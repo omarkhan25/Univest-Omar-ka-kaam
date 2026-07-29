@@ -16,8 +16,12 @@
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-hot-toast": "^2.6.0",
+    "react-is": "^19.0.0",
     "react-router-dom": "^7.18.1",
     "recharts": "^3.9.2"
+  },
+  "overrides": {
+    "react-is": "$react-is"
   },
   "devDependencies": {
     "@types/node": "^24.13.2",

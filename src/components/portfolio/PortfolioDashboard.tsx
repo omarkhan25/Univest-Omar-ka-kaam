@@ -12,6 +12,7 @@ import {
   PieChart as RechartsPieChart, Pie, Cell
 } from 'recharts';
 import toast from 'react-hot-toast';
+import { LoadingSkeleton } from '../common/LoadingSkeleton';
 
 // ----------------------------------------------------
 // MULTI-MONTH HISTORICAL PORTFOLIO DATASET
@@ -81,445 +82,36 @@ interface MonthData {
   };
 }
 
-const HISTORICAL_DATA: Record<string, MonthData> = {
-  'Jan 2026': {
-    overview: { value: 820000, todayPnL: 3400, todayPnLPerc: 0.41, overallReturn: 5.12, invested: 780000, cash: 40000 },
-    chartData: [{ name: 'Jan', value: 820000 }],
-    holdings: [
-      {
-        symbol: 'RELIANCE', companyName: 'Reliance Industries Ltd', logo: 'RL', qty: 50, avgPrice: 2400.00, cmp: 2450.50,
-        todayPnL: 1200, overallReturn: 2.1, currentValue: 122525, weight: 15, risk: 'Low', ai: 'BUY', sparkline: [2400, 2450],
-        notes: 'Steady energy demand supporting valuations.',
-        timeline: [{ date: '12 Jan 2026', type: 'Buy', qty: 50, price: 2400.00 }],
-        dividends: []
-      },
-      {
-        symbol: 'TCS', companyName: 'Tata Consultancy Services', logo: 'TC', qty: 20, avgPrice: 3800.00, cmp: 3850.00,
-        todayPnL: 800, overallReturn: 1.3, currentValue: 77000, weight: 9.3, risk: 'Low', ai: 'HOLD', sparkline: [3800, 3850],
-        notes: 'Excellent dividend track record.',
-        timeline: [{ date: '15 Jan 2026', type: 'Buy', qty: 20, price: 3800.00 }],
-        dividends: []
-      },
-      {
-        symbol: 'HDFCBANK', companyName: 'HDFC Bank Limited', logo: 'HD', qty: 100, avgPrice: 1600.00, cmp: 1620.40,
-        todayPnL: 1400, overallReturn: 1.25, currentValue: 162040, weight: 19.7, risk: 'Low', ai: 'BUY', sparkline: [1600, 1620],
-        notes: 'Post-merger margins starting to stabilize.',
-        timeline: [{ date: '18 Jan 2026', type: 'Buy', qty: 100, price: 1600.00 }],
-        dividends: []
-      }
-    ],
-    allocation: [
-      { name: 'Stocks', value: 85, color: '#3B82F6' },
-      { name: 'Cash', value: 15, color: '#64748B' }
-    ],
-    sectors: [
-      { name: 'Banking', value: 45, color: '#2563EB' },
-      { name: 'IT / Tech', value: 30, color: '#0EA5E9' },
-      { name: 'Energy', value: 25, color: '#F59E0B' }
-    ],
-    performance: {
-      dailyReturn: 0.41, monthlyReturn: 5.12, yearlyReturn: 5.12, sinceInception: 5.12, niftyComparison: 4.2,
-      bestPerformer: { symbol: 'RELIANCE', change: 2.1, sector: 'Energy' },
-      worstPerformer: { symbol: 'HDFCBANK', change: 1.25, sector: 'Banking' },
-      realisedGains: 0, unrealisedGains: 40000, dividendYTD: 0
-    },
-    transactions: [
-      { id: 't1', type: 'Deposit', symbol: 'FUNDS', name: 'Wallet Funding', qty: 0, price: 0, total: 820000, date: '01 Jan 2026', time: '09:00 AM' },
-      { id: 't2', type: 'Buy', symbol: 'RELIANCE', name: 'Reliance Industries', qty: 50, price: 2400.00, total: 120000, date: '12 Jan 2026', time: '10:24 AM' },
-      { id: 't3', type: 'Buy', symbol: 'TCS', name: 'Tata Consultancy Services', qty: 20, price: 3800.00, total: 76000, date: '15 Jan 2026', time: '11:15 AM' },
-      { id: 't4', type: 'Buy', symbol: 'HDFCBANK', name: 'HDFC Bank', qty: 100, price: 1600.00, total: 160000, date: '18 Jan 2026', time: '02:45 PM' }
-    ],
-    aiInsights: {
-      healthScore: 85, diversification: 'Average', riskLevel: 'Low', topOpportunity: 'Mutual Funds', biggestRisk: 'Concentration in direct equities',
-      suggestedAction: 'Add mutual funds to optimize sector representation.', expectedImprovement: '1.2%',
-      analysisText: 'Concentration in direct bank holdings offers solid baseline gains but leaves you exposed to rate cycles.'
-    }
+const createEmptyMonthData = (): MonthData => ({
+  overview: { value: 0, todayPnL: 0, todayPnLPerc: 0, overallReturn: 0, invested: 0, cash: 0 },
+  chartData: [{ name: 'Jul 2026', value: 0 }],
+  holdings: [],
+  allocation: [],
+  sectors: [],
+  performance: {
+    dailyReturn: 0, monthlyReturn: 0, yearlyReturn: 0, sinceInception: 0, niftyComparison: 0,
+    bestPerformer: { symbol: '--', change: 0, sector: '--' },
+    worstPerformer: { symbol: '--', change: 0, sector: '--' },
+    realisedGains: 0, unrealisedGains: 0, dividendYTD: 0
   },
-  'Feb 2026': {
-    overview: { value: 850000, todayPnL: -1200, todayPnLPerc: -0.14, overallReturn: 4.94, invested: 810000, cash: 40000 },
-    chartData: [{ name: 'Jan', value: 820000 }, { name: 'Feb', value: 850000 }],
-    holdings: [
-      {
-        symbol: 'RELIANCE', companyName: 'Reliance Industries Ltd', logo: 'RL', qty: 50, avgPrice: 2400.00, cmp: 2490.50,
-        todayPnL: -500, overallReturn: 3.7, currentValue: 124525, weight: 14.6, risk: 'Low', ai: 'HOLD', sparkline: [2400, 2450, 2490],
-        notes: 'Oil-to-chemical margins stabilizing.',
-        timeline: [{ date: '12 Jan 2026', type: 'Buy', qty: 50, price: 2400.00 }],
-        dividends: []
-      },
-      {
-        symbol: 'TCS', companyName: 'Tata Consultancy Services', logo: 'TC', qty: 20, avgPrice: 3800.00, cmp: 3890.00,
-        todayPnL: -300, overallReturn: 2.37, currentValue: 77800, weight: 9.1, risk: 'Low', ai: 'BUY', sparkline: [3800, 3850, 3890],
-        notes: 'Client pipelines remain robust.',
-        timeline: [{ date: '15 Jan 2026', type: 'Buy', qty: 20, price: 3800.00 }],
-        dividends: []
-      },
-      {
-        symbol: 'HDFCBANK', companyName: 'HDFC Bank Limited', logo: 'HD', qty: 100, avgPrice: 1600.00, cmp: 1630.00,
-        todayPnL: -400, overallReturn: 1.88, currentValue: 163000, weight: 19.1, risk: 'Low', ai: 'BUY', sparkline: [1600, 1620, 1630],
-        notes: 'Rate cuts could support margin re-rating.',
-        timeline: [{ date: '18 Jan 2026', type: 'Buy', qty: 100, price: 1600.00 }],
-        dividends: []
-      }
-    ],
-    allocation: [
-      { name: 'Stocks', value: 80, color: '#3B82F6' },
-      { name: 'Mutual Funds', value: 10, color: '#10B981' },
-      { name: 'Cash', value: 10, color: '#64748B' }
-    ],
-    sectors: [
-      { name: 'Banking', value: 40, color: '#2563EB' },
-      { name: 'IT / Tech', value: 30, color: '#0EA5E9' },
-      { name: 'Energy', value: 20, color: '#F59E0B' },
-      { name: 'FMCG', value: 10, color: '#8B5CF6' }
-    ],
-    performance: {
-      dailyReturn: -0.14, monthlyReturn: 3.65, yearlyReturn: 4.94, sinceInception: 4.94, niftyComparison: 4.1,
-      bestPerformer: { symbol: 'RELIANCE', change: 3.7, sector: 'Energy' },
-      worstPerformer: { symbol: 'HDFCBANK', change: 1.88, sector: 'Banking' },
-      realisedGains: 0, unrealisedGains: 40000, dividendYTD: 0
-    },
-    transactions: [
-      { id: 't5', type: 'SIP', symbol: 'PPFCF', name: 'Parag Parikh Flexi Fund', qty: 0, price: 0, total: 10000, date: '10 Feb 2026', time: '10:00 AM' }
-    ],
-    aiInsights: {
-      healthScore: 88, diversification: 'Good', riskLevel: 'Low', topOpportunity: 'Midcaps', biggestRisk: 'High concentration in Large Cap index entities',
-      suggestedAction: 'Consider introducing Midcap mutual funds to capture delta.', expectedImprovement: '1.5%',
-      analysisText: 'Mutual fund SIP integration improves the portfolio diversification metric.'
-    }
-  },
-  'Mar 2026': {
-    overview: { value: 890000, todayPnL: 8200, todayPnLPerc: 0.92, overallReturn: 7.23, invested: 830000, cash: 60000 },
-    chartData: [{ name: 'Jan', value: 820000 }, { name: 'Feb', value: 850000 }, { name: 'Mar', value: 890000 }],
-    holdings: [
-      {
-        symbol: 'RELIANCE', companyName: 'Reliance Industries Ltd', logo: 'RL', qty: 80, avgPrice: 2420.00, cmp: 2510.00,
-        todayPnL: 3200, overallReturn: 3.71, currentValue: 200800, weight: 22.5, risk: 'Low', ai: 'BUY', sparkline: [2400, 2490, 2510],
-        notes: 'Additional buy in March sets up breakout.',
-        timeline: [{ date: '12 Jan 2026', type: 'Buy', qty: 50, price: 2400.00 }, { date: '15 Mar 2026', type: 'Buy', qty: 30, price: 2453.00 }],
-        dividends: []
-      },
-      {
-        symbol: 'TCS', companyName: 'Tata Consultancy Services', logo: 'TC', qty: 20, avgPrice: 3800.00, cmp: 3920.00,
-        todayPnL: 2000, overallReturn: 3.15, currentValue: 78400, weight: 8.8, risk: 'Low', ai: 'HOLD', sparkline: [3800, 3890, 3920],
-        notes: 'Dividend payout received.',
-        timeline: [{ date: '15 Jan 2026', type: 'Buy', qty: 20, price: 3800.00 }],
-        dividends: [{ date: '28 Mar 2026', amount: 800 }]
-      },
-      {
-        symbol: 'HDFCBANK', companyName: 'HDFC Bank Limited', logo: 'HD', qty: 100, avgPrice: 1600.00, cmp: 1650.00,
-        todayPnL: 3000, overallReturn: 3.12, currentValue: 165000, weight: 18.5, risk: 'Low', ai: 'BUY', sparkline: [1600, 1630, 1650],
-        notes: 'FII flow turning positive.',
-        timeline: [{ date: '18 Jan 2026', type: 'Buy', qty: 100, price: 1600.00 }],
-        dividends: []
-      }
-    ],
-    allocation: [
-      { name: 'Stocks', value: 78, color: '#3B82F6' },
-      { name: 'Mutual Funds', value: 12, color: '#10B981' },
-      { name: 'Cash', value: 10, color: '#64748B' }
-    ],
-    sectors: [
-      { name: 'Banking', value: 38, color: '#2563EB' },
-      { name: 'IT / Tech', value: 28, color: '#0EA5E9' },
-      { name: 'Energy', value: 24, color: '#F59E0B' },
-      { name: 'FMCG', value: 10, color: '#8B5CF6' }
-    ],
-    performance: {
-      dailyReturn: 0.92, monthlyReturn: 4.7, yearlyReturn: 7.23, sinceInception: 7.23, niftyComparison: 6.1,
-      bestPerformer: { symbol: 'RELIANCE', change: 3.71, sector: 'Energy' },
-      worstPerformer: { symbol: 'HDFCBANK', change: 3.12, sector: 'Banking' },
-      realisedGains: 0, unrealisedGains: 60000, dividendYTD: 800
-    },
-    transactions: [
-      { id: 't6', type: 'Buy', symbol: 'RELIANCE', name: 'Reliance Industries', qty: 30, price: 2453.00, total: 73590, date: '15 Mar 2026', time: '11:15 AM' },
-      { id: 't7', type: 'Dividend', symbol: 'TCS', name: 'TCS Dividend Payout', qty: 0, price: 0, total: 800, date: '28 Mar 2026', time: '02:00 PM' }
-    ],
-    aiInsights: {
-      healthScore: 89, diversification: 'Good', riskLevel: 'Low', topOpportunity: 'Clean Energy Re-rating', biggestRisk: 'Lack of commodities hedges',
-      suggestedAction: 'Add digital gold / SGB to diversify equity risk.', expectedImprovement: '0.8%',
-      analysisText: 'Dividend payout improves passive cash return profile. Re-investing payouts is recommended.'
-    }
-  },
-  'Apr 2026': {
-    overview: { value: 860000, todayPnL: -14500, todayPnLPerc: -1.68, overallReturn: 2.38, invested: 840000, cash: 20000 },
-    chartData: [{ name: 'Jan', value: 820000 }, { name: 'Feb', value: 850000 }, { name: 'Mar', value: 890000 }, { name: 'Apr', value: 860000 }],
-    holdings: [
-      {
-        symbol: 'RELIANCE', companyName: 'Reliance Industries Ltd', logo: 'RL', qty: 80, avgPrice: 2420.00, cmp: 2480.00,
-        todayPnL: -5000, overallReturn: 2.47, currentValue: 198400, weight: 23, risk: 'Low', ai: 'BUY', sparkline: [2490, 2510, 2480],
-        notes: 'Crude price corrections trigger minor profit taking.',
-        timeline: [{ date: '12 Jan 2026', type: 'Buy', qty: 50, price: 2400.00 }, { date: '15 Mar 2026', type: 'Buy', qty: 30, price: 2453.00 }],
-        dividends: []
-      },
-      {
-        symbol: 'TCS', companyName: 'Tata Consultancy Services', logo: 'TC', qty: 20, avgPrice: 3800.00, cmp: 3820.00,
-        todayPnL: -3000, overallReturn: 0.52, currentValue: 76400, weight: 8.9, risk: 'Low', ai: 'HOLD', sparkline: [3890, 3920, 3820],
-        notes: 'Macro headwinds across client base.',
-        timeline: [{ date: '15 Jan 2026', type: 'Buy', qty: 20, price: 3800.00 }],
-        dividends: []
-      },
-      {
-        symbol: 'HDFCBANK', companyName: 'HDFC Bank Limited', logo: 'HD', qty: 50, avgPrice: 1600.00, cmp: 1610.00,
-        todayPnL: -2000, overallReturn: 0.62, currentValue: 80500, weight: 9.3, risk: 'Low', ai: 'BUY', sparkline: [1630, 1650, 1610],
-        notes: 'Partially booked profits.',
-        timeline: [{ date: '18 Jan 2026', type: 'Buy', qty: 100, price: 1600.00 }, { date: '22 Apr 2026', type: 'Sell', qty: 50, price: 1655.00 }],
-        dividends: []
-      },
-      {
-        symbol: 'INFY', companyName: 'Infosys Limited', logo: 'IF', qty: 20, avgPrice: 1600.00, cmp: 1562.10,
-        todayPnL: -4500, overallReturn: -2.36, currentValue: 31242, weight: 3.6, risk: 'Medium', ai: 'SELL', sparkline: [1600, 1562],
-        notes: 'Headwinds in cloud division.',
-        timeline: [{ date: '10 Apr 2026', type: 'Buy', qty: 20, price: 1600.00 }],
-        dividends: []
-      }
-    ],
-    allocation: [
-      { name: 'Stocks', value: 82, color: '#3B82F6' },
-      { name: 'Mutual Funds', value: 15, color: '#10B981' },
-      { name: 'Cash', value: 3, color: '#64748B' }
-    ],
-    sectors: [
-      { name: 'IT / Tech', value: 38, color: '#0EA5E9' },
-      { name: 'Banking', value: 28, color: '#3B82F6' },
-      { name: 'Energy', value: 24, color: '#F59E0B' },
-      { name: 'Healthcare', value: 10, color: '#A855F7' }
-    ],
-    performance: {
-      dailyReturn: -1.68, monthlyReturn: -3.37, yearlyReturn: 2.38, sinceInception: 2.38, niftyComparison: 1.8,
-      bestPerformer: { symbol: 'RELIANCE', change: 2.47, sector: 'Energy' },
-      worstPerformer: { symbol: 'INFY', change: -2.36, sector: 'IT' },
-      realisedGains: 2750, // 50 shares * (1655 - 1600)
-      unrealisedGains: 17250, dividendYTD: 800
-    },
-    transactions: [
-      { id: 't8', type: 'Buy', symbol: 'INFY', name: 'Infosys Limited', qty: 20, price: 1600.00, total: 32000, date: '10 Apr 2026', time: '10:45 AM' },
-      { id: 't9', type: 'Sell', symbol: 'HDFCBANK', name: 'HDFC Bank Limited', qty: 50, price: 1655.00, total: 82750, date: '22 Apr 2026', time: '01:30 PM' }
-    ],
-    aiInsights: {
-      healthScore: 82, diversification: 'Good', riskLevel: 'Moderate', topOpportunity: 'FMCG Defensive Play', biggestRisk: 'Overweight IT Sector (38%)',
-      suggestedAction: 'Reduce IT allocation below 25%.', expectedImprovement: '1.4%',
-      analysisText: 'Market volatility in IT has affected portfolio beta. Trim INFY position to buffer downside risk.'
-    }
-  },
-  'May 2026': {
-    overview: { value: 920000, todayPnL: 6800, todayPnLPerc: 0.74, overallReturn: 3.37, invested: 890000, cash: 30000 },
-    chartData: [{ name: 'Jan', value: 820000 }, { name: 'Feb', value: 850000 }, { name: 'Mar', value: 890000 }, { name: 'Apr', value: 860000 }, { name: 'May', value: 920000 }],
-    holdings: [
-      {
-        symbol: 'RELIANCE', companyName: 'Reliance Industries Ltd', logo: 'RL', qty: 80, avgPrice: 2420.00, cmp: 2540.00,
-        todayPnL: 1800, overallReturn: 4.95, currentValue: 203200, weight: 22.1, risk: 'Low', ai: 'BUY', sparkline: [2510, 2480, 2540],
-        notes: 'Telecom subscriber additions trending up.',
-        timeline: [{ date: '12 Jan 2026', type: 'Buy', qty: 50, price: 2400.00 }, { date: '15 Mar 2026', type: 'Buy', qty: 30, price: 2453.00 }],
-        dividends: []
-      },
-      {
-        symbol: 'TCS', companyName: 'Tata Consultancy Services', logo: 'TC', qty: 20, avgPrice: 3800.00, cmp: 3880.00,
-        todayPnL: 1000, overallReturn: 2.1, currentValue: 77600, weight: 8.4, risk: 'Low', ai: 'HOLD', sparkline: [3920, 3820, 3880],
-        notes: 'Institutional holdings increased.',
-        timeline: [{ date: '15 Jan 2026', type: 'Buy', qty: 20, price: 3800.00 }],
-        dividends: []
-      },
-      {
-        symbol: 'HDFCBANK', companyName: 'HDFC Bank Limited', logo: 'HD', qty: 100, avgPrice: 1605.00, cmp: 1640.00,
-        todayPnL: 2000, overallReturn: 2.18, currentValue: 164000, weight: 17.8, risk: 'Low', ai: 'BUY', sparkline: [1610, 1640],
-        notes: 'Added back HDFC shares at support.',
-        timeline: [{ date: '18 Jan 2026', type: 'Buy', qty: 100, price: 1600.00 }, { date: '22 Apr 2026', type: 'Sell', qty: 50, price: 1655.00 }, { date: '12 May 2026', type: 'Buy', qty: 50, price: 1615.00 }],
-        dividends: []
-      },
-      {
-        symbol: 'INFY', companyName: 'Infosys Limited', logo: 'IF', qty: 40, avgPrice: 1610.00, cmp: 1575.00,
-        todayPnL: 1000, overallReturn: -2.17, currentValue: 63000, weight: 6.8, risk: 'Medium', ai: 'SELL', sparkline: [1562, 1575],
-        notes: 'Accumulated further near lows.',
-        timeline: [{ date: '10 Apr 2026', type: 'Buy', qty: 20, price: 1600.00 }, { date: '18 May 2026', type: 'Buy', qty: 20, price: 1620.00 }],
-        dividends: []
-      }
-    ],
-    allocation: [
-      { name: 'Stocks', value: 75, color: '#3B82F6' },
-      { name: 'Gold / Bonds', value: 15, color: '#F59E0B' },
-      { name: 'Mutual Funds', value: 5, color: '#10B981' },
-      { name: 'Cash', value: 5, color: '#64748B' }
-    ],
-    sectors: [
-      { name: 'Banking', value: 35, color: '#2563EB' },
-      { name: 'IT / Tech', value: 30, color: '#0EA5E9' },
-      { name: 'Energy', value: 25, color: '#F59E0B' },
-      { name: 'Automotive', value: 10, color: '#6366F1' }
-    ],
-    performance: {
-      dailyReturn: 0.74, monthlyReturn: 6.9, yearlyReturn: 3.37, sinceInception: 3.37, niftyComparison: 2.9,
-      bestPerformer: { symbol: 'RELIANCE', change: 4.95, sector: 'Energy' },
-      worstPerformer: { symbol: 'INFY', change: -2.17, sector: 'IT' },
-      realisedGains: 2750, unrealisedGains: 27250, dividendYTD: 800
-    },
-    transactions: [
-      { id: 't10', type: 'Buy', symbol: 'HDFCBANK', name: 'HDFC Bank Limited', qty: 50, price: 1615.00, total: 80750, date: '12 May 2026', time: '02:15 PM' },
-      { id: 't11', type: 'Buy', symbol: 'INFY', name: 'Infosys Limited', qty: 20, price: 1620.00, total: 32400, date: '18 May 2026', time: '11:00 AM' }
-    ],
-    aiInsights: {
-      healthScore: 87, diversification: 'Good', riskLevel: 'Moderate', topOpportunity: 'Auto Rebound', biggestRisk: 'Rate headwinds on auto exposures',
-      suggestedAction: 'Keep buffer cash around 5% of assets.', expectedImprovement: '0.9%',
-      analysisText: 'Bonds and Sovereign Gold Bonds added during this cycle help buffer general index volatility.'
-    }
-  },
-  'Jun 2026': {
-    overview: { value: 1050000, todayPnL: 12400, todayPnLPerc: 1.18, overallReturn: 14.13, invested: 920000, cash: 130000 },
-    chartData: [{ name: 'Jan', value: 820000 }, { name: 'Feb', value: 850000 }, { name: 'Mar', value: 890000 }, { name: 'Apr', value: 860000 }, { name: 'May', value: 920000 }, { name: 'Jun', value: 1050000 }],
-    holdings: [
-      {
-        symbol: 'RELIANCE', companyName: 'Reliance Industries Ltd', logo: 'RL', qty: 100, avgPrice: 2435.00, cmp: 2780.00,
-        todayPnL: 4500, overallReturn: 14.17, currentValue: 278000, weight: 26.5, risk: 'Low', ai: 'BUY', sparkline: [2480, 2540, 2780],
-        notes: 'Hydrogen project validation triggers breakout.',
-        timeline: [{ date: '12 Jan 2026', type: 'Buy', qty: 50, price: 2400.00 }, { date: '15 Mar 2026', type: 'Buy', qty: 30, price: 2453.00 }, { date: '05 Jun 2026', type: 'Buy', qty: 20, price: 2510.00 }],
-        dividends: []
-      },
-      {
-        symbol: 'TCS', companyName: 'Tata Consultancy Services', logo: 'TC', qty: 45, avgPrice: 3800.00, cmp: 4050.00,
-        todayPnL: 3500, overallReturn: 6.58, currentValue: 182250, weight: 17.4, risk: 'Low', ai: 'HOLD', sparkline: [3820, 3880, 4050],
-        notes: 'Significant new UK orders acquired.',
-        timeline: [{ date: '15 Jan 2026', type: 'Buy', qty: 20, price: 3800.00 }, { date: '12 Jun 2026', type: 'Buy', qty: 25, price: 3800.00 }],
-        dividends: []
-      },
-      {
-        symbol: 'HDFCBANK', companyName: 'HDFC Bank Limited', logo: 'HD', qty: 200, avgPrice: 1600.00, cmp: 1675.00,
-        todayPnL: 3000, overallReturn: 4.69, currentValue: 335000, weight: 31.9, risk: 'Low', ai: 'BUY', sparkline: [1640, 1675],
-        notes: 'Deposit ratios expand positively.',
-        timeline: [{ date: '18 Jan 2026', type: 'Buy', qty: 100, price: 1600.00 }, { date: '22 Apr 2026', type: 'Sell', qty: 50, price: 1655.00 }, { date: '12 May 2026', type: 'Buy', qty: 50, price: 1615.00 }, { date: '18 Jun 2026', type: 'Buy', qty: 100, price: 1595.00 }],
-        dividends: []
-      },
-      {
-        symbol: 'INFY', companyName: 'Infosys Limited', logo: 'IF', qty: 85, avgPrice: 1640.00, cmp: 1560.00,
-        todayPnL: -1500, overallReturn: -4.88, currentValue: 132600, weight: 12.6, risk: 'Medium', ai: 'SELL', sparkline: [1575, 1560],
-        notes: 'Exited some shares near cost.',
-        timeline: [{ date: '10 Apr 2026', type: 'Buy', qty: 20, price: 1600.00 }, { date: '18 May 2026', type: 'Buy', qty: 20, price: 1620.00 }, { date: '22 Jun 2026', type: 'Sell', qty: 20, price: 1645.00 }, { date: '28 Jun 2026', type: 'Buy', qty: 65, price: 1665.00 }],
-        dividends: []
-      }
-    ],
-    allocation: [
-      { name: 'Stocks', value: 88, color: '#3B82F6' },
-      { name: 'Gold / Bonds', value: 5, color: '#F59E0B' },
-      { name: 'Cash', value: 7, color: '#64748B' }
-    ],
-    sectors: [
-      { name: 'IT / Tech', value: 30, color: '#0EA5E9' },
-      { name: 'Banking', value: 32, color: '#3B82F6' },
-      { name: 'Energy', value: 26, color: '#F59E0B' },
-      { name: 'Automotive', value: 12, color: '#6366F1' }
-    ],
-    performance: {
-      dailyReturn: 1.18, monthlyReturn: 14.13, yearlyReturn: 14.13, sinceInception: 14.13, niftyComparison: 10.5,
-      bestPerformer: { symbol: 'RELIANCE', change: 14.17, sector: 'Energy' },
-      worstPerformer: { symbol: 'INFY', change: -4.88, sector: 'IT' },
-      realisedGains: 3650, unrealisedGains: 130000, dividendYTD: 800
-    },
-    transactions: [
-      { id: 't12', type: 'Buy', symbol: 'RELIANCE', name: 'Reliance Industries', qty: 20, price: 2510.00, total: 50200, date: '05 Jun 2026', time: '10:45 AM' },
-      { id: 't13', type: 'Buy', symbol: 'TCS', name: 'Tata Consultancy Services', qty: 25, price: 3800.00, total: 95000, date: '12 Jun 2026', time: '11:30 AM' },
-      { id: 't14', type: 'Buy', symbol: 'HDFCBANK', name: 'HDFC Bank', qty: 100, price: 1595.00, total: 159500, date: '18 Jun 2026', time: '02:00 PM' },
-      { id: 't15', type: 'Sell', symbol: 'INFY', name: 'Infosys Limited', qty: 20, price: 1645.00, total: 32900, date: '22 Jun 2026', time: '03:15 PM' },
-      { id: 't16', type: 'Buy', symbol: 'INFY', name: 'Infosys Limited', qty: 65, price: 1665.00, total: 108225, date: '28 Jun 2026', time: '11:00 AM' }
-    ],
-    aiInsights: {
-      healthScore: 90, diversification: 'Good', riskLevel: 'Moderate', topOpportunity: 'Telecom Monetization', biggestRisk: 'High bank exposures',
-      suggestedAction: 'Reduce HDFC exposure to optimize allocation.', expectedImprovement: '1.2%',
-      analysisText: 'A high gain month. Reliance and TCS order boosts have accelerated portfolio outperformance.'
-    }
-  },
-  'Jul 2026': {
-    overview: { value: 1248420, todayPnL: 18420, todayPnLPerc: 1.42, overallReturn: 22.84, invested: 1016800, cash: 84250 },
-    chartData: [
-      { name: 'Jan', value: 820000 }, { name: 'Feb', value: 850000 }, { name: 'Mar', value: 890000 },
-      { name: 'Apr', value: 860000 }, { name: 'May', value: 920000 }, { name: 'Jun', value: 1050000 },
-      { name: 'Jul', value: 1248420 }
-    ],
-    holdings: [
-      {
-        symbol: 'RELIANCE', companyName: 'Reliance Industries Ltd', logo: 'RL', qty: 150, avgPrice: 2450.00, cmp: 3024.50,
-        todayPnL: 5420, overallReturn: 23.4, currentValue: 453675, weight: 36.3, risk: 'Low', ai: 'HOLD', sparkline: [2540, 2780, 3024.5],
-        notes: 'Robust retail metrics and clean energy execution drive ratings.',
-        timeline: [
-          { date: '12 Jan 2026', type: 'Buy', qty: 50, price: 2400.00 },
-          { date: '15 Mar 2026', type: 'Buy', qty: 30, price: 2453.00 },
-          { date: '05 Jun 2026', type: 'Buy', qty: 20, price: 2510.00 },
-          { date: '18 Jul 2026', type: 'Buy', qty: 50, price: 2900.50 }
-        ],
-        dividends: []
-      },
-      {
-        symbol: 'TCS', companyName: 'Tata Consultancy Services', logo: 'TC', qty: 45, avgPrice: 3800.00, cmp: 4185.10,
-        todayPnL: 4200, overallReturn: 10.13, currentValue: 188329.5, weight: 15.1, risk: 'Low', ai: 'BUY', sparkline: [3880, 4050, 4185.1],
-        notes: 'AI systems delivery setup expanding margins.',
-        timeline: [
-          { date: '15 Jan 2026', type: 'Buy', qty: 20, price: 3800.00 },
-          { date: '12 Jun 2026', type: 'Buy', qty: 25, price: 3800.00 }
-        ],
-        dividends: [{ date: '28 Mar 2026', amount: 800 }, { date: '15 Jul 2026', amount: 1260 }]
-      },
-      {
-        symbol: 'HDFCBANK', companyName: 'HDFC Bank Limited', logo: 'HD', qty: 200, avgPrice: 1610.20, cmp: 1682.40,
-        todayPnL: 5200, overallReturn: 4.48, currentValue: 336480, weight: 27, risk: 'Low', ai: 'BUY', sparkline: [1675, 1682.4],
-        notes: 'Synergistic post-merger deposits flow expansion.',
-        timeline: [
-          { date: '18 Jan 2026', type: 'Buy', qty: 100, price: 1600.00 },
-          { date: '22 Apr 2026', type: 'Sell', qty: 50, price: 1655.00 },
-          { date: '12 May 2026', type: 'Buy', qty: 50, price: 1615.00 },
-          { date: '18 Jun 2026', type: 'Buy', qty: 100, price: 1595.00 }
-        ],
-        dividends: []
-      },
-      {
-        symbol: 'INFY', companyName: 'Infosys Limited', logo: 'IF', qty: 85, avgPrice: 1640.00, cmp: 1562.10,
-        todayPnL: -1200, overallReturn: -4.75, currentValue: 132778.5, weight: 10.6, risk: 'Medium', ai: 'SELL', sparkline: [1560, 1562.1],
-        notes: 'Weak guidance impacts sector pricing.',
-        timeline: [
-          { date: '10 Apr 2026', type: 'Buy', qty: 20, price: 1600.00 },
-          { date: '18 May 2026', type: 'Buy', qty: 20, price: 1620.00 },
-          { date: '22 Jun 2026', type: 'Sell', qty: 20, price: 1645.00 },
-          { date: '28 Jun 2026', type: 'Buy', qty: 65, price: 1665.00 }
-        ],
-        dividends: []
-      },
-      {
-        symbol: 'TATASTEEL', companyName: 'Tata Steel Limited', logo: 'TS', qty: 1000, avgPrice: 125.40, cmp: 147.20,
-        todayPnL: 4800, overallReturn: 17.38, currentValue: 147200, weight: 11.8, risk: 'Medium', ai: 'HOLD', sparkline: [125.4, 147.2],
-        notes: 'Acquired in early July, transition subventions support pricing.',
-        timeline: [{ date: '03 Jul 2026', type: 'Buy', qty: 1000, price: 125.40 }],
-        dividends: []
-      }
-    ],
-    allocation: [
-      { name: 'Stocks', value: 85, color: '#3B82F6' },
-      { name: 'Mutual Funds', value: 5, color: '#10B981' },
-      { name: 'ETFs', value: 3, color: '#6366F1' },
-      { name: 'Gold', value: 2, color: '#F59E0B' },
-      { name: 'Bonds', value: 2, color: '#14B8A6' },
-      { name: 'Cash', value: 3, color: '#64748B' }
-    ],
-    sectors: [
-      { name: 'Banking', value: 32, color: '#2563EB' },
-      { name: 'IT / Tech', value: 30, color: '#0EA5E9' },
-      { name: 'Energy', value: 20, color: '#F59E0B' },
-      { name: 'Healthcare', value: 8, color: '#A855F7' },
-      { name: 'Auto', value: 5, color: '#6366F1' },
-      { name: 'FMCG', value: 5, color: '#8B5CF6' }
-    ],
-    performance: {
-      dailyReturn: 1.42, monthlyReturn: 8.4, yearlyReturn: 22.84, sinceInception: 22.84, niftyComparison: 15.6,
-      bestPerformer: { symbol: 'RELIANCE', change: 23.4, sector: 'Energy' },
-      worstPerformer: { symbol: 'INFY', change: -4.75, sector: 'IT' },
-      realisedGains: 3650, unrealisedGains: 231620, dividendYTD: 2060
-    },
-    transactions: [
-      { id: 't17', type: 'Buy', symbol: 'TATASTEEL', name: 'Tata Steel Limited', qty: 1000, price: 125.40, total: 125400, date: '03 Jul 2026', time: '11:15 AM' },
-      { id: 't18', type: 'Dividend', symbol: 'TCS', name: 'TCS Dividend Payout', qty: 0, price: 0, total: 1260, date: '15 Jul 2026', time: '09:15 AM' },
-      { id: 't19', type: 'Buy', symbol: 'RELIANCE', name: 'Reliance Industries', qty: 50, price: 2900.50, total: 145025, date: '18 Jul 2026', time: '10:24 AM' }
-    ],
-    aiInsights: {
-      healthScore: 92, diversification: 'Good', riskLevel: 'Moderate', topOpportunity: 'Healthcare', biggestRisk: 'Overweight IT Sector (30%)',
-      suggestedAction: 'Reduce IT exposure by 5% and allocate to Healthcare.', expectedImprovement: '1.8%',
-      analysisText: 'Outperforming the benchmarks. Rebalancing IT exposures will lock in gains and stabilize future returns.'
-    }
+  transactions: [],
+  aiInsights: {
+    healthScore: 0, diversification: 'Awaiting Data', riskLevel: 'Unrated',
+    topOpportunity: '--', biggestRisk: '--',
+    suggestedAction: 'Awaiting backend broker integration or user trade execution.',
+    expectedImprovement: '--',
+    analysisText: 'No portfolio holdings recorded. Connect your broker account or execute trades to begin.'
   }
+});
+
+const HISTORICAL_DATA: Record<string, MonthData> = {
+  'Jan 2026': createEmptyMonthData(),
+  'Feb 2026': createEmptyMonthData(),
+  'Mar 2026': createEmptyMonthData(),
+  'Apr 2026': createEmptyMonthData(),
+  'May 2026': createEmptyMonthData(),
+  'Jun 2026': createEmptyMonthData(),
+  'Jul 2026': createEmptyMonthData(),
 };
 
 const TIMELINE_MONTHS = ['Jan 2026', 'Feb 2026', 'Mar 2026', 'Apr 2026', 'May 2026', 'Jun 2026', 'Jul 2026'];
@@ -537,35 +129,130 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
   const [activeHoldingDetail, setActiveHoldingDetail] = useState<any | null>(null);
 
-  // Mutable session data for high-fidelity actions
-  const [sessionData, setSessionData] = useState<Record<string, MonthData>>(() => {
+  // Dynamic portfolio recalculation helper
+  const getRecalculatedSessionData = () => {
     const initialData = JSON.parse(JSON.stringify(HISTORICAL_DATA));
-    const val = localStorage.getItem('demat_cash_balance');
-    if (val) {
-      const parsedCash = parseFloat(val) || 84250;
-      initialData['Jul 2026'].overview.cash = parsedCash;
-      initialData['Jul 2026'].overview.value = initialData['Jul 2026'].overview.invested + parsedCash;
+    const rawTrades = localStorage.getItem('executed_trades');
+    const rawParsed = rawTrades ? JSON.parse(rawTrades) : [];
+    const trades = rawParsed.filter((t: any) => t && t.qty && t.price && (t.qty * t.price) < 100000000);
+    
+    const cashVal = localStorage.getItem('demat_cash_balance');
+    const parsedCash = cashVal ? parseFloat(cashVal) : 0;
+    if (parsedCash > 100000000) {
+      localStorage.setItem('demat_cash_balance', '0');
     }
+    
+    initialData['Jul 2026'].overview.cash = parsedCash > 100000000 ? 0 : parsedCash;
+    initialData['Jul 2026'].overview.invested = 0; // zero starting baseline for user trades
+    
+    trades.forEach((trade: any) => {
+      const tradeValue = trade.qty * trade.price;
+      const brokerage = 0;
+      const stt = trade.type === 'BUY' && trade.product === 'CNC' ? tradeValue * 0.001 : 0;
+      const exchangeTax = tradeValue * 0.000345;
+      const gst = exchangeTax * 0.18;
+      const stampDuty = trade.type === 'BUY' ? tradeValue * 0.00015 : 0;
+      const totalCharges = brokerage + stt + exchangeTax + gst + stampDuty;
+
+      if (trade.type === 'BUY') {
+        initialData['Jul 2026'].overview.invested += tradeValue;
+        
+        const holding = initialData['Jul 2026'].holdings.find((h: any) => h.symbol === trade.symbol);
+        if (holding) {
+          const oldTotal = holding.qty * holding.avgPrice;
+          holding.qty += trade.qty;
+          holding.avgPrice = (oldTotal + tradeValue) / holding.qty;
+          holding.currentValue = holding.qty * holding.cmp;
+        } else {
+          initialData['Jul 2026'].holdings.push({
+            symbol: trade.symbol,
+            companyName: trade.company || trade.symbol,
+            logo: trade.symbol.substring(0, 2),
+            qty: trade.qty,
+            avgPrice: trade.price,
+            cmp: trade.price,
+            todayPnL: 0,
+            overallReturn: 0,
+            currentValue: tradeValue,
+            weight: 5,
+            risk: 'Low',
+            ai: 'BUY',
+            sparkline: [trade.price],
+            notes: 'Added via execution terminal.',
+            timeline: [{ date: 'Today', type: 'Buy', qty: trade.qty, price: trade.price }],
+            dividends: []
+          });
+        }
+      } else { // SELL
+        const holdingIndex = initialData['Jul 2026'].holdings.findIndex((h: any) => h.symbol === trade.symbol);
+        if (holdingIndex !== -1) {
+          const holding = initialData['Jul 2026'].holdings[holdingIndex];
+          const sellQty = Math.min(trade.qty, holding.qty);
+          holding.qty -= sellQty;
+          
+          if (holding.qty <= 0) {
+            initialData['Jul 2026'].holdings.splice(holdingIndex, 1);
+          } else {
+            holding.currentValue = holding.qty * holding.cmp;
+          }
+          initialData['Jul 2026'].overview.invested = Math.max(0, initialData['Jul 2026'].overview.invested - (sellQty * holding.avgPrice));
+        }
+      }
+      
+      initialData['Jul 2026'].transactions.unshift({
+        id: trade.id,
+        type: trade.type === 'BUY' ? 'Buy' : 'Sell',
+        symbol: trade.symbol,
+        name: trade.company || trade.symbol,
+        qty: trade.qty,
+        price: trade.price,
+        total: tradeValue,
+        date: 'Today',
+        time: trade.time || '10:00 AM'
+      });
+    });
+
+    const totalHoldingsValue = initialData['Jul 2026'].holdings.reduce((sum: number, h: any) => sum + h.currentValue, 0);
+    initialData['Jul 2026'].overview.value = totalHoldingsValue + parsedCash;
+    
+    initialData['Jul 2026'].holdings.forEach((h: any) => {
+      h.weight = parseFloat(((h.currentValue / initialData['Jul 2026'].overview.value) * 100).toFixed(1));
+      h.overallReturn = parseFloat((((h.cmp - h.avgPrice) / h.avgPrice) * 100).toFixed(2));
+    });
+
+    if (initialData['Jul 2026'].chartData.length > 0) {
+      initialData['Jul 2026'].chartData[initialData['Jul 2026'].chartData.length - 1].value = initialData['Jul 2026'].overview.value;
+    }
+
     return initialData;
+  };
+
+  // State controls
+  const [isReloading, setIsReloading] = useState<boolean>(false);
+  const [sessionData, setSessionData] = useState<Record<string, MonthData>>(() => {
+    return getRecalculatedSessionData();
   });
 
-  // Sync cash balance dynamically from localStorage
+  // Dynamic state syncing listeners
   useEffect(() => {
-    const syncCash = () => {
-      const val = localStorage.getItem('demat_cash_balance');
-      if (val) {
-        const parsedCash = parseFloat(val) || 84250;
-        setSessionData(prev => {
-          const current = JSON.parse(JSON.stringify(prev));
-          current['Jul 2026'].overview.cash = parsedCash;
-          current['Jul 2026'].overview.value = current['Jul 2026'].overview.invested + parsedCash;
-          return current;
-        });
+    const syncPortfolio = (e?: Event) => {
+      if (e && e.type === 'portfolio-updated') {
+        setIsReloading(true);
+        setTimeout(() => {
+          setSessionData(getRecalculatedSessionData());
+          setIsReloading(false);
+        }, 1200);
+      } else {
+        setSessionData(getRecalculatedSessionData());
       }
     };
-    window.addEventListener('focus', syncCash);
-    syncCash();
-    return () => window.removeEventListener('focus', syncCash);
+    window.addEventListener('focus', syncPortfolio);
+    window.addEventListener('portfolio-updated', syncPortfolio);
+    syncPortfolio();
+    return () => {
+      window.removeEventListener('focus', syncPortfolio);
+      window.removeEventListener('portfolio-updated', syncPortfolio);
+    };
   }, []);
   const [showDepositModal, setShowDepositModal] = useState(false);
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
@@ -816,6 +503,42 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
     }
   };
 
+  if (isReloading) {
+    return (
+      <div className="w-full flex flex-col gap-10 font-sans text-slate-800 pb-20 animate-in fade-in duration-300">
+        {/* Skeleton Hero Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-8 animate-pulse">
+          <div className="bg-white border border-slate-200 rounded-[32px] p-6 sm:p-8 flex flex-col gap-6">
+            <div className="flex justify-between items-center">
+              <div className="w-32 h-4 bg-slate-200 rounded" />
+              <div className="w-20 h-3 bg-slate-200 rounded" />
+            </div>
+            <LoadingSkeleton variant="Chart" />
+          </div>
+          <div className="bg-[#0F172A] border border-slate-800 rounded-[32px] p-6 sm:p-8 flex flex-col gap-6">
+            <div className="w-24 h-4 bg-slate-800 rounded" />
+            <div className="w-48 h-8 bg-slate-800 rounded mt-2" />
+            <div className="flex flex-col gap-4 mt-6">
+              <div className="w-full h-12 bg-slate-800 rounded-xl" />
+              <div className="w-full h-12 bg-slate-800 rounded-xl" />
+            </div>
+          </div>
+        </div>
+        
+        {/* Skeleton Holdings Table */}
+        <div className="bg-white border border-slate-200 rounded-[32px] p-6 sm:p-8 flex flex-col gap-6">
+          <div className="flex justify-between">
+            <div className="w-40 h-5 bg-slate-200 rounded" />
+            <div className="w-24 h-8 bg-slate-200 rounded-xl" />
+          </div>
+          <div className="flex flex-col gap-3.5">
+            <LoadingSkeleton variant="TableRow" count={4} />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full flex flex-col gap-10 font-sans text-slate-800 pb-20 animate-in fade-in duration-500">
 
@@ -835,7 +558,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
             <span className="text-[10px] font-bold text-slate-400 uppercase">Growth vs Index</span>
           </div>
 
-          <div className="h-64 w-full">
+          <div className="h-64 w-full relative">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={data.chartData} margin={{ top: 10, right: 0, left: 0, bottom: 0 }}>
                 <defs>

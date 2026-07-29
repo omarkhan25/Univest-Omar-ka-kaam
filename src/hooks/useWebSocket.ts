@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { wsService, PriceUpdate, WebSocketStatus } from '../services/websocket.service';
+import { wsService, type PriceUpdate, type WebSocketStatus } from '../services/websocket.service';
 
 export interface UseWebSocketReturn {
   status: WebSocketStatus;

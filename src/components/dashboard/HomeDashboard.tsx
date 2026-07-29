@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   TrendingUp, TrendingDown, Sparkles, Wallet, ArrowUpRight, ArrowDownRight, 
@@ -7,6 +7,63 @@ import {
   Bookmark, ChevronDown, Radio, AlertCircle, Check, X
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { 
+  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer 
+} from 'recharts';
+
+import marketService from '../../services/market.service';
+import wsService from '../../services/websocket.service';
+
+const ALL_HISTORICAL_DATA = [
+  // FY 2024-25
+  { date: 'Apr 2024', value: 850000, invested: 800000 },
+  { date: 'May 2024', value: 870000, invested: 800000 },
+  { date: 'Jun 2024', value: 890000, invested: 800000 },
+  { date: 'Jul 2024', value: 920000, invested: 850000 },
+  { date: 'Aug 2024', value: 910000, invested: 850000 },
+  { date: 'Sep 2024', value: 945000, invested: 850000 },
+  { date: 'Oct 2024', value: 980000, invested: 900000 },
+  { date: 'Nov 2024', value: 975000, invested: 900000 },
+  { date: 'Dec 2024', value: 1020000, invested: 950000 },
+  { date: 'Jan 2025', value: 1050000, invested: 950000 },
+  { date: 'Feb 2025', value: 1090000, invested: 1000000 },
+  { date: 'Mar 2025', value: 1120000, invested: 1000000 },
+  // FY 2025-26
+  { date: 'Apr 2025', value: 1150000, invested: 1143060 },
+  { date: 'May 2025', value: 1175000, invested: 1143060 },
+  { date: 'Jun 2025', value: 1210000, invested: 1143060 },
+  { date: 'Jul 2025', value: 1195000, invested: 1143060 },
+  { date: 'Aug 2025', value: 1240000, invested: 1143060 },
+  { date: 'Sep 2025', value: 1285000, invested: 1143060 },
+  { date: 'Oct 2025', value: 1320000, invested: 1143060 },
+  { date: 'Nov 2025', value: 1305000, invested: 1143060 },
+  { date: 'Dec 2025', value: 1360000, invested: 1143060 },
+  { date: 'Jan 2026', value: 1395000, invested: 1143060 },
+  { date: 'Feb 2026', value: 1430000, invested: 1143060 },
+  { date: 'Mar 2026', value: 1485240, invested: 1143060 }
+];
+
+const CustomTooltip = ({ active, payload }: any) => {
+  if (active && payload && payload.length) {
+    const data = payload[0].payload;
+    const value = data.value;
+    const invested = data.invested || 1143060;
+    const gain = value - invested;
+    const gainPercentage = ((gain / invested) * 100).toFixed(1);
+    
+    return (
+      <div className="bg-slate-950 text-white p-3.5 rounded-2xl shadow-xl border border-slate-800 text-[11px] font-sans">
+        <p className="font-extrabold text-slate-400 mb-1">{data.date}</p>
+        <p className="font-black text-sm text-white">Valuation: ₹{value.toLocaleString('en-IN')}</p>
+        <p className="font-bold text-slate-400 mt-1">Invested: ₹{invested.toLocaleString('en-IN')}</p>
+        <p className={`font-black mt-1 ${gain >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+          {gain >= 0 ? '+' : ''}₹{gain.toLocaleString('en-IN')} ({gainPercentage}%)
+        </p>
+      </div>
+    );
+  }
+  return null;
+};
 
 interface HomeDashboardProps {
   onSelectStock?: (stock: any) => void;
@@ -41,6 +98,114 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
     return timeInMinutes >= 555 && timeInMinutes <= 930;
   }, []);
 
+  const [activeTimeframe, setActiveTimeframe] = useState<'1M' | '3M' | '6M' | '1Y' | 'ALL'>('1Y');
+
+  // Sync state for executed trades & balance
+  const [executedTrades, setExecutedTrades] = useState<any[]>(() => {
+    const raw = localStorage.getItem('executed_trades');
+    if (!raw) return [];
+    try {
+      const parsed = JSON.parse(raw);
+      const sanitized = parsed.filter((t: any) => t && t.qty && t.price && (t.qty * t.price) < 100000000);
+      if (sanitized.length !== parsed.length) {
+        localStorage.setItem('executed_trades', JSON.stringify(sanitized));
+      }
+      return sanitized;
+    } catch {
+      return [];
+    }
+  });
+
+  const [currentBalance, setCurrentBalance] = useState<number>(() => {
+    const val = localStorage.getItem('demat_cash_balance');
+    const parsed = val ? parseFloat(val) : 0;
+    if (parsed > 100000000) {
+      localStorage.setItem('demat_cash_balance', '0');
+      return 0;
+    }
+    return parsed;
+  });
+
+  useEffect(() => {
+    const syncTrades = () => {
+      const raw = localStorage.getItem('executed_trades');
+      if (raw) {
+        try {
+          const parsed = JSON.parse(raw);
+          const sanitized = parsed.filter((t: any) => t && t.qty && t.price && (t.qty * t.price) < 100000000);
+          setExecutedTrades(sanitized);
+        } catch {
+          setExecutedTrades([]);
+        }
+      }
+      const val = localStorage.getItem('demat_cash_balance');
+      if (val) {
+        const parsed = parseFloat(val);
+        setCurrentBalance(parsed > 100000000 ? 0 : parsed);
+      }
+    };
+    window.addEventListener('portfolio-updated', syncTrades);
+    window.addEventListener('focus', syncTrades);
+    syncTrades();
+    return () => {
+      window.removeEventListener('portfolio-updated', syncTrades);
+      window.removeEventListener('focus', syncTrades);
+    };
+  }, []);
+
+  const portfolioMetrics = useMemo(() => {
+    let invested = 0;
+    let holdingsValue = 0;
+
+    executedTrades.forEach(trade => {
+      if (!trade || !trade.qty || !trade.price) return;
+      const tradeValue = Number(trade.qty) * Number(trade.price);
+      if (tradeValue >= 100000000) return;
+
+      if (trade.type === 'BUY') {
+        invested += tradeValue;
+        holdingsValue += tradeValue;
+      } else {
+        invested = Math.max(0, invested - tradeValue);
+        holdingsValue = Math.max(0, holdingsValue - tradeValue);
+      }
+    });
+
+    const valuation = holdingsValue + currentBalance;
+    const totalGain = valuation - invested;
+    const totalGainPerc = invested > 0 ? (totalGain / invested) * 100 : 0;
+
+    return {
+      valuation,
+      invested,
+      cash: currentBalance,
+      totalGain,
+      totalGainPerc,
+      xirr: invested > 0 ? Math.min(30, Math.max(0, totalGainPerc)).toFixed(1) : '0.0'
+    };
+  }, [executedTrades, currentBalance]);
+
+  const chartData = useMemo(() => {
+    const val = portfolioMetrics?.valuation || 0;
+    const inv = portfolioMetrics?.invested || 0;
+    if (val === 0 && inv === 0) {
+      return [
+        { date: 'Apr 2025', value: 0, invested: 0 },
+        { date: 'Jul 2025', value: 0, invested: 0 },
+        { date: 'Oct 2025', value: 0, invested: 0 },
+        { date: 'Jan 2026', value: 0, invested: 0 },
+        { date: 'Mar 2026', value: 0, invested: 0 }
+      ];
+    }
+    return [
+      { date: 'Apr 2025', value: Math.round(inv * 0.95), invested: inv },
+      { date: 'Jul 2025', value: Math.round(inv), invested: inv },
+      { date: 'Oct 2025', value: Math.round(val * 0.95), invested: inv },
+      { date: 'Jan 2026', value: Math.round(val * 0.98), invested: inv },
+      { date: 'Mar 2026', value: val, invested: inv }
+    ];
+  }, [portfolioMetrics]);
+
   // Watchlist States
   const [watchlists, setWatchlists] = useState(['Default Watchlist', 'Long Term Picks', 'Breakout Trades', 'High Dividend Yield']);
   const [selectedWatchlist, setSelectedWatchlist] = useState('Default Watchlist');
@@ -49,53 +214,72 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
   const [showCreateWatchlistModal, setShowCreateWatchlistModal] = useState(false);
   const [newWatchlistTitle, setNewWatchlistTitle] = useState('');
 
-  // Mock Watchlist Stocks
-  const watchlistStocks = [
-    { symbol: 'RELIANCE', name: 'Reliance Industries', ltp: '₹2,940.35', change: '+2.45%', isPositive: true, sparkline: [10, 14, 12, 18, 22, 28] },
-    { symbol: 'TCS', name: 'Tata Consultancy Services', ltp: '₹4,120.45', change: '-0.85%', isPositive: false, sparkline: [24, 20, 22, 18, 16, 14] },
-    { symbol: 'HDFCBANK', name: 'HDFC Bank Ltd', ltp: '₹1,610.15', change: '+1.82%', isPositive: true, sparkline: [12, 15, 14, 20, 24, 29] },
-    { symbol: 'INFY', name: 'Infosys Ltd', ltp: '₹1,560.50', change: '-0.92%', isPositive: false, sparkline: [22, 19, 18, 17, 16, 15] },
-    { symbol: 'TATAPOWER', name: 'Tata Power Co', ltp: '₹435.80', change: '+3.15%', isPositive: true, sparkline: [15, 18, 22, 25, 28, 34] }
-  ];
+  // Live Watchlist Stocks
+  const [watchlistStocks, setWatchlistStocks] = useState<any[]>([]);
+  const [aiOpportunities, setAiOpportunities] = useState<any[]>([]);
+
+  useEffect(() => {
+    let isMounted = true;
+    marketService.getStocks().then(data => {
+      if (isMounted && data && data.length > 0) {
+        setWatchlistStocks(data.map(st => ({
+          symbol: st.symbol,
+          name: st.companyName,
+          ltp: `₹${st.lastPrice.toLocaleString('en-IN')}`,
+          change: `${st.changePercent >= 0 ? '+' : ''}${st.changePercent.toFixed(2)}%`,
+          isPositive: st.changePercent >= 0,
+          sparkline: [10, 14, 12, 18, 22, 28]
+        })));
+      }
+    }).catch(err => console.error('Error fetching watchlist stocks:', err));
+
+    marketService.getResearchCalls().then(data => {
+      if (isMounted && data && data.length > 0) {
+        setAiOpportunities(data.slice(0, 3).map(call => ({
+          symbol: call.symbol,
+          company: call.companyName,
+          signal: call.recommendation,
+          confidence: call.confidenceScore,
+          targetPrice: `₹${call.targetPrice}`,
+          upside: `+${call.potentialReturn}%`,
+          risk: call.riskLevel,
+          reason: call.summary
+        })));
+      }
+    }).catch(err => console.error('Error fetching AI opportunities:', err));
+
+    const symbols = watchlistStocks.map(s => s.symbol);
+    symbols.forEach(s => wsService.subscribe(s));
+
+    const handlePriceUpdate = (prices: Record<string, any>) => {
+      setWatchlistStocks(prev =>
+        prev.map(item => {
+          const live = prices[item.symbol];
+          if (live && live.lastPrice) {
+            const isPos = live.change >= 0;
+            return {
+              ...item,
+              ltp: `₹${live.lastPrice.toLocaleString('en-IN')}`,
+              change: `${isPos ? '+' : ''}${live.changePercent}%`,
+              isPositive: isPos
+            };
+          }
+          return item;
+        })
+      );
+    };
+
+    wsService.addListener(handlePriceUpdate);
+    return () => {
+      isMounted = false;
+      wsService.removeListener(handlePriceUpdate);
+    };
+  }, []);
 
   const filteredWatchlist = watchlistStocks.filter(st => 
     st.symbol.toLowerCase().includes(watchlistSearch.toLowerCase()) ||
     st.name.toLowerCase().includes(watchlistSearch.toLowerCase())
   );
-
-  // Today's AI Opportunities (Strictly 3 Quality Recommendations)
-  const aiOpportunities = [
-    {
-      symbol: 'RELIANCE',
-      company: 'Reliance Industries Ltd',
-      signal: 'BUY',
-      confidence: 94,
-      targetPrice: '₹3,250',
-      upside: '+12.4%',
-      risk: 'Low',
-      reason: 'Green Hydrogen gigafactory commissioning approaching & retail margin expansion.'
-    },
-    {
-      symbol: 'HDFCBANK',
-      company: 'HDFC Bank Ltd',
-      signal: 'BUY',
-      confidence: 91,
-      targetPrice: '₹1,850',
-      upside: '+14.8%',
-      risk: 'Low',
-      reason: 'RBI repo rate pause protects net interest margins and expands institutional accumulation.'
-    },
-    {
-      symbol: 'TATAPOWER',
-      company: 'Tata Power Company',
-      signal: 'BUY',
-      confidence: 88,
-      targetPrice: '₹480',
-      upside: '+16.2%',
-      risk: 'Moderate',
-      reason: 'Approved 1:1 bonus share issue and green energy generation capacity addition.'
-    }
-  ];
 
   // Market Overview Benchmarks
   const marketOverview = [
@@ -143,6 +327,17 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
     { type: 'DEPOSIT', symbol: 'UPI Wallet', detail: '₹50,000 Added to Available Cash', status: 'Success', time: '1 Week Ago' }
   ];
 
+  const dynamicRecentActivities = useMemo(() => {
+    const formattedTrades = executedTrades.map((trade: any) => ({
+      type: trade.type,
+      symbol: trade.symbol,
+      detail: `${trade.qty} Qty @ ₹${trade.price.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+      status: 'Executed',
+      time: 'Just Now'
+    }));
+    return [...formattedTrades, ...recentActivities];
+  }, [executedTrades]);
+
   return (
     <div className="flex flex-col gap-8 w-full animate-in fade-in duration-500 pb-16">
       
@@ -156,10 +351,15 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
           <div className="flex flex-wrap items-start justify-between gap-4 border-b border-slate-100 pb-5">
             <div>
               <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">Net Portfolio Valuation</span>
-              <h2 className="text-3xl sm:text-4xl font-black text-slate-900 leading-none">₹14,85,240.00</h2>
+              <h2 className="text-3xl sm:text-4xl font-black text-slate-900 leading-none">
+                ₹{portfolioMetrics.valuation.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </h2>
               <div className="flex items-center gap-2 mt-2">
-                <span className="text-xs font-black text-emerald-600 bg-emerald-50 border border-emerald-100 px-2.5 py-0.5 rounded-md flex items-center gap-1">
-                  <ArrowUpRight className="w-3.5 h-3.5" /> +₹18,420.50 (+1.25%) Today
+                <span className={`text-xs font-black px-2.5 py-0.5 rounded-md flex items-center gap-1 border ${
+                  portfolioMetrics.totalGain >= 0 ? 'text-emerald-600 bg-emerald-50 border-emerald-100' : 'text-rose-600 bg-rose-50 border-rose-100'
+                }`}>
+                  {portfolioMetrics.totalGain >= 0 ? <ArrowUpRight className="w-3.5 h-3.5" /> : <ArrowDownRight className="w-3.5 h-3.5" />} 
+                  {portfolioMetrics.totalGain >= 0 ? '+' : ''}₹{portfolioMetrics.totalGain.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ({portfolioMetrics.totalGainPerc >= 0 ? '+' : ''}{portfolioMetrics.totalGainPerc.toFixed(2)}%) Today
                 </span>
                 <span className="text-xs font-bold text-slate-400">Real-Time Sync</span>
               </div>
@@ -190,47 +390,100 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div className="bg-slate-50 border border-slate-100 p-3.5 rounded-2xl">
               <span className="text-[9px] font-black text-slate-400 uppercase tracking-wider block">Total Gain</span>
-              <span className="text-sm font-black text-emerald-600 block mt-0.5">+₹3,42,180 (+29.9%)</span>
+              <span className={`text-sm font-black block mt-0.5 ${portfolioMetrics.totalGain >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                {portfolioMetrics.totalGain >= 0 ? '+' : ''}₹{portfolioMetrics.totalGain.toLocaleString('en-IN')} ({portfolioMetrics.totalGainPerc >= 0 ? '+' : ''}{portfolioMetrics.totalGainPerc.toFixed(1)}%)
+              </span>
             </div>
             <div className="bg-slate-50 border border-slate-100 p-3.5 rounded-2xl">
               <span className="text-[9px] font-black text-slate-400 uppercase tracking-wider block">Invested Amount</span>
-              <span className="text-sm font-black text-slate-800 block mt-0.5">₹11,43,060</span>
+              <span className="text-sm font-black text-slate-800 block mt-0.5">
+                ₹{portfolioMetrics.invested.toLocaleString('en-IN')}
+              </span>
             </div>
             <div className="bg-slate-50 border border-slate-100 p-3.5 rounded-2xl">
               <span className="text-[9px] font-black text-slate-400 uppercase tracking-wider block">Available Cash</span>
-              <span className="text-sm font-black text-blue-600 block mt-0.5">₹1,24,800</span>
+              <span className="text-sm font-black text-blue-600 block mt-0.5">
+                ₹{portfolioMetrics.cash.toLocaleString('en-IN')}
+              </span>
             </div>
             <div className="bg-slate-50 border border-slate-100 p-3.5 rounded-2xl">
               <span className="text-[9px] font-black text-slate-400 uppercase tracking-wider block">XIRR Return</span>
-              <span className="text-sm font-black text-emerald-600 block mt-0.5">24.8% p.a.</span>
+              <span className="text-sm font-black text-emerald-600 block mt-0.5">{portfolioMetrics.xirr}% p.a.</span>
             </div>
           </div>
 
-          {/* Mini Growth Curve */}
-          <div className="flex flex-col gap-1.5 pt-2">
-            <div className="flex justify-between items-center text-[10px] text-slate-400 font-bold">
-              <span>PORTFOLIO GROWTH TRAJECTORY (FY 2025-26)</span>
-              <span className="text-emerald-600 font-black">All-Time High</span>
+          {/* Growth Curve */}
+          <div className="flex flex-col gap-3 pt-3 border-t border-slate-100">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex flex-col">
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Portfolio Growth Trajectory</span>
+                <span className="text-[9px] text-slate-400 font-bold mt-0.5">
+                  {activeTimeframe === '1M' ? 'March 2026 (Weekly)' : 
+                   activeTimeframe === '3M' ? 'Jan 2026 - Mar 2026 (3 Months)' :
+                   activeTimeframe === '6M' ? 'Oct 2025 - Mar 2026 (6 Months)' :
+                   activeTimeframe === '1Y' ? 'FY 2025-26 (1 Year)' : 'All-time Performance (FY25-FY26)'}
+                </span>
+              </div>
+              
+              <div className="flex items-center gap-1.5 bg-slate-100/80 p-1 rounded-xl">
+                {(['1M', '3M', '6M', '1Y', 'ALL'] as const).map((tf) => (
+                  <button
+                    key={tf}
+                    onClick={() => setActiveTimeframe(tf)}
+                    className={`px-3 py-1.5 rounded-lg text-[10px] font-black tracking-wider transition cursor-pointer select-none ${
+                      activeTimeframe === tf 
+                        ? 'bg-blue-600 text-white shadow-xs' 
+                        : 'text-slate-500 hover:text-slate-800'
+                    }`}
+                  >
+                    {tf}
+                  </button>
+                ))}
+              </div>
             </div>
-            <svg className="w-full h-14" viewBox="0 0 300 40">
-              <path
-                d="M 0 32 Q 50 28, 100 20 T 200 12 T 300 4"
-                fill="none"
-                stroke="#2563EB"
-                strokeWidth={2.5}
-                strokeLinecap="round"
-              />
-              <path
-                d="M 0 32 Q 50 28, 100 20 T 200 12 T 300 4 L 300 40 L 0 40 Z"
-                fill="rgba(37, 99, 235, 0.08)"
-              />
-            </svg>
+
+            <div className="h-48 w-full mt-2 relative">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={chartData} margin={{ top: 10, right: 5, left: -10, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="growthGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#2563EB" stopOpacity={0.15} />
+                      <stop offset="95%" stopColor="#2563EB" stopOpacity={0.01} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F5F9" />
+                  <XAxis 
+                    dataKey="date" 
+                    axisLine={false} 
+                    tickLine={false} 
+                    tick={{ fontSize: 9, fill: '#94A3B8', fontWeight: 700 }}
+                    dy={8}
+                  />
+                  <YAxis 
+                    axisLine={false} 
+                    tickLine={false} 
+                    tick={{ fontSize: 9, fill: '#94A3B8', fontWeight: 700 }}
+                    tickFormatter={(value) => `₹${(value / 100000).toFixed(1)}L`}
+                    dx={-6}
+                  />
+                  <Tooltip content={<CustomTooltip />} />
+                  <Area 
+                    type="monotone" 
+                    dataKey="value" 
+                    stroke="#2563EB" 
+                    strokeWidth={3} 
+                    fillOpacity={1} 
+                    fill="url(#growthGradient)" 
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
           </div>
         </div>
 
         {/* WATCHLIST WIDGET (3 COLUMNS / 30%) */}
-        <div className="lg:col-span-3 bg-white border border-slate-200 rounded-[28px] p-5 shadow-xs flex flex-col justify-between gap-4">
-          <div className="flex flex-col gap-2.5 border-b border-slate-100 pb-3.5">
+        <div className="lg:col-span-3 bg-white border border-slate-200 rounded-[28px] p-5 shadow-xs flex flex-col gap-3.5">
+          <div className="flex flex-col gap-2 border-b border-slate-100 pb-3">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="font-black text-base text-slate-900 leading-tight">Watchlist</h3>
@@ -308,7 +561,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
           </div>
 
           {/* Compact Stock List */}
-          <div className="flex flex-col gap-2.5 flex-1 overflow-y-auto max-h-64 scrollbar-none">
+          <div className="flex flex-col gap-2 flex-1 overflow-y-auto max-h-[320px] scrollbar-none pr-0.5">
             {filteredWatchlist.map((st) => (
               <div 
                 key={st.symbol}
@@ -611,7 +864,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {recentActivities.map((act, idx) => (
+          {dynamicRecentActivities.map((act, idx) => (
             <div key={idx} className="p-4 bg-slate-50 border border-slate-100 rounded-2xl flex flex-col justify-between gap-2">
               <div className="flex items-center justify-between">
                 <span className={`text-[9px] font-black px-2 py-0.5 rounded uppercase ${

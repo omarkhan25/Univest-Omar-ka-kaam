@@ -1,9 +1,10 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { 
   BarChart3, Search, Filter, ShieldCheck, ArrowUpRight, 
   ChevronRight, Bookmark, ArrowRight, Zap, RefreshCw, LayoutGrid, List
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import marketService from '../../services/market.service';
 
 export interface StockItem {
   id: string;
@@ -21,19 +22,6 @@ export interface StockItem {
   volume: string;
 }
 
-export const MOCK_STOCKS_DATA: StockItem[] = [
-  { id: '1', symbol: 'RELIANCE', companyName: 'Reliance Industries Ltd', sector: 'Energy', marketCapTier: 'Large', marketCap: 1932456, currentPrice: 2934.50, changePercent: 1.25, peRatio: 24.2, dividendYield: 0.45, isFNO: true, isMomentum: true, volume: '4.2M' },
-  { id: '2', symbol: 'HDFCBANK', companyName: 'HDFC Bank Limited', sector: 'Banking', marketCapTier: 'Large', marketCap: 1284500, currentPrice: 1682.40, changePercent: 0.85, peRatio: 18.6, dividendYield: 1.10, isFNO: true, isMomentum: false, volume: '6.8M' },
-  { id: '3', symbol: 'TATASTEEL', companyName: 'Tata Steel Limited', sector: 'Metals', marketCapTier: 'Large', marketCap: 182400, currentPrice: 147.20, changePercent: 2.40, peRatio: 14.1, dividendYield: 2.40, isFNO: true, isMomentum: true, volume: '14.5M' },
-  { id: '4', symbol: 'INFY', companyName: 'Infosys Limited', sector: 'IT', marketCapTier: 'Large', marketCap: 648900, currentPrice: 1562.10, changePercent: -0.85, peRatio: 23.5, dividendYield: 2.15, isFNO: true, isMomentum: false, volume: '3.1M' },
-  { id: '5', symbol: 'TCS', companyName: 'Tata Consultancy Services', sector: 'IT', marketCapTier: 'Large', marketCap: 1515000, currentPrice: 4185.10, changePercent: -0.42, peRatio: 28.4, dividendYield: 1.40, isFNO: true, isMomentum: false, volume: '1.9M' },
-  { id: '6', symbol: 'ICICIBANK', companyName: 'ICICI Bank Limited', sector: 'Banking', marketCapTier: 'Large', marketCap: 874500, currentPrice: 1240.50, changePercent: 1.40, peRatio: 17.8, dividendYield: 0.85, isFNO: true, isMomentum: true, volume: '5.4M' },
-  { id: '7', symbol: 'LT', companyName: 'Larsen & Toubro Ltd', sector: 'Capital Goods', marketCapTier: 'Large', marketCap: 485000, currentPrice: 3456.90, changePercent: 1.05, peRatio: 31.2, dividendYield: 0.70, isFNO: true, isMomentum: true, volume: '1.4M' },
-  { id: '8', symbol: 'SUNPHARMA', companyName: 'Sun Pharmaceutical Ind', sector: 'Pharma', marketCapTier: 'Large', marketCap: 378900, currentPrice: 1580.20, changePercent: 2.10, peRatio: 34.5, dividendYield: 0.80, isFNO: true, isMomentum: true, volume: '2.1M' },
-  { id: '9', symbol: 'SUZLON', companyName: 'Suzlon Energy Limited', sector: 'Energy', marketCapTier: 'Mid', marketCap: 74500, currentPrice: 54.80, changePercent: 4.80, peRatio: 45.2, dividendYield: 0.00, isFNO: true, isMomentum: true, volume: '48.2M' },
-  { id: '10', symbol: 'IDEA', companyName: 'Vodafone Idea Limited', sector: 'Telecom', marketCapTier: 'Mid', marketCap: 52400, currentPrice: 16.40, changePercent: -2.10, peRatio: 0.0, dividendYield: 0.00, isFNO: true, isMomentum: false, volume: '112.5M' },
-];
-
 export const StocksTab: React.FC<{
   onSelectStock: (stock: StockItem) => void;
   onTrade: (stock: StockItem) => void;
@@ -42,6 +30,8 @@ export const StocksTab: React.FC<{
   const [selectedSector, setSelectedSector] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
+  const [stocksList, setStocksList] = useState<StockItem[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const categories = [
     { key: 'All', label: 'All Stocks' },
@@ -54,23 +44,80 @@ export const StocksTab: React.FC<{
 
   const sectors = ['All', 'Banking', 'IT', 'Energy', 'Metals', 'Capital Goods', 'Pharma'];
 
+  useEffect(() => {
+    let isMounted = true;
+    const fetchStocks = async () => {
+      setIsLoading(true);
+      try {
+        let fetchedData;
+        if (searchQuery.trim().length > 0) {
+          const results = await marketService.searchStocks(searchQuery);
+          fetchedData = results.map((stk, idx) => ({
+            id: String(idx + 1),
+            symbol: stk.symbol,
+            companyName: stk.companyName || stk.symbol,
+            sector: stk.sector || 'Equities',
+            marketCapTier: (stk.marketCap && parseInt(stk.marketCap) > 100000 ? 'Large' : 'Mid') as any,
+            marketCap: stk.marketCap ? parseFloat(stk.marketCap) : 50000,
+            currentPrice: stk.lastPrice || 0,
+            changePercent: stk.changePercent || 0,
+            peRatio: stk.peRatio || 20,
+            dividendYield: 0.5,
+            isFNO: true,
+            isMomentum: (stk.changePercent || 0) > 1.0,
+            volume: stk.volume ? `${(stk.volume / 1000000).toFixed(1)}M` : '1.0M'
+          }));
+        } else {
+          const results = await marketService.getStocks(selectedCategory.toLowerCase());
+          if (results && results.length > 0) {
+            fetchedData = results.map((stk, idx) => ({
+              id: String(idx + 1),
+              symbol: stk.symbol,
+              companyName: stk.companyName || stk.symbol,
+              sector: stk.sector || 'Equities',
+              marketCapTier: (stk.marketCap && parseFloat(stk.marketCap) > 100000 ? 'Large' : 'Mid') as any,
+              marketCap: stk.marketCap ? parseFloat(stk.marketCap) : 50000,
+              currentPrice: stk.lastPrice || 0,
+              changePercent: stk.changePercent || 0,
+              peRatio: stk.peRatio || 20,
+              dividendYield: 0.5,
+              isFNO: true,
+              isMomentum: (stk.changePercent || 0) > 1.0,
+              volume: stk.volume ? `${(stk.volume / 1000000).toFixed(1)}M` : '1.0M'
+            }));
+          }
+        }
+        if (isMounted && fetchedData && fetchedData.length > 0) {
+          setStocksList(fetchedData);
+        }
+      } catch (err) {
+        console.error('Error fetching live stocks:', err);
+      } finally {
+        if (isMounted) setIsLoading(false);
+      }
+    };
+
+    fetchStocks();
+    return () => { isMounted = false; };
+  }, [selectedCategory, searchQuery]);
+
   const filteredStocks = useMemo(() => {
-    return MOCK_STOCKS_DATA.filter((stk) => {
+    return stocksList.filter((stk) => {
       let matchesCat = true;
       if (selectedCategory === 'Large') matchesCat = stk.marketCapTier === 'Large';
-      else if (selectedCategory === 'Mid') matchesCat = stk.marketCapTier === 'Mid';
-      else if (selectedCategory === 'Momentum') matchesCat = stk.isMomentum;
-      else if (selectedCategory === 'FNO') matchesCat = stk.isFNO;
-      else if (selectedCategory === 'Dividend') matchesCat = stk.dividendYield > 1.0;
+      if (selectedCategory === 'Mid') matchesCat = stk.marketCapTier === 'Mid';
+      if (selectedCategory === 'Momentum') matchesCat = stk.isMomentum;
+      if (selectedCategory === 'FNO') matchesCat = stk.isFNO;
+      if (selectedCategory === 'Dividend') matchesCat = stk.dividendYield > 1.0;
 
-      const matchesSec = selectedSector === 'All' || stk.sector === selectedSector;
-      const matchesSearch = 
-        stk.symbol.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      const matchesSec = selectedSector === 'All' || stk.sector.toLowerCase() === selectedSector.toLowerCase();
+      const matchesSearch = searchQuery === '' || 
+        stk.symbol.toLowerCase().includes(searchQuery.toLowerCase()) || 
         stk.companyName.toLowerCase().includes(searchQuery.toLowerCase());
 
       return matchesCat && matchesSec && matchesSearch;
     });
-  }, [selectedCategory, selectedSector, searchQuery]);
+  }, [stocksList, selectedCategory, selectedSector, searchQuery]);
 
   return (
     <div className="flex flex-col gap-6 w-full font-sans text-slate-800 animate-in fade-in duration-300">

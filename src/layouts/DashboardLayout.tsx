@@ -21,7 +21,7 @@ import { ResearchDetail } from '../components/dashboard/ResearchDetail';
 import { ReportViewer } from '../components/dashboard/ReportViewer';
 import { AnalystProfileModal } from '../components/dashboard/AnalystProfileModal';
 import { CompareModal } from '../components/dashboard/CompareModal';
-import { TradeDrawer } from '../components/dashboard/TradeDrawer';
+import { OrderExecutionDrawer } from '../components/dashboard/OrderExecutionDrawer';
 import { NotificationCenterModal } from '../components/dashboard/NotificationCenterModal';
 import { NewsDetail } from '../components/dashboard/NewsDetail';
 import { AiCopilotModal } from '../components/ai/AiCopilotModal';
@@ -136,12 +136,12 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
   
   const handleTradeIntent = (tr: any) => {
     if (!tr) return;
-    setSelectedStock({
+    setTradeIntent({
       symbol: tr.symbol || 'RELIANCE',
-      company: tr.company || tr.companyName || tr.name || 'Reliance Industries Ltd',
+      companyName: tr.company || tr.companyName || tr.name || 'Reliance Industries Ltd',
       logo: tr.logo || tr.symbol?.substring(0, 2) || 'RL',
-      isTrading: true,
-      action: tr.rec || 'BUY'
+      action: tr.rec || tr.action || 'BUY',
+      price: tr.price || 3024.50
     });
   };
   
@@ -1069,6 +1069,26 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
             logo={selectedStock?.logo}
             isTrading={selectedStock?.isTrading}
             action={selectedStock?.action}
+            onTrade={(tr) => {
+              // Set trade intent first (mounts the drawer), then close stock detail
+              handleTradeIntent(tr);
+              setTimeout(() => setSelectedStock(null), 50);
+            }}
+          />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {tradeIntent && (
+          <OrderExecutionDrawer
+            isOpen={true}
+            onClose={() => setTradeIntent(null)}
+            symbol={tradeIntent.symbol}
+            companyName={tradeIntent.companyName}
+            logo={tradeIntent.logo}
+            initialAction={tradeIntent.action}
+            initialPrice={tradeIntent.price}
+            onNavigateTab={(tab) => setActiveTab(tab)}
           />
         )}
       </AnimatePresence>

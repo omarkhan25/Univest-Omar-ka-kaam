@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowLeft, TrendingUp, Clock, Activity, Briefcase, 
-  BarChart3, Bookmark, Share2, Sparkles, CheckCircle2, ShieldCheck,
-  Star, MessageSquare, Sliders, Zap, AlertCircle, Building2, UserCheck, 
-  ChevronRight, Calendar, Compass, Info, Award, ChevronUp, ChevronDown,
-  ArrowRight, RefreshCw, Wallet, X
+  BarChart3, Bookmark, Share2, Sparkles,
+  Star, MessageSquare, Sliders, AlertCircle, Building2, UserCheck, 
+  ChevronRight, Calendar, Compass, Info, Award, ChevronUp, ChevronDown
 } from 'lucide-react';
 import toast from 'react-hot-toast';
-import api from '../../services/api';
 
 interface StockDetailProps {
   isOpen: boolean;
@@ -45,99 +43,15 @@ export const StockDetail: React.FC<StockDetailProps> = ({
     { id: '2', user: 'Ananya R.', time: '45 min ago', text: 'Q2 earnings beat expected across retail and telecom divisions.', sentiment: 'Bullish' }
   ]);
 
-  // Demat wallet balance state
-  const [currentBalance, setCurrentBalance] = useState<number>(() => {
-    const val = localStorage.getItem('demat_cash_balance');
-    if (val) return parseFloat(val) || 84250;
-    localStorage.setItem('demat_cash_balance', '84250');
-    return 84250;
-  });
+  // Base stock price (hardcoded for MVP demo)
+  const basePrice = 3024.50;
 
-  // Order State
-  const [orderAction, setOrderAction] = useState<'BUY' | 'SELL'>('BUY');
-  const [productType, setProductType] = useState<'CNC' | 'MIS'>('CNC'); // CNC Delivery, MIS Intraday
-  const [orderType, setOrderType] = useState<'MARKET' | 'LIMIT' | 'SL' | 'SL-M'>('MARKET');
-  const [quantity, setQuantity] = useState<number>(10);
-  const [exchange, setExchange] = useState<'NSE' | 'BSE'>('NSE');
-  
-  // Interactive UI State
-  const [showCharges, setShowCharges] = useState(false);
-  const [tradeStep, setTradeStep] = useState<'input' | 'review' | 'success'>('input');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isTradePopupOpen, setIsTradePopupOpen] = useState(false);
-
-  const rawPriceStr = String('3024.50').replace(/[^0-9.]/g, '');
-  const basePrice = parseFloat(rawPriceStr) || 3024.50;
-  const [limitPrice, setLimitPrice] = useState<number>(basePrice);
-
-  // Sync action and scroll on mount/updates
+  // Sync scroll-to-top on open
   React.useEffect(() => {
     if (isOpen) {
-      setTradeStep('input');
-      setIsSubmitting(false);
-      setLimitPrice(basePrice);
-      if (action) {
-        setOrderAction(action);
-      }
-      if (isTrading) {
-        setIsTradePopupOpen(true);
-      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  }, [isOpen, action, isTrading, basePrice]);
-
-  // Calculations
-  const executionPrice = orderType === 'MARKET' ? basePrice : limitPrice;
-  const totalOrderValue = quantity * executionPrice;
-  const marginRequired = productType === 'MIS' ? totalOrderValue * 0.20 : totalOrderValue;
-  const availableMargin = currentBalance;
-  const remainingMargin = availableMargin - marginRequired;
-
-  // Charges Breakdown
-  const brokerage = 0; // Free for delivery/advisory
-  const stt = orderAction === 'BUY' && productType === 'CNC' ? totalOrderValue * 0.001 : 0;
-  const exchangeTax = totalOrderValue * 0.000345;
-  const gst = (brokerage + exchangeTax) * 0.18;
-  const stampDuty = orderAction === 'BUY' ? totalOrderValue * 0.00015 : 0;
-  const totalCharges = brokerage + stt + exchangeTax + gst + stampDuty;
-  const netPayable = totalOrderValue + totalCharges;
-
-  const handleStepAdvance = () => {
-    if (quantity <= 0) {
-      toast.error('Please enter a valid quantity');
-      return;
-    }
-    if (remainingMargin < 0) {
-      toast.error('Insufficient margin available');
-      return;
-    }
-    setTradeStep('review');
-  };
-
-  const handleConfirmOrder = async () => {
-    setIsSubmitting(true);
-    try {
-      await api.post('/orders/place', {
-        broker_account_id: "00000000-0000-0000-0000-000000000000",
-        symbol: symbol,
-        side: orderAction,
-        order_type: orderType,
-        quantity: quantity,
-        price: orderType === 'MARKET' ? null : limitPrice,
-        trigger_price: null
-      });
-      setTradeStep('success');
-      // Update local wallet balance after trade
-      const newBal = currentBalance - marginRequired;
-      setCurrentBalance(newBal);
-      localStorage.setItem('demat_cash_balance', String(newBal));
-      toast.success(`Order executed! ${orderAction} ${quantity} ${symbol}`);
-    } catch (err) {
-      console.error(err);
-      toast.error('Order execution failed');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -190,14 +104,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
     toast.success('Comment posted to Community Stream');
   };
 
-  const tradeData = {
-    company: companyName,
-    companyName: companyName,
-    symbol: symbol,
-    logo: logo,
-    price: '3,024.50',
-    rec: 'BUY'
-  };
+
 
   return (
     <motion.div
@@ -754,8 +661,11 @@ export const StockDetail: React.FC<StockDetailProps> = ({
           <div className="flex items-center gap-3 w-full sm:w-auto flex-1 sm:flex-none justify-end">
             <button
               onClick={() => {
-                setOrderAction('SELL');
-                setIsTradePopupOpen(true);
+                if (onTrade) {
+                  onTrade({ symbol, company: companyName, logo, rec: 'SELL', price: basePrice });
+                } else {
+                  toast('Trading is not available in this context. Please navigate to the main dashboard.', { icon: '⚠️' });
+                }
               }}
               className="flex-1 sm:px-8 py-2.5 rounded-xl bg-[#EF4444] hover:bg-rose-700 text-white font-black text-xs transition shadow-sm cursor-pointer"
             >
@@ -764,8 +674,11 @@ export const StockDetail: React.FC<StockDetailProps> = ({
 
             <button
               onClick={() => {
-                setOrderAction('BUY');
-                setIsTradePopupOpen(true);
+                if (onTrade) {
+                  onTrade({ symbol, company: companyName, logo, rec: 'BUY', price: basePrice });
+                } else {
+                  toast('Trading is not available in this context. Please navigate to the main dashboard.', { icon: '⚠️' });
+                }
               }}
               className="flex-1 sm:px-10 py-2.5 rounded-xl bg-[#16A34A] hover:bg-emerald-700 text-white font-black text-xs transition shadow-sm cursor-pointer"
             >
@@ -773,358 +686,6 @@ export const StockDetail: React.FC<StockDetailProps> = ({
             </button>
           </div>
         </footer>
-
-        {/* TRADING MODAL POPUP */}
-        <AnimatePresence>
-          {isTradePopupOpen && (
-            <div className="fixed inset-0 z-[120] flex items-center justify-center p-4">
-              {/* Backdrop */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setIsTradePopupOpen(false)}
-                className="absolute inset-0 bg-slate-900/60 backdrop-blur-xs"
-              />
-
-              {/* Popup Box */}
-              <motion.div
-                initial={{ scale: 0.95, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.95, opacity: 0 }}
-                className="relative bg-white rounded-[28px] border border-[#E2E8F0] p-6 sm:p-8 shadow-2xl flex flex-col gap-6 max-w-4xl w-full z-10 max-h-[90vh] overflow-y-auto"
-              >
-                {/* Close Button */}
-                <button
-                  onClick={() => setIsTradePopupOpen(false)}
-                  className="absolute top-6 right-6 w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 transition cursor-pointer"
-                  aria-label="Close trading popup"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-
-                {/* Popup Content */}
-                {tradeStep === 'success' ? (
-                  <div className="flex flex-col items-center justify-center text-center py-8 gap-6 animate-in zoom-in-95 duration-500">
-                    <div className="w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shadow-lg animate-bounce">
-                      <CheckCircle2 className="w-12 h-12" />
-                    </div>
-                    <div>
-                      <span className="text-xs font-extrabold uppercase text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">
-                        ORDER EXECUTED
-                      </span>
-                      <h2 className="text-2xl font-black text-[#0F172A] mt-3">{symbol}</h2>
-                      <p className="text-xs font-bold text-slate-500 mt-1">
-                        Successfully placed {orderAction} order for {quantity} shares at ₹{executionPrice.toFixed(2)}
-                      </p>
-                    </div>
-                    <div className="w-full bg-slate-50 p-4 rounded-2xl border border-[#E2E8F0] shadow-2xs grid grid-cols-2 gap-3 text-xs text-left mx-auto">
-                      <div>
-                        <span className="text-[9px] font-bold text-slate-400 uppercase block">Order ID</span>
-                        <span className="font-black text-[#0F172A]">#ORD-{Date.now().toString().slice(-6)}</span>
-                      </div>
-                      <div>
-                        <span className="text-[9px] font-bold text-slate-400 uppercase block">Execution Time</span>
-                        <span className="font-black text-[#0F172A]">Just Now</span>
-                      </div>
-                      <div>
-                        <span className="text-[9px] font-bold text-slate-400 uppercase block">Average Price</span>
-                        <span className="font-black text-[#0F172A]">₹{executionPrice.toFixed(2)}</span>
-                      </div>
-                      <div>
-                        <span className="text-[9px] font-bold text-slate-400 uppercase block">Total Settled</span>
-                        <span className="font-black text-emerald-600">₹{netPayable.toFixed(2)}</span>
-                      </div>
-                    </div>
-                    <div className="flex gap-3 w-full">
-                      <button
-                        onClick={() => setTradeStep('input')}
-                        className="flex-1 py-3.5 rounded-xl border border-[#E2E8F0] text-[#0F172A] font-black text-xs hover:bg-slate-50 transition cursor-pointer"
-                      >
-                        New Order
-                      </button>
-                      <button
-                        onClick={() => setIsTradePopupOpen(false)}
-                        className="flex-1 py-3.5 rounded-xl bg-[#0F172A] text-white font-black text-xs hover:bg-slate-800 transition shadow-lg cursor-pointer"
-                      >
-                        Done & Close
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <>
-                    <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
-                      <div className="flex items-center gap-2">
-                        <Zap className="w-5 h-5 text-blue-600" />
-                        <div>
-                          <h3 className="font-black text-base text-[#0F172A]">Direct Advisory Execution Terminal</h3>
-                          <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mt-0.5">
-                            NSE / BSE Live Direct Execution · SEBI Compliant Broker Access
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                      {/* Left Column - Inputs */}
-                      <div className="lg:col-span-7 flex flex-col gap-5">
-                        {/* Buy/Sell toggles */}
-                        <div className="grid grid-cols-2 gap-3 p-1.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-2xl">
-                          <button
-                            onClick={() => { setOrderAction('BUY'); setTradeStep('input'); }}
-                            className={`py-2 rounded-xl font-black text-xs transition-all cursor-pointer ${
-                              orderAction === 'BUY' ? 'bg-[#16A34A] text-white shadow-md' : 'text-slate-500 hover:text-[#0F172A]'
-                            }`}
-                          >
-                            BUY
-                          </button>
-                          <button
-                            onClick={() => { setOrderAction('SELL'); setTradeStep('input'); }}
-                            className={`py-2 rounded-xl font-black text-xs transition-all cursor-pointer ${
-                              orderAction === 'SELL' ? 'bg-[#EF4444] text-white shadow-md' : 'text-slate-500 hover:text-[#0F172A]'
-                            }`}
-                          >
-                            SELL
-                          </button>
-                        </div>
-
-                        {/* Step input vs review */}
-                        {tradeStep === 'input' ? (
-                          <div className="flex flex-col gap-5">
-                            {/* Product type */}
-                            <div className="flex flex-col gap-1.5">
-                              <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Product Type</label>
-                              <div className="grid grid-cols-2 gap-3">
-                                <button
-                                  onClick={() => setProductType('CNC')}
-                                  className={`p-2.5 rounded-xl border text-left transition cursor-pointer ${
-                                    productType === 'CNC' ? 'bg-blue-50 border-blue-600 text-blue-900' : 'bg-[#F8FAFC] border-[#E2E8F0] text-slate-600'
-                                  }`}
-                                >
-                                  <span className="font-black text-xs block">Delivery (CNC)</span>
-                                  <span className="text-[9px] font-bold text-slate-400 block mt-0.5">100% Cash · Long-Term</span>
-                                </button>
-                                <button
-                                  onClick={() => setProductType('MIS')}
-                                  className={`p-2.5 rounded-xl border text-left transition cursor-pointer ${
-                                    productType === 'MIS' ? 'bg-blue-50 border-blue-600 text-blue-900' : 'bg-[#F8FAFC] border-[#E2E8F0] text-slate-600'
-                                  }`}
-                                >
-                                  <span className="font-black text-xs block">Intraday (MIS)</span>
-                                  <span className="text-[9px] font-bold text-slate-400 block mt-0.5">5x Margin · Square Off Today</span>
-                                </button>
-                              </div>
-                            </div>
-
-                            {/* Order type */}
-                            <div className="flex flex-col gap-1.5">
-                              <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Order Type</label>
-                              <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
-                                {(['MARKET', 'LIMIT', 'SL', 'SL-M'] as const).map((type) => (
-                                  <button
-                                    key={type}
-                                    onClick={() => setOrderType(type)}
-                                    className={`px-3 py-1.5 rounded-xl font-extrabold text-xs transition cursor-pointer shrink-0 ${
-                                      orderType === type
-                                        ? 'bg-[#0F172A] text-white shadow-sm'
-                                        : 'bg-[#F8FAFC] border border-[#E2E8F0] text-slate-500 hover:text-[#0F172A]'
-                                    }`}
-                                  >
-                                    {type}
-                                  </button>
-                                ))}
-                              </div>
-                            </div>
-
-                            {/* Quantity and Price */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                              <div className="flex flex-col gap-1.5">
-                                <div className="flex justify-between items-center">
-                                  <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Quantity</label>
-                                  <div className="flex gap-1">
-                                    {[10, 50, 100].map(addQty => (
-                                      <button
-                                        key={addQty}
-                                        onClick={() => setQuantity(q => q + addQty)}
-                                        className="px-1.5 py-0.5 rounded bg-slate-100 text-[9px] font-bold text-slate-600 hover:bg-slate-200 cursor-pointer"
-                                      >
-                                        +{addQty}
-                                      </button>
-                                    ))}
-                                  </div>
-                                </div>
-                                <div className="flex items-center gap-2 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl p-1">
-                                  <button
-                                    onClick={() => setQuantity(q => Math.max(1, q - 1))}
-                                    className="w-7 h-7 rounded-lg bg-white border border-[#E2E8F0] font-black text-slate-700 hover:bg-slate-100 flex items-center justify-center cursor-pointer"
-                                  >
-                                    -
-                                  </button>
-                                  <input
-                                    type="number"
-                                    min="1"
-                                    value={quantity}
-                                    onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
-                                    className="flex-1 bg-transparent text-center font-black text-xs text-[#0F172A] outline-none"
-                                  />
-                                  <button
-                                    onClick={() => setQuantity(q => q + 1)}
-                                    className="w-7 h-7 rounded-lg bg-white border border-[#E2E8F0] font-black text-slate-700 hover:bg-slate-100 flex items-center justify-center cursor-pointer"
-                                  >
-                                    +
-                                  </button>
-                                </div>
-                              </div>
-
-                              <div className="flex flex-col gap-1.5">
-                                <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Price (₹)</label>
-                                {orderType === 'MARKET' ? (
-                                  <div className="bg-[#F8FAFC] border border-dashed border-[#E2E8F0] rounded-xl px-3 py-2.5 font-bold text-[#0F172A] text-xs text-center">
-                                    Market Price (₹{basePrice})
-                                  </div>
-                                ) : (
-                                  <input
-                                    type="number"
-                                    step="0.05"
-                                    value={limitPrice}
-                                    onChange={(e) => setLimitPrice(parseFloat(e.target.value) || basePrice)}
-                                    className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 font-black text-[#0F172A] text-xs outline-none focus:border-blue-600"
-                                  />
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        ) : (
-                          // Review details
-                          <div className="bg-[#F8FAFC] p-4 rounded-xl border border-[#E2E8F0] flex flex-col gap-3">
-                            <div className="flex items-center justify-between border-b border-slate-200 pb-2">
-                              <div>
-                                <span className={`px-2 py-0.5 rounded text-[9px] font-black ${
-                                  orderAction === 'BUY' ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'
-                                }`}>
-                                  {orderAction} ORDER REVIEW
-                                </span>
-                                <h4 className="text-sm font-black text-[#0F172A] mt-1">{symbol}</h4>
-                              </div>
-                              <span className="text-base font-black text-[#0F172A]">
-                                ₹{netPayable.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
-                              </span>
-                            </div>
-                            <div className="grid grid-cols-2 gap-2 text-xs">
-                              <div>
-                                <span className="text-[9px] font-bold text-slate-400 uppercase block">Quantity</span>
-                                <span className="font-black text-[#0F172A]">{quantity} Shares</span>
-                              </div>
-                              <div>
-                                <span className="text-[9px] font-bold text-slate-400 uppercase block">Price</span>
-                                <span className="font-black text-[#0F172A]">
-                                  {orderType === 'MARKET' ? 'Market Price' : `₹${limitPrice}`}
-                                </span>
-                              </div>
-                              <div>
-                                <span className="text-[9px] font-bold text-slate-400 uppercase block">Product</span>
-                                <span className="font-black text-[#0F172A]">{productType === 'CNC' ? 'Delivery (CNC)' : 'Intraday (MIS)'}</span>
-                              </div>
-                              <div>
-                                <span className="text-[9px] font-bold text-slate-400 uppercase block">Estimated Charges</span>
-                                <span className="font-black text-[#0F172A]">₹{totalCharges.toFixed(2)}</span>
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Right Column - Summary & Execution */}
-                      <div className="lg:col-span-5 flex flex-col justify-between gap-5 border-l border-slate-100 lg:pl-6">
-                        <div className="flex flex-col gap-3">
-                          {/* Margin summary */}
-                          <div className="bg-[#F8FAFC] border border-[#E2E8F0] p-3.5 rounded-xl flex flex-col gap-1.5 text-xs">
-                            <div className="flex justify-between items-center">
-                              <span className="font-bold text-slate-500">Margin Required:</span>
-                              <span className="font-black text-blue-600">₹{marginRequired.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
-                            </div>
-                            <div className="flex justify-between items-center">
-                              <span className="font-bold text-slate-500">Available Funds:</span>
-                              <span className="font-black text-slate-700">₹{availableMargin.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
-                            </div>
-                            <div className="h-px bg-slate-200 my-0.5" />
-                            <div className="flex justify-between items-center">
-                              <span className="font-bold text-slate-500">Remaining Balance:</span>
-                              <span className={`font-black ${remainingMargin < 0 ? 'text-red-500' : 'text-slate-700'}`}>
-                                ₹{remainingMargin.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
-                              </span>
-                            </div>
-                          </div>
-
-                          {/* Charges accordion */}
-                          <div className="border border-[#E2E8F0] rounded-xl overflow-hidden text-xs">
-                            <button
-                              onClick={() => setShowCharges(!showCharges)}
-                              className="w-full p-2.5 flex items-center justify-between font-bold text-slate-500 hover:bg-slate-50 cursor-pointer"
-                            >
-                              <span>Estimated Taxes & Charges</span>
-                              <div className="flex items-center gap-1">
-                                <span className="font-black text-slate-700">₹{totalCharges.toFixed(2)}</span>
-                                {showCharges ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                              </div>
-                            </button>
-                            {showCharges && (
-                              <div className="p-2.5 border-t border-slate-100 bg-[#F8FAFC] flex flex-col gap-1 text-[9px] text-slate-500 font-medium">
-                                <div className="flex justify-between"><span>Brokerage:</span><span className="font-bold text-emerald-600">FREE ₹0.00</span></div>
-                                <div className="flex justify-between"><span>STT / CTT:</span><span className="font-bold">₹{stt.toFixed(2)}</span></div>
-                                <div className="flex justify-between"><span>Exchange Turnover Tax:</span><span className="font-bold">₹{exchangeTax.toFixed(2)}</span></div>
-                                <div className="flex justify-between"><span>GST (18%):</span><span className="font-bold">₹{gst.toFixed(2)}</span></div>
-                                <div className="flex justify-between"><span>Stamp Duty:</span><span className="font-bold">₹{stampDuty.toFixed(2)}</span></div>
-                              </div>
-                            )}
-                          </div>
-
-                          {/* Suitability warning */}
-                          <div className="p-2.5 bg-blue-50 border border-blue-100 rounded-xl flex gap-2">
-                            <Sparkles className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
-                            <span className="text-[9.5px] text-blue-900 font-medium leading-normal">
-                              <strong className="block text-blue-950">AI Suitability Check</strong>
-                              Order matches your conservative risk profile. SEBI Risk Level: Moderate.
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Action buttons */}
-                        <div className="flex items-center gap-2 pt-2">
-                          {tradeStep === 'review' && (
-                            <button
-                              onClick={() => setTradeStep('input')}
-                              className="px-2.5 py-2.5 rounded-xl border border-[#E2E8F0] text-slate-500 hover:bg-slate-50 transition cursor-pointer"
-                            >
-                              <ArrowLeft className="w-4 h-4" />
-                            </button>
-                          )}
-                          <button
-                            onClick={tradeStep === 'input' ? handleStepAdvance : handleConfirmOrder}
-                            disabled={isSubmitting}
-                            className={`flex-1 font-black py-2.5 rounded-xl transition shadow-md flex items-center justify-center gap-2 text-xs text-white cursor-pointer ${
-                              orderAction === 'BUY'
-                                ? 'bg-[#16A34A] hover:bg-emerald-700 shadow-emerald-500/20'
-                                : 'bg-[#EF4444] hover:bg-rose-700 shadow-rose-500/20'
-                            }`}
-                          >
-                            {isSubmitting ? (
-                              <RefreshCw className="w-4 h-4 animate-spin" />
-                            ) : tradeStep === 'input' ? (
-                              <>Review {orderAction} Order <ArrowRight className="w-4 h-4" /></>
-                            ) : (
-                              <>Confirm & Execute {orderAction} Order</>
-                            )}
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                )}
-              </motion.div>
-            </div>
-          )}
-        </AnimatePresence>
 
       </motion.div>
   );

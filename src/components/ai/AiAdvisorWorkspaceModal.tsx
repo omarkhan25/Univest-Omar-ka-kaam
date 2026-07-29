@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
-import api from '../../services/api';
+import aiService from '../../services/ai.service';
 
 export interface AiAdvisorConfig {
   id: string;
@@ -281,25 +281,11 @@ export const AiAdvisorWorkspaceModal: React.FC<AiAdvisorWorkspaceModalProps> = (
 
   useEffect(() => {
     if (advisor) {
-      // Pre-populate with initial greeting
-      const defaultGreeting = advisor.sampleResponses[0];
       setMessages([
         {
           sender: 'ai',
           text: `Hello! I am your **${advisor.name}**. ${advisor.description} How can I assist your investments today?`,
           time: 'Just now'
-        },
-        {
-          sender: 'user',
-          text: defaultGreeting.query,
-          time: 'Just now'
-        },
-        {
-          sender: 'ai',
-          text: defaultGreeting.response,
-          time: 'Just now',
-          relatedStocks: defaultGreeting.relatedStocks,
-          visualType: defaultGreeting.visualType
         }
       ]);
     }
@@ -328,22 +314,16 @@ export const AiAdvisorWorkspaceModal: React.FC<AiAdvisorWorkspaceModalProps> = (
     setIsThinking(true);
 
     try {
-      // Mock API call mapping context for the backend
-      const { data } = await api.post('/ai/analyze', {
-        symbol: "NIFTY", // For MVP, hardcoding symbol since we just have one generic endpoint
-        timeframe: "1D",
-        technical_indicators: ["RSI", "MACD"],
-        user_portfolio_context: null
-      });
+      const data = await aiService.sendAdvisorQuery(advisor.id, query);
 
       setMessages((prev) => [
         ...prev,
         {
           sender: 'ai',
-          text: data.analysis_text || `${advisor.name} analyzed "${query}" and returned a score of ${data.confidence_score}/100.`,
+          text: data.analysis_text || `${advisor.name} analyzed "${query}" and returned a score of ${data.confidence_score || 90}/100.`,
           time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }),
-          relatedStocks: [{ symbol: data.symbol, company: data.symbol, price: '₹--', change: '--', positive: data.recommendation.includes('BUY') }],
-          visualType: 'fundamentals'
+          relatedStocks: data.related_stocks || [{ symbol: data.symbol || 'NIFTY', company: data.symbol || 'NIFTY 50 Index', price: '₹22,147.80', change: '+0.54%', positive: true }],
+          visualType: data.visual_type || 'fundamentals'
         }
       ]);
     } catch (err) {

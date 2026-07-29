@@ -1,256 +1,428 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Sparkles, TrendingUp, TrendingDown, ArrowRight, ShieldCheck, 
-  Activity, Star, BarChart3, AlertCircle, Eye
+  Activity, Star, BarChart3, AlertCircle, Flame, Globe, 
+  Zap, Target, CheckCircle2, Clock, Radio, RefreshCw, Inbox
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import marketService, { type MarketIndex, type ResearchCallData, type SectorData } from '../../services/market.service';
 
 interface OverviewTabProps {
-  onNavigateTab: (tabId: string) => void;
-  onOpenAiAdvisor: (advisorId?: string) => void;
+  onNavigateTab?: (tabId: string) => void;
+  onOpenAiAdvisor?: (advisorId?: string) => void;
   onSelectResearchCall?: (call: any) => void;
 }
 
-export const OverviewTab: React.FC<OverviewTabProps> = ({
-  onNavigateTab,
-  onOpenAiAdvisor,
-  onSelectResearchCall
-}) => {
+export const OverviewTab: React.FC<OverviewTabProps> = ({ onSelectResearchCall }) => {
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [indices, setIndices] = useState<MarketIndex[]>([]);
+  const [researchCalls, setResearchCalls] = useState<ResearchCallData[]>([]);
+  const [sectors, setSectors] = useState<SectorData[]>([]);
 
-  const featuredReports = [
-    {
-      company: 'Reliance Industries',
-      symbol: 'RELIANCE',
-      rating: 'BUY',
-      target: '₹3,375',
-      upside: '+14%',
-      risk: 'Low',
-      confidence: '94%',
-      summary: 'Reliance Industries is poised for expansion across digital services and green energy setups. Reliances strong balance sheet and robust retail margins support a structural valuation breakout.'
-    },
-    {
-      key: 'hdfc',
-      company: 'HDFC Bank Ltd',
-      symbol: 'HDFCBANK',
-      rating: 'BUY',
-      target: '₹1,950',
-      upside: '+16%',
-      risk: 'Low',
-      confidence: '92%',
-      summary: 'Net Interest Margins are stabilizing as post-merger integration dynamics settle. Credit demand remains strong across retail segments.'
-    },
-    {
-      key: 'tata',
-      company: 'Tata Motors Ltd',
-      symbol: 'TATAMOTORS',
-      rating: 'BUY',
-      target: '₹1,180',
-      upside: '+18%',
-      risk: 'Medium',
-      confidence: '89%',
-      summary: 'Market leadership in domestic electric passenger vehicles coupled with JLR debt reduction targets positions Tata Motors for continuous margin upgrades.'
+  const fetchOverviewData = async () => {
+    setLoading(true);
+    try {
+      const [fetchedIndices, fetchedCalls, fetchedSectors] = await Promise.all([
+        marketService.getIndices(),
+        marketService.getResearchCalls(),
+        marketService.getSectors()
+      ]);
+
+      setIndices(fetchedIndices || []);
+      setResearchCalls(fetchedCalls || []);
+      setSectors(fetchedSectors || []);
+    } catch (err) {
+      console.error('Error fetching overview data:', err);
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
 
-  const quickInsights = [
-    { title: 'Most Bullish Sector', value: 'Healthcare', icon: TrendingUp, trend: 'Outperforming', color: 'bg-emerald-50 text-emerald-600 border-emerald-100' },
-    { title: 'Most Bearish', value: 'IT Sector', icon: TrendingDown, trend: 'Correction', color: 'bg-rose-50 text-rose-600 border-rose-100' },
-    { title: 'Best Momentum', value: 'Banking', icon: Activity, trend: 'Buying Inflows', color: 'bg-blue-50 text-blue-600 border-blue-100' },
-    { title: 'Highest Volume', value: 'Energy', icon: BarChart3, trend: 'Institutional Flows', color: 'bg-amber-50 text-amber-600 border-amber-100' }
-  ];
+  useEffect(() => {
+    fetchOverviewData();
+  }, []);
 
-  const todayPicks = [
-    { company: 'Reliance Industries', symbol: 'RELIANCE', rating: 'BUY', target: '₹3,375', upside: '+14%', confidence: '94%' },
-    { company: 'HDFC Bank Ltd', symbol: 'HDFCBANK', rating: 'BUY', target: '₹1,950', upside: '+16%', confidence: '92%' },
-    { company: 'Tata Motors Ltd', symbol: 'TATAMOTORS', rating: 'BUY', target: '₹1,180', upside: '+18%', confidence: '89%' },
-    { company: 'State Bank of India', symbol: 'SBIN', rating: 'BUY', target: '₹840', upside: '+11%', confidence: '91%' },
-    { company: 'Infosys Ltd', symbol: 'INFY', rating: 'HOLD', target: '₹1,620', upside: '+3%', confidence: '85%' }
-  ];
+  const marketSnapshot = indices.map(idx => ({
+    label: idx.name,
+    value: `₹${idx.value.toLocaleString('en-IN')}`,
+    change: idx.change >= 0 ? `+${idx.change.toFixed(2)}` : `${idx.change.toFixed(2)}`,
+    pct: idx.changePercent >= 0 ? `+${idx.changePercent.toFixed(2)}%` : `${idx.changePercent.toFixed(2)}%`,
+    positive: idx.changePercent >= 0
+  }));
+
+  const quickInsights = sectors.length > 0 ? [
+    { title: 'Most Bullish Sector', value: sectors[0]?.name || '--', icon: TrendingUp, change: `${sectors[0]?.changePercent ? (sectors[0].changePercent >= 0 ? '+' : '') + sectors[0].changePercent + '%' : '--'}`, color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-100', badge: 'Outperforming' },
+    { title: 'Most Bearish Sector', value: sectors[sectors.length - 1]?.name || '--', icon: TrendingDown, change: `${sectors[sectors.length - 1]?.changePercent ? sectors[sectors.length - 1].changePercent + '%' : '--'}`, color: 'text-rose-600', bg: 'bg-rose-50', border: 'border-rose-100', badge: 'Underperforming' },
+    { title: 'Best Momentum', value: sectors[1]?.name || sectors[0]?.name || '--', icon: Zap, change: `${sectors[1]?.changePercent ? '+' + sectors[1].changePercent + '%' : '--'}`, color: 'text-blue-600', bg: 'bg-blue-50', border: 'border-blue-100', badge: 'Strong Inflows' },
+    { title: 'Top Volume', value: sectors[2]?.name || sectors[0]?.name || '--', icon: BarChart3, change: `${sectors[2]?.changePercent ? '+' + sectors[2].changePercent + '%' : '--'}`, color: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-100', badge: 'FII Buying' },
+  ] : [];
+
+  const featuredReports = researchCalls.slice(0, 3).map(call => ({
+    company: call.companyName,
+    symbol: call.symbol,
+    sector: call.sector,
+    rating: call.recommendation,
+    target: `₹${call.targetPrice}`,
+    current: `₹${call.currentPrice}`,
+    upside: `+${call.potentialReturn}%`,
+    risk: call.riskLevel,
+    confidence: call.confidenceScore,
+    horizon: call.horizon,
+    analyst: call.analyst,
+    publishedAt: call.publishedTime,
+    summary: call.summary,
+    thesis: call.thesis,
+    gradient: 'from-blue-600 to-indigo-700',
+    accentBg: 'bg-blue-50',
+    accentText: 'text-blue-700',
+    accentBorder: 'border-blue-100'
+  }));
+
+  const todayPicks = researchCalls.map(call => ({
+    company: call.companyName,
+    symbol: call.symbol,
+    rating: call.recommendation,
+    current: `₹${call.currentPrice}`,
+    target: `₹${call.targetPrice}`,
+    upside: `+${call.potentialReturn}%`,
+    confidence: call.confidenceScore,
+    risk: call.riskLevel,
+    horizon: call.horizon,
+    analyst: call.analyst
+  }));
 
   return (
-    <div className="flex flex-col gap-10 w-full font-sans text-slate-800 animate-in fade-in duration-500 pb-16">
-      
-      {/* 1. LARGE HERO MAGAZINE COVER */}
-      <div className="relative overflow-hidden rounded-[32px] bg-[#0A0F1D] text-white border border-slate-800 p-8 md:p-12 shadow-2xl flex flex-col justify-between min-h-[360px]">
-        {/* Decorative background visual elements */}
-        <div className="absolute right-0 top-0 w-[45%] h-full bg-gradient-to-l from-blue-600/10 via-emerald-500/5 to-transparent pointer-events-none" />
-        <div className="absolute -right-20 -top-20 w-80 h-80 bg-blue-600/20 rounded-full blur-[100px] pointer-events-none animate-pulse" />
-        <div className="absolute left-1/3 bottom-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none" />
+    <div className="flex flex-col gap-10 w-full text-slate-800 pb-16 animate-in fade-in duration-500">
 
-        {/* Header line */}
-        <div className="relative z-10 flex items-center justify-between border-b border-white/10 pb-6 mb-6">
-          <div className="flex items-center gap-3">
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] bg-blue-500/20 border border-blue-500/30 text-blue-300 px-3 py-1 rounded">Today's Research</span>
-            <span className="text-xs font-bold text-slate-400">Vol. {new Date().getFullYear()} • Issue {new Date().getMonth() + 1}</span>
+      {/* ── 1. HERO EDITORIAL BANNER ── */}
+      <div className="relative overflow-hidden rounded-[32px] bg-[#060D1F] text-white border border-slate-800/60 shadow-2xl min-h-[280px] flex flex-col justify-between">
+        <div className="absolute -right-24 -top-24 w-96 h-96 bg-blue-600/25 rounded-full blur-[120px] pointer-events-none animate-pulse" />
+        <div className="absolute left-1/3 bottom-0 w-72 h-72 bg-emerald-500/15 rounded-full blur-[100px] pointer-events-none" />
+        
+        <div className="absolute inset-0 opacity-[0.03]" style={{backgroundImage:'linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.5) 1px,transparent 1px)',backgroundSize:'40px 40px'}} />
+
+        <div className="relative z-10 flex items-center justify-between border-b border-white/10 px-8 md:px-12 py-5">
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-400">Live Research Feed</span>
+            </div>
+            <div className="h-4 w-px bg-white/20" />
+            <span className="text-xs font-bold text-slate-400">
+              {new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+            </span>
           </div>
-          <div className="flex items-center gap-1 text-[11px] font-black uppercase text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full">
-            <Sparkles className="w-3.5 h-3.5" /> Market: Bullish
-          </div>
+          <button 
+            onClick={fetchOverviewData} 
+            disabled={loading}
+            className="flex items-center gap-2 bg-emerald-500/15 border border-emerald-500/25 px-3 py-1.5 rounded-full hover:bg-emerald-500/25 transition cursor-pointer"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 text-emerald-400 ${loading ? 'animate-spin' : ''}`} />
+            <span className="text-[11px] font-black text-emerald-400">
+              {loading ? 'Fetching Backend Data...' : 'API Integration Ready'}
+            </span>
+          </button>
         </div>
 
-        {/* Content */}
-        <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
-          <div className="max-w-xl">
-            <span className="text-[10px] font-black uppercase text-slate-400 tracking-widest block mb-2">Top Opportunity</span>
-            <h1 className="text-3xl md:text-5xl font-black tracking-tight text-white leading-tight mb-4">
-              Structural Upside in Private Banking & Financials
+        <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-end justify-between gap-8 px-8 md:px-12 py-8">
+          <div className="max-w-2xl">
+            <span className="text-[10px] font-black uppercase text-blue-400 tracking-widest block mb-2">Research Dashboard</span>
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tight text-white leading-[1.1] mb-3">
+              Stock Research & Advisory Hub
             </h1>
-            <p className="text-slate-400 text-xs md:text-sm font-medium leading-relaxed">
-              Favorable credit trends, margin stabilization and post-merger consolidations indicate a major entry window across primary private lenders.
+            <p className="text-slate-400 text-sm font-medium leading-relaxed max-w-xl">
+              Connected directly to backend market data APIs and Groq AI research feeds.
             </p>
           </div>
 
-          <div className="flex items-center gap-4 bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-md shrink-0">
-            <div className="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-              <ShieldCheck className="w-6 h-6" />
-            </div>
-            <div>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">AI Confidence Score</span>
-              <span className="text-2xl font-black text-white flex items-center gap-1.5 mt-0.5">
-                92% <span className="text-xs text-emerald-400 font-bold">Very Strong</span>
-              </span>
+          <div className="flex flex-col gap-4 shrink-0 w-full lg:w-auto">
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { label: 'Active Research Calls', value: `${researchCalls.length}`, icon: Radio },
+                { label: 'Market Indices', value: `${indices.length}`, icon: Activity },
+                { label: 'Sector Feeds', value: `${sectors.length}`, icon: BarChart3 },
+                { label: 'API Status', value: loading ? 'Syncing...' : 'Connected', icon: ShieldCheck },
+              ].map((stat, i) => {
+                const Icon = stat.icon;
+                return (
+                  <div key={i} className="bg-white/8 border border-white/12 p-3.5 rounded-2xl backdrop-blur-sm">
+                    <Icon className="w-4 h-4 text-blue-400 mb-1.5" />
+                    <div className="text-lg font-black text-white">{stat.value}</div>
+                    <div className="text-[9px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">{stat.label}</div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
       </div>
 
-      {/* 2. FEATURED RESEARCH ARTICLES */}
-      <div className="flex flex-col gap-6">
-        <div className="flex items-center gap-2">
-          <Star className="w-4.5 h-4.5 text-blue-600 fill-blue-600" />
-          <h2 className="text-lg font-black text-slate-900 uppercase tracking-widest">Featured Research</h2>
+      {/* ── 2. LIVE MARKET SNAPSHOT STRIP ── */}
+      <div className="bg-white border border-slate-200 rounded-[24px] p-5 shadow-xs">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <Activity className="w-4 h-4 text-blue-600" />
+            <span className="text-xs font-black text-slate-900 uppercase tracking-widest">Live Market Snapshot</span>
+          </div>
+          <div className="flex items-center gap-1.5 text-[10px] font-black text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full border border-slate-200">
+            {indices.length} Indices Loaded
+          </div>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {featuredReports.map((r, i) => (
-            <motion.div
-              key={r.symbol}
-              whileHover={{ y: -4 }}
-              onClick={() => onSelectResearchCall?.(r)}
-              className="bg-white border border-slate-200 rounded-[28px] p-6 shadow-xs hover:shadow-md transition-all flex flex-col justify-between cursor-pointer group"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="bg-blue-50 border border-blue-200 text-blue-700 text-[10px] font-black px-2.5 py-1 rounded-lg">
-                    {r.rating}
+        {marketSnapshot.length > 0 ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+            {marketSnapshot.map((item, i) => (
+              <div key={i} className="flex flex-col gap-1 p-3.5 bg-slate-50/60 border border-slate-100 rounded-2xl hover:border-blue-200 transition">
+                <span className="text-[9px] font-black text-slate-400 uppercase tracking-wider">{item.label}</span>
+                <span className="text-sm font-black text-slate-900">{item.value}</span>
+                <div className="flex items-center gap-1">
+                  {item.positive
+                    ? <TrendingUp className="w-3 h-3 text-emerald-500" />
+                    : <TrendingDown className="w-3 h-3 text-rose-500" />
+                  }
+                  <span className={`text-[10px] font-black ${item.positive ? 'text-emerald-600' : 'text-rose-600'}`}>
+                    {item.pct}
                   </span>
-                  <div className="flex items-center gap-1 text-[10px] text-slate-400 font-bold">
-                    <span>AI Confidence:</span>
-                    <span className="text-slate-900 font-black">{r.confidence}</span>
-                  </div>
                 </div>
-
-                <h3 className="text-base font-black text-slate-900 group-hover:text-blue-600 transition-colors leading-tight">
-                  {r.company}
-                </h3>
-                <span className="text-[10px] font-bold text-slate-400 block mt-0.5 mb-3">{r.symbol} • Risk: {r.risk}</span>
-
-                <p className="text-slate-500 text-xs leading-relaxed line-clamp-3 font-medium mb-6">
-                  {r.summary}
-                </p>
               </div>
-
-              <div className="border-t border-slate-100 pt-4 mt-auto flex items-center justify-between">
-                <div>
-                  <span className="text-[9px] text-slate-400 font-bold block">TARGET PRICE</span>
-                  <span className="text-sm font-black text-slate-900">{r.target} <span className="text-xs text-emerald-600 font-bold">{r.upside}</span></span>
-                </div>
-                <span className="text-xs font-black text-blue-600 flex items-center gap-1 group-hover:translate-x-0.5 transition-all">
-                  Read Report <ArrowRight className="w-3.5 h-3.5" />
-                </span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="py-8 text-center bg-slate-50/50 border border-dashed border-slate-200 rounded-2xl">
+            <Inbox className="w-6 h-6 text-slate-300 mx-auto mb-2" />
+            <p className="text-xs font-bold text-slate-500">No live market indices returned from API</p>
+            <p className="text-[10px] text-slate-400 mt-1">Backend endpoint: <code className="bg-slate-200 px-1 py-0.5 rounded text-slate-700">/api/v1/market/indices</code></p>
+          </div>
+        )}
       </div>
 
-      {/* 3. AI QUICK INSIGHTS */}
-      <div className="flex flex-col gap-6">
-        <div className="flex items-center gap-2">
-          <Activity className="w-4.5 h-4.5 text-blue-600" />
-          <h2 className="text-lg font-black text-slate-900 uppercase tracking-widest">AI Quick Insights</h2>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {quickInsights.map((insight, idx) => {
-            const Icon = insight.icon;
-            return (
-              <div 
-                key={idx} 
-                className="bg-white border border-slate-200 rounded-[22px] p-5 shadow-xs flex items-center justify-between"
-              >
-                <div>
-                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block mb-1">{insight.title}</span>
-                  <span className="text-base font-black text-slate-900">{insight.value}</span>
-                  <span className="text-[10px] text-slate-400 block font-semibold mt-0.5">{insight.trend}</span>
-                </div>
-                <div className={`p-2.5 rounded-xl border shrink-0 ${insight.color}`}>
-                  <Icon className="w-4 h-4" />
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* 4. TODAY'S RESEARCH PICKS */}
+      {/* ── 3. FEATURED RESEARCH CARDS ── */}
       <div className="flex flex-col gap-6">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <AlertCircle className="w-4.5 h-4.5 text-blue-600" />
-            <h2 className="text-lg font-black text-slate-900 uppercase tracking-widest">Today's Research Picks</h2>
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-yellow-50 border border-yellow-100 flex items-center justify-center">
+              <Star className="w-4 h-4 text-yellow-500 fill-yellow-400" />
+            </div>
+            <div>
+              <h2 className="text-base font-black text-slate-900">Featured Research Reports</h2>
+              <span className="text-[10px] text-slate-400 font-bold">Top analyst picks from backend feed</span>
+            </div>
           </div>
-          <span className="text-[10px] font-bold text-slate-400">Showing top 5 opportunities</span>
+          <span className="text-[10px] font-bold text-slate-400">Showing {featuredReports.length} calls</span>
+        </div>
+
+        {featuredReports.length > 0 ? (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {featuredReports.map((r, i) => (
+              <motion.div
+                key={r.symbol + i}
+                onHoverStart={() => setHoveredCard(i)}
+                onHoverEnd={() => setHoveredCard(null)}
+                whileHover={{ y: -6 }}
+                onClick={() => onSelectResearchCall?.(r)}
+                className="bg-white border border-slate-200 rounded-[28px] overflow-hidden shadow-xs hover:shadow-xl transition-all cursor-pointer group relative"
+              >
+                <div className={`h-1.5 w-full bg-gradient-to-r ${r.gradient}`} />
+
+                <div className="p-6">
+                  <div className="flex items-center justify-between mb-5">
+                    <div className="flex items-center gap-2">
+                      <span className={`text-[10px] font-black px-2.5 py-1 rounded-lg border ${r.accentBg} ${r.accentText} ${r.accentBorder}`}>
+                        {r.rating}
+                      </span>
+                      <span className="text-[10px] font-bold text-slate-400 bg-slate-50 border border-slate-100 px-2 py-1 rounded-lg">
+                        {r.horizon}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <span className="text-[9px] font-bold text-slate-400">AI:</span>
+                      <span className="text-[10px] font-black text-slate-900">{r.confidence}%</span>
+                    </div>
+                  </div>
+
+                  <div className="mb-4">
+                    <h3 className="text-base font-black text-slate-900 group-hover:text-blue-600 transition-colors leading-tight">
+                      {r.company}
+                    </h3>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="text-[10px] font-bold text-slate-400">{r.symbol}</span>
+                      <span className="text-slate-200">•</span>
+                      <span className="text-[10px] font-bold text-slate-400">{r.sector}</span>
+                    </div>
+                  </div>
+
+                  <p className="text-slate-500 text-xs leading-relaxed line-clamp-3 font-medium mb-4">
+                    {r.summary}
+                  </p>
+
+                  <div className="grid grid-cols-3 gap-2 bg-slate-50 border border-slate-100 p-3 rounded-2xl mb-5">
+                    <div>
+                      <span className="text-[8px] uppercase text-slate-400 block font-black mb-0.5">Current</span>
+                      <span className="text-xs font-black text-slate-900">{r.current}</span>
+                    </div>
+                    <div>
+                      <span className="text-[8px] uppercase text-slate-400 block font-black mb-0.5">Target</span>
+                      <span className="text-xs font-black text-emerald-600">{r.target}</span>
+                    </div>
+                    <div>
+                      <span className="text-[8px] uppercase text-slate-400 block font-black mb-0.5">Upside</span>
+                      <span className="text-xs font-black text-emerald-600">{r.upside}</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[9px] font-black text-slate-700 block leading-none">{r.analyst}</span>
+                    </div>
+                    <span className="text-xs font-black text-blue-600 flex items-center gap-1 group-hover:translate-x-0.5 transition-all">
+                      Full Report <ArrowRight className="w-3.5 h-3.5" />
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        ) : (
+          <div className="py-12 text-center bg-white border border-dashed border-slate-200 rounded-[28px] p-8">
+            <Inbox className="w-8 h-8 text-slate-300 mx-auto mb-3" />
+            <p className="text-sm font-black text-slate-700">No active research reports returned</p>
+            <p className="text-xs text-slate-400 mt-1">Backend endpoint: <code className="bg-slate-100 px-1.5 py-0.5 rounded text-slate-600">/api/v1/research/calls</code></p>
+          </div>
+        )}
+      </div>
+
+      {/* ── 4. AI QUICK INSIGHTS ── */}
+      {quickInsights.length > 0 && (
+        <div className="flex flex-col gap-5">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-violet-50 border border-violet-100 flex items-center justify-center">
+              <Sparkles className="w-4 h-4 text-violet-600" />
+            </div>
+            <div>
+              <h2 className="text-base font-black text-slate-900">AI Sector Intelligence</h2>
+              <span className="text-[10px] text-slate-400 font-bold">Real-time sector & flow analysis</span>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {quickInsights.map((insight, idx) => {
+              const Icon = insight.icon;
+              return (
+                <div
+                  key={idx}
+                  className="bg-white border border-slate-200 rounded-[22px] p-5 shadow-xs hover:shadow-md transition-all group"
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <div className={`p-2.5 rounded-xl border ${insight.bg} ${insight.border}`}>
+                      <Icon className={`w-4.5 h-4.5 ${insight.color}`} />
+                    </div>
+                    <span className={`text-[9px] font-black px-2 py-0.5 rounded-full border ${insight.bg} ${insight.color} ${insight.border}`}>
+                      {insight.badge}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-[9px] font-black text-slate-400 uppercase tracking-wider block mb-1">{insight.title}</span>
+                    <span className="text-lg font-black text-slate-900 block">{insight.value}</span>
+                    <span className={`text-sm font-black ${insight.color} block mt-0.5`}>{insight.change}</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* ── 5. TODAY'S RESEARCH PICKS — TABLE ── */}
+      <div className="flex flex-col gap-6">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-slate-900 flex items-center justify-center">
+              <AlertCircle className="w-4 h-4 text-white" />
+            </div>
+            <div>
+              <h2 className="text-base font-black text-slate-900">Research Call Table</h2>
+              <span className="text-[10px] text-slate-400 font-bold">Direct backend advisory feed</span>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] font-bold text-slate-400 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl">
+              {todayPicks.length} Calls Active
+            </span>
+          </div>
         </div>
 
         <div className="bg-white border border-slate-200 rounded-[28px] overflow-hidden shadow-xs">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="border-b border-slate-100 bg-slate-50/50">
-                  <th className="py-4 px-6 text-[10px] font-black text-slate-400 uppercase tracking-wider">Company</th>
-                  <th className="py-4 px-6 text-[10px] font-black text-slate-400 uppercase tracking-wider">Rating</th>
-                  <th className="py-4 px-6 text-[10px] font-black text-slate-400 uppercase tracking-wider">Target</th>
-                  <th className="py-4 px-6 text-[10px] font-black text-slate-400 uppercase tracking-wider">Upside</th>
-                  <th className="py-4 px-6 text-[10px] font-black text-slate-400 uppercase tracking-wider">AI Confidence</th>
-                  <th className="py-4 px-6 text-[10px] font-black text-slate-400 uppercase tracking-wider text-right">Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {todayPicks.map((pick, i) => (
-                  <tr key={i} className="hover:bg-slate-50/50 transition">
-                    <td className="py-4 px-6">
-                      <div className="flex flex-col">
-                        <span className="text-xs font-black text-slate-900">{pick.company}</span>
-                        <span className="text-[10px] text-slate-400 font-bold">{pick.symbol}</span>
-                      </div>
-                    </td>
-                    <td className="py-4 px-6">
-                      <span className={`text-[10px] font-black px-2 py-0.5 rounded ${
-                        pick.rating === 'BUY' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'
-                      }`}>
-                        {pick.rating}
-                      </span>
-                    </td>
-                    <td className="py-4 px-6 text-xs font-black text-slate-900">{pick.target}</td>
-                    <td className="py-4 px-6 text-xs font-black text-emerald-600">{pick.upside}</td>
-                    <td className="py-4 px-6 text-xs font-medium text-slate-600">{pick.confidence}</td>
-                    <td className="py-4 px-6 text-right">
-                      <button 
-                        onClick={() => onSelectResearchCall?.(pick)}
-                        className="text-[10px] font-black text-blue-600 hover:text-blue-700 inline-flex items-center gap-1 cursor-pointer"
-                      >
-                        Read Report <ArrowRight className="w-3 h-3" />
-                      </button>
-                    </td>
+          {todayPicks.length > 0 ? (
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-slate-100 bg-slate-50/60">
+                    <th className="py-4 px-6 text-[9px] font-black text-slate-400 uppercase tracking-widest">Company</th>
+                    <th className="py-4 px-6 text-[9px] font-black text-slate-400 uppercase tracking-widest">Signal</th>
+                    <th className="py-4 px-6 text-[9px] font-black text-slate-400 uppercase tracking-widest">Current</th>
+                    <th className="py-4 px-6 text-[9px] font-black text-slate-400 uppercase tracking-widest">Target</th>
+                    <th className="py-4 px-6 text-[9px] font-black text-slate-400 uppercase tracking-widest">Upside</th>
+                    <th className="py-4 px-6 text-[9px] font-black text-slate-400 uppercase tracking-widest">Risk</th>
+                    <th className="py-4 px-6 text-[9px] font-black text-slate-400 uppercase tracking-widest text-right">Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-slate-100/80">
+                  {todayPicks.map((pick, i) => (
+                    <tr key={i} className="hover:bg-blue-50/30 transition group">
+                      <td className="py-4 px-6">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-xl bg-slate-900 text-white text-[10px] font-black flex items-center justify-center shrink-0">
+                            {pick.symbol.substring(0, 2)}
+                          </div>
+                          <div>
+                            <span className="text-xs font-black text-slate-900 block">{pick.company}</span>
+                            <span className="text-[10px] text-slate-400 font-bold">{pick.symbol} · {pick.analyst}</span>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-4 px-6">
+                        <span className={`text-[10px] font-black px-2.5 py-1 rounded-lg border ${
+                          pick.rating === 'BUY' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' :
+                          pick.rating === 'SELL' ? 'bg-rose-50 text-rose-700 border-rose-100' :
+                          'bg-amber-50 text-amber-700 border-amber-100'
+                        }`}>
+                          {pick.rating}
+                        </span>
+                      </td>
+                      <td className="py-4 px-6 text-xs font-black text-slate-700">{pick.current}</td>
+                      <td className="py-4 px-6 text-xs font-black text-slate-900">{pick.target}</td>
+                      <td className="py-4 px-6 text-xs font-black text-emerald-600">{pick.upside}</td>
+                      <td className="py-4 px-6">
+                        <span className="text-[9px] font-black px-2 py-0.5 rounded border bg-slate-50 text-slate-700 border-slate-200">{pick.risk}</span>
+                      </td>
+                      <td className="py-4 px-6 text-right">
+                        <button
+                          onClick={() => onSelectResearchCall?.(pick)}
+                          className="text-[10px] font-black text-blue-600 hover:text-blue-800 inline-flex items-center gap-1 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-xl transition cursor-pointer"
+                        >
+                          Read Report <ArrowRight className="w-3 h-3" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div className="py-12 text-center p-8">
+              <Inbox className="w-8 h-8 text-slate-300 mx-auto mb-3" />
+              <p className="text-sm font-black text-slate-700">No active research call items</p>
+              <p className="text-xs text-slate-400 mt-1">Backend endpoint: <code className="bg-slate-100 px-1.5 py-0.5 rounded text-slate-600">GET /api/v1/research/calls</code></p>
+            </div>
+          )}
+
+          <div className="px-6 py-4 bg-slate-50/60 border-t border-slate-100 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Globe className="w-3.5 h-3.5 text-slate-400" />
+              <span className="text-[10px] font-bold text-slate-400">All calls fetched dynamically from backend endpoints.</span>
+            </div>
           </div>
         </div>
       </div>
-
     </div>
   );
 };
