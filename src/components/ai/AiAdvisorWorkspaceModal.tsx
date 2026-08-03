@@ -314,16 +314,21 @@ export const AiAdvisorWorkspaceModal: React.FC<AiAdvisorWorkspaceModalProps> = (
     setIsThinking(true);
 
     try {
-      const data = await aiService.sendAdvisorQuery(advisor.id, query);
+      // Use the new backend endpoint for chat
+      const data = await aiService.chatWithCopilot({
+        messages: [{ role: 'user', content: query }]
+      });
 
       setMessages((prev) => [
         ...prev,
         {
           sender: 'ai',
-          text: data.analysis_text || `${advisor.name} analyzed "${query}" and returned a score of ${data.confidence_score || 90}/100.`,
+          text: data.text || `${advisor.name} analyzed "${query}" and returned a score of ${data.confidence || 90}/100.`,
           time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }),
-          relatedStocks: data.related_stocks || [{ symbol: data.symbol || 'NIFTY', company: data.symbol || 'NIFTY 50 Index', price: '₹22,147.80', change: '+0.54%', positive: true }],
-          visualType: data.visual_type || 'fundamentals'
+          relatedStocks: data.relatedStocks 
+            ? data.relatedStocks.map(s => ({ symbol: s, company: s, price: '---', change: '---', positive: true })) 
+            : [],
+          visualType: data.type || 'fundamentals'
         }
       ]);
     } catch (err) {

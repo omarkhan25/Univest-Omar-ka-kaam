@@ -1,57 +1,47 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import api from '../services/api';
-
-interface User {
-  id: string;
-  email: string;
-  full_name: string | null;
-  role: string;
-}
+import React, { createContext, useContext, useState } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import userService from '../services/user.service';
+import type { UserProfile } from '../services/user.service';
+import authService from '../services/auth.service';
 
 interface AuthContextType {
-  user: User | null;
+  user: UserProfile | null;
   token: string | null;
-  login: (token: string, userData: User) => void;
+  login: (token: string, userData: UserProfile) => void;
   logout: () => void;
   isAuthenticated: boolean;
+  isLoading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const queryClient = useQueryClient();
   const [token, setToken] = useState<string | null>(localStorage.getItem('access_token'));
 
-  useEffect(() => {
-    // If we have a token but no user, we should fetch the user profile
-    const fetchUser = async () => {
-      if (token && !user) {
-        try {
-          const response = await api.get('/users/me');
-          setUser(response.data);
-        } catch (error) {
-          console.error("Failed to fetch user profile, logging out");
-          logout();
-        }
-      }
-    };
-    fetchUser();
-  }, [token, user]);
+  // Use React Query to fetch the user profile if there's a token
+  const { data: user = null, isLoading } = useQuery({
+    queryKey: ['authUser'],
+    queryFn: () => userService.getProfile(),
+    enabled: !!token,
+    retry: false,
+  });
 
-  const login = (newToken: string, userData: User) => {
+  const login = (newToken: string, userData: UserProfile) => {
     localStorage.setItem('access_token', newToken);
     setToken(newToken);
-    setUser(userData);
+    // Optimistically set the user data in the query cache
+    queryClient.setQueryData(['authUser'], userData);
   };
 
-  const logout = () => {
-    localStorage.removeItem('access_token');
+  const logout = async () => {
+    await authService.logout();
     setToken(null);
-    setUser(null);
+    queryClient.setQueryData(['authUser'], null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, isAuthenticated: !!token }}>
+    <AuthContext.Provider value={{ user, token, login, logout, isAuthenticated: !!token, isLoading }}>
       {children}
     </AuthContext.Provider>
   );

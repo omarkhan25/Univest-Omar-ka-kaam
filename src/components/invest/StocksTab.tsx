@@ -1,4 +1,5 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { 
   BarChart3, Search, Filter, ShieldCheck, ArrowUpRight, 
   ChevronRight, Bookmark, ArrowRight, Zap, RefreshCw, LayoutGrid, List
@@ -31,7 +32,7 @@ export const StocksTab: React.FC<{
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
   const [stocksList, setStocksList] = useState<StockItem[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  
 
   const categories = [
     { key: 'All', label: 'All Stocks' },
@@ -44,65 +45,43 @@ export const StocksTab: React.FC<{
 
   const sectors = ['All', 'Banking', 'IT', 'Energy', 'Metals', 'Capital Goods', 'Pharma'];
 
-  useEffect(() => {
-    let isMounted = true;
-    const fetchStocks = async () => {
-      setIsLoading(true);
-      try {
-        let fetchedData;
-        if (searchQuery.trim().length > 0) {
-          const results = await marketService.searchStocks(searchQuery);
-          fetchedData = results.map((stk, idx) => ({
-            id: String(idx + 1),
-            symbol: stk.symbol,
-            companyName: stk.companyName || stk.symbol,
-            sector: stk.sector || 'Equities',
-            marketCapTier: (stk.marketCap && parseInt(stk.marketCap) > 100000 ? 'Large' : 'Mid') as any,
-            marketCap: stk.marketCap ? parseFloat(stk.marketCap) : 50000,
-            currentPrice: stk.lastPrice || 0,
-            changePercent: stk.changePercent || 0,
-            peRatio: stk.peRatio || 20,
-            dividendYield: 0.5,
-            isFNO: true,
-            isMomentum: (stk.changePercent || 0) > 1.0,
-            volume: stk.volume ? `${(stk.volume / 1000000).toFixed(1)}M` : '1.0M'
-          }));
-        } else {
-          const results = await marketService.getStocks(selectedCategory.toLowerCase());
-          if (results && results.length > 0) {
-            fetchedData = results.map((stk, idx) => ({
-              id: String(idx + 1),
-              symbol: stk.symbol,
-              companyName: stk.companyName || stk.symbol,
-              sector: stk.sector || 'Equities',
-              marketCapTier: (stk.marketCap && parseFloat(stk.marketCap) > 100000 ? 'Large' : 'Mid') as any,
-              marketCap: stk.marketCap ? parseFloat(stk.marketCap) : 50000,
-              currentPrice: stk.lastPrice || 0,
-              changePercent: stk.changePercent || 0,
-              peRatio: stk.peRatio || 20,
-              dividendYield: 0.5,
-              isFNO: true,
-              isMomentum: (stk.changePercent || 0) > 1.0,
-              volume: stk.volume ? `${(stk.volume / 1000000).toFixed(1)}M` : '1.0M'
-            }));
-          }
-        }
-        if (isMounted && fetchedData && fetchedData.length > 0) {
-          setStocksList(fetchedData);
-        }
-      } catch (err) {
-        console.error('Error fetching live stocks:', err);
-      } finally {
-        if (isMounted) setIsLoading(false);
+  const { data: fetchedStocks, isLoading } = useQuery({
+    queryKey: ['stocks', selectedCategory, searchQuery],
+    queryFn: async () => {
+      let results;
+      if (searchQuery.trim().length > 0) {
+        results = await marketService.searchStocks(searchQuery);
+      } else {
+        results = await marketService.getStocks(selectedCategory.toLowerCase());
       }
-    };
-
-    fetchStocks();
-    return () => { isMounted = false; };
-  }, [selectedCategory, searchQuery]);
+      
+      if (!results) return [];
+      
+      return results.map((stk: any, idx: number) => ({
+        id: String(idx + 1),
+        symbol: stk.symbol,
+        companyName: stk.companyName || stk.symbol,
+        sector: stk.sector || 'Equities',
+        marketCapTier: (stk.marketCap && parseInt(stk.marketCap) > 100000 ? 'Large' : 'Mid') as any,
+        marketCap: stk.marketCap ? parseFloat(stk.marketCap) : 50000,
+        currentPrice: stk.currentPrice || stk.lastPrice || 0,
+        changePercent: stk.changePercent || 0,
+        peRatio: stk.peRatio || 20,
+        dividendYield: 0.5,
+        isFNO: true,
+        isMomentum: (stk.changePercent || 0) > 1.0,
+        volume: stk.volume ? `${(stk.volume / 1000000).toFixed(1)}M` : '1.0M'
+      }));
+    }
+  });
 
   const filteredStocks = useMemo(() => {
-    return stocksList.filter((stk) => {
+    let list = fetchedStocks || [];
+    if (selectedSector !== 'All') {
+      list = list.filter((s: any) => s.sector.toLowerCase().includes(selectedSector.toLowerCase()) || selectedSector.toLowerCase().includes(s.sector.toLowerCase()));
+    }
+    
+    return list.filter((stk) => {
       let matchesCat = true;
       if (selectedCategory === 'Large') matchesCat = stk.marketCapTier === 'Large';
       if (selectedCategory === 'Mid') matchesCat = stk.marketCapTier === 'Mid';
@@ -220,9 +199,9 @@ export const StocksTab: React.FC<{
                       {stk.sector}
                     </span>
                   </td>
-                  <td className="py-3.5 px-4 font-black text-slate-900">₹{stk.currentPrice.toLocaleString('en-IN')}</td>
+                  <td className="py-3.5 px-4 font-black text-slate-900">₹{stk.currentPrice.toLocaleString('en-IN', { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</td>
                   <td className={`py-3.5 px-4 font-black ${stk.changePercent >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
-                    {stk.changePercent >= 0 ? `+${stk.changePercent}%` : `${stk.changePercent}%`}
+                    {stk.changePercent >= 0 ? `+${stk.changePercent.toFixed(2)}%` : `${stk.changePercent.toFixed(2)}%`}
                   </td>
                   <td className="py-3.5 px-4 font-bold text-slate-700">{stk.peRatio ? stk.peRatio : 'N/A'}</td>
                   <td className="py-3.5 px-4 font-bold text-slate-700">{stk.dividendYield}%</td>
@@ -260,9 +239,9 @@ export const StocksTab: React.FC<{
                 </div>
 
                 <div className="my-4 flex items-baseline justify-between">
-                  <span className="text-2xl font-black text-[#0F172A]">₹{stk.currentPrice.toLocaleString('en-IN')}</span>
+                  <span className="text-2xl font-black text-[#0F172A]">₹{stk.currentPrice.toLocaleString('en-IN', { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</span>
                   <span className={`text-xs font-black ${stk.changePercent >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
-                    {stk.changePercent >= 0 ? `+${stk.changePercent}%` : `${stk.changePercent}%`}
+                    {stk.changePercent >= 0 ? `+${stk.changePercent.toFixed(2)}%` : `${stk.changePercent.toFixed(2)}%`}
                   </span>
                 </div>
               </div>

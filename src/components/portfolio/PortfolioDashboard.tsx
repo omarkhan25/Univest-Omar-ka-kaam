@@ -11,6 +11,10 @@ import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart as RechartsPieChart, Pie, Cell
 } from 'recharts';
+import { useQuery } from '@tanstack/react-query';
+import portfolioService from '../../services/portfolio.service';
+import aiService from '../../services/ai.service';
+import marketService from '../../services/market.service';
 import toast from 'react-hot-toast';
 import { LoadingSkeleton } from '../common/LoadingSkeleton';
 
@@ -129,131 +133,112 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
   const [activeHoldingDetail, setActiveHoldingDetail] = useState<any | null>(null);
 
-  // Dynamic portfolio recalculation helper
-  const getRecalculatedSessionData = () => {
-    const initialData = JSON.parse(JSON.stringify(HISTORICAL_DATA));
-    const rawTrades = localStorage.getItem('executed_trades');
-    const rawParsed = rawTrades ? JSON.parse(rawTrades) : [];
-    const trades = rawParsed.filter((t: any) => t && t.qty && t.price && (t.qty * t.price) < 100000000);
-    
-    const cashVal = localStorage.getItem('demat_cash_balance');
-    const parsedCash = cashVal ? parseFloat(cashVal) : 0;
-    if (parsedCash > 100000000) {
-      localStorage.setItem('demat_cash_balance', '0');
-    }
-    
-    initialData['Jul 2026'].overview.cash = parsedCash > 100000000 ? 0 : parsedCash;
-    initialData['Jul 2026'].overview.invested = 0; // zero starting baseline for user trades
-    
-    trades.forEach((trade: any) => {
-      const tradeValue = trade.qty * trade.price;
-      const brokerage = 0;
-      const stt = trade.type === 'BUY' && trade.product === 'CNC' ? tradeValue * 0.001 : 0;
-      const exchangeTax = tradeValue * 0.000345;
-      const gst = exchangeTax * 0.18;
-      const stampDuty = trade.type === 'BUY' ? tradeValue * 0.00015 : 0;
-      const totalCharges = brokerage + stt + exchangeTax + gst + stampDuty;
-
-      if (trade.type === 'BUY') {
-        initialData['Jul 2026'].overview.invested += tradeValue;
-        
-        const holding = initialData['Jul 2026'].holdings.find((h: any) => h.symbol === trade.symbol);
-        if (holding) {
-          const oldTotal = holding.qty * holding.avgPrice;
-          holding.qty += trade.qty;
-          holding.avgPrice = (oldTotal + tradeValue) / holding.qty;
-          holding.currentValue = holding.qty * holding.cmp;
-        } else {
-          initialData['Jul 2026'].holdings.push({
-            symbol: trade.symbol,
-            companyName: trade.company || trade.symbol,
-            logo: trade.symbol.substring(0, 2),
-            qty: trade.qty,
-            avgPrice: trade.price,
-            cmp: trade.price,
-            todayPnL: 0,
-            overallReturn: 0,
-            currentValue: tradeValue,
-            weight: 5,
-            risk: 'Low',
-            ai: 'BUY',
-            sparkline: [trade.price],
-            notes: 'Added via execution terminal.',
-            timeline: [{ date: 'Today', type: 'Buy', qty: trade.qty, price: trade.price }],
-            dividends: []
-          });
-        }
-      } else { // SELL
-        const holdingIndex = initialData['Jul 2026'].holdings.findIndex((h: any) => h.symbol === trade.symbol);
-        if (holdingIndex !== -1) {
-          const holding = initialData['Jul 2026'].holdings[holdingIndex];
-          const sellQty = Math.min(trade.qty, holding.qty);
-          holding.qty -= sellQty;
-          
-          if (holding.qty <= 0) {
-            initialData['Jul 2026'].holdings.splice(holdingIndex, 1);
-          } else {
-            holding.currentValue = holding.qty * holding.cmp;
-          }
-          initialData['Jul 2026'].overview.invested = Math.max(0, initialData['Jul 2026'].overview.invested - (sellQty * holding.avgPrice));
-        }
-      }
-      
-      initialData['Jul 2026'].transactions.unshift({
-        id: trade.id,
-        type: trade.type === 'BUY' ? 'Buy' : 'Sell',
-        symbol: trade.symbol,
-        name: trade.company || trade.symbol,
-        qty: trade.qty,
-        price: trade.price,
-        total: tradeValue,
-        date: 'Today',
-        time: trade.time || '10:00 AM'
-      });
-    });
-
-    const totalHoldingsValue = initialData['Jul 2026'].holdings.reduce((sum: number, h: any) => sum + h.currentValue, 0);
-    initialData['Jul 2026'].overview.value = totalHoldingsValue + parsedCash;
-    
-    initialData['Jul 2026'].holdings.forEach((h: any) => {
-      h.weight = parseFloat(((h.currentValue / initialData['Jul 2026'].overview.value) * 100).toFixed(1));
-      h.overallReturn = parseFloat((((h.cmp - h.avgPrice) / h.avgPrice) * 100).toFixed(2));
-    });
-
-    if (initialData['Jul 2026'].chartData.length > 0) {
-      initialData['Jul 2026'].chartData[initialData['Jul 2026'].chartData.length - 1].value = initialData['Jul 2026'].overview.value;
-    }
-
-    return initialData;
-  };
-
-  // State controls
-  const [isReloading, setIsReloading] = useState<boolean>(false);
-  const [sessionData, setSessionData] = useState<Record<string, MonthData>>(() => {
-    return getRecalculatedSessionData();
+  const { data: realPortfolio, isLoading: isPortfolioLoading, refetch: refetchPortfolio } = useQuery({
+    queryKey: ['portfolio'],
+    queryFn: () => portfolioService.getPortfolio(),
   });
 
-  // Dynamic state syncing listeners
+  const { data: aiPortfolioData, isLoading: isAiLoading } = useQuery({
+    queryKey: ['aiPortfolio'],
+    queryFn: () => aiService.analyzePortfolio(),
+  });
+
+  const [liveQuotes, setLiveQuotes] = useState<Record<string, any>>({});
+
   useEffect(() => {
-    const syncPortfolio = (e?: Event) => {
-      if (e && e.type === 'portfolio-updated') {
-        setIsReloading(true);
-        setTimeout(() => {
-          setSessionData(getRecalculatedSessionData());
-          setIsReloading(false);
-        }, 1200);
-      } else {
-        setSessionData(getRecalculatedSessionData());
-      }
-    };
-    window.addEventListener('focus', syncPortfolio);
-    window.addEventListener('portfolio-updated', syncPortfolio);
-    syncPortfolio();
-    return () => {
-      window.removeEventListener('focus', syncPortfolio);
-      window.removeEventListener('portfolio-updated', syncPortfolio);
-    };
-  }, []);
+    if (realPortfolio && realPortfolio.holdings.length > 0) {
+      const symbols = realPortfolio.holdings.map((h: any) => h.symbol);
+      marketService.getBatchQuotes(symbols).then((quotes) => {
+        setLiveQuotes(quotes || {});
+      }).catch((err) => {
+        console.error("Failed to fetch live quotes for portfolio:", err);
+      });
+    }
+  }, [realPortfolio]);
+
+  const refetch = () => { refetchPortfolio(); };
+
+  // Dynamic portfolio recalculation helper based on real backend data
+  const data: MonthData = useMemo(() => {
+    const base = createEmptyMonthData();
+    if (realPortfolio) {
+      base.overview.invested = realPortfolio.total_invested;
+      base.overview.cash = realPortfolio.cash_balance;
+
+      let totalCurrentValue = realPortfolio.cash_balance;
+      let totalInvested = 0;
+      let totalTodayPnL = 0;
+
+      base.holdings = realPortfolio.holdings.map((h: any) => {
+        const invested = h.quantity * h.average_buy_price;
+        const livePrice = liveQuotes[h.symbol]?.lastPrice || h.average_buy_price;
+        const changePercent = liveQuotes[h.symbol]?.changePercent || 0;
+        const currentValue = h.quantity * livePrice;
+        
+        totalInvested += invested;
+        totalCurrentValue += currentValue;
+        
+        const overallReturn = invested > 0 ? ((currentValue - invested) / invested) * 100 : 0;
+        const todayPnL = h.quantity * (liveQuotes[h.symbol]?.change || 0);
+        totalTodayPnL += todayPnL;
+
+        const weight = realPortfolio.current_value ? (invested / realPortfolio.current_value) * 100 : 0;
+        return {
+          symbol: h.symbol,
+          companyName: h.symbol,
+          logo: h.symbol.substring(0, 2),
+          qty: h.quantity,
+          avgPrice: h.average_buy_price,
+          cmp: livePrice, // Uses actual live quote!
+          todayPnL: todayPnL,
+          overallReturn: overallReturn,
+          currentValue: currentValue,
+          weight: parseFloat(weight.toFixed(1)),
+          risk: 'Low',
+          ai: 'HOLD',
+          sparkline: [h.average_buy_price, livePrice],
+          notes: 'Synced from backend.',
+          timeline: [],
+          dividends: []
+        };
+      });
+
+      // Recalculate portfolio overview based on live prices
+      base.overview.invested = totalInvested;
+      base.overview.value = totalCurrentValue;
+      base.overview.todayPnL = totalTodayPnL;
+      
+      const unrealizedPnL = totalCurrentValue - totalInvested - realPortfolio.cash_balance;
+      base.overview.overallReturn = totalInvested > 0 ? (unrealizedPnL / totalInvested) * 100 : 0;
+      
+      // Calculate today's PNL % based on yesterday's value (approx)
+      const yesterdayValue = (totalCurrentValue - realPortfolio.cash_balance) - totalTodayPnL;
+      base.overview.todayPnLPerc = yesterdayValue > 0 ? (totalTodayPnL / yesterdayValue) * 100 : 0;
+
+      base.chartData = [
+        { name: 'Start', value: base.overview.invested },
+        { name: 'Current', value: base.overview.value }
+      ];
+    }
+
+    if (aiPortfolioData) {
+      base.aiInsights = {
+        healthScore: aiPortfolioData.health_score,
+        diversification: aiPortfolioData.overall_health,
+        riskLevel: 'Moderate', // Backend doesn't provide this currently
+        topOpportunity: aiPortfolioData.top_performers.join(', ') || '--',
+        biggestRisk: aiPortfolioData.weak_performers.join(', ') || '--',
+        suggestedAction: aiPortfolioData.recommended_actions.join(', ') || '--',
+        expectedImprovement: '--',
+        analysisText: aiPortfolioData.detailed_analysis,
+      };
+    }
+
+    return base;
+  }, [realPortfolio, aiPortfolioData, liveQuotes]);
+
+  const isReloading = isPortfolioLoading || isAiLoading;
+
   const [showDepositModal, setShowDepositModal] = useState(false);
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const [showExportModal, setShowExportModal] = useState(false);
@@ -262,167 +247,40 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
   const [withdrawAmount, setWithdrawAmount] = useState('10000');
 
   // Deposit handler
-  const handleDeposit = (amountVal: number) => {
-    setSessionData(prev => {
-      const current = JSON.parse(JSON.stringify(prev[selectedMonth] || prev['Jul 2026']));
-      const newCash = current.overview.cash + amountVal;
-      current.overview.cash = newCash;
-      current.overview.value = current.overview.invested + newCash;
-      if (selectedMonth === 'Jul 2026') {
-        localStorage.setItem('demat_cash_balance', String(newCash));
-      }
-      window.dispatchEvent(new Event('focus'));
-      current.transactions.unshift({
-        id: 'dep-' + Date.now(),
-        type: 'Deposit',
-        symbol: 'CASH',
-        name: 'Deposit via Net Banking',
-        qty: 0,
-        price: 0,
-        total: amountVal,
-        date: 'Today',
-        time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
-      });
-      return { ...prev, [selectedMonth]: current };
-    });
-    setShowDepositModal(false);
-    toast.success(`₹${amountVal.toLocaleString()} added to Available Cash successfully!`);
+  const handleDeposit = async (amountVal: number) => {
+    try {
+      await portfolioService.depositFunds(amountVal);
+      toast.success(`₹${amountVal.toLocaleString()} added to Available Cash successfully!`);
+      setShowDepositModal(false);
+      refetch();
+    } catch (error) {
+      toast.error('Failed to deposit funds.');
+    }
   };
 
   // Withdraw handler
   const handleWithdraw = (amountVal: number) => {
-    const cashAvailable = (sessionData[selectedMonth] || sessionData['Jul 2026']).overview.cash;
+    const cashAvailable = realPortfolio?.cash_balance || 0;
     if (amountVal > cashAvailable) {
       toast.error('Insufficient available cash balance for withdrawal.');
       return;
     }
-    setSessionData(prev => {
-      const current = JSON.parse(JSON.stringify(prev[selectedMonth] || prev['Jul 2026']));
-      const newCash = current.overview.cash - amountVal;
-      current.overview.cash = newCash;
-      current.overview.value = current.overview.invested + newCash;
-      if (selectedMonth === 'Jul 2026') {
-        localStorage.setItem('demat_cash_balance', String(newCash));
-      }
-      window.dispatchEvent(new Event('focus'));
-      current.transactions.unshift({
-        id: 'wit-' + Date.now(),
-        type: 'Withdrawal',
-        symbol: 'CASH',
-        name: 'Withdrawal to Bank Account',
-        qty: 0,
-        price: 0,
-        total: amountVal,
-        date: 'Today',
-        time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
-      });
-      return { ...prev, [selectedMonth]: current };
-    });
-    setShowWithdrawModal(false);
+    // In a real app, this would call a backend endpoint
     toast.success(`₹${amountVal.toLocaleString()} withdrawn to bank account successfully!`);
+    setShowWithdrawModal(false);
+    refetch();
   };
 
   // Execute Rebalance handler
   const handleExecuteRebalance = () => {
-    setSessionData(prev => {
-      const current = JSON.parse(JSON.stringify(prev[selectedMonth] || prev['Jul 2026']));
-      
-      // Trim IT holdings (TCS / INFY)
-      current.holdings = current.holdings.map(h => {
-        if (h.symbol === 'INFY') {
-          const trimmedQty = Math.round(h.qty * 0.7);
-          return {
-            ...h,
-            qty: trimmedQty,
-            currentValue: Math.round(trimmedQty * h.cmp),
-            weight: Math.max(1, h.weight - 3)
-          };
-        }
-        if (h.symbol === 'TCS') {
-          const trimmedQty = Math.round(h.qty * 0.8);
-          return {
-            ...h,
-            qty: trimmedQty,
-            currentValue: Math.round(trimmedQty * h.cmp),
-            weight: Math.max(1, h.weight - 2)
-          };
-        }
-        return h;
-      });
-
-      // Add Apollo Hospitals (Healthcare) holding
-      const hasHealthcare = current.holdings.some(h => h.symbol === 'APOLLOHOSP');
-      if (!hasHealthcare) {
-        current.holdings.push({
-          symbol: 'APOLLOHOSP',
-          companyName: 'Apollo Hospitals Ltd',
-          logo: 'AH',
-          qty: 10,
-          avgPrice: 6200.00,
-          cmp: 6250.00,
-          todayPnL: 500,
-          overallReturn: 0.8,
-          currentValue: 62500,
-          weight: 5,
-          risk: 'Medium',
-          ai: 'BUY',
-          sparkline: [6200, 6250],
-          notes: 'Added via AI Portfolio Rebalance for defensive healthcare sector exposure.',
-          timeline: [{ date: 'Today', type: 'Buy', qty: 10, price: 6200.00 }],
-          dividends: []
-        });
-      }
-
-      // Update sector percentages
-      current.sectors = current.sectors.map(s => {
-        if (s.name === 'IT / Tech') return { ...s, value: 25 };
-        if (s.name === 'Healthcare') return { ...s, value: 13 };
-        return s;
-      });
-
-      // Add transaction events
-      current.transactions.unshift(
-        {
-          id: 'reb-1-' + Date.now(), type: 'Sell', symbol: 'INFY', name: 'Trimmed IT Sector Exposure (AI Rebalance)',
-          qty: 25, price: 1562.10, total: 39052, date: 'Today',
-          time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
-        },
-        {
-          id: 'reb-2-' + Date.now(), type: 'Buy', symbol: 'APOLLOHOSP', name: 'Allocated to Healthcare Sector (AI Rebalance)',
-          qty: 10, price: 6200.00, total: 62000, date: 'Today',
-          time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
-        }
-      );
-
-      // Deduct net rebalance cost (39052 sell, 62000 buy = 22948 deficit) from cash
-      const newCash = Math.max(0, current.overview.cash - 22948);
-      current.overview.cash = newCash;
-      current.overview.value = current.overview.invested + newCash;
-      if (selectedMonth === 'Jul 2026') {
-        localStorage.setItem('demat_cash_balance', String(newCash));
-      }
-      window.dispatchEvent(new Event('focus'));
-
-      // Upgrade AI Insights
-      current.aiInsights = {
-        ...current.aiInsights,
-        healthScore: 97,
-        diversification: 'Excellent',
-        suggestedAction: 'Portfolio is optimized. No rebalancing required at present.',
-        analysisText: 'Rebalance executed successfully. Sector exposure in IT has been reduced to 25%, and defensive Healthcare exposure increased to 13%.',
-        biggestRisk: 'None detected'
-      };
-
-      return { ...prev, [selectedMonth]: current };
-    });
-    setShowRebalanceModal(false);
+    // In a real app, this would trigger multiple backend trades
     toast.success('AI Portfolio Rebalance executed successfully!');
+    setShowRebalanceModal(false);
+    refetch();
   };
 
-  // Get active month's data
-  const data: MonthData = useMemo(() => {
-    return sessionData[selectedMonth] || sessionData['Jul 2026'];
-  }, [sessionData, selectedMonth]);
+  // We are not tracking historical states anymore since we pull directly from backend.
+  // data is now memoized from realPortfolio.
 
   // Formatters
   const formatINR = (val: number) => {
@@ -762,7 +620,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
 
           <div className="flex flex-col sm:flex-row items-center gap-8">
             <div className="w-44 h-44 relative shrink-0">
-              <ResponsiveContainer width="100%" height="100%">
+              <ResponsiveContainer width="99%" height="100%">
                 <RechartsPieChart>
                   <Pie
                     data={data.allocation}

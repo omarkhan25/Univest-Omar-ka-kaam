@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { 
   Radio, ShieldCheck, ArrowRight, Clock, Star,
   TrendingUp, TrendingDown, Target, Zap, Filter,
@@ -47,25 +48,22 @@ export const LiveCallsTab: React.FC<LiveCallsTabProps> = ({ onSelectCall, onTrad
   const [viewMode, setViewMode] = useState<'card' | 'table'>('card');
   const [researchCalls, setResearchCalls] = useState<ResearchCallItem[]>([]);
 
+  const { data: fetchedCalls } = useQuery({
+    queryKey: ['researchCalls'],
+    queryFn: async () => {
+      const fetched = await marketService.getResearchCalls();
+      return fetched || [];
+    },
+    refetchInterval: 120000,
+  });
+
   useEffect(() => {
-    let isMounted = true;
-    const loadCalls = async () => {
-      if (initialCalls && initialCalls.length > 0) {
-        setResearchCalls(initialCalls);
-        return;
-      }
-      try {
-        const fetched = await marketService.getResearchCalls();
-        if (isMounted && fetched && fetched.length > 0) {
-          setResearchCalls(fetched);
-        }
-      } catch (err) {
-        console.error('Error loading live research calls:', err);
-      }
-    };
-    loadCalls();
-    return () => { isMounted = false; };
-  }, [initialCalls]);
+    if (initialCalls && initialCalls.length > 0) {
+      setResearchCalls(initialCalls);
+    } else if (fetchedCalls) {
+      setResearchCalls(fetchedCalls);
+    }
+  }, [initialCalls, fetchedCalls]);
 
   useEffect(() => {
     const handlePriceUpdate = (prices: Record<string, any>) => {

@@ -5,6 +5,7 @@ import {
   Sparkles, CheckCircle2, AlertTriangle, ShieldCheck, Info 
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import orderService from '../../services/order.service';
 
 
 
@@ -208,32 +209,17 @@ export const OrderExecutionDrawer: React.FC<OrderExecutionDrawerProps> = ({
     }, 600);
   };
 
-  const executeTradeMockData = () => {
+  const executeTradeMockData = async () => {
     try {
-      // 1. Log trade in localStorage
-      const rawTrades = localStorage.getItem('executed_trades');
-      const tradesList = rawTrades ? JSON.parse(rawTrades) : [];
-      
-      const newTrade = {
-        id: `ORD-${Date.now().toString().slice(-6)}`,
+      await orderService.placeOrder({
         symbol: symbol,
-        company: companyName,
-        type: action,
-        qty: quantity,
-        price: activePrice,
-        product: productType,
-        time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })
-      };
-      
-      tradesList.push(newTrade);
-      localStorage.setItem('executed_trades', JSON.stringify(tradesList));
+        side: action,
+        order_type: orderType,
+        quantity: quantity,
+        price: orderType === 'LIMIT' ? activePrice : undefined,
+      });
 
-      // 2. Adjust cash balance
-      const finalCash = availableFunds - (action === 'BUY' ? estimatedTotal : -estimatedTotal);
-      localStorage.setItem('demat_cash_balance', finalCash.toFixed(2));
-      setAvailableFunds(finalCash);
-
-      // 3. Dispatch global sync event
+      // 3. Dispatch global sync event to update portfolio dashboard
       window.dispatchEvent(new Event('portfolio-updated'));
 
       // 4. Move to success stage
@@ -241,6 +227,7 @@ export const OrderExecutionDrawer: React.FC<OrderExecutionDrawerProps> = ({
       toast.success(`${action} order executed successfully!`);
     } catch (e) {
       console.error(e);
+      toast.error('Failed to place order.');
       setStage('failed');
     }
   };

@@ -181,8 +181,8 @@ export const StockDetail: React.FC<StockDetailProps> = ({
 
             <button
               onClick={() => {
-                setOrderAction('BUY');
-                setIsTradePopupOpen(true);
+                if (onTrade) onTrade({ symbol, action: 'BUY', company: companyName });
+                
               }}
               className="px-5 py-2.5 rounded-xl bg-blue-600 text-white font-black text-xs hover:bg-blue-700 transition shadow-sm cursor-pointer"
             >

@@ -21,7 +21,7 @@ export const WelcomeContinue = () => {
       } else if (option === 2) {
         navigate('/login-otp?mode=new');
       } else if (option === 3) {
-        navigate('/design-system?demo=true');
+        navigate('/dashboard?demo=true');
       }
     }, 450); // small delay for animation response
   };

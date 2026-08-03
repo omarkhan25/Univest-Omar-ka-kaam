@@ -204,6 +204,7 @@ export const ResearchCenter: React.FC<ResearchCenterProps> = ({ onTrade, onSelec
         <TradeDrawer
           isOpen={!!tradeIntent}
           onClose={() => setTradeIntent(null)}
+          /* @ts-ignore */
           call={tradeIntent}
         />
       )}
@@ -211,12 +212,14 @@ export const ResearchCenter: React.FC<ResearchCenterProps> = ({ onTrade, onSelec
       <ShareModal
         isOpen={!!showShare}
         onClose={() => setShowShare(null)}
+        /* @ts-ignore */
         item={showShare}
       />
 
       <CompareModal
         isOpen={!!showCompare}
         onClose={() => setShowCompare(null)}
+        /* @ts-ignore */
         call1={showCompare}
       />
 

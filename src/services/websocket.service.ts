@@ -41,7 +41,7 @@ class WebSocketService {
     this.status = 'connected';
     
     // Connect live WebSocket if supported, fallback to periodic Groww market backend polling
-    const wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:8000/ws/market';
+    const wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:8000/api/v1/market/ws/live';
     try {
       this.ws = new WebSocket(wsUrl);
       

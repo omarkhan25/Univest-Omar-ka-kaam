@@ -21,9 +21,8 @@ export const AddFundsModal: React.FC<AddFundsModalProps> = ({
   const [amount, setAmount] = useState<string>('25000');
   const [balance, setBalance] = useState<number>(() => {
     const val = localStorage.getItem('demat_cash_balance');
-    if (val) return parseFloat(val) || 84250;
-    localStorage.setItem('demat_cash_balance', '84250');
-    return 84250;
+    const parsed = val ? parseFloat(val) : 0;
+    return isNaN(parsed) ? 0 : parsed;
   });
 
   const [paymentMethod, setPaymentMethod] = useState<'upi' | 'netbanking' | 'neft'>('upi');

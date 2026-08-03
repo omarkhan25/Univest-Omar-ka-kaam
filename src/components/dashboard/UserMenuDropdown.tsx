@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
+import authService from '../../services/auth.service';
 
 interface UserMenuDropdownProps {
   isOpen: boolean;
@@ -48,18 +49,18 @@ export const UserMenuDropdown: React.FC<UserMenuDropdownProps> = ({
     if (onSwitchAccount) {
       onSwitchAccount();
     } else {
-      navigate('/login');
+      navigate('/');
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     onClose();
     if (onLogout) {
       onLogout();
     } else {
-      localStorage.removeItem('access_token');
+      await authService.logout();
       toast.success('Logged out successfully');
-      navigate('/login');
+      navigate('/');
     }
   };
 

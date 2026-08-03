@@ -6,6 +6,7 @@ import {
   UserPlus, Percent, KeyRound, ExternalLink, HelpCircle, Save, Smartphone
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useAuth } from '../../context/AuthContext';
 
 interface ProfileSettingsCenterProps {
   onAddFunds?: () => void;
@@ -26,15 +27,31 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
   type TabType = typeof tabs[number];
   const [activeSubTab, setActiveSubTab] = useState<TabType>('Account Details');
 
+  const { user } = useAuth();
+  const defaultClientId = user?.id?.substring(0, 8).toUpperCase() || 'UNIV-8912';
+
   // Form states
   const [accountDetails, setAccountDetails] = useState({
-    fullName: 'Omar Khan',
-    email: 'omar.khan@gmail.com',
-    phone: '+91 98765 43210',
+    fullName: user?.full_name || '',
+    email: user?.email || '',
+    phone: user?.phone_number || '',
     pan: 'ABCDE1234F',
-    role: 'Individual Investor',
-    clientId: 'UNIV-8912'
+    role: user?.role || 'Individual Investor',
+    clientId: defaultClientId
   });
+
+  React.useEffect(() => {
+    if (user) {
+      setAccountDetails(prev => ({
+        ...prev,
+        fullName: user.full_name || '',
+        email: user.email || '',
+        phone: user.phone_number || '',
+        role: user.role || 'Individual Investor',
+        clientId: user.id?.substring(0, 8).toUpperCase() || prev.clientId
+      }));
+    }
+  }, [user]);
 
   const [personalDetails, setPersonalDetails] = useState({
     dob: '1995-08-15',

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import marketService from '../../services/market.service';
 import { 
-  Building2, ArrowUpRight, ArrowDownRight, ChevronRight, TrendingUp, TrendingDown,
-  BarChart3, X, Star, ArrowRight, Target, Activity, Zap, Inbox, RefreshCw
+  Building2, ArrowUpRight, ArrowDownRight, ChevronRight, TrendingUp,
+  Inbox, RefreshCw
 } from 'lucide-react';
-import { motion } from 'framer-motion';
 
 export interface SectorConfig {
   id: string;
@@ -27,7 +26,6 @@ export interface SectorConfig {
 }
 
 export const SectorsTab: React.FC = () => {
-  const [selectedSector, setSelectedSector] = useState<SectorConfig | null>(null);
   const [sectors, setSectors] = useState<SectorConfig[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -36,9 +34,9 @@ export const SectorsTab: React.FC = () => {
     try {
       const data = await marketService.getSectors();
       if (data && data.length > 0) {
-        setSectors(data.map((d, i) => ({
-          id: d.name.toLowerCase().replace(/\s+/g, '-'),
-          name: d.name,
+        setSectors(data.map((d) => ({
+          id: (d.name || d.companyName || d.symbol || '').toLowerCase().replace(/\s+/g, '-'),
+          name: d.name || d.companyName || d.symbol || 'Unknown',
           performance: `${d.changePercent >= 0 ? '+' : ''}${d.changePercent.toFixed(2)}%`,
           positive: d.changePercent >= 0,
           marketCap: d.marketCap || '--',

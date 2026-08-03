@@ -2,12 +2,16 @@ import React from 'react';
 import { ShieldCheck, User, Star, Share, Edit3, Wallet, Plus } from 'lucide-react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
+import { useAuth } from '../../context/AuthContext';
 
 interface ProfileHeroProps {
   onAddFunds?: () => void;
 }
 
 export const ProfileHero: React.FC<ProfileHeroProps> = ({ onAddFunds }) => {
+  const { user } = useAuth();
+  const joinYear = user?.created_at ? new Date(user.created_at).getFullYear() : new Date().getFullYear();
+
   return (
     <section className="relative overflow-hidden rounded-[28px] p-8 md:p-10 shadow-premium-lg bg-brand-navy w-full border border-slate-800">
       {/* Background Effects */}
@@ -45,8 +49,8 @@ export const ProfileHero: React.FC<ProfileHeroProps> = ({ onAddFunds }) => {
           
           <div>
             <div className="flex items-center gap-3 mb-1">
-              <h1 className="text-white text-[32px] md:text-[48px] leading-tight font-black tracking-tight">
-                Rahul Sharma
+              <h1 className="text-white text-[32px] md:text-[48px] leading-tight font-black tracking-tight capitalize">
+                {user?.full_name || user?.email.split('@')[0] || 'User Profile'}
               </h1>
               <span className="hidden md:flex items-center gap-1 bg-white/10 border border-white/20 text-white text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
                 <Star className="w-3 h-3 text-amber-400 fill-amber-400" /> Premium
@@ -54,9 +58,9 @@ export const ProfileHero: React.FC<ProfileHeroProps> = ({ onAddFunds }) => {
             </div>
             
             <div className="flex items-center gap-4 text-slate-400 text-sm font-medium">
-              <span>ID: UNV-8492-X9</span>
+              <span>ID: {user?.id?.substring(0, 8).toUpperCase() || 'UNV-XXXX'}</span>
               <span className="w-1 h-1 rounded-full bg-slate-600" />
-              <span>Member since 2024</span>
+              <span>Member since {joinYear}</span>
             </div>
 
             <div className="mt-4 inline-flex flex-col">

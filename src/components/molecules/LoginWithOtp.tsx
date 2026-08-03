@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, CheckCircle2, Headphones, LockKeyhole, MessageSquareCode, ShieldCheck, Smartphone, UserRound, Mail } from 'lucide-react';
 import { Button } from '../atoms/Button';
 import { useAuth } from '../../context/AuthContext';
+import authService from '../../services/auth.service';
 import api from '../../services/api';
 
 type AuthTab = 'login' | 'signup';
@@ -42,38 +43,35 @@ export const LoginWithOtp = () => {
       const otpString = otp.join('');
       
       if (isSignup) {
-        // Register API call
         try {
-          await api.post('/auth/register', {
+          await authService.register({
             full_name: name,
             email: email,
             otp: otpString,
-            phone_number: phone || undefined
+            phone_number: phone || ''
           });
         } catch (regError: any) {
-          // If 409 Conflict (User already exists), we can safely ignore and just log them in
-          if (regError.response?.status !== 409) {
-            throw regError;
+          if (regError.response?.status === 409) {
+            alert("User Already Registed with the mobile number or the email");
+            switchTab('login');
+            setIsLoading(false);
+            return;
           }
+          throw regError;
         }
       }
       
-      // Login API call
-      const response = await api.post('/auth/login', {
+      const response = await authService.login({
         email: email,
         otp: otpString
       });
       
-      const { access_token } = response.data;
+      const { access_token } = response;
+      const userRes = await authService.getUserProfile();
       
-      // Fetch user data using the token
-      const userRes = await api.get('/auth/me', {
-        headers: { Authorization: `Bearer ${access_token}` }
-      });
+      login(access_token, userRes);
       
-      login(access_token, userRes.data);
-      
-      window.location.href = isSignup ? '/onboarding' : '/design-system';
+      window.location.href = isSignup ? '/onboarding' : '/dashboard';
     } catch (error) {
       console.error("Auth Error", error);
       alert("Authentication failed. Invalid OTP or account error.");
@@ -97,16 +95,16 @@ export const LoginWithOtp = () => {
     
     try {
       if (isSignup) {
-        const checkRes = await api.get(`/auth/check-email?email=${encodeURIComponent(email)}`);
-        if (checkRes.data.exists) {
+        const checkRes = await authService.checkEmail(email);
+        if (checkRes.exists) {
           setErrorMessage('You already have an account with this email. Please log in.');
           setTab('login');
           setIsLoading(false);
           return;
         }
       } else {
-        const checkRes = await api.get(`/auth/check-email?email=${encodeURIComponent(email)}`);
-        if (!checkRes.data.exists) {
+        const checkRes = await authService.checkEmail(email);
+        if (!checkRes.exists) {
           setErrorMessage('No account found with this email. Please create an account.');
           setTab('signup');
           setIsLoading(false);
@@ -114,7 +112,7 @@ export const LoginWithOtp = () => {
         }
       }
 
-      await api.post('/auth/send-otp', { email });
+      await authService.sendOtp({ email });
       setOtpSent(true); 
       setResendAfter(30); 
     } catch (error) {

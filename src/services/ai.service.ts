@@ -1,77 +1,83 @@
 import api from './api';
 
 export interface AiAnalysisRequest {
-  symbol?: string;
-  query?: string;
+  symbol: string;
   timeframe?: string;
-  advisor_id?: string;
-  user_portfolio_context?: any;
 }
 
-export interface AiAnalysisResponse {
-  symbol?: string;
-  recommendation?: string;
-  confidence_score?: number;
-  analysis_text?: string;
-  related_stocks?: Array<{
-    symbol: string;
-    company: string;
-    price: string;
-    change: string;
-    positive: boolean;
-  }>;
-  visual_type?: 'heatmap' | 'chart' | 'sip' | 'risk' | 'fundamentals' | 'news';
+export interface AiRecommendationResponse {
+  id: string;
+  symbol: string;
+  recommendation: string;
+  confidence_score: number;
+  analysis_text: string;
+  created_at: string;
+}
+
+export interface AiChatMessage {
+  role: 'user' | 'assistant' | 'system';
+  content: string;
+}
+
+export interface AiChatRequest {
+  messages: AiChatMessage[];
+}
+
+export interface AiChatResponse {
+  text: string;
+  confidence?: number;
+  relatedStocks?: string[];
+  relatedResearch?: string;
+  type?: string;
+}
+
+export interface AiPortfolioAnalysisResponse {
+  overall_health: string;
+  health_score: number;
+  top_performers: string[];
+  weak_performers: string[];
+  recommended_actions: string[];
+  detailed_analysis: string;
+}
+
+export interface AiMarketMoversResponse {
+  market_mood: string;
+  best_returns: string[];
+  worst_returns: string[];
+  analysis_text: string;
 }
 
 class AiService {
   /**
-   * Send a query to the Groq AI backend API endpoint
+   * Run an AI-based technical and sentiment analysis on a specific stock symbol.
    */
-  async analyzeMarket(request: AiAnalysisRequest): Promise<AiAnalysisResponse> {
-    try {
-      const response = await api.post('/ai/analyze', request);
-      return response.data;
-    } catch (error) {
-      try {
-        const altResponse = await api.post('/groq/analyze', request);
-        return altResponse.data;
-      } catch (err) {
-        console.warn('AI analysis API request error:', err);
-        return {
-          symbol: request.symbol || '',
-          recommendation: '',
-          confidence_score: 0,
-          analysis_text: `AI analysis service connection error for "${request.query || request.symbol}". Please ensure backend endpoint is active.`,
-          related_stocks: [],
-          visual_type: 'fundamentals'
-        };
-      }
-    }
+  async analyzeStock(request: AiAnalysisRequest): Promise<AiRecommendationResponse> {
+    const response = await api.post('/ai/analyze', request);
+    return response.data;
   }
 
   /**
-   * Send query to specific AI Advisor persona powered by Groq API
+   * Chat with the AI Copilot.
    */
-  async sendAdvisorQuery(advisorId: string, query: string, context?: any): Promise<AiAnalysisResponse> {
-    try {
-      const response = await api.post('/ai/advisor-chat', {
-        advisor_id: advisorId,
-        query,
-        context
-      });
-      return response.data;
-    } catch (error) {
-      try {
-        const altResponse = await api.post('/groq/chat', {
-          advisor_id: advisorId,
-          query,
-          context
-        });
-        return altResponse.data;
-      } catch (err) {
-        return this.analyzeMarket({ advisor_id: advisorId, query, user_portfolio_context: context });
-      }
-    }
+  async chatWithCopilot(request: AiChatRequest): Promise<AiChatResponse> {
+    const response = await api.post('/ai/chat', request);
+    return response.data;
+  }
+
+  /**
+   * Analyze the user's portfolio and provide actionable insights.
+   */
+  async analyzePortfolio(): Promise<AiPortfolioAnalysisResponse> {
+    const response = await api.get('/ai/portfolio/analyze');
+    return response.data;
+  }
+
+  /**
+   * Analyze the best and worst performing stocks in the market today.
+   */
+  async analyzeMarketMovers(): Promise<AiMarketMoversResponse> {
+    const response = await api.get('/ai/market/movers/analyze');
+    return response.data;
   }
 }
 

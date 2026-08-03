@@ -4,7 +4,7 @@ import { User, Mail, Phone, Check, ArrowRight, RefreshCw, ShieldCheck } from 'lu
 import { SignupIllustration } from '../components/auth/SignupIllustration';
 import { TrustBadges } from '../components/auth/TrustBadges';
 import toast from 'react-hot-toast';
-import api from '../services/api';
+import { authService } from '../services/auth.service';
 import { useAuth } from '../context/AuthContext';
 
 export const SignUp: React.FC = () => {
@@ -43,15 +43,15 @@ export const SignUp: React.FC = () => {
     setIsLoading(true);
     try {
       // 1. Check if email exists
-      const checkRes = await api.get(`/auth/check-email?email=${encodeURIComponent(formData.email)}`);
-      if (checkRes.data.exists) {
+      const checkRes = await authService.checkEmail(formData.email);
+      if (checkRes.exists) {
         setErrorMessage('You already have an account with this email. Please log in.');
         setIsLoading(false);
         return;
       }
 
       // 2. Send OTP
-      await api.post('/auth/send-otp', { email: formData.email });
+      await authService.sendOtp({ email: formData.email });
       setOtpSent(true); 
       setResendAfter(30);
       setStep(2);
@@ -91,11 +91,11 @@ export const SignUp: React.FC = () => {
       
       // 1. Register
       try {
-        await api.post('/auth/register', {
+        await authService.register({
           full_name: formData.name,
           email: formData.email,
           otp: otpString,
-          phone_number: formData.mobile || undefined
+          phone_number: formData.mobile || ''
         });
       } catch (regError: any) {
         // If user already exists, we might still be able to login, but ideally they shouldn't reach here if check-email worked
@@ -105,19 +105,17 @@ export const SignUp: React.FC = () => {
       }
       
       // 2. Login
-      const response = await api.post('/auth/login', {
+      const response = await authService.login({
         email: formData.email,
         otp: otpString
       });
       
-      const { access_token } = response.data;
+      const { access_token } = response;
       
       // 3. Fetch User
-      const userRes = await api.get('/auth/me', {
-        headers: { Authorization: `Bearer ${access_token}` }
-      });
+      const userRes = await authService.getUserProfile();
       
-      login(access_token, userRes.data);
+      login(access_token, userRes);
       
       toast.success('Account created! Proceeding to KYC & Document verification...');
       navigate('/onboarding', { state: { name: formData.name, email: formData.email, mobile: formData.mobile } });

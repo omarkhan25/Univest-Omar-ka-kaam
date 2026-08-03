@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Check, ShieldCheck, Zap } from 'lucide-react';
 import { Button } from '../components/atoms/Button';
-import api from '../services/api';
+import subscriptionService from '../services/subscription.service';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -16,8 +16,8 @@ export const Pricing = () => {
   useEffect(() => {
     const fetchPlans = async () => {
       try {
-        const res = await api.get('/subscriptions/plans');
-        setPlans(res.data);
+        const data = await subscriptionService.getPlans();
+        setPlans(data);
       } catch (err) {
         console.error(err);
       } finally {
@@ -35,18 +35,18 @@ export const Pricing = () => {
     }
     
     try {
-      const { data } = await api.post('/subscriptions/orders', { plan_id: planId });
+      const order = await subscriptionService.createOrder(planId);
       
       // Mock Razorpay popup since we don't have the script loaded
-      const mockSuccess = window.confirm(`Proceed with mock payment of ₹${data.amount / 100}?`);
+      const mockSuccess = window.confirm(`Proceed with mock payment of ₹${order.amount / 100}?`);
       
       if (mockSuccess) {
-        await api.post('/subscriptions/verify', {
-          razorpay_order_id: data.order_id,
-          razorpay_payment_id: `pay_${Math.random().toString(36).substr(2, 9)}`,
-          razorpay_signature: "mock_signature",
-          plan_id: planId
-        });
+        await subscriptionService.verifyPayment(
+          order.order_id,
+          `pay_${Math.random().toString(36).substr(2, 9)}`,
+          "mock_signature",
+          planId
+        );
         toast.success('Subscription activated! Welcome to Premium.');
         window.location.reload();
       }

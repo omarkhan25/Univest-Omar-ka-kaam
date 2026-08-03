@@ -5,7 +5,7 @@ import { Mail, ArrowRight, RefreshCw, ShieldCheck } from 'lucide-react';
 import { LoginIllustration } from '../components/auth/LoginIllustration';
 import { TrustBadges } from '../components/auth/TrustBadges';
 import toast from 'react-hot-toast';
-import api from '../services/api';
+import { authService } from '../services/auth.service';
 import { useAuth } from '../context/AuthContext';
 
 export const Login: React.FC = () => {
@@ -41,15 +41,15 @@ export const Login: React.FC = () => {
     setIsLoading(true);
     try {
       // 1. Check if email exists
-      const checkRes = await api.get(`/auth/check-email?email=${encodeURIComponent(email)}`);
-      if (!checkRes.data.exists) {
+      const checkRes = await authService.checkEmail(email);
+      if (!checkRes.exists) {
         setErrorMessage('No account found with this email. Please create an account.');
         setIsLoading(false);
         return;
       }
 
       // 2. Send OTP
-      await api.post('/auth/send-otp', { email });
+      await authService.sendOtp({ email });
       setOtpSent(true); 
       setResendAfter(30);
       toast.success('OTP sent to your email');
@@ -68,18 +68,15 @@ export const Login: React.FC = () => {
     try {
       const otpString = otp.join('');
       
-      const response = await api.post('/auth/login', {
+      const response = await authService.login({
         email: email,
         otp: otpString
       });
       
-      const { access_token } = response.data;
+      const { access_token } = response;
+      const userRes = await authService.getUserProfile();
       
-      const userRes = await api.get('/auth/me', {
-        headers: { Authorization: `Bearer ${access_token}` }
-      });
-      
-      login(access_token, userRes.data);
+      login(access_token, userRes);
       toast.success('Welcome back to Univest!');
       navigate('/dashboard');
     } catch (error) {

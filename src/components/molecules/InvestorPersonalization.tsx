@@ -99,7 +99,7 @@ export const InvestorPersonalization = () => {
   const prevScreen = () => setScreen(prev => Math.max(prev - 1, 1));
   
   const handleFinalRedirect = () => {
-    navigate('/design-system');
+    navigate('/dashboard');
   };
 
   // Get current active progress percentage for the indicator bar

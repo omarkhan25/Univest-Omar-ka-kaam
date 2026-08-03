@@ -152,7 +152,7 @@ export const InvestHub: React.FC<InvestHubProps> = ({
     return Math.round(tax * 1.04);
   };
 
-  const calculateNewTax = (income) => {
+  const calculateNewTax = (income: any) => {
     const taxable = Math.max(0, income - 75000);
     if (taxable <= 700000) return 0;
 

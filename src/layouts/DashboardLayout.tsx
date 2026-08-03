@@ -3,11 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Home, TrendingUp, Compass, Briefcase, User, 
-  Bell, Sparkles, Send, X, ShieldAlert,
-  ArrowRight, ArrowLeft, BrainCircuit, Search, ChevronDown,
+  Bell, Sparkles, X,
+  ArrowRight, ArrowLeft, Search, ChevronDown,
   Bookmark, Plus, Trash2, AlertCircle, Wand2, ArrowUpRight,
-  BarChart3, CandlestickChart, Wallet, Gem,
-  Fuel, Rocket, Layers, Landmark, Shield, MoreHorizontal, Clock
+  Gem, Clock
 } from 'lucide-react';
 import { MarketRibbon } from '../components/dashboard/MarketRibbon';
 import { InvestHub } from '../components/dashboard/InvestHub';
@@ -31,8 +30,7 @@ import { useAuth } from '../context/AuthContext';
 import { LiveMarketStatusWidget } from '../components/dashboard/LiveMarketStatusWidget';
 import { AddFundsModal } from '../components/dashboard/AddFundsModal';
 import HomeDashboard from '../components/dashboard/HomeDashboard';
-import { Newspaper, GraduationCap, Settings } from 'lucide-react';
-import { Toaster } from 'react-hot-toast';
+import { Newspaper, GraduationCap } from 'lucide-react';
 
 interface SidebarItemProps {
   icon: React.ReactNode;
@@ -130,7 +128,6 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
   const [tradeIntent, setTradeIntent] = useState<any | null>(null);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isCompareOpen, setIsCompareOpen] = useState(false);
-  const navigate = useNavigate();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isAddFundsOpen, setIsAddFundsOpen] = useState(false);
   
@@ -188,11 +185,6 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
   // Hover item overlay
   const [hoveredStockSymbol, setHoveredStockSymbol] = useState<string | null>(null);
 
-  const [chatMessages, setChatMessages] = useState<string[]>([
-    'Hello Omar! I am your Univest AI Assistant. How can I help you build wealth today?',
-  ]);
-  const [inputVal, setInputVal] = useState('');
-
   const tabs = [
     { name: 'Home', icon: <Home className="w-5 h-5" />, label: 'Home' },
     { name: 'Research', icon: <TrendingUp className="w-5 h-5" />, label: 'Research', badgeCount: 3 },
@@ -203,52 +195,51 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
     { name: 'Profile', icon: <User className="w-5 h-5" />, label: 'Profile & Settings' },
   ];
 
-  // Watchlist prices auto-tick simulator
   useEffect(() => {
-    const interval = setInterval(() => {
-      setWatchlistStocks((prevStocks) => {
-        if (prevStocks.length === 0) return prevStocks;
-        const randomIndex = Math.floor(Math.random() * prevStocks.length);
-        return prevStocks.map((stock, idx) => {
-          if (idx === randomIndex) {
-            const numericPrice = parseFloat(stock.price.replace(/,/g, ''));
-            const variance = (Math.random() * 0.26 - 0.13) / 100;
-            const newPrice = numericPrice * (1 + variance);
+    let isMounted = true;
+    
+    const fetchWatchlistLivePrices = async () => {
+      try {
+        const { marketService } = await import('../services/market.service');
+        // Initial list of symbols we want in the watchlist
+        const symbols = ['RELIANCE', 'TCS', 'HDFCBANK', 'INFY', 'ICICIBANK'];
+        const quotes = await marketService.getBatchQuotes(symbols);
+        
+        if (isMounted && Object.keys(quotes).length > 0) {
+          const updatedStocks = symbols.map(sym => {
+            const quote = quotes[sym];
+            if (!quote) return null;
+            
             return {
-              ...stock,
-              price: newPrice.toLocaleString('en-IN', {
+              symbol: sym,
+              name: quote.companyName || sym,
+              price: (typeof quote.lastPrice === 'number' ? quote.lastPrice : 0).toLocaleString('en-IN', {
                 maximumFractionDigits: 2,
                 minimumFractionDigits: 2
               }),
-              changePercent: stock.changePercent + (variance * 100),
-              flash: variance > 0 ? 'green' : 'red'
+              change: quote.change,
+              changePercent: quote.changePercent,
+              marketCap: quote.marketCap || 'N/A'
             };
-          }
-          return stock;
-        });
-      });
+          }).filter(Boolean) as any[];
+          
+          setWatchlistStocks(updatedStocks);
+        }
+      } catch (error) {
+        console.error("Failed to fetch live watchlist prices", error);
+      }
+    };
 
-      // Clear flashes
-      setTimeout(() => {
-        setWatchlistStocks(curr => curr.map(s => s.flash ? { ...s, flash: null } : s));
-      }, 1000);
-
-    }, 4500);
-
-    return () => clearInterval(interval);
+    fetchWatchlistLivePrices();
+    
+    // Poll every 10 seconds
+    const interval = setInterval(fetchWatchlistLivePrices, 10000);
+    
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
   }, []);
-
-  const handleSendPrompt = (prompt: string) => {
-    if (!prompt.trim()) return;
-    setChatMessages((prev) => [...prev, prompt]);
-    setInputVal('');
-    setTimeout(() => {
-      setChatMessages((prev) => [
-        ...prev,
-        `I am analyzing "${prompt}" using real-time data feeds and compliance models. Win-rates show a favorable outlook.`,
-      ]);
-    }, 1000);
-  };
 
   const handleCreateWatchlist = (e: React.FormEvent) => {
     e.preventDefault();

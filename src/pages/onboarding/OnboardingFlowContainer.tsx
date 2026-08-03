@@ -132,7 +132,7 @@ export const OnboardingFlowContainer: React.FC = () => {
               </div>
               <Lock className="w-4 h-4 text-emerald-400/60" />
             </div>
-            <div className="font-mono text-sm text-white/60 tracking-widest mb-2">•••• •••• •••• 4521</div>
+            <div className="font-mono text-sm text-white/60 tracking-widest mb-2">â€¢â€¢â€¢â€¢ â€¢â€¢â€¢â€¢ â€¢â€¢â€¢â€¢ 4521</div>
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-[8px] text-white/40 font-bold">ACCOUNT HOLDER</div>
@@ -291,7 +291,7 @@ export const OnboardingFlowContainer: React.FC = () => {
           </div>
           <div className="flex items-center gap-2 text-[10px] font-bold text-slate-500">
             <Lock className="w-3 h-3 text-emerald-500" />
-            <span>256-bit encrypted · SEBI compliant · Data never shared</span>
+            <span>256-bit encrypted Â· SEBI compliant Â· Data never shared</span>
           </div>
         </div>
       </div>
@@ -351,7 +351,7 @@ export const OnboardingFlowContainer: React.FC = () => {
                         <span className="text-xs font-bold text-white/50">Camera access required</span>
                       </div>
                       <div className="absolute inset-x-0 bottom-0 bg-black/50 py-2 text-center text-[10px] font-bold text-white/60">
-                        Feature coming soon — skip to continue
+                        Feature coming soon â€” skip to continue
                       </div>
                     </div>
                     <div className="p-3 bg-violet-50 border border-violet-100 rounded-xl text-xs font-medium text-violet-700">
@@ -385,7 +385,7 @@ export const OnboardingFlowContainer: React.FC = () => {
                       <div className="flex flex-col items-center gap-3 text-slate-400">
                         <Pen className="w-8 h-8 text-slate-300" />
                         <span className="text-sm font-bold">Signature Pad</span>
-                        <span className="text-xs">Stylus / mouse drawing canvas — coming soon</span>
+                        <span className="text-xs">Stylus / mouse drawing canvas â€” coming soon</span>
                       </div>
                     </div>
                     <div className="p-4 bg-blue-50 border border-blue-100 rounded-xl text-xs font-medium text-blue-700">

@@ -6,6 +6,7 @@ import {
   BarChart3, RefreshCw, Layers, ArrowUpDown, ChevronRight, HelpCircle, UserCheck, Search, Scale
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import aiService from '../../services/ai.service';
 
 interface AiCopilotModalProps {
   isOpen: boolean;
@@ -63,7 +64,9 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
     'Explain RSI'
   ];
 
-  const handleSend = (textToSend?: string) => {
+  const [isAiTyping, setIsAiTyping] = useState(false);
+
+  const handleSend = async (textToSend?: string) => {
     const text = (textToSend || inputVal).trim();
     if (!text) return;
 
@@ -76,63 +79,37 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
 
     setMessages(prev => [...prev, userMsg]);
     if (!textToSend) setInputVal('');
-
-    // Simulate AI Copilot intelligent analysis
-    setTimeout(() => {
-      let aiResponse: ChatMessage;
-
-      if (text.toLowerCase().includes('compare') || (text.toLowerCase().includes('tcs') && text.toLowerCase().includes('infosys'))) {
-        aiResponse = {
-          id: (Date.now() + 1).toString(),
-          sender: 'ai',
-          text: 'TCS currently presents stronger ROE (42.1%) and lower debt, while Infosys offers a higher dividend yield (2.85%). Here is the comparative breakdown:',
-          timestamp: 'Just now',
-          confidence: 94,
-          type: 'comparison',
-          sources: ['SEBI Research Desk', 'Company Q1 Reports'],
-          relatedStocks: ['TCS', 'INFY'],
-          relatedResearch: 'TCS vs INFY Valuation Breakdown',
-          comparisonData: {
-            stockA: { symbol: 'TCS', name: 'Tata Consultancy', pe: '31.2x', roe: '42.1%', rating: 'BUY' },
-            stockB: { symbol: 'INFY', name: 'Infosys Limited', pe: '26.8x', roe: '31.4%', rating: 'HOLD' }
-          }
-        };
-      } else if (text.toLowerCase().includes('reliance')) {
-        aiResponse = {
-          id: (Date.now() + 1).toString(),
-          sender: 'ai',
-          text: 'Reliance Industries (NSE: RELIANCE) is in a strong bullish consolidation phase. Green Hydrogen commissioning projected for Q3 FY26 will drive enterprise valuation re-rating.',
-          timestamp: 'Just now',
-          confidence: 92,
-          sources: ['Lead Analyst Aarav Mehta', 'NSE Live Feed'],
-          relatedStocks: ['RELIANCE'],
-          relatedResearch: 'Reliance Green Energy Commissioning Valuation Report'
-        };
-      } else if (text.toLowerCase().includes('portfolio')) {
-        aiResponse = {
-          id: (Date.now() + 1).toString(),
-          sender: 'ai',
-          text: 'Your Portfolio Health Score is 92/100. You hold 12 assets with a total value of ₹8,42,150. AI recommends reallocating 5% from IT into Healthcare to balance sector exposure.',
-          timestamp: 'Just now',
-          confidence: 95,
-          type: 'portfolio',
-          sources: ['Univest Portfolio Engine', 'Risk Assessment Matrix'],
-          relatedStocks: ['INFY', 'SUNPHARMA']
-        };
-      } else {
-        aiResponse = {
-          id: (Date.now() + 1).toString(),
-          sender: 'ai',
-          text: `I have analyzed "${text}" against current market data. Banking and Capital Goods continue to outperform. Would you like me to generate a full research report or execute a trade?`,
-          timestamp: 'Just now',
-          confidence: 90,
-          sources: ['TradingView Technical Engine', 'Bloomberg News Feed'],
-          relatedStocks: ['HDFCBANK', 'LT']
-        };
-      }
-
+    
+    setIsAiTyping(true);
+    try {
+      const response = await aiService.chatWithCopilot({
+        messages: [{ role: 'user', content: text }]
+      });
+      
+      const aiResponse: ChatMessage = {
+        id: (Date.now() + 1).toString(),
+        sender: 'ai',
+        text: response.text,
+        timestamp: 'Just now',
+        confidence: response.confidence,
+        relatedStocks: response.relatedStocks,
+        sources: ['Univest AI Engine']
+      };
+      
       setMessages(prev => [...prev, aiResponse]);
-    }, 1000);
+    } catch (error) {
+      console.error("AI Copilot Error:", error);
+      const errorMsg: ChatMessage = {
+        id: (Date.now() + 1).toString(),
+        sender: 'ai',
+        text: "I encountered a problem analyzing that. Please try again later.",
+        timestamp: 'Just now',
+        confidence: 0
+      };
+      setMessages(prev => [...prev, errorMsg]);
+    } finally {
+      setIsAiTyping(false);
+    }
   };
 
   const toggleVoiceMode = () => {
@@ -359,6 +336,17 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
                     </div>
                   </div>
                 ))}
+                {isAiTyping && (
+                  <div className="flex flex-col gap-2 items-start">
+                    <div className="p-4 rounded-2xl max-w-[90%] text-xs leading-relaxed font-medium bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] rounded-bl-none shadow-2xs">
+                      <div className="flex gap-1 items-center">
+                        <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
+                        <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                        <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 
