@@ -46,7 +46,7 @@ export const SplashScreen = () => {
     const trendLength = 120;
     const startX = -100;
     const endX = width + 100;
-    
+
     for (let i = 0; i <= trendLength; i++) {
       const x = startX + (i / trendLength) * (endX - startX);
       // Upward trend function with subtle wave
@@ -83,7 +83,7 @@ export const SplashScreen = () => {
       // 2. Draw Network Nodes & Connections
       for (let i = 0; i < numNodes; i++) {
         const node = nodes[i];
-        
+
         // Move nodes slowly
         node.x += node.vx;
         node.y += node.vy;

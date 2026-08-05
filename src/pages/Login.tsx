@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Mail, ArrowRight, RefreshCw, ShieldCheck } from 'lucide-react';
+import { Mail, ArrowRight, RefreshCw, ShieldCheck, User } from 'lucide-react';
 import { LoginIllustration } from '../components/auth/LoginIllustration';
 import { TrustBadges } from '../components/auth/TrustBadges';
 import toast from 'react-hot-toast';
@@ -12,12 +12,15 @@ export const Login: React.FC = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
   
-  const [email, setEmail] = useState('');
+  const [identifier, setIdentifier] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState(Array(6).fill(''));
   const [isLoading, setIsLoading] = useState(false);
   const [resendAfter, setResendAfter] = useState(30);
+  const [accountNotFound, setAccountNotFound] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [loginMessageIndex, setLoginMessageIndex] = useState(0);
   const otpRefs = useRef<Array<HTMLInputElement | null>>([]);
 
   useEffect(() => { 
@@ -33,43 +36,44 @@ export const Login: React.FC = () => {
   const handleSendOtp = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     setErrorMessage('');
-    if (!email || !email.includes('@')) {
-      setErrorMessage('Please enter a valid email address.');
+    if (!identifier) {
+      setErrorMessage('Please enter a valid mobile number or email address.');
       return;
     }
     
     setIsLoading(true);
     try {
-      // 1. Check if email exists
-      const checkRes = await authService.checkEmail(email);
-      if (!checkRes.exists) {
-        setErrorMessage('No account found with this email. Please create an account.');
-        setIsLoading(false);
-        return;
-      }
-
-      // 2. Send OTP
-      await authService.sendOtp({ email });
+      // Send OTP
+      await authService.sendOtp({ email: identifier });
       setOtpSent(true); 
       setResendAfter(30);
-      toast.success('OTP sent to your email');
+      toast.success('OTP sent successfully');
     } catch (error) {
       console.error("Failed to send OTP", error);
-      setErrorMessage("Failed to send OTP. Please check your email or try again later.");
+      setErrorMessage("Failed to send OTP. Please check your details or try again later.");
     } finally {
       setIsLoading(false); 
     }
   };
 
+  const loginMessages = [
+    "Authenticating Account...",
+    "Syncing Portfolio...",
+    "Preparing Dashboard...",
+    "Loading AI Insights...",
+    "Checking Market Data..."
+  ];
+
   const handleVerifyOtp = async () => { 
     if (otp.some(value => !value) || isLoading) return; 
     setIsLoading(true); 
+    setErrorMessage('');
     
     try {
       const otpString = otp.join('');
       
       const response = await authService.login({
-        email: email,
+        email: identifier,
         otp: otpString
       });
       
@@ -77,14 +81,34 @@ export const Login: React.FC = () => {
       const userRes = await authService.getUserProfile();
       
       login(access_token, userRes);
-      toast.success('Welcome back to Univest!');
-      navigate('/dashboard');
+      
+      setIsLoggingIn(true);
+      let messageIdx = 0;
+      const interval = setInterval(() => {
+        messageIdx++;
+        if (messageIdx >= loginMessages.length) {
+          clearInterval(interval);
+          navigate('/dashboard');
+        } else {
+          setLoginMessageIndex(messageIdx);
+        }
+      }, 1500);
     } catch (error) {
       console.error("Auth Error", error);
+      // Check if account exists
+      try {
+        const checkRes = await authService.checkEmail(identifier);
+        if (!checkRes.exists) {
+          setAccountNotFound(true);
+          setIsLoading(false);
+          return;
+        }
+      } catch (checkErr) {
+        // Fallback
+      }
       setErrorMessage("Authentication failed. Invalid OTP.");
       setOtp(Array(6).fill(''));
       otpRefs.current[0]?.focus();
-    } finally {
       setIsLoading(false);
     }
   };
@@ -203,6 +227,47 @@ export const Login: React.FC = () => {
       {/* Right Column: Interactive Login Form (White Background) */}
       <div className="min-h-screen p-8 sm:p-16 md:p-24 bg-white flex flex-col justify-center text-slate-900 overflow-y-auto">
         <div className="max-w-md w-full mx-auto flex flex-col justify-between min-h-[550px]">
+          {isLoggingIn ? (
+            <div className="flex flex-col items-center justify-center flex-1 h-full py-16 text-center">
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+                className="w-16 h-16 border-4 border-[#0D5C4E] border-t-transparent rounded-full mb-8 mx-auto"
+              />
+              <motion.h2 
+                key={loginMessageIndex}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="text-2xl font-black text-slate-900 tracking-tight"
+              >
+                {loginMessages[loginMessageIndex]}
+              </motion.h2>
+              <p className="text-slate-500 text-sm font-semibold mt-2">Please wait while we set things up</p>
+            </div>
+          ) : accountNotFound ? (
+            <div className="flex flex-col flex-1 h-full justify-center">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-slate-50 border border-slate-200 p-8 rounded-[24px] text-center shadow-lg shadow-slate-200/50"
+              >
+                <div className="w-16 h-16 mx-auto bg-emerald-100 text-[#0D5C4E] rounded-full flex items-center justify-center mb-6">
+                  <User className="w-8 h-8" />
+                </div>
+                <h2 className="text-2xl font-black text-slate-900 tracking-tight mb-2">Looks like you're new here.</h2>
+                <p className="text-slate-500 text-sm font-medium mb-8 leading-relaxed">
+                  We couldn't find an account associated with this mobile number. Create your account in just a few minutes and start investing smarter.
+                </p>
+                <button
+                  onClick={() => navigate('/signup')}
+                  className="w-full py-3.5 bg-[#0D5C4E] hover:bg-[#0A4E42] active:bg-[#073D33] text-white font-black text-xs rounded-xl tracking-wider uppercase transition shadow-md shadow-[#0D5C4E]/10 cursor-pointer"
+                >
+                  Create Account
+                </button>
+              </motion.div>
+            </div>
+          ) : (
           <div>
             {/* Form Header */}
             <div className="mb-8 text-left">
@@ -215,15 +280,15 @@ export const Login: React.FC = () => {
 
               {!otpSent ? (
                 <>
-                  <h1 className="text-3xl font-black text-slate-900 tracking-tight">Sign in</h1>
-                  <p className="text-slate-400 text-xs font-semibold mt-1">Access to your Univest account</p>
+                  <h1 className="text-3xl font-black text-slate-900 tracking-tight">Welcome Back</h1>
+                  <p className="text-slate-400 text-xs font-semibold mt-1">Sign in to continue to your investment workspace.</p>
                 </>
               ) : (
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <h1 className="text-3xl font-black text-slate-900 tracking-tight">Verify Email</h1>
+                    <h1 className="text-3xl font-black text-slate-900 tracking-tight">Verify OTP</h1>
                     <p className="text-slate-400 text-xs font-semibold mt-1">
-                      We sent a 6-digit code to <span className="font-bold text-slate-700">{email}</span>.
+                      We sent a 6-digit code to <span className="font-bold text-slate-700">{identifier}</span>.
                     </p>
                   </div>
                   <span className="grid h-10 w-10 place-items-center rounded-full bg-emerald-500/10 text-emerald-600 shrink-0">
@@ -291,18 +356,18 @@ export const Login: React.FC = () => {
 
             {!otpSent ? (
               <form onSubmit={handleSendOtp} className="space-y-4">
-                {/* Email Address */}
+                {/* Email Address or Mobile */}
                 <div className={`relative border rounded-xl px-4 py-2.5 transition-colors text-left bg-white ${
                   errorMessage ? 'border-rose-500 bg-rose-500/5' : 'border-slate-200 focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500/30'
                 }`}>
                   <label className="block text-[9px] font-black uppercase tracking-wider text-slate-400 mb-0.5">
-                    E-Mail address
+                    Mobile Number or Email Address
                   </label>
                   <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="you@example.com"
+                    type="text"
+                    value={identifier}
+                    onChange={(e) => setIdentifier(e.target.value)}
+                    placeholder="you@example.com or 10-digit number"
                     className="w-full bg-transparent border-none outline-none text-slate-900 placeholder-slate-350 text-xs font-semibold p-0 focus:ring-0 focus:outline-none"
                     required
                   />
@@ -329,7 +394,7 @@ export const Login: React.FC = () => {
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  disabled={isLoading || !email}
+                  disabled={isLoading || !identifier}
                   className="w-full py-3.5 bg-[#0D5C4E] hover:bg-[#0A4E42] active:bg-[#073D33] text-white font-black text-xs rounded-xl tracking-wider uppercase transition shadow-md shadow-[#0D5C4E]/10 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 mt-4"
                 >
                   {isLoading ? (
@@ -339,7 +404,7 @@ export const Login: React.FC = () => {
                     </>
                   ) : (
                     <>
-                      <span>Login</span>
+                      <span>Continue</span>
                     </>
                   )}
                 </button>
@@ -369,7 +434,7 @@ export const Login: React.FC = () => {
                     onClick={() => { setOtpSent(false); setErrorMessage(''); }} 
                     className="text-[#0D5C4E] hover:underline"
                   >
-                    Change email
+                    Change Mobile Number
                   </button>
                   <button 
                     type="button"
@@ -398,7 +463,7 @@ export const Login: React.FC = () => {
                     </>
                   ) : (
                     <>
-                      <span>Secure Log In</span>
+                      <span>Verify OTP</span>
                     </>
                   )}
                 </button>
@@ -413,10 +478,11 @@ export const Login: React.FC = () => {
                 onClick={() => navigate('/signup')}
                 className="text-[#0D5C4E] font-black hover:underline transition-colors"
               >
-                Register
+                Create Account
               </button>
             </div>
           </div>
+          )}
 
           <div className="mt-8">
             <TrustBadges light={true} />

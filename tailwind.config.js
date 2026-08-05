@@ -35,7 +35,7 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['TT Norms Pro', 'Inter', 'sans-serif'],
       },
       fontSize: {
         'display': ['3rem', { lineHeight: '1.15', fontWeight: '800' }],

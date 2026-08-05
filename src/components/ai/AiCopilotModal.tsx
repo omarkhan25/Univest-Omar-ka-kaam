@@ -53,6 +53,8 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
     }
   ]);
 
+  const [isAiTyping, setIsAiTyping] = useState(false);
+
   if (!isOpen) return null;
 
   const quickPrompts = [
@@ -63,8 +65,6 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
     'Find dividend stocks',
     'Explain RSI'
   ];
-
-  const [isAiTyping, setIsAiTyping] = useState(false);
 
   const handleSend = async (textToSend?: string) => {
     const text = (textToSend || inputVal).trim();

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, Mail, Phone, Check, ArrowRight, RefreshCw, ShieldCheck } from 'lucide-react';
-import { SignupIllustration } from '../components/auth/SignupIllustration';
+import { motion } from 'framer-motion';
 import { TrustBadges } from '../components/auth/TrustBadges';
 import toast from 'react-hot-toast';
 import { authService } from '../services/auth.service';
@@ -150,40 +150,112 @@ export const SignUp: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#070B14] flex items-center justify-center p-4 sm:p-6 font-sans text-slate-100">
-      <div className="w-full max-w-5xl grid lg:grid-cols-2 gap-0 bg-[#0F172A] border border-slate-800 rounded-[32px] overflow-hidden shadow-2xl">
+    <div className="min-h-screen w-full grid lg:grid-cols-2 gap-0 bg-white font-sans text-slate-900 relative overflow-hidden">
+      
+      {/* Left Column: Liquid Gradient Ribbon & Teaser Banner */}
+      <div className="hidden lg:flex flex-col justify-between p-16 relative overflow-hidden bg-[#030712] min-h-screen">
         
-        {/* Left Column: Illustration */}
-        <div className="hidden lg:flex flex-col justify-between p-10 bg-gradient-to-br from-emerald-950/40 via-slate-900 to-slate-950 border-r border-slate-800/80">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-emerald-600 font-black text-white text-lg flex items-center justify-center shadow-md">
-              U
-            </div>
-            <span className="font-black text-xl tracking-tight text-white">UNIVEST</span>
-          </div>
+        {/* Fluid Ribbon background waves */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden bg-[#030712]">
+          {/* Glowing animated background blobs */}
+          <motion.div
+            animate={{ 
+              scale: [1, 1.15, 0.95, 1],
+              x: [0, 30, -20, 0],
+              y: [0, -40, 20, 0]
+            }}
+            transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute top-1/4 right-[-10%] w-[350px] h-[350px] bg-emerald-500/10 rounded-full blur-[80px]"
+          />
+          <motion.div
+            animate={{ 
+              scale: [1, 0.9, 1.1, 1],
+              x: [0, -20, 40, 0],
+              y: [0, 30, -30, 0]
+            }}
+            transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+            className="absolute bottom-1/4 left-[-10%] w-[400px] h-[400px] bg-blue-600/10 rounded-full blur-[100px]"
+          />
 
-          <div className="my-auto flex flex-col items-center text-center">
-            <SignupIllustration />
-            <h2 className="text-2xl font-black text-white mt-6 tracking-tight">
-              Begin Your Investment Journey
-            </h2>
-            <p className="text-slate-400 text-xs font-medium mt-2 max-w-sm leading-relaxed">
-              Open your free SEBI-compliant trading & research advisory account in under 2 minutes.
-            </p>
-          </div>
-
-          <div className="flex items-center justify-between text-[11px] font-bold text-slate-500 border-t border-slate-800/60 pt-4">
-            <span>Free Account</span>
-            <span>Zero Annual Charges</span>
-          </div>
+          {/* Glowing Wavy Fluid Silk Mesh Ribbon via SVG */}
+          <svg className="absolute inset-0 w-full h-full opacity-80" viewBox="0 0 500 800" fill="none" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="silkWave" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#2563EB" stopOpacity="0.05" />
+                <stop offset="35%" stopColor="#1E4ED8" stopOpacity="0.3" />
+                <stop offset="70%" stopColor="#059669" stopOpacity="0.4" />
+                <stop offset="100%" stopColor="#10B981" stopOpacity="0.1" />
+              </linearGradient>
+              <linearGradient id="silkWave2" x1="100%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.1" />
+                <stop offset="50%" stopColor="#10B981" stopOpacity="0.3" />
+                <stop offset="100%" stopColor="#065F46" stopOpacity="0.6" />
+              </linearGradient>
+              <filter id="waveGlow">
+                <feGaussianBlur stdDeviation="15" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+            <motion.path
+              animate={{
+                d: [
+                  "M 350,0 C 420,150 250,350 300,500 C 350,650 480,720 400,800 L 500,800 L 500,0 Z",
+                  "M 380,0 C 390,200 280,300 320,520 C 360,740 460,700 420,800 L 500,800 L 500,0 Z",
+                  "M 350,0 C 420,150 250,350 300,500 C 350,650 480,720 400,800 L 500,800 L 500,0 Z"
+                ]
+              }}
+              transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+              d="M 350,0 C 420,150 250,350 300,500 C 350,650 480,720 400,800 L 500,800 L 500,0 Z"
+              fill="url(#silkWave)"
+              filter="url(#waveGlow)"
+            />
+            <motion.path
+              animate={{
+                d: [
+                  "M 300,0 C 380,180 200,300 260,480 C 320,660 440,750 370,800 L 500,800 L 500,0 Z",
+                  "M 320,0 C 360,140 230,340 280,460 C 330,580 410,780 390,800 L 500,800 L 500,0 Z",
+                  "M 300,0 C 380,180 200,300 260,480 C 320,660 440,750 370,800 L 500,800 L 500,0 Z"
+                ]
+              }}
+              transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+              d="M 300,0 C 380,180 200,300 260,480 C 320,660 440,750 370,800 L 500,800 L 500,0 Z"
+              fill="url(#silkWave2)"
+            />
+          </svg>
         </div>
 
-        {/* Right Column: Multi-Step Form */}
-        <div className="p-8 sm:p-12 flex flex-col justify-between">
+        {/* Top Left Logo */}
+        <div className="flex items-center gap-3 z-10 text-left">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-emerald-500 flex items-center justify-center font-black text-xl text-white shadow-lg shadow-blue-600/30">
+            U
+          </div>
+          <span className="font-black text-xl tracking-tight text-white font-display">UNIVEST</span>
+        </div>
+
+        {/* Bottom Left Teaser Text */}
+        <div className="z-10 text-left mt-auto">
+          <h2 className="text-[42px] leading-[1.1] font-black text-white font-display tracking-tight">
+            Begin Your<br />Investment<br />Journey
+          </h2>
+          <p className="text-slate-400 text-sm font-medium mt-4 max-w-sm leading-relaxed">
+            Open your free SEBI-compliant trading & research advisory account in under 2 minutes.
+          </p>
+        </div>
+      </div>
+
+      {/* Right Column: Interactive Signup Form (White Background) */}
+      <div className="min-h-screen p-8 sm:p-16 md:p-24 bg-white flex flex-col justify-center text-slate-900 overflow-y-auto">
+        <div className="max-w-md w-full mx-auto flex flex-col justify-between min-h-[550px]">
           <div>
-            <div className="mb-6">
-              <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">Create Account</h1>
-              <p className="text-slate-400 text-xs font-medium mt-1">Start building your stock portfolio with AI insights</p>
+            <div className="mb-6 text-left">
+              <div className="lg:hidden flex items-center gap-2 mb-6">
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-emerald-500 flex items-center justify-center font-black text-lg text-white shadow-md">
+                  U
+                </div>
+                <span className="font-black text-lg text-slate-900 font-display">UNIVEST</span>
+              </div>
+              <h1 className="text-3xl font-black text-slate-900 tracking-tight">Create Account</h1>
+              <p className="text-slate-400 text-xs font-semibold mt-1">Start building your stock portfolio with AI insights</p>
             </div>
 
             {/* Step Progress Bar */}
@@ -191,63 +263,63 @@ export const SignUp: React.FC = () => {
               {[1, 2].map((s) => (
                 <React.Fragment key={s}>
                   <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-black transition ${
-                    s === step ? 'bg-blue-600 text-white' : s < step ? 'bg-emerald-500 text-white' : 'bg-slate-800 text-slate-500'
+                    s === step ? 'bg-[#0D5C4E] text-white' : s < step ? 'bg-[#0D5C4E] text-white' : 'bg-slate-100 text-slate-400'
                   }`}>
                     {s < step ? <Check className="w-3.5 h-3.5" /> : s}
                   </div>
-                  {s < 2 && <div className={`flex-1 h-1 rounded-full transition ${s < step ? 'bg-emerald-500' : 'bg-slate-800'}`} />}
+                  {s < 2 && <div className={`flex-1 h-1 rounded-full transition ${s < step ? 'bg-[#0D5C4E]' : 'bg-slate-100'}`} />}
                 </React.Fragment>
               ))}
             </div>
 
             {errorMessage && (
-              <div className="mb-6 rounded-xl border border-rose-500/30 bg-rose-500/10 p-3 text-[13px] font-bold text-rose-500">
+              <div className="mb-6 rounded-xl border border-rose-500/30 bg-rose-500/5 p-3 text-[13px] font-bold text-rose-500 text-left">
                 {errorMessage}
               </div>
             )}
 
             {step === 1 ? (
-              <div className="space-y-4">
+              <div className="space-y-4 text-left">
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1.5">Full Name *</label>
-                  <div className="relative">
-                    <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <label className="block text-[9px] font-black uppercase tracking-wider text-slate-400 mb-0.5">Full Name *</label>
+                  <div className="relative border border-slate-200 rounded-xl px-4 py-2.5 bg-white focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500/30 transition-colors">
+                    <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="Enter your full name"
-                      className="w-full pl-10 pr-4 py-3 bg-[#1E293B] border border-slate-700 rounded-xl text-xs font-medium text-white placeholder-slate-500 outline-none focus:border-blue-500"
+                      className="w-full pl-8 bg-transparent border-none outline-none text-slate-900 placeholder-slate-350 text-xs font-semibold p-0 focus:ring-0 focus:outline-none"
                     />
                   </div>
                   {errors.name && <span className="text-[11px] font-bold text-rose-500 mt-1 block">{errors.name}</span>}
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1.5">Email Address *</label>
-                  <div className="relative">
-                    <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <label className="block text-[9px] font-black uppercase tracking-wider text-slate-400 mb-0.5">Email Address *</label>
+                  <div className="relative border border-slate-200 rounded-xl px-4 py-2.5 bg-white focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500/30 transition-colors">
+                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
                       type="email"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="you@example.com"
-                      className="w-full pl-10 pr-4 py-3 bg-[#1E293B] border border-slate-700 rounded-xl text-xs font-medium text-white placeholder-slate-500 outline-none focus:border-blue-500"
+                      className="w-full pl-8 bg-transparent border-none outline-none text-slate-900 placeholder-slate-350 text-xs font-semibold p-0 focus:ring-0 focus:outline-none"
                     />
                   </div>
                   {errors.email && <span className="text-[11px] font-bold text-rose-500 mt-1 block">{errors.email}</span>}
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1.5">Mobile Number *</label>
-                  <div className="relative">
-                    <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <label className="block text-[9px] font-black uppercase tracking-wider text-slate-400 mb-0.5">Mobile Number *</label>
+                  <div className="relative border border-slate-200 rounded-xl px-4 py-2.5 bg-white focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500/30 transition-colors">
+                    <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
                       type="tel"
                       value={formData.mobile}
                       onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
                       placeholder="10-digit mobile number"
-                      className="w-full pl-10 pr-4 py-3 bg-[#1E293B] border border-slate-700 rounded-xl text-xs font-medium text-white placeholder-slate-500 outline-none focus:border-blue-500"
+                      className="w-full pl-8 bg-transparent border-none outline-none text-slate-900 placeholder-slate-350 text-xs font-semibold p-0 focus:ring-0 focus:outline-none"
                     />
                   </div>
                   {errors.mobile && <span className="text-[11px] font-bold text-rose-500 mt-1 block">{errors.mobile}</span>}
@@ -258,9 +330,9 @@ export const SignUp: React.FC = () => {
                     type="checkbox"
                     checked={formData.acceptTerms}
                     onChange={(e) => setFormData({ ...formData, acceptTerms: e.target.checked })}
-                    className="w-4 h-4 rounded border-slate-700 bg-[#1E293B] text-blue-600 focus:ring-blue-500"
+                    className="w-4 h-4 rounded border-slate-300 text-[#0D5C4E] focus:ring-[#0D5C4E]"
                   />
-                  <span className="text-xs text-slate-300 font-medium">I agree to SEBI advisory terms & privacy policy</span>
+                  <span className="text-[11px] font-bold text-slate-400">I agree to SEBI advisory terms & privacy policy</span>
                 </div>
                 {errors.acceptTerms && <span className="text-[11px] font-bold text-rose-500 block -mt-2 mb-2">{errors.acceptTerms}</span>}
 
@@ -268,7 +340,7 @@ export const SignUp: React.FC = () => {
                   type="button"
                   onClick={handleNext}
                   disabled={isLoading}
-                  className="w-full py-3.5 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white font-black text-xs rounded-xl transition shadow-md flex items-center justify-center gap-2 cursor-pointer mt-2"
+                  className="w-full py-3.5 bg-[#0D5C4E] hover:bg-[#0A4E42] active:bg-[#073D33] disabled:opacity-50 text-white font-black text-xs rounded-xl transition shadow-md flex items-center justify-center gap-2 cursor-pointer mt-4 tracking-wider uppercase"
                 >
                   {isLoading ? (
                     <>
@@ -284,15 +356,15 @@ export const SignUp: React.FC = () => {
                 </button>
               </div>
             ) : (
-              <div className="space-y-6">
-                <div className="flex items-start justify-between gap-4 bg-[#1E293B] p-4 rounded-xl border border-slate-800">
+              <div className="space-y-6 text-left">
+                <div className="flex items-start justify-between gap-4 bg-slate-50 border border-slate-200 p-4 rounded-xl">
                   <div>
-                    <h3 className="text-sm font-bold text-white tracking-tight">Verify Email</h3>
-                    <p className="text-slate-400 text-xs font-medium mt-1">
-                      Code sent to <span className="font-bold text-white">{formData.email}</span>.
+                    <h3 className="text-sm font-black text-slate-900 tracking-tight">Verify Email</h3>
+                    <p className="text-slate-400 text-xs font-semibold mt-1">
+                      Code sent to <span className="font-bold text-slate-700">{formData.email}</span>.
                     </p>
                   </div>
-                  <span className="grid h-10 w-10 place-items-center rounded-full bg-blue-500/20 text-blue-400 shrink-0">
+                  <span className="grid h-10 w-10 place-items-center rounded-full bg-emerald-500/10 text-emerald-600 shrink-0">
                     <ShieldCheck className="h-5 w-5" />
                   </span>
                 </div>
@@ -309,13 +381,13 @@ export const SignUp: React.FC = () => {
                       inputMode="numeric"
                       maxLength={1}
                       aria-label={`OTP digit ${index + 1}`}
-                      className="h-12 w-11 sm:h-14 sm:w-12 rounded-xl border border-slate-700 bg-[#1E293B] text-center text-lg font-black text-white outline-none transition focus:border-blue-500 focus:bg-slate-800"
+                      className="h-12 w-11 sm:h-14 sm:w-12 rounded-xl border border-slate-200 bg-slate-50 text-center text-lg font-black text-slate-900 outline-none transition focus:border-[#0D5C4E] focus:bg-white focus:shadow-md"
                     />
                   ))}
                 </div>
 
-                <div className="flex items-center justify-between text-xs">
-                  <button onClick={() => { setStep(1); setErrorMessage(''); }} className="font-bold text-blue-400 hover:text-blue-300 transition-colors">
+                <div className="flex items-center justify-between text-[11px] font-bold text-slate-400">
+                  <button onClick={() => { setStep(1); setErrorMessage(''); }} className="text-[#0D5C4E] hover:underline transition-colors">
                     Change details
                   </button>
                   <button 
@@ -326,7 +398,7 @@ export const SignUp: React.FC = () => {
                       } 
                     }} 
                     disabled={Boolean(resendAfter)} 
-                    className="font-bold text-blue-400 disabled:text-slate-500 transition-colors"
+                    className="text-[#0D5C4E] hover:underline disabled:text-slate-300 disabled:no-underline transition-colors"
                   >
                     {resendAfter ? `Resend in ${resendAfter}s` : 'Resend code'}
                   </button>
@@ -336,7 +408,7 @@ export const SignUp: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => { setStep(1); setErrorMessage(''); }}
-                    className="py-3 px-4 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs rounded-xl cursor-pointer"
+                    className="py-3.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-600 font-black text-xs rounded-xl cursor-pointer uppercase tracking-wider transition-colors"
                   >
                     Back
                   </button>
@@ -344,30 +416,29 @@ export const SignUp: React.FC = () => {
                     type="button"
                     onClick={handleVerifyOtp}
                     disabled={isLoading || otp.some(v => !v)}
-                    className="flex-1 py-3.5 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 disabled:hover:bg-emerald-600 text-white font-black text-xs rounded-xl transition shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                    className="flex-1 py-3.5 bg-[#0D5C4E] hover:bg-[#0A4E42] active:bg-[#073D33] disabled:opacity-50 disabled:hover:bg-[#0D5C4E] text-white font-black text-xs rounded-xl transition shadow-md shadow-[#0D5C4E]/10 flex items-center justify-center gap-2 cursor-pointer uppercase tracking-wider"
                   >
                     {isLoading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
-                    <span>{isLoading ? 'Creating Account...' : 'Complete Registration'}</span>
+                    <span>{isLoading ? 'Creating...' : 'Complete'}</span>
                   </button>
                 </div>
               </div>
             )}
 
-            <div className="mt-6 text-center">
-              <span className="text-xs text-slate-400 font-medium">
+            <div className="mt-6 text-center text-xs">
+              <span className="text-slate-400 font-semibold">
                 Already registered?{' '}
-                <button onClick={() => navigate('/login')} className="text-blue-400 font-black hover:text-blue-300">
+                <button onClick={() => navigate('/login')} className="text-[#0D5C4E] font-black hover:underline transition-colors">
                   Sign In
                 </button>
               </span>
             </div>
           </div>
 
-          <div className="mt-6">
-            <TrustBadges />
+          <div className="mt-8">
+            <TrustBadges light={true} />
           </div>
         </div>
-
       </div>
     </div>
   );

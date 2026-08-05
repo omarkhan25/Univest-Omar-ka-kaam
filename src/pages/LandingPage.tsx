@@ -1,8 +1,8 @@
 import React from 'react';
-import BestVersionLandingPage from '../components/landing/BestVersionLandingPage';
+import UnivestStablecoinLanding from '../components/landing/UnivestStablecoinLanding';
 
 export const LandingPage: React.FC = () => {
-  return <BestVersionLandingPage />;
+  return <UnivestStablecoinLanding />;
 };
 
 export default LandingPage;
