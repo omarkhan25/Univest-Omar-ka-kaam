@@ -79,6 +79,19 @@ class AiService {
     const response = await api.get('/ai/market/movers/analyze');
     return response.data;
   }
+
+  /**
+   * Fetch high-conviction AI picks including stocks and mutual funds with high return potential.
+   */
+  async getHighConvictionPicks(): Promise<any[]> {
+    try {
+      const response = await api.get('/ai/high-conviction-picks');
+      return response.data;
+    } catch (error) {
+      console.error('Failed to fetch real AI high-conviction picks', error);
+      return [];
+    }
+  }
 }
 
 export const aiService = new AiService();

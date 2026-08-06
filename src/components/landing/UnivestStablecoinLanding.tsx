@@ -1,6 +1,10 @@
-import React from 'react';
-import { ArrowRight } from 'lucide-react';
-
+import React, { useState } from 'react';
+import { ArrowRight, Mail, ShieldCheck, Fingerprint, Database, BrainCircuit, Activity, Wallet, BadgeCheck, Lock } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { authService } from '../../services/auth.service';
+import { StablecoinNavbar } from './StablecoinNavbar';
+import { AnimatedChatbot } from './AnimatedChatbot';
+import { Footer } from './Footer';
 const LogoIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg
     viewBox="0 0 256 256"
@@ -13,89 +17,82 @@ const LogoIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
 );
 
 export const UnivestStablecoinLanding: React.FC = () => {
-  const heroBrands = [
-    { name: 'Stripe', style: { fontFamily: 'Georgia, serif', fontWeight: 700, letterSpacing: '-0.02em', fontSize: '15px' } },
-    { name: 'Coinbase', style: { fontFamily: 'Arial, sans-serif', fontWeight: 900, letterSpacing: '0.08em', fontSize: '13px', textTransform: 'uppercase' as const } },
-    { name: 'Uniswap', style: { fontFamily: '"Trebuchet MS", sans-serif', fontWeight: 600, letterSpacing: '0.01em', fontSize: '15px', fontStyle: 'italic' } },
-    { name: 'Aave', style: { fontFamily: '"Courier New", monospace', fontWeight: 700, letterSpacing: '0.12em', fontSize: '13px', textTransform: 'uppercase' as const } },
-    { name: 'Compound', style: { fontFamily: 'Palatino, "Book Antiqua", serif', fontWeight: 400, letterSpacing: '-0.01em', fontSize: '16px' } },
-    { name: 'MakerDAO', style: { fontFamily: 'Impact, "Arial Narrow", sans-serif', fontWeight: 400, letterSpacing: '0.04em', fontSize: '14px' } },
-    { name: 'Chainlink', style: { fontFamily: 'Verdana, sans-serif', fontWeight: 700, letterSpacing: '-0.03em', fontSize: '13px' } },
-  ];
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
 
-  const backersBrands = [
-    { name: 'Fundamental Labs', style: { fontFamily: '"Times New Roman", Times, serif', fontWeight: 400, letterSpacing: '0.02em', fontSize: '14px' } },
-    { name: 'KUCOIN', style: { fontFamily: '"Arial Black", sans-serif', fontWeight: 900, letterSpacing: '0.08em', fontSize: '16px' } },
-    { name: 'NGC', style: { fontFamily: 'Impact, sans-serif', fontWeight: 700, letterSpacing: '0.05em', fontSize: '18px' } },
-    { name: 'NxGen', style: { fontFamily: 'Georgia, serif', fontWeight: 600, letterSpacing: '-0.02em', fontSize: '17px' } },
-    { name: 'Matter Labs', style: { fontFamily: 'Helvetica, Arial, sans-serif', fontWeight: 700, letterSpacing: '-0.01em', fontSize: '15px' } },
-    { name: 'DEXTools', style: { fontFamily: 'Verdana, sans-serif', fontWeight: 700, letterSpacing: '0.06em', fontSize: '14px', textTransform: 'uppercase' as const } },
-    { name: 'NGRAVE', style: { fontFamily: '"Courier New", Courier, monospace', fontWeight: 700, letterSpacing: '0.18em', fontSize: '14px' } },
-    { name: 'Polychain', style: { fontFamily: 'Palatino, "Book Antiqua", serif', fontWeight: 500, letterSpacing: '0.03em', fontSize: '15px' } },
+  const handleEmailSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    
+    setIsSubmitting(true);
+    try {
+      const checkRes = await authService.checkEmail(email);
+      if (checkRes.exists) {
+        navigate('/login', { state: { email } });
+      } else {
+        navigate('/signup', { state: { email } });
+      }
+    } catch (error) {
+      console.error('Error checking email:', error);
+      navigate('/signup', { state: { email } });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const trustCards = [
+    {
+      title: 'Bank-Grade Security',
+      description: 'Your investments and personal data are protected using enterprise-level security standards.',
+      icon: ShieldCheck
+    },
+    {
+      title: 'Secure Authentication',
+      description: 'Multi-layer verification and encrypted access keep your account protected at every step.',
+      icon: Fingerprint
+    },
+    {
+      title: 'Reliable Infrastructure',
+      description: 'Built on scalable cloud infrastructure for fast, secure and uninterrupted investing.',
+      icon: Database
+    },
+    {
+      title: 'AI-Powered Intelligence',
+      description: 'Advanced AI continuously analyzes market data to deliver smarter investment insights.',
+      icon: BrainCircuit
+    },
+    {
+      title: 'Real-Time Market Data',
+      description: 'Access live prices, market movements and instant portfolio updates.',
+      icon: Activity
+    },
+    {
+      title: 'Portfolio Protection',
+      description: 'Track your investments securely with real-time monitoring and intelligent alerts.',
+      icon: Wallet
+    },
+    {
+      title: 'Verified Identity',
+      description: 'Digital KYC and secure verification help maintain a trusted investment environment.',
+      icon: BadgeCheck
+    },
+    {
+      title: 'Privacy First',
+      description: 'Your personal and financial information always remains private and encrypted.',
+      icon: Lock
+    }
   ];
 
   return (
     <div className="flex flex-col bg-[#F5F5F5] min-h-screen">
-      {/* Scoped styles for Marquees */}
-      <style>{`
-        @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .marquee-track {
-          display: flex;
-          width: max-content;
-          animation: marquee 22s linear infinite;
-        }
-        
-        @keyframes backers-marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .backers-track {
-          display: flex;
-          width: max-content;
-          animation: backers-marquee 30s linear infinite;
-        }
-      `}</style>
 
       {/* 1. Navbar + Hero wrapper (h-screen) */}
-      <div className="h-screen flex flex-col overflow-hidden container mx-auto relative w-full">
-        {/* Navbar */}
-        <nav className="absolute top-0 left-0 right-0 z-20 px-6 py-5">
-          <div className="flex items-center justify-between max-w-[88rem] mx-auto">
-            {/* Logo */}
-            <div className="flex items-center gap-2">
-              <LogoIcon className="w-7 h-7 text-black" />
-              <span className="text-2xl font-medium tracking-tight text-black">Univest</span>
-            </div>
-
-            {/* Links */}
-            <div className="hidden md:flex items-center gap-8">
-              <a href="#products" className="text-base text-gray-700 hover:text-black font-medium transition-colors duration-200">Products</a>
-              <a href="#ai-research" className="text-base text-gray-700 hover:text-black font-medium transition-colors duration-200">AI Research</a>
-              <a href="#pricing" className="text-base text-gray-700 hover:text-black font-medium transition-colors duration-200">Pricing</a>
-              <a href="#about" className="text-base text-gray-700 hover:text-black font-medium transition-colors duration-200">About</a>
-              <a href="#contact" className="text-base text-gray-700 hover:text-black font-medium transition-colors duration-200">Contact</a>
-            </div>
-
-            {/* Actions */}
-            <div className="flex items-center gap-6">
-              <a href="/login" className="text-base text-gray-700 hover:text-black font-medium transition-colors duration-200">
-                Login
-              </a>
-              <button
-                onClick={() => window.location.href = '/signup'}
-                className="bg-black text-white text-base font-medium px-7 py-2.5 rounded-full hover:bg-gray-800 transition-colors duration-200"
-              >
-                Create Account
-              </button>
-            </div>
-          </div>
-        </nav>
+      <div className="h-screen flex flex-col overflow-hidden relative w-full">
+        <StablecoinNavbar />
 
         {/* Hero Section */}
-        <div className="flex-1 px-6 pt-20 pb-6 flex items-end">
+        <div className="flex-1 px-[50px] pt-20 pb-[50px] flex items-end">
           <div
             className="relative w-full rounded-2xl overflow-hidden"
             style={{ height: 'calc(100vh - 96px)' }}
@@ -113,59 +110,57 @@ export const UnivestStablecoinLanding: React.FC = () => {
             {/* Content Overlay */}
             <div className="relative z-10 flex flex-col items-start justify-start h-full p-12 pt-36 bg-white/10 md:bg-transparent">
               <h1
-                className="text-black text-5xl md:text-6xl font-medium leading-tight max-w-xl mb-4"
+                className="text-black text-7xl md:text-[5.5rem] font-medium leading-tight max-w-4xl mb-6"
                 style={{ letterSpacing: '-0.04em' }}
               >
-                Your Wealth<br />Works
+                Built for <span className="bg-gradient-to-r from-[#2B2440] to-purple-700 bg-clip-text text-transparent">Investors</span><br />Who Think <span className="bg-gradient-to-r from-[#2B2440] to-purple-700 bg-clip-text text-transparent">Ahead.</span>
               </h1>
 
               <p
-                className="text-black/70 text-base md:text-lg max-w-md mb-8 leading-relaxed"
+                className="text-black/70 text-lg md:text-xl max-w-2xl mb-10 leading-relaxed"
                 style={{ fontFamily: "'Inter', ui-sans-serif, system-ui, sans-serif" }}
               >
-                An automated, reward-powered digital dollar built for native passive earnings and effortless connection into DeFi.
+                Univest combines AI research, market intelligence, portfolio management, and investing into one seamless platform helping you invest with clarity and  confidence.
               </p>
 
-              {/* Join us Button */}
-              <button className="inline-flex items-center gap-3 bg-black text-white text-base md:text-lg font-medium pl-8 pr-2 py-2 rounded-full hover:bg-gray-800 transition-colors duration-200">
-                <span>Join us</span>
-                <span className="bg-white rounded-full p-2 flex items-center justify-center">
-                  <ArrowRight className="w-5 h-5 text-black" />
-                </span>
-              </button>
-
-              {/* Brand Marquee */}
-              <div className="mt-24 w-full max-w-md overflow-hidden">
-                <div className="marquee-track">
-                  {/* First set of brands */}
-                  {heroBrands.map((brand, idx) => (
-                    <span
-                      key={`hero-1-${idx}`}
-                      className="mx-7 shrink-0 text-black/60 whitespace-nowrap"
-                      style={brand.style}
-                    >
-                      {brand.name}
-                    </span>
-                  ))}
-                  {/* Duplicate set for loop */}
-                  {heroBrands.map((brand, idx) => (
-                    <span
-                      key={`hero-2-${idx}`}
-                      className="mx-7 shrink-0 text-black/60 whitespace-nowrap"
-                      style={brand.style}
-                    >
-                      {brand.name}
-                    </span>
-                  ))}
+              {/* Email Form */}
+              <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-xl relative">
+                <div className="relative w-full">
+                  <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+                    <Mail className="w-5 h-5 text-black/40" />
+                  </div>
+                  <input 
+                    type="email" 
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    placeholder="Enter your email address" 
+                    className="w-full bg-white/60 backdrop-blur-md border border-white/40 text-black placeholder:text-black/40 text-base md:text-lg rounded-full py-4 pl-14 pr-6 focus:outline-none focus:ring-2 focus:ring-black/20 focus:border-black/30 transition-all shadow-sm"
+                  />
                 </div>
-              </div>
+                <button 
+                  type="submit" 
+                  disabled={isSubmitting}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-black text-white text-base md:text-lg font-medium px-8 py-4 rounded-full hover:bg-gray-800 transition-all duration-200 shrink-0 disabled:opacity-70"
+                >
+                  {isSubmitting ? (
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  ) : (
+                    <>
+                      <span>Get Started</span>
+                      <ArrowRight className="w-5 h-5" />
+                    </>
+                  )}
+                </button>
+              </form>
+
             </div>
           </div>
         </div>
       </div>
 
       {/* 3. Info Section */}
-      <section className="bg-[#F5F5F5] px-6 py-24">
+      <section className="bg-[#F5F5F5] px-[50px] py-24">
         <div className="max-w-[88rem] mx-auto">
           {/* Row 1 */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16 items-start">
@@ -174,18 +169,13 @@ export const UnivestStablecoinLanding: React.FC = () => {
                 className="text-black text-4xl md:text-5xl font-medium leading-tight mb-8"
                 style={{ letterSpacing: '-0.03em' }}
               >
-                Meet USD Univest.
+                One Platform.<br />Smarter Investing.
               </h2>
-              <button className="inline-flex items-center gap-2 bg-black text-white text-base font-medium pl-6 pr-1.5 py-1.5 rounded-full hover:bg-gray-800 transition-colors duration-200">
-                <span>Discover it</span>
-                <span className="bg-white rounded-full p-1.5 flex items-center justify-center">
-                  <ArrowRight className="w-4 h-4 text-black" />
-                </span>
-              </button>
+
             </div>
             <div>
-              <p className="text-black/70 text-2xl md:text-3xl leading-relaxed">
-                USD Univest is a reward-earning dollar coin that lets your savings grow while remaining tied to the U.S. dollar.
+              <p className="text-black/70 text-2xl md:text-3xl leading-relaxed max-w-xl">
+                One intelligent ecosystem combining AI research, market intelligence, portfolio management, and multi-asset investing.
               </p>
             </div>
           </div>
@@ -194,98 +184,129 @@ export const UnivestStablecoinLanding: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Card 1 - spans 2 columns */}
             <div
-              className="lg:col-span-2 rounded-2xl p-7 min-h-80 flex flex-col justify-between"
-              style={{
+              className="lg:col-span-2 rounded-2xl p-7 min-h-80 flex flex-col justify-between relative overflow-hidden group hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-black/5 transition-all duration-300"
+            >
+              <div className="absolute inset-0 z-0 transition-transform duration-700 group-hover:scale-[1.03]" style={{
                 backgroundImage: "url('https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260423_164207_f243351d-ed59-48ec-83a0-a5e996bdbe3c.png&w=1280&q=85')",
                 backgroundSize: 'cover',
                 backgroundPosition: 'center'
-              }}
-            >
-              <h4
-                className="text-black text-2xl font-medium leading-snug"
-                style={{ letterSpacing: '-0.02em' }}
-              >
-                Savings that bloom
-              </h4>
-              <p className="text-black/70 text-base max-w-xs">
-                Gain steady returns as your dollar tokens are routed into top-performing DeFi strategies.
-              </p>
+              }}></div>
+              
+
+
+              <div className="relative z-20">
+                <h4
+                  className="text-black text-3xl font-medium leading-snug mb-3"
+                  style={{ letterSpacing: '-0.02em' }}
+                >
+                  AI Research
+                </h4>
+              </div>
+              <div className="relative z-20">
+                <p className="text-black/80 text-base max-w-sm mb-5 font-medium mix-blend-color-burn">
+                  Turn complex market data into confident investment decisions with institutional-grade research, stock analysis, and intelligent recommendations powered by AI.
+                </p>
+                <a href="#explore-research" className="inline-flex items-center gap-2 group/btn">
+                  <span className="text-black text-sm font-bold">Explore Research</span>
+                  <span className="w-7 h-7 rounded-full bg-black/5 flex items-center justify-center group-hover/btn:bg-black/10 transition-colors duration-200">
+                    <ArrowRight className="w-4 h-4 text-black transition-transform duration-300 group-hover/btn:translate-x-1" />
+                  </span>
+                </a>
+              </div>
             </div>
 
             {/* Card 2 */}
-            <div className="bg-[#2B2644] rounded-2xl p-7 min-h-80 flex flex-col justify-between">
-              <h4 className="text-white text-2xl font-medium leading-snug whitespace-pre-line">
-                Always fluid,{"\n"}always pegged.
-              </h4>
-              <p className="text-white/60 text-base">
-                Keep fully dollar-anchored with on-demand access to funds — no lockups or waits.
-              </p>
+            <div className="bg-[#2B2644] rounded-2xl p-7 min-h-80 flex flex-col justify-between group hover:-translate-y-1.5 hover:shadow-2xl transition-all duration-300 border border-transparent hover:border-white/10 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-white/0 group-hover:from-white/5 group-hover:to-transparent transition-all duration-500" />
+              <div className="relative z-10">
+                <h4 className="text-white text-2xl font-medium leading-snug mb-3">
+                  Market Intelligence
+                </h4>
+                <p className="text-white/70 text-base mb-6">
+                  Stay ahead of the market. Get live news, earnings updates, corporate actions, and instant AI summaries.
+                </p>
+                <ul className="text-white/60 text-sm font-medium space-y-1.5 mb-2">
+                  <li>• Live Market News</li>
+                  <li>• Earnings Updates</li>
+                  <li>• Corporate Actions</li>
+                  <li>• AI Summaries</li>
+                </ul>
+              </div>
+              <a href="#market-insights" className="inline-flex items-center gap-2 group/btn relative z-10 mt-auto w-max">
+                <span className="text-white text-sm font-medium">View Market Insights</span>
+                <span className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center group-hover/btn:bg-white/20 transition-colors duration-200">
+                  <ArrowRight className="w-4 h-4 text-white transition-transform duration-300 group-hover/btn:translate-x-1" />
+                </span>
+              </a>
             </div>
 
             {/* Card 3 */}
-            <div className="bg-[#2B2644] rounded-2xl p-7 min-h-80 flex flex-col justify-between">
-              <h4 className="text-white text-2xl font-medium leading-snug whitespace-pre-line">
-                Fully{"\n"}automated
-              </h4>
-              <p className="text-white/60 text-base">
-                Skip the task of tuning positions yourself. USD Univest runs in the background for you.
-              </p>
+            <div className="bg-[#2B2644] rounded-2xl p-7 min-h-80 flex flex-col justify-between group hover:-translate-y-1.5 hover:shadow-2xl transition-all duration-300 border border-transparent hover:border-white/10 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-white/0 group-hover:from-white/5 group-hover:to-transparent transition-all duration-500" />
+              <div className="relative z-10">
+                <h4 className="text-white text-2xl font-medium leading-snug mb-3">
+                  Portfolio Intelligence
+                </h4>
+                <p className="text-white/70 text-base mb-6">
+                  Grow your wealth with clarity. Track holdings, monitor returns, and get smart AI rebalancing recommendations.
+                </p>
+                <ul className="text-white/60 text-sm font-medium space-y-1.5 mb-2">
+                  <li>• Track Holdings</li>
+                  <li>• Monitor Returns</li>
+                  <li>• Analyze Portfolio</li>
+                  <li>• AI Recommendations</li>
+                </ul>
+              </div>
+              <a href="#portfolio" className="inline-flex items-center gap-2 group/btn relative z-10 mt-auto w-max">
+                <span className="text-white text-sm font-medium">Open Portfolio</span>
+                <span className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center group-hover/btn:bg-white/20 transition-colors duration-200">
+                  <ArrowRight className="w-4 h-4 text-white transition-transform duration-300 group-hover/btn:translate-x-1" />
+                </span>
+              </a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 4. Backed By Section */}
-      <section className="bg-[#F5F5F5] px-6 py-12 border-t border-b border-black/5">
-        <div className="max-w-[88rem] mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 items-center">
-          <div className="md:col-span-1 text-black/70 text-base leading-relaxed whitespace-pre-line">
-            Funded by premier partners{"\n"}and forward-thinking leaders.
-          </div>
-          <div className="md:col-span-3 overflow-hidden w-full">
-            <div className="backers-track">
-              {/* First set of backers */}
-              {backersBrands.map((brand, idx) => (
-                <span
-                  key={`backer-1-${idx}`}
-                  className="mx-10 shrink-0 text-black/50 whitespace-nowrap"
-                  style={brand.style}
-                >
-                  {brand.name}
-                </span>
-              ))}
-              {/* Duplicate set for loop */}
-              {backersBrands.map((brand, idx) => (
-                <span
-                  key={`backer-2-${idx}`}
-                  className="mx-10 shrink-0 text-black/50 whitespace-nowrap"
-                  style={brand.style}
-                >
-                  {brand.name}
-                </span>
-              ))}
+      {/* 4. Trust Section */}
+      <section className="bg-[#F5F5F5] px-[50px] py-24 border-t border-b border-black/5">
+        <div className="max-w-[88rem] mx-auto text-center mb-16">
+          <span className="text-black/50 font-bold text-xs uppercase tracking-widest block mb-4">TRUST & SECURITY</span>
+          <h2
+            className="text-black text-4xl md:text-5xl font-medium leading-tight mb-6"
+            style={{ letterSpacing: '-0.03em' }}
+          >
+            Built for Secure Investing.
+          </h2>
+          <p className="text-black/70 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed" style={{ fontFamily: "'Inter', ui-sans-serif, system-ui, sans-serif" }}>
+            Every investment on Univest is backed by enterprise-grade security, intelligent infrastructure and a privacy-first architecture designed for modern investors.
+          </p>
+        </div>
+        
+        <div className="max-w-[88rem] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {trustCards.map((card, idx) => (
+            <div 
+              key={idx}
+              className="bg-white rounded-[18px] border border-black/5 p-8 shadow-sm hover:shadow-md hover:-translate-y-1.5 hover:border-blue-500 transition-all duration-300 group"
+            >
+              <div className="mb-6 inline-flex p-3 rounded-xl bg-[#F5F5F5] text-black group-hover:text-blue-500 transition-colors duration-300">
+                <card.icon className="w-8 h-8 transition-transform duration-300 group-hover:scale-105 group-hover:rotate-[4deg]" strokeWidth={1.5} />
+              </div>
+              <h4 className="text-black text-xl font-medium mb-3" style={{ letterSpacing: '-0.01em' }}>
+                {card.title}
+              </h4>
+              <p className="text-black/60 text-sm leading-relaxed font-medium">
+                {card.description}
+              </p>
             </div>
-          </div>
+          ))}
         </div>
       </section>
 
       {/* 5. Use Cases Section */}
-      <section className="bg-[#F5F5F5] px-6 py-24">
+      <section className="bg-[#F5F5F5] px-[50px] py-24">
         <div className="max-w-[88rem] mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
           {/* Left Column */}
-          <div className="md:pr-12 md:pt-2">
-            <span className="text-black/60 text-sm block mb-2">USD Univest in Practice</span>
-            <h2
-              className="text-5xl md:text-6xl font-medium leading-none mb-6 text-black"
-              style={{ letterSpacing: '-0.04em' }}
-            >
-              Use modes
-            </h2>
-            <p className="text-black/60 text-base leading-relaxed max-w-sm">
-              USD Univest powers a wide range of modes for builders, companies and treasuries wanting safe and rewarding stablecoin integrations plus more
-            </p>
-          </div>
-
-          {/* Right Column */}
           <div className="relative rounded-3xl overflow-hidden min-h-[720px] w-full">
             {/* Video Background */}
             <video
@@ -297,28 +318,29 @@ export const UnivestStablecoinLanding: React.FC = () => {
               src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260423_183428_ab5e672a-f608-4dcb-b319-f3e040f02e2d.mp4"
             />
             {/* Overlay Content */}
-            <div className="relative z-10 p-10 md:p-12 flex flex-col justify-end h-full min-h-[720px] bg-gradient-to-t from-white/90 via-white/40 to-transparent">
+            <div className="relative z-10 p-10 md:p-12 flex flex-col justify-start h-full min-h-[720px] bg-gradient-to-b from-white/90 via-white/40 to-transparent">
               <h3
                 className="text-black text-4xl md:text-5xl font-medium leading-tight mb-5"
                 style={{ letterSpacing: '-0.03em' }}
               >
-                Commerce
+                AI-Powered Stock Advisory
               </h3>
 
               <p className="text-black/70 text-base max-w-md mb-8">
-                Lift customer retention by offering USD Univest, a trusted dollar-backed stablecoin with strong yields, letting your patrons earn with zero effort on your platform.
-              </p>
+              Receive AI-driven stock recommendations, institutional-grade research and real-time market insights to make confident, data-backed investment decisions.              </p>
 
-              <a href="#know-more" className="inline-flex items-center gap-3 group">
-                <span className="w-9 h-9 rounded-full bg-white/80 backdrop-blur flex items-center justify-center group-hover:bg-white transition-colors duration-200">
-                  <ArrowRight className="w-4 h-4 text-black" />
-                </span>
-                <span className="text-black text-base font-medium">Know more</span>
-              </a>
+
             </div>
+          </div>
+
+          {/* Right Column */}
+          <div className="md:pl-12 md:pt-2 flex justify-center lg:justify-end w-full">
+            <AnimatedChatbot />
           </div>
         </div>
       </section>
+      
+      <Footer />
     </div>
   );
 };

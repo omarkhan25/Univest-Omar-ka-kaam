@@ -82,38 +82,48 @@ class WebSocketService {
       this.status = 'disconnected';
     }
 
-    // Polling fallback every 3 seconds for backend Groww API batch quotes
+    // Polling fallback every 10 seconds for backend Groww API batch quotes
     if (this.pollTimer) clearInterval(this.pollTimer);
+    let isPolling = false;
     this.pollTimer = setInterval(async () => {
+      if (isPolling) return;
+      
       const symbols = Array.from(this.subscribedSymbols);
       if (symbols.length === 0) return;
 
-      const liveQuotes = await marketService.getBatchQuotes(symbols);
-      let updated = false;
+      isPolling = true;
+      try {
+        const liveQuotes = await marketService.getBatchQuotes(symbols);
+        let updated = false;
 
-      Object.entries(liveQuotes).forEach(([sym, quote]) => {
-        if (quote && quote.lastPrice) {
-          this.prices[sym] = {
-            symbol: sym,
-            lastPrice: quote.lastPrice,
-            change: quote.change,
-            changePercent: quote.changePercent,
-            volume: quote.volume,
-            timestamp: new Date().toISOString(),
-            high: quote.high,
-            low: quote.low,
-            open: quote.open,
-            previousClose: quote.previousClose
-          };
-          updated = true;
+        Object.entries(liveQuotes).forEach(([sym, quote]) => {
+          if (quote && quote.lastPrice) {
+            this.prices[sym] = {
+              symbol: sym,
+              lastPrice: quote.lastPrice,
+              change: quote.change,
+              changePercent: quote.changePercent,
+              volume: quote.volume,
+              timestamp: new Date().toISOString(),
+              high: quote.high,
+              low: quote.low,
+              open: quote.open,
+              previousClose: quote.previousClose
+            };
+            updated = true;
+          }
+        });
+
+        if (updated) {
+          this.status = 'connected';
+          this.notifyListeners();
         }
-      });
-
-      if (updated) {
-        this.status = 'connected';
-        this.notifyListeners();
+      } catch (err) {
+        console.error("Polling error:", err);
+      } finally {
+        isPolling = false;
       }
-    }, 3000);
+    }, 10000);
   }
 
   public subscribe(symbol: string) {

@@ -7,6 +7,11 @@ import { DashboardLayout } from './layouts/DashboardLayout';
 import { ProtectedRoute } from './components/routing/ProtectedRoute';
 
 import { LandingPage } from './pages/LandingPage';
+import { ProductsPage } from './pages/landing/ProductsPage';
+import { AiResearchPage } from './pages/landing/AiResearchPage';
+import { PricingPage } from './pages/landing/PricingPage';
+import { AboutPage } from './pages/landing/AboutPage';
+import { ContactPage } from './pages/landing/ContactPage';
 import { Login } from './pages/Login';
 import { SignUp } from './pages/SignUp';
 import AnalystDashboard from './pages/admin/AnalystDashboard';
@@ -21,6 +26,12 @@ function App() {
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<LandingPage />} />
+            <Route path="/products" element={<ProductsPage />} />
+            <Route path="/ai-research" element={<AiResearchPage />} />
+            <Route path="/pricing" element={<PricingPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/register" element={<SignUp />} />

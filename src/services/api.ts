@@ -64,8 +64,7 @@ api.interceptors.response.use(
          isRefreshing = false;
          localStorage.removeItem('access_token');
          localStorage.removeItem('user');
-         // Authentication disabled: Do not redirect to login page.
-         // window.location.href = '/login';
+         window.location.href = '/login';
          return Promise.reject(error);
       }
 
@@ -90,8 +89,7 @@ api.interceptors.response.use(
          localStorage.removeItem('access_token');
          localStorage.removeItem('refresh_token');
          localStorage.removeItem('user');
-         // Authentication disabled: Do not redirect to login page.
-         // window.location.href = '/login';
+         window.location.href = '/login';
          return Promise.reject(refreshError);
       } finally {
          isRefreshing = false;

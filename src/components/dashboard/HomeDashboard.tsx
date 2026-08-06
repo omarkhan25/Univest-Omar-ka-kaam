@@ -262,7 +262,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
   const { data: aiOpportunitiesData, isLoading: isAiLoading } = useQuery({
     queryKey: ['aiOpportunities'],
     queryFn: async () => {
-      const data = await marketService.getResearchCalls();
+      const data = await aiService.getHighConvictionPicks();
       return data || [];
     },
     refetchInterval: 120000
@@ -270,12 +270,13 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
 
   const aiOpportunities = useMemo(() => {
     if (!aiOpportunitiesData) return [];
-    return aiOpportunitiesData.slice(0, 3).map(call => ({
+    return aiOpportunitiesData.slice(0, 4).map(call => ({
       symbol: call.symbol,
       company: call.companyName,
+      type: call.type || 'Stock',
       signal: call.recommendation,
       confidence: call.confidenceScore,
-      targetPrice: `₹${call.targetPrice}`,
+      targetPrice: typeof call.targetPrice === 'number' ? `₹${call.targetPrice.toLocaleString('en-IN')}` : call.targetPrice,
       upside: `+${call.potentialReturn}%`,
       risk: call.riskLevel,
       reason: call.summary
@@ -389,13 +390,6 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
     }
   ];
 
-  const recentActivities = [
-    { type: 'BUY', symbol: 'RELIANCE', detail: '15 Qty @ ₹2,920.00', status: 'Executed', time: 'Yesterday' },
-    { type: 'DIVIDEND', symbol: 'HDFCBANK', detail: '₹2,925.00 Credited to Primary Bank', status: 'Completed', time: '2 Days Ago' },
-    { type: 'SIP', symbol: 'ICICI Prudential Bluechip', detail: '₹10,000 Auto-Debited', status: 'Executed', time: '4 Days Ago' },
-    { type: 'DEPOSIT', symbol: 'UPI Wallet', detail: '₹50,000 Added to Available Cash', status: 'Success', time: '1 Week Ago' }
-  ];
-
   const dynamicRecentActivities = useMemo(() => {
     const formattedTrades = (orderHistory || []).map((trade: any) => ({
       type: trade.order_type || 'TRADE',
@@ -404,7 +398,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
       status: trade.status || 'Executed',
       time: new Date(trade.created_at).toLocaleDateString()
     }));
-    return [...formattedTrades, ...recentActivities];
+    return formattedTrades;
   }, [orderHistory]);
 
   return (
@@ -663,7 +657,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
 
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <section className="bg-white border border-slate-200 rounded-[28px] p-6 shadow-xs flex flex-col justify-between gap-5">
+        <section className="bg-white border border-slate-200 rounded-[28px] p-6 shadow-xs flex flex-col gap-5 h-[380px]">
           <div className="flex items-center justify-between border-b border-slate-100 pb-3.5">
             <div className="flex items-center gap-2">
               <Sparkles className="w-4.5 h-4.5 text-blue-600 fill-blue-500/20 animate-pulse" />
@@ -673,7 +667,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
             </div>
           </div>
 
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 flex-1 overflow-y-auto pr-1">
             {isAiLoading ? (
               <div className="p-6 bg-slate-50 border border-slate-100 rounded-2xl flex flex-col items-center justify-center gap-3">
                 <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
@@ -691,26 +685,62 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
               aiOpportunities.map((opp: any) => (
                 <div 
                   key={opp.symbol}
-                  className="p-4 bg-slate-50 border border-slate-100 hover:border-blue-200 rounded-2xl transition flex flex-col gap-3 group"
+                  className="p-4 bg-white border border-slate-200 hover:border-blue-300 hover:shadow-md rounded-2xl transition-all duration-300 flex flex-col gap-3 group relative overflow-hidden"
                 >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="font-black text-sm text-slate-900">{opp.symbol}</span>
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50/50 rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
+                  
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-start gap-3">
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
+                        opp.type === 'Mutual Fund' 
+                          ? 'bg-violet-100 text-violet-600' 
+                          : 'bg-blue-100 text-blue-600'
+                      }`}>
+                        {opp.type === 'Mutual Fund' ? <Layers className="w-5 h-5" /> : <BarChart3 className="w-5 h-5" />}
+                      </div>
+                      <div className="flex flex-col">
+                        <div className="flex items-center gap-2">
+                          <span className="font-black text-sm text-slate-900">{opp.symbol}</span>
+                          <span className="text-[9px] font-black bg-blue-50 text-blue-700 border border-blue-100 px-1.5 py-0.5 rounded uppercase tracking-wider">
+                            {opp.type}
+                          </span>
+                        </div>
+                        <span className="text-[10px] text-slate-500 font-bold truncate max-w-[180px] mt-0.5">{opp.company}</span>
+                      </div>
+                    </div>
+                    
+                    <div className="flex flex-col items-end">
                       <span className="text-[9px] font-black bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded uppercase">
                         {opp.signal}
                       </span>
+                      <span className="text-xs font-black text-emerald-600 mt-1">
+                        {opp.upside}
+                      </span>
                     </div>
-                    <span className="text-xs font-black text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded-md">
-                      Target {opp.targetPrice} ({opp.upside})
-                    </span>
                   </div>
 
-                  <p className="text-[11px] text-slate-600 font-medium leading-relaxed">
-                    {opp.reason}
-                  </p>
+                  <div className="bg-slate-50 border border-slate-100 rounded-xl p-3 flex flex-col gap-2 mt-1">
+                    <p className="text-[11px] text-slate-700 font-medium leading-relaxed">
+                      {opp.reason}
+                    </p>
+                    <div className="flex items-center gap-4 mt-1">
+                      <div className="flex items-center gap-1.5">
+                        <Award className="w-3.5 h-3.5 text-amber-500" />
+                        <span className="text-[10px] font-bold text-slate-600">AI Confidence: <span className="text-slate-900">{opp.confidence}%</span></span>
+                      </div>
+                      {opp.targetPrice && (
+                        <div className="flex items-center gap-1.5">
+                          <Zap className="w-3.5 h-3.5 text-blue-500" />
+                          <span className="text-[10px] font-bold text-slate-600">Target: <span className="text-slate-900">{opp.targetPrice}</span></span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
 
-                  <div className="flex items-center justify-between pt-1 border-t border-slate-200/60">
-                    <span className="text-[9px] text-slate-400 font-bold uppercase">Risk Profile: {opp.risk}</span>
+                  <div className="flex items-center justify-between pt-2">
+                    <span className="text-[10px] font-bold px-2 py-1 bg-slate-100 text-slate-600 rounded-lg">
+                      Risk: {opp.risk}
+                    </span>
                     <div className="flex items-center gap-2">
                       <button
                         onClick={(e) => {
@@ -718,7 +748,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
                           setStockToSave(opp);
                           setShowSaveToWatchlistModal(true);
                         }}
-                        className="text-[10px] font-black text-slate-600 hover:text-blue-600 transition cursor-pointer flex items-center gap-1"
+                        className="px-3 py-1.5 bg-white border border-slate-200 hover:bg-slate-50 text-[10px] font-black text-slate-700 rounded-xl transition cursor-pointer flex items-center gap-1"
                       >
                         <Bookmark className="w-3.5 h-3.5" /> Save
                       </button>
@@ -726,9 +756,9 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
                         onClick={() => {
                           if (onSelectResearch) onSelectResearch({ symbol: opp.symbol, company: opp.company });
                         }}
-                        className="text-[10px] font-black text-slate-600 hover:text-slate-900 transition cursor-pointer"
+                        className="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-[10px] font-black text-white rounded-xl transition cursor-pointer flex items-center gap-1 shadow-xs"
                       >
-                        Read Research
+                        Explore <ArrowRight className="w-3 h-3" />
                       </button>
                     </div>
                   </div>
@@ -738,7 +768,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
           </div>
         </section>
 
-        <section className="bg-white border border-slate-200 rounded-[28px] p-6 shadow-xs flex flex-col justify-between gap-5">
+        <section className="bg-white border border-slate-200 rounded-[28px] p-6 shadow-xs flex flex-col gap-5 h-[380px]">
           <div className="flex items-center justify-between border-b border-slate-100 pb-3.5">
             <div className="flex items-center gap-2">
               <Activity className="w-4.5 h-4.5 text-blue-600" />
@@ -748,7 +778,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
             </div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5 flex-1 overflow-y-auto pr-1 content-start">
             {marketOverview.map((idx: any) => (
               <div key={idx.name} className="p-3.5 bg-slate-50 border border-slate-100 rounded-2xl flex flex-col gap-1.5">
                 <span className="text-[9px] font-black text-slate-400 uppercase">{idx.name}</span>
@@ -779,26 +809,32 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {dynamicRecentActivities.map((act: any, idx: number) => (
-            <div key={idx} className="p-4 bg-slate-50 border border-slate-100 rounded-2xl flex flex-col justify-between gap-2">
-              <div className="flex items-center justify-between">
-                <span className={`text-[9px] font-black px-2 py-0.5 rounded uppercase ${
-                  act.type === 'BUY' ? 'bg-emerald-100 text-emerald-800' :
-                  act.type === 'DIVIDEND' ? 'bg-blue-100 text-blue-800' :
-                  act.type === 'SIP' ? 'bg-violet-100 text-violet-800' : 'bg-slate-200 text-slate-800'
-                }`}>
-                  {act.type}
-                </span>
-                <span className="text-[9px] text-slate-400 font-bold">{act.time}</span>
+        {dynamicRecentActivities.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {dynamicRecentActivities.map((act: any, idx: number) => (
+              <div key={idx} className="p-4 bg-slate-50 border border-slate-100 rounded-2xl flex flex-col justify-between gap-2">
+                <div className="flex items-center justify-between">
+                  <span className={`text-[9px] font-black px-2 py-0.5 rounded uppercase ${
+                    act.type === 'BUY' ? 'bg-emerald-100 text-emerald-800' :
+                    act.type === 'DIVIDEND' ? 'bg-blue-100 text-blue-800' :
+                    act.type === 'SIP' ? 'bg-violet-100 text-violet-800' : 'bg-slate-200 text-slate-800'
+                  }`}>
+                    {act.type}
+                  </span>
+                  <span className="text-[9px] text-slate-400 font-bold">{act.time}</span>
+                </div>
+                <div>
+                  <strong className="text-xs font-black text-slate-900 block">{act.symbol}</strong>
+                  <span className="text-[10px] text-slate-500 font-medium block mt-0.5">{act.detail}</span>
+                </div>
               </div>
-              <div>
-                <strong className="text-xs font-black text-slate-900 block">{act.symbol}</strong>
-                <span className="text-[10px] text-slate-500 font-medium block mt-0.5">{act.detail}</span>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center p-8 border border-dashed border-slate-200 rounded-2xl bg-slate-50">
+            <span className="text-sm font-bold text-slate-400">No recent activity to show</span>
+          </div>
+        )}
       </section>
 
       <AnimatePresence>

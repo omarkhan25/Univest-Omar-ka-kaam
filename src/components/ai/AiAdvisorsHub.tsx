@@ -96,7 +96,7 @@ export const AiAdvisorsHub: React.FC<AiAdvisorsHubProps> = ({ onTradeStock }) =>
       const aiMsg: Message = {
         id: (Date.now() + 1).toString(),
         sender: 'ai',
-        text: data.text || `Based on current market data, ${query} — here's what I found: The NIFTY is showing moderate bullish momentum with RSI at ${Math.floor(Math.random() * 20 + 50)} and strong institutional support. Consider watching IT and Banking sectors closely this week.`,
+        text: data.text,
         time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }),
       };
 
