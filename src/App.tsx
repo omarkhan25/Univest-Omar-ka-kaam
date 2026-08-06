@@ -17,6 +17,7 @@ import { SignUp } from './pages/SignUp';
 import AnalystDashboard from './pages/admin/AnalystDashboard';
 import Pricing from './pages/Pricing';
 import InvestorPersonalization from './components/molecules/InvestorPersonalization';
+import { OnboardingFlowContainer } from './pages/onboarding/OnboardingFlowContainer';
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
               <Route path="/pricing" element={<DashboardLayout><Pricing /></DashboardLayout>} />
               <Route path="/analyst" element={<DashboardLayout><AnalystDashboard /></DashboardLayout>} />
               <Route path="/personalization" element={<InvestorPersonalization />} />
+              <Route path="/onboarding" element={<OnboardingFlowContainer />} />
             </Route>
             
             {/* Fallback redirect */}

@@ -8,7 +8,7 @@ export interface RegisterRequest {
   email: string;
   otp: string;
   full_name: string;
-  phone_number: string;
+  phone_number?: string;
 }
 
 export interface LoginRequest {
@@ -62,8 +62,9 @@ class AuthService {
   /**
    * Get the current authenticated user's profile
    */
-  async getUserProfile(): Promise<any> {
-    const response = await api.get('/auth/me');
+  async getUserProfile(token?: string): Promise<any> {
+    const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
+    const response = await api.get('/auth/me', config);
     return response.data;
   }
 
