@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Shield, Key, Smartphone, Fingerprint, History, Laptop, XCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -72,7 +72,7 @@ export const SecuritySettings: React.FC = () => {
           </h3>
           <button 
             onClick={() => toast.success('Logged out of all other devices.')}
-            className="text-[10px] font-black uppercase text-rose-600 hover:text-rose-700 transition"
+            className="text-[10px] font-black uppercase text-danger hover:text-rose-700 transition"
           >
             Log out of all devices
           </button>
@@ -99,7 +99,7 @@ export const SecuritySettings: React.FC = () => {
             </div>
             <button 
               onClick={() => toast.success('Session terminated.')}
-              className="text-slate-400 hover:text-rose-600 transition p-2"
+              className="text-slate-400 hover:text-danger transition p-2"
             >
               <XCircle className="w-5 h-5" />
             </button>

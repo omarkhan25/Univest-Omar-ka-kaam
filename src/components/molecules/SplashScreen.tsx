@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+﻿import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
@@ -69,7 +69,7 @@ export const SplashScreen = () => {
 
       // 1. Draw Subtle Upward Trendline
       ctx.beginPath();
-      ctx.strokeStyle = 'rgba(37, 99, 235, 0.08)'; // faint blue
+      ctx.strokeStyle = 'rgba(21, 81, 157, 0.08)'; // faint blue
       ctx.lineWidth = 1.5;
       for (let i = 0; i < trendPoints.length; i++) {
         if (i === 0) {
@@ -95,7 +95,7 @@ export const SplashScreen = () => {
         // Draw node dot
         ctx.beginPath();
         ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(37, 99, 235, 0.25)';
+        ctx.fillStyle = 'rgba(21, 81, 157, 0.25)';
         ctx.fill();
 
         // Connect nearby nodes
@@ -107,7 +107,7 @@ export const SplashScreen = () => {
             ctx.beginPath();
             ctx.moveTo(node.x, node.y);
             ctx.lineTo(other.x, other.y);
-            ctx.strokeStyle = `rgba(37, 99, 235, ${alpha})`;
+            ctx.strokeStyle = `rgba(21, 81, 157, ${alpha})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }

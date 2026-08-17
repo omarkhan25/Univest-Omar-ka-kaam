@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { 
   Bookmark, FileText, Sparkles, Clock, ChevronRight, 
   Share2, Trash2, Download, Search, Filter, Eye, 
@@ -166,7 +166,7 @@ const recentlyViewed = [
 ];
 
 const typeColor = (type: string) => {
-  if (type === 'Equity Research') return 'bg-blue-50 text-blue-700 border-blue-100';
+  if (type === 'Equity Research') return 'bg-primary-light text-primary border-[#E2E8F0]';
   if (type === 'Sector Report') return 'bg-violet-50 text-violet-700 border-violet-100';
   if (type === 'AI Brief') return 'bg-emerald-50 text-emerald-700 border-emerald-100';
   if (type === 'F&O Strategy') return 'bg-rose-50 text-rose-700 border-rose-100';
@@ -191,7 +191,7 @@ export const SavedTab: React.FC = () => {
       {/* ── STATS HEADER ── */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[
-          { label: 'Saved Reports', value: SAVED_REPORTS.length, icon: FileText, color: 'text-blue-600', bg: 'bg-blue-50', border: 'border-blue-100' },
+          { label: 'Saved Reports', value: SAVED_REPORTS.length, icon: FileText, color: 'text-primary', bg: 'bg-primary-light', border: 'border-[#E2E8F0]' },
           { label: 'AI Briefs', value: SAVED_BRIEFS.length, icon: Sparkles, color: 'text-violet-600', bg: 'bg-violet-50', border: 'border-violet-100' },
           { label: 'Bookmarked Calls', value: BOOKMARKED_CALLS.length, icon: Bookmark, color: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-100' },
           { label: 'Recently Viewed', value: recentlyViewed.length, icon: Eye, color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-100' },
@@ -220,7 +220,7 @@ export const SavedTab: React.FC = () => {
             placeholder="Search saved reports, briefs, symbols..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-white border border-slate-200 rounded-2xl pl-10 pr-4 py-3 text-sm font-medium text-slate-800 placeholder:text-slate-400 outline-none focus:border-blue-400 shadow-xs transition"
+            className="w-full bg-white border border-slate-200 rounded-2xl pl-10 pr-4 py-3 text-sm font-medium text-slate-800 placeholder:text-slate-400 outline-none focus:border-primary-light shadow-xs transition"
           />
         </div>
         <div className="flex items-center gap-1.5 bg-white border border-slate-200 rounded-2xl p-1.5 shadow-xs">
@@ -242,8 +242,8 @@ export const SavedTab: React.FC = () => {
       {/* ── SAVED REPORTS ── */}
       <div className="flex flex-col gap-5">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center">
-            <FileText className="w-4 h-4 text-blue-600" />
+          <div className="w-8 h-8 rounded-xl bg-primary-light border border-[#E2E8F0] flex items-center justify-center">
+            <FileText className="w-4 h-4 text-primary" />
           </div>
           <div>
             <h3 className="text-sm font-black text-slate-900">Saved Research Reports</h3>
@@ -261,12 +261,12 @@ export const SavedTab: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, x: -40 }}
                 whileHover={{ y: -2 }}
-                className="bg-white border border-slate-200 rounded-[22px] p-5 hover:border-blue-200 hover:shadow-md transition-all cursor-pointer group"
+                className="bg-white border border-slate-200 rounded-[22px] p-5 hover:border-primary-light hover:shadow-md transition-all cursor-pointer group"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-4 flex-1 min-w-0">
                     {/* File icon */}
-                    <div className="w-12 h-14 rounded-xl bg-slate-100 border border-slate-200 flex flex-col items-center justify-center shrink-0 group-hover:border-blue-200 transition">
+                    <div className="w-12 h-14 rounded-xl bg-slate-100 border border-slate-200 flex flex-col items-center justify-center shrink-0 group-hover:border-primary-light transition">
                       <FileText className="w-5 h-5 text-slate-500 mb-0.5" />
                       <span className="text-[8px] font-black text-slate-400 uppercase">PDF</span>
                     </div>
@@ -279,7 +279,7 @@ export const SavedTab: React.FC = () => {
                           <span className="text-[9px] font-black px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-100">NEW</span>
                         )}
                       </div>
-                      <h4 className="text-sm font-black text-slate-900 group-hover:text-blue-600 transition-colors leading-tight mb-1.5 line-clamp-2">
+                      <h4 className="text-sm font-black text-slate-900 group-hover:text-primary transition-colors leading-tight mb-1.5 line-clamp-2">
                         {r.title}
                       </h4>
                       <div className="flex items-center gap-3 flex-wrap">
@@ -305,7 +305,7 @@ export const SavedTab: React.FC = () => {
 
                   {/* Actions */}
                   <div className="flex items-center gap-2 shrink-0">
-                    <button className="p-2 hover:bg-blue-50 border border-slate-200 hover:border-blue-200 rounded-xl text-slate-400 hover:text-blue-600 transition cursor-pointer">
+                    <button className="p-2 hover:bg-primary-light border border-slate-200 hover:border-primary-light rounded-xl text-slate-400 hover:text-primary transition cursor-pointer">
                       <Download className="w-3.5 h-3.5" />
                     </button>
                     <button className="p-2 hover:bg-slate-50 border border-slate-200 rounded-xl text-slate-400 hover:text-slate-700 transition cursor-pointer">
@@ -313,7 +313,7 @@ export const SavedTab: React.FC = () => {
                     </button>
                     <button
                       onClick={(e) => { e.stopPropagation(); setDeletedIds(prev => [...prev, r.id]); }}
-                      className="p-2 hover:bg-rose-50 border border-slate-200 hover:border-rose-200 rounded-xl text-slate-400 hover:text-rose-600 transition cursor-pointer"
+                      className="p-2 hover:bg-rose-50 border border-slate-200 hover:border-rose-200 rounded-xl text-slate-400 hover:text-danger transition cursor-pointer"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
@@ -382,7 +382,7 @@ export const SavedTab: React.FC = () => {
                         <button className="p-1.5 hover:bg-slate-50 border border-slate-100 rounded-lg text-slate-400 hover:text-slate-700 transition cursor-pointer">
                           <Share2 className="w-3 h-3" />
                         </button>
-                        <button className="p-1.5 hover:bg-rose-50 border border-slate-100 rounded-lg text-slate-400 hover:text-rose-600 transition cursor-pointer">
+                        <button className="p-1.5 hover:bg-rose-50 border border-slate-100 rounded-lg text-slate-400 hover:text-danger transition cursor-pointer">
                           <Trash2 className="w-3 h-3" />
                         </button>
                       </div>
@@ -442,7 +442,7 @@ export const SavedTab: React.FC = () => {
                   </div>
                   <div>
                     <span className="text-[8px] font-black text-slate-400 uppercase block">Current P&L</span>
-                    <span className={`text-xs font-black ${call.pnlPositive ? 'text-emerald-600' : 'text-rose-600'}`}>{call.pnl}</span>
+                    <span className={`text-xs font-black ${call.pnlPositive ? 'text-emerald-600' : 'text-danger'}`}>{call.pnl}</span>
                   </div>
                 </div>
 
@@ -473,7 +473,7 @@ export const SavedTab: React.FC = () => {
             <motion.div
               key={i}
               whileHover={{ y: -2 }}
-              className="bg-white border border-slate-200 p-4 rounded-[20px] flex items-center justify-between hover:border-blue-200 hover:shadow-sm transition-all cursor-pointer group"
+              className="bg-white border border-slate-200 p-4 rounded-[20px] flex items-center justify-between hover:border-primary-light hover:shadow-sm transition-all cursor-pointer group"
             >
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-xl bg-slate-900 text-white text-[10px] font-black flex items-center justify-center shrink-0">
@@ -481,10 +481,10 @@ export const SavedTab: React.FC = () => {
                 </div>
                 <div>
                   <span className="text-[9px] font-black text-slate-400 block uppercase">{item.type}</span>
-                  <h4 className="text-xs font-black text-slate-900 group-hover:text-blue-600 transition line-clamp-1">{item.title}</h4>
+                  <h4 className="text-xs font-black text-slate-900 group-hover:text-primary transition line-clamp-1">{item.title}</h4>
                 </div>
               </div>
-              <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-all shrink-0" />
+              <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-primary group-hover:translate-x-0.5 transition-all shrink-0" />
             </motion.div>
           ))}
         </div>
@@ -500,7 +500,7 @@ export const SavedTab: React.FC = () => {
           <button className="flex items-center gap-2 px-4 py-2.5 bg-white/10 border border-white/20 text-white text-xs font-black rounded-xl hover:bg-white/20 transition cursor-pointer">
             <Radio className="w-3.5 h-3.5" /> Live Calls
           </button>
-          <button className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-black rounded-xl transition cursor-pointer shadow-md">
+          <button className="flex items-center gap-2 px-4 py-2.5 bg-primary hover:bg-primary-dark text-white text-xs font-black rounded-xl transition cursor-pointer shadow-md">
             <Sparkles className="w-3.5 h-3.5" /> AI Research Brief <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>

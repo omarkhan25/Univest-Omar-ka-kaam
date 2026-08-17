@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Sparkles, X, Maximize2, Minimize2, Send, Mic, Volume2, Bookmark, Share2, 
@@ -148,13 +148,13 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
           {/* TOP HEADER */}
           <header className="p-5 border-b border-[#E2E8F0] bg-white flex items-center justify-between shadow-2xs">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center font-black text-sm shadow-md">
+              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-primary to-indigo-700 text-white flex items-center justify-center font-black text-sm shadow-md">
                 <Sparkles className="w-5 h-5 fill-white animate-pulse" />
               </div>
               <div>
-                <h3 className="font-black text-base text-[#0F172A] leading-tight flex items-center gap-2">
+                <h3 className="font-black text-base text-[#172033] leading-tight flex items-center gap-2">
                   Univest AI Copilot
-                  <span className="px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 text-[9px] font-black border border-blue-200 uppercase">
+                  <span className="px-2 py-0.5 rounded-full bg-primary-light text-primary text-[9px] font-black border border-primary-light uppercase">
                     SEBI Integrated
                   </span>
                 </h3>
@@ -186,7 +186,7 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 className={`px-3.5 py-1.5 rounded-xl transition ${
-                  activeTab === tab ? 'bg-[#0F172A] text-white font-black shadow-2xs' : 'text-slate-500 hover:text-[#0F172A]'
+                  activeTab === tab ? 'bg-[#172033] text-white font-black shadow-2xs' : 'text-slate-500 hover:text-[#172033]'
                 }`}
               >
                 {tab}
@@ -202,10 +202,10 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
               <div className="flex flex-col gap-6">
                 
                 {/* Today's AI Brief Card */}
-                <div className="bg-[#0F172A] text-white rounded-[24px] p-6 shadow-xl relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
+                <div className="bg-[#172033] text-white rounded-[24px] p-6 shadow-xl relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
                   <div className="relative z-10 flex flex-col gap-3">
-                    <span className="text-[10px] font-black text-blue-400 uppercase tracking-widest flex items-center gap-1.5">
+                    <span className="text-[10px] font-black text-[#64748B] uppercase tracking-widest flex items-center gap-1.5">
                       <Sparkles className="w-3.5 h-3.5" /> TODAY'S COPILOT SYNTHESIS
                     </span>
                     <h4 className="text-lg font-black leading-snug">
@@ -225,7 +225,7 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
                   </div>
                   <div className="bg-[#F8FAFC] border border-[#E2E8F0] p-4 rounded-2xl">
                     <span className="text-[10px] font-bold text-slate-400 uppercase block mb-1">Top Risk Alert</span>
-                    <strong className="text-xs text-rose-600 font-black block">Small-cap IT Drag (-0.8%)</strong>
+                    <strong className="text-xs text-danger font-black block">Small-cap IT Drag (-0.8%)</strong>
                   </div>
                 </div>
 
@@ -240,10 +240,10 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
                           setActiveTab('Chat');
                           handleSend(p);
                         }}
-                        className="p-3 bg-[#F8FAFC] border border-[#E2E8F0] hover:border-blue-300 hover:bg-blue-50/50 rounded-xl text-xs text-left font-bold text-[#0F172A] transition flex items-center justify-between group"
+                        className="p-3 bg-[#F8FAFC] border border-[#E2E8F0] hover:border-blue-300 hover:bg-primary-light/50 rounded-xl text-xs text-left font-bold text-[#172033] transition flex items-center justify-between group"
                       >
                         <span>{p}</span>
-                        <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-600 transition" />
+                        <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-primary transition" />
                       </button>
                     ))}
                   </div>
@@ -262,22 +262,22 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
                   >
                     <div className={`p-4 rounded-2xl max-w-[90%] text-xs leading-relaxed font-medium ${
                       msg.sender === 'user'
-                        ? 'bg-blue-600 text-white rounded-br-none'
-                        : 'bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] rounded-bl-none shadow-2xs'
+                        ? 'bg-primary text-white rounded-br-none'
+                        : 'bg-[#F8FAFC] border border-[#E2E8F0] text-[#172033] rounded-bl-none shadow-2xs'
                     }`}>
                       <p>{msg.text}</p>
 
                       {/* Embedded Comparison Component */}
                       {msg.type === 'comparison' && msg.comparisonData && (
-                        <div className="mt-3 bg-white p-3.5 rounded-xl border border-slate-200 text-[#0F172A]">
+                        <div className="mt-3 bg-white p-3.5 rounded-xl border border-slate-200 text-[#172033]">
                           <div className="grid grid-cols-2 gap-3 text-[11px] font-bold border-b border-slate-100 pb-2 mb-2">
                             <div>
-                              <span className="text-blue-600 font-black block">{msg.comparisonData.stockA.symbol}</span>
+                              <span className="text-primary font-black block">{msg.comparisonData.stockA.symbol}</span>
                               <span>P/E: {msg.comparisonData.stockA.pe}</span>
                               <span className="block text-emerald-600">ROE: {msg.comparisonData.stockA.roe}</span>
                             </div>
                             <div>
-                              <span className="text-indigo-600 font-black block">{msg.comparisonData.stockB.symbol}</span>
+                              <span className="text-primary font-black block">{msg.comparisonData.stockB.symbol}</span>
                               <span>P/E: {msg.comparisonData.stockB.pe}</span>
                               <span className="block text-emerald-600">ROE: {msg.comparisonData.stockB.roe}</span>
                             </div>
@@ -290,7 +290,7 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
                         <div className="mt-3 pt-3 border-t border-slate-200/60 flex flex-col gap-2 text-[10px]">
                           {msg.confidence && (
                             <div className="flex items-center justify-between text-slate-400 font-bold">
-                              <span className="flex items-center gap-1 text-blue-600">
+                              <span className="flex items-center gap-1 text-primary">
                                 <Sparkles className="w-3 h-3" /> {msg.confidence}% AI Conviction
                               </span>
                               <span>{msg.timestamp}</span>
@@ -306,7 +306,7 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
                                   onClick={() => {
                                     if (onSelectStock) onSelectStock({ symbol: st, company: st });
                                   }}
-                                  className="px-2 py-0.5 rounded bg-slate-200 hover:bg-slate-300 font-black text-[#0F172A] transition"
+                                  className="px-2 py-0.5 rounded bg-slate-200 hover:bg-slate-300 font-black text-[#172033] transition"
                                 >
                                   ${st}
                                 </button>
@@ -320,7 +320,7 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
                               onClick={() => {
                                 if (onTrade) onTrade({ symbol: msg.relatedStocks?.[0] || 'RELIANCE', rec: 'BUY' });
                               }}
-                              className="px-3 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-black transition"
+                              className="px-3 py-1 rounded-lg bg-primary hover:bg-primary-dark text-white font-black transition"
                             >
                               Trade {msg.relatedStocks?.[0] || 'Asset'}
                             </button>
@@ -338,7 +338,7 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
                 ))}
                 {isAiTyping && (
                   <div className="flex flex-col gap-2 items-start">
-                    <div className="p-4 rounded-2xl max-w-[90%] text-xs leading-relaxed font-medium bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] rounded-bl-none shadow-2xs">
+                    <div className="p-4 rounded-2xl max-w-[90%] text-xs leading-relaxed font-medium bg-[#F8FAFC] border border-[#E2E8F0] text-[#172033] rounded-bl-none shadow-2xs">
                       <div className="flex gap-1 items-center">
                         <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
                         <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
@@ -358,7 +358,7 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
               <button
                 onClick={toggleVoiceMode}
                 className={`p-2.5 rounded-xl border transition ${
-                  isRecording ? 'bg-rose-50 border-rose-200 text-rose-600 animate-pulse' : 'bg-slate-50 border-slate-200 text-slate-500 hover:bg-slate-100'
+                  isRecording ? 'bg-rose-50 border-rose-200 text-danger animate-pulse' : 'bg-slate-50 border-slate-200 text-slate-500 hover:bg-slate-100'
                 }`}
                 title="Voice Input"
               >
@@ -371,12 +371,12 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
                 value={inputVal}
                 onChange={(e) => setInputVal(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                className="flex-1 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-2.5 text-xs text-[#0F172A] outline-none focus:border-blue-600 font-medium"
+                className="flex-1 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-2.5 text-xs text-[#172033] outline-none focus:border-primary font-medium"
               />
 
               <button
                 onClick={() => handleSend()}
-                className="p-2.5 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition shadow-sm"
+                className="p-2.5 rounded-xl bg-primary text-white hover:bg-primary transition shadow-sm"
               >
                 <Send className="w-4 h-4" />
               </button>

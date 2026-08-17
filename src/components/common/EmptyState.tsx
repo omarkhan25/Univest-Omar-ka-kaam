@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { 
   Radio, Briefcase, History, Bookmark, Bell, Search, Plus, ArrowRight 
 } from 'lucide-react';
@@ -37,14 +37,14 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
     switch (variant) {
       case 'Research':
         return {
-          icon: <Radio className="w-8 h-8 text-rose-500" />,
+          icon: <Radio className="w-8 h-8 text-danger" />,
           title: title || 'No Research Calls Available',
           description: description || 'Our SEBI Research Analysts are scanning market signals. Check back shortly for fresh high-conviction ideas.',
           actionLabel: actionLabel || 'Explore AI Advisors',
         };
       case 'Portfolio':
         return {
-          icon: <Briefcase className="w-8 h-8 text-blue-600" />,
+          icon: <Briefcase className="w-8 h-8 text-primary" />,
           title: title || 'Your Portfolio is Empty',
           description: description || 'Start building your wealth by exploring high-performing stocks or automated SEBI research calls.',
           actionLabel: actionLabel || 'Explore Investments',
@@ -79,7 +79,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
         };
       default:
         return {
-          icon: icon || <Plus className="w-8 h-8 text-blue-600" />,
+          icon: icon || <Plus className="w-8 h-8 text-primary" />,
           title: title || 'No Items to Display',
           description: description || 'There is no data available for this view at the moment.',
           actionLabel: actionLabel,
@@ -95,7 +95,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
         {defaults.icon}
       </div>
 
-      <h3 className="text-lg font-black text-[#0F172A] mb-1">
+      <h3 className="text-lg font-black text-[#172033] mb-1">
         {defaults.title}
       </h3>
 
@@ -107,7 +107,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
         {defaults.actionLabel && onAction && (
           <button
             onClick={onAction}
-            className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-black text-xs transition shadow-sm flex items-center gap-2 cursor-pointer"
+            className="px-5 py-2.5 bg-primary hover:bg-primary-dark text-white rounded-xl font-black text-xs transition shadow-sm flex items-center gap-2 cursor-pointer"
           >
             <span>{defaults.actionLabel}</span>
             <ArrowRight className="w-3.5 h-3.5" />

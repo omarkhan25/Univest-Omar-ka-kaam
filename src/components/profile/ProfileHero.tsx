@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { ShieldCheck, User, Star, Share, Edit3, Wallet, Plus } from 'lucide-react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
@@ -15,7 +15,7 @@ export const ProfileHero: React.FC<ProfileHeroProps> = ({ onAddFunds }) => {
   return (
     <section className="relative overflow-hidden rounded-[28px] p-8 md:p-10 shadow-premium-lg bg-brand-navy w-full border border-slate-800">
       {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0F172A] via-[#1e293b] to-[#0f172a] opacity-90" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#172033] via-[#1e293b] to-[#0f172a] opacity-90" />
       <div className="absolute right-0 top-0 w-96 h-96 bg-primary/20 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute left-0 bottom-0 w-80 h-80 bg-success/15 rounded-full blur-[100px] pointer-events-none" />
       
@@ -42,7 +42,7 @@ export const ProfileHero: React.FC<ProfileHeroProps> = ({ onAddFunds }) => {
             <div className="w-24 h-24 rounded-full bg-slate-800 border-[3px] border-white flex items-center justify-center overflow-hidden shadow-xl">
               <User className="w-10 h-10 text-slate-400" />
             </div>
-            <div className="absolute -bottom-1 -right-1 bg-success text-white p-1.5 rounded-full border-2 border-[#0F172A] shadow-lg">
+            <div className="absolute -bottom-1 -right-1 bg-success text-white p-1.5 rounded-full border-2 border-[#172033] shadow-lg">
               <ShieldCheck className="w-4 h-4" />
             </div>
           </div>
@@ -76,7 +76,7 @@ export const ProfileHero: React.FC<ProfileHeroProps> = ({ onAddFunds }) => {
             onClick={onAddFunds}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-black py-3.5 rounded-xl shadow-glow-blue flex items-center justify-center gap-2 transition cursor-pointer"
+            className="w-full bg-primary hover:bg-primary-dark active:bg-primary-dark text-white font-black py-3.5 rounded-xl shadow-glow-blue flex items-center justify-center gap-2 transition cursor-pointer"
           >
             <Plus className="w-4 h-4 stroke-[3]" /> Add Funds
           </motion.button>

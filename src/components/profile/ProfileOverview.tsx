@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { User, Mail, Phone, MapPin, Building, Link2, ShieldAlert, CreditCard } from 'lucide-react';
 
 interface ProfileOverviewProps {
@@ -49,7 +49,7 @@ export const ProfileOverview: React.FC<ProfileOverviewProps> = ({ onNavigate }) 
           <span className="text-[10px] font-bold text-slate-400">Last updated: 12 July 2026</span>
           <button 
             onClick={() => onNavigate && onNavigate('Personal Details')}
-            className="text-xs font-black text-primary hover:text-blue-700 transition"
+            className="text-xs font-black text-primary hover:text-primary transition"
           >
             Update Details
           </button>
@@ -109,7 +109,7 @@ export const ProfileOverview: React.FC<ProfileOverviewProps> = ({ onNavigate }) 
       {/* Security Status */}
       <div className="bg-white border border-[#E2E8F0] rounded-[24px] p-6 shadow-premium">
         <h3 className="text-sm font-black uppercase tracking-wider text-brand-navy mb-4 flex items-center gap-2">
-          <ShieldAlert className="w-4 h-4 text-blue-500" /> Security Status
+          <ShieldAlert className="w-4 h-4 text-primary" /> Security Status
         </h3>
         <div className="space-y-4">
           <div className="flex justify-between items-center">

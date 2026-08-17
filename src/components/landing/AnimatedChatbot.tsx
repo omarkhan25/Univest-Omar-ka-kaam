@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bot, Sparkles, TrendingUp, Landmark, Send, Activity, PieChart, ShieldCheck, Briefcase, Rocket, Award } from 'lucide-react';
 
@@ -166,12 +166,12 @@ export const AnimatedChatbot: React.FC = () => {
           <div className="w-14 h-14 bg-white/10 border border-white/20 rounded-full flex items-center justify-center backdrop-blur-md">
             <Sparkles className="w-7 h-7 text-white" />
           </div>
-          <div className="absolute bottom-0 right-0 w-4 h-4 bg-[#22C55E] border-[3px] border-[#1C1A27] rounded-full"></div>
+          <div className="absolute bottom-0 right-0 w-4 h-4 bg-[#16A34A] border-[3px] border-[#1C1A27] rounded-full"></div>
         </div>
         <div className="relative z-10">
           <h4 className="font-semibold text-xl tracking-tight leading-tight">Univest AI</h4>
           <p className="text-white/70 text-[15px] flex items-center gap-2 mt-1 font-medium">
-            <span className="w-2 h-2 bg-[#22C55E] rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span>
+            <span className="w-2 h-2 bg-[#16A34A] rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span>
             Online now
           </p>
         </div>

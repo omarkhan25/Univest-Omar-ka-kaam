@@ -68,7 +68,7 @@ export const ResearchDetail: React.FC<ResearchDetailProps> = ({
             onClick={() => {
               onTrade?.(research);
             }}
-            className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-black text-xs rounded-xl shadow-xs cursor-pointer transition"
+            className="px-6 py-2.5 bg-primary hover:bg-primary-dark text-white font-black text-xs rounded-xl shadow-xs cursor-pointer transition"
           >
             Trade Now
           </button>
@@ -76,7 +76,7 @@ export const ResearchDetail: React.FC<ResearchDetailProps> = ({
       </header>
 
       {/* Editorial Content Container */}
-      <div className="flex-1 max-w-4xl w-full mx-auto px-6 py-10 md:py-16 flex flex-col gap-10">
+      <div className="flex-1 max-w-7xl w-full mx-auto px-6 sm:px-10 py-6 sm:py-8 flex flex-col gap-8">
         
         {/* 1. HERO HEADER */}
         <div className="flex flex-col gap-4">
@@ -89,25 +89,25 @@ export const ResearchDetail: React.FC<ResearchDetailProps> = ({
             <span className="text-[10px] font-bold text-slate-400">PUBLISHED TODAY</span>
           </div>
 
-          <h1 className="text-3xl md:text-5xl font-black text-[#0F172A] tracking-tight leading-tight">
+          <h1 className="text-3xl md:text-5xl font-black text-[#172033] tracking-tight leading-tight">
             {companyName} ({symbol})
           </h1>
 
           <div className="flex flex-wrap items-center gap-6 text-xs text-slate-500 font-bold border-y border-slate-200/80 py-4 mt-2">
             <div>Target: <strong className="text-slate-900 font-black">{targetPrice}</strong> <span className="text-emerald-600">({upside} Upside)</span></div>
             <div className="h-4 w-px bg-slate-200" />
-            <div>Stop Loss: <strong className="text-rose-600 font-black">{stopLoss}</strong></div>
+            <div>Stop Loss: <strong className="text-danger font-black">{stopLoss}</strong></div>
             <div className="h-4 w-px bg-slate-200" />
             <div>Risk Profile: <strong className="text-slate-900 font-black">{risk}</strong></div>
             <div className="h-4 w-px bg-slate-200" />
-            <div>AI Confidence: <strong className="text-blue-600 font-black">{confidence}</strong></div>
+            <div>AI Confidence: <strong className="text-primary font-black">{confidence}</strong></div>
           </div>
         </div>
 
         {/* 2. AI EXECUTIVE SUMMARY */}
-        <div className="p-6 md:p-8 bg-blue-50/50 border border-blue-100 rounded-[28px] flex flex-col gap-4">
-          <h3 className="font-black text-sm text-[#0F172A] flex items-center gap-2">
-            <Sparkles className="w-4.5 h-4.5 text-blue-600" /> AI Executive Summary
+        <div className="p-6 md:p-8 bg-primary-light/50 border border-[#E2E8F0] rounded-[28px] flex flex-col gap-4">
+          <h3 className="font-black text-sm text-[#172033] flex items-center gap-2">
+            <Sparkles className="w-4.5 h-4.5 text-primary" /> AI Executive Summary
           </h3>
           <p className="text-xs md:text-sm text-slate-700 leading-relaxed font-medium">
             {summary}
@@ -125,7 +125,7 @@ export const ResearchDetail: React.FC<ResearchDetailProps> = ({
         {/* 4. GROWTH DRIVERS & CONTEXT */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border-t border-slate-200/80 pt-8">
           <div className="flex flex-col gap-3">
-            <h4 className="font-black text-sm text-[#0F172A] flex items-center gap-2">
+            <h4 className="font-black text-sm text-[#172033] flex items-center gap-2">
               <TrendingUp className="w-4.5 h-4.5 text-emerald-600" /> Growth Drivers
             </h4>
             <ul className="space-y-2.5 text-xs text-slate-600 font-medium">
@@ -145,16 +145,16 @@ export const ResearchDetail: React.FC<ResearchDetailProps> = ({
           </div>
 
           <div className="flex flex-col gap-3">
-            <h4 className="font-black text-sm text-[#0F172A] flex items-center gap-2">
-              <AlertTriangle className="w-4.5 h-4.5 text-rose-500" /> Key Risks
+            <h4 className="font-black text-sm text-[#172033] flex items-center gap-2">
+              <AlertTriangle className="w-4.5 h-4.5 text-danger" /> Key Risks
             </h4>
             <ul className="space-y-2.5 text-xs text-slate-600 font-medium">
               <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1.5 shrink-0" />
+                <span className="w-1.5 h-1.5 rounded-full bg-danger mt-1.5 shrink-0" />
                 Fluctuations in global energy crude demand and export margin policy caps.
               </li>
               <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1.5 shrink-0" />
+                <span className="w-1.5 h-1.5 rounded-full bg-danger mt-1.5 shrink-0" />
                 Rising pricing competition across localized telecom service providers.
               </li>
             </ul>
@@ -187,7 +187,7 @@ export const ResearchDetail: React.FC<ResearchDetailProps> = ({
           
           <div className="flex justify-between items-center bg-white border border-slate-200 p-4 rounded-2xl shadow-xs">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 bg-blue-50 text-blue-600 rounded-xl border border-blue-100">
+              <div className="p-2.5 bg-primary-light text-primary rounded-xl border border-[#E2E8F0]">
                 <Calendar className="w-4 h-4" />
               </div>
               <div>
@@ -206,7 +206,7 @@ export const ResearchDetail: React.FC<ResearchDetailProps> = ({
           </div>
           <button
             onClick={() => onTrade?.(research)}
-            className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-black text-sm rounded-2xl shadow-md shadow-blue-600/10 cursor-pointer transition"
+            className="px-8 py-3 bg-primary hover:bg-primary-dark text-white font-black text-sm rounded-2xl shadow-md shadow-[rgba(21,81,157,0.3)]/10 cursor-pointer transition"
           >
             Execute Trade
           </button>

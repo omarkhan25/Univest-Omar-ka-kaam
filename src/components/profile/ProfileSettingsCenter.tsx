@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   User, Mail, Phone, ShieldCheck, CreditCard, Lock, Eye, Bell, Globe, 
@@ -91,14 +91,14 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
       {/* ----------------------------------------------------
           1. HEADER PANEL
           ---------------------------------------------------- */}
-      <section className="relative overflow-hidden rounded-[28px] p-6 sm:p-8 bg-[#0F172A] text-white shadow-2xl border border-slate-800">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
+      <section className="relative overflow-hidden rounded-[28px] p-6 sm:p-8 bg-[#172033] text-white shadow-2xl border border-slate-800">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <User className="w-5 h-5 text-blue-400" />
-              <span className="text-xs font-black text-blue-400 uppercase tracking-widest">Investor Profile</span>
+              <User className="w-5 h-5 text-[#64748B]" />
+              <span className="text-xs font-black text-[#64748B] uppercase tracking-widest">Investor Profile</span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-black leading-none tracking-tight">
               Profile & Settings
@@ -111,7 +111,7 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
           <div className="flex gap-2">
             <button
               onClick={() => handleSave(activeSubTab)}
-              className="px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-black text-xs transition shadow-md flex items-center gap-2 cursor-pointer"
+              className="px-5 py-3 rounded-xl bg-primary hover:bg-primary-dark text-white font-black text-xs transition shadow-md flex items-center gap-2 cursor-pointer"
             >
               <Save className="w-4 h-4" /> Save Changes
             </button>
@@ -122,7 +122,7 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
       {/* ----------------------------------------------------
           2. TAB NAVIGATION (HORIZONTAL BAR FROM USER REQUEST SCREENSHOT)
           ---------------------------------------------------- */}
-      <div className="w-full bg-[#0F172A] rounded-2xl p-1 shadow-md border border-slate-800 flex overflow-x-auto whitespace-nowrap scrollbar-none">
+      <div className="w-full bg-[#172033] rounded-2xl p-1 shadow-md border border-slate-800 flex overflow-x-auto whitespace-nowrap scrollbar-none">
         {tabs.map((tab) => {
           const isActive = activeSubTab === tab;
           return (
@@ -130,7 +130,7 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
               key={tab}
               onClick={() => setActiveSubTab(tab)}
               className={`px-5 py-3.5 rounded-xl text-xs font-black transition-all cursor-pointer relative ${
-                isActive ? 'text-white bg-blue-600 shadow-glow-blue' : 'text-slate-400 hover:text-slate-200'
+                isActive ? 'text-white bg-primary shadow-glow-blue' : 'text-slate-400 hover:text-slate-200'
               }`}
             >
               <span>{tab}</span>
@@ -157,7 +157,7 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
             {activeSubTab === 'Account Details' && (
               <div className="flex flex-col gap-6">
                 <div>
-                  <h3 className="text-lg font-black text-[#0F172A]">Account Details</h3>
+                  <h3 className="text-lg font-black text-[#172033]">Account Details</h3>
                   <p className="text-xs text-slate-400 font-medium">Verify your registered account identifier and regulatory client profile details.</p>
                 </div>
 
@@ -168,7 +168,7 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
                       type="text" 
                       value={accountDetails.fullName}
                       onChange={(e) => setAccountDetails({...accountDetails, fullName: e.target.value})}
-                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-blue-500" 
+                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-primary" 
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -177,7 +177,7 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
                       type="email" 
                       value={accountDetails.email}
                       onChange={(e) => setAccountDetails({...accountDetails, email: e.target.value})}
-                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-blue-500" 
+                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-primary" 
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -229,7 +229,7 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
             {activeSubTab === 'Personal Details' && (
               <div className="flex flex-col gap-6">
                 <div>
-                  <h3 className="text-lg font-black text-[#0F172A]">Personal Details</h3>
+                  <h3 className="text-lg font-black text-[#172033]">Personal Details</h3>
                   <p className="text-xs text-slate-400 font-medium">Verify or edit your personal profile information.</p>
                 </div>
 
@@ -240,7 +240,7 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
                       type="date" 
                       value={personalDetails.dob}
                       onChange={(e) => setPersonalDetails({...personalDetails, dob: e.target.value})}
-                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-blue-500" 
+                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-primary" 
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -248,7 +248,7 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
                     <select
                       value={personalDetails.gender}
                       onChange={(e) => setPersonalDetails({...personalDetails, gender: e.target.value})}
-                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-blue-500"
+                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-primary"
                     >
                       <option>Male</option>
                       <option>Female</option>
@@ -260,7 +260,7 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
                     <select
                       value={personalDetails.occupation}
                       onChange={(e) => setPersonalDetails({...personalDetails, occupation: e.target.value})}
-                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-blue-500"
+                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-primary"
                     >
                       <option>Professional / Salaried</option>
                       <option>Business Owner / Self-Employed</option>
@@ -273,7 +273,7 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
                     <select
                       value={personalDetails.incomeSlab}
                       onChange={(e) => setPersonalDetails({...personalDetails, incomeSlab: e.target.value})}
-                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-blue-500"
+                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-primary"
                     >
                       <option>Below ₹5,00,000</option>
                       <option>₹5,00,000 - ₹10,00,000</option>
@@ -287,7 +287,7 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
                       rows={2}
                       value={personalDetails.address}
                       onChange={(e) => setPersonalDetails({...personalDetails, address: e.target.value})}
-                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-blue-500 resize-none"
+                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-primary resize-none"
                     />
                   </div>
                 </div>
@@ -298,7 +298,7 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
             {activeSubTab === 'My Brokerage Plans' && (
               <div className="flex flex-col gap-6">
                 <div>
-                  <h3 className="text-lg font-black text-[#0F172A]">My Brokerage Plans</h3>
+                  <h3 className="text-lg font-black text-[#172033]">My Brokerage Plans</h3>
                   <p className="text-xs text-slate-400 font-medium">Link, synchronize, and configure zero-commission brokerage schemas with linked stockbrokers.</p>
                 </div>
 
@@ -311,7 +311,7 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
                           <CheckCircle2 className="w-3.5 h-3.5" /> Synced & Active
                         </span>
                       </div>
-                      <div className="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center font-black text-xs">ZE</div>
+                      <div className="w-9 h-9 rounded-xl bg-primary text-white flex items-center justify-center font-black text-xs">ZE</div>
                     </div>
                     <div className="flex justify-between text-xs font-bold text-slate-500 border-t border-slate-100 pt-3">
                       <span>Brokerage Scheme:</span>
@@ -339,7 +339,7 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
                     </div>
                     <button 
                       onClick={() => toast.success('Redirecting to AngelOne OAuth portal')}
-                      className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-black rounded-xl mt-2 cursor-pointer"
+                      className="w-full py-2 bg-primary hover:bg-primary-dark text-white text-[10px] font-black rounded-xl mt-2 cursor-pointer"
                     >
                       Link Account
                     </button>
@@ -352,14 +352,14 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
             {activeSubTab === 'Privacy and Security' && (
               <div className="flex flex-col gap-6">
                 <div>
-                  <h3 className="text-lg font-black text-[#0F172A]">Privacy and Security</h3>
+                  <h3 className="text-lg font-black text-[#172033]">Privacy and Security</h3>
                   <p className="text-xs text-slate-400 font-medium">Protect your capital and trade operations with high-grade security tools.</p>
                 </div>
 
                 <div className="flex flex-col gap-4">
                   <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 flex items-center justify-between">
                     <div>
-                      <h4 className="font-black text-xs text-[#0F172A]">Two-Factor Authentication (2FA)</h4>
+                      <h4 className="font-black text-xs text-[#172033]">Two-Factor Authentication (2FA)</h4>
                       <span className="text-[10px] text-slate-400 font-bold block">Verify transactions via SMS / Email OTP on all executions</span>
                     </div>
                     <button
@@ -372,7 +372,7 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
 
                   <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 flex items-center justify-between">
                     <div>
-                      <h4 className="font-black text-xs text-[#0F172A]">Biometric App Lock</h4>
+                      <h4 className="font-black text-xs text-[#172033]">Biometric App Lock</h4>
                       <span className="text-[10px] text-slate-400 font-bold block">Unlock Univest via mobile TouchID or FaceID credentials</span>
                     </div>
                     <button
@@ -386,21 +386,21 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
 
                 {/* Password modification */}
                 <div className="border-t border-slate-100 pt-6 flex flex-col gap-4">
-                  <h4 className="font-black text-xs text-[#0F172A] uppercase tracking-wider">Change Account Password</h4>
+                  <h4 className="font-black text-xs text-[#172033] uppercase tracking-wider">Change Account Password</h4>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <input 
                       type="password" 
                       placeholder="Current Password" 
-                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-blue-500" 
+                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-primary" 
                     />
                     <input 
                       type="password" 
                       placeholder="New Password" 
-                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-blue-500" 
+                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-primary" 
                     />
                     <button 
                       onClick={() => toast.success('Password updated successfully')}
-                      className="py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black transition cursor-pointer text-center"
+                      className="py-3 bg-primary hover:bg-primary-dark text-white rounded-xl text-xs font-black transition cursor-pointer text-center"
                     >
                       Update Password
                     </button>
@@ -413,7 +413,7 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
             {activeSubTab === 'Settings' && (
               <div className="flex flex-col gap-6">
                 <div>
-                  <h3 className="text-lg font-black text-[#0F172A]">Display & Notification Settings</h3>
+                  <h3 className="text-lg font-black text-[#172033]">Display & Notification Settings</h3>
                   <p className="text-xs text-slate-400 font-medium">Personalize visual parameters and regional compliance rules.</p>
                 </div>
 
@@ -423,14 +423,14 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
                   <div className="grid grid-cols-3 gap-3">
                     {[
                       { id: 'Light', icon: <Sun className="w-4 h-4 text-amber-500" />, desc: 'Crisp Light' },
-                      { id: 'Dark', icon: <Moon className="w-4 h-4 text-blue-500" />, desc: 'OLED Dark' },
-                      { id: 'System', icon: <Laptop className="w-4 h-4 text-blue-600" />, desc: 'Sync OS' }
+                      { id: 'Dark', icon: <Moon className="w-4 h-4 text-primary" />, desc: 'OLED Dark' },
+                      { id: 'System', icon: <Laptop className="w-4 h-4 text-primary" />, desc: 'Sync OS' }
                     ].map(opt => (
                       <button
                         key={opt.id}
                         onClick={() => { setTheme(opt.id as any); toast.success(`Visual theme set to ${opt.id}`); }}
                         className={`p-4 border rounded-xl flex items-center gap-3 transition cursor-pointer text-xs font-black ${
-                          theme === opt.id ? 'border-blue-600 bg-blue-50/50 text-[#0F172A]' : 'border-slate-200 hover:border-slate-300'
+                          theme === opt.id ? 'border-primary bg-primary-light/50 text-[#172033]' : 'border-slate-200 hover:border-slate-300'
                         }`}
                       >
                         {opt.icon}
@@ -450,7 +450,7 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
                     <select
                       value={currency}
                       onChange={(e) => setCurrency(e.target.value)}
-                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-blue-500"
+                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-primary"
                     >
                       <option>INR (₹)</option>
                       <option>USD ($)</option>
@@ -463,7 +463,7 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
                       <span className="text-xs font-bold text-slate-500">Send morning stock calls directly</span>
                       <button
                         onClick={() => setWhatsappDigest(!whatsappDigest)}
-                        className={`w-10 h-5 rounded-full transition relative ${whatsappDigest ? 'bg-blue-600' : 'bg-slate-300'}`}
+                        className={`w-10 h-5 rounded-full transition relative ${whatsappDigest ? 'bg-primary' : 'bg-slate-300'}`}
                       >
                         <span className={`w-4.5 h-4.5 rounded-full bg-white absolute top-0.25 transition ${whatsappDigest ? 'right-0.25' : 'left-0.25'}`} />
                       </button>
@@ -477,14 +477,14 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
             {activeSubTab === 'Other Details' && (
               <div className="flex flex-col gap-6">
                 <div>
-                  <h3 className="text-lg font-black text-[#0F172A]">Other Profile Details</h3>
+                  <h3 className="text-lg font-black text-[#172033]">Other Profile Details</h3>
                   <p className="text-xs text-slate-400 font-medium">Manage linked bank accounts for fund transfers and view active identity documents.</p>
                 </div>
 
                 {/* Bank Account Details */}
                 <div className="flex flex-col gap-4">
                   <span className="text-[10px] uppercase text-slate-400 font-bold">Primary Linked Bank Account</span>
-                  <div className="p-4 border border-slate-200 rounded-2xl flex items-center justify-between hover:border-blue-500 transition">
+                  <div className="p-4 border border-slate-200 rounded-2xl flex items-center justify-between hover:border-primary transition">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-500 flex items-center justify-center font-black text-xs shrink-0">HD</div>
                       <div>
@@ -520,7 +520,7 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
             {activeSubTab === 'Nomination Details' && (
               <div className="flex flex-col gap-6">
                 <div>
-                  <h3 className="text-lg font-black text-[#0F172A]">Nomination Details</h3>
+                  <h3 className="text-lg font-black text-[#172033]">Nomination Details</h3>
                   <p className="text-xs text-slate-400 font-medium">Add or verify registered nominees for wealth distribution claims and security compliance.</p>
                 </div>
 
@@ -531,7 +531,7 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
                       type="text" 
                       value={nomineeDetails.name}
                       onChange={(e) => setNomineeDetails({...nomineeDetails, name: e.target.value})}
-                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-blue-500" 
+                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-primary" 
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -539,7 +539,7 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
                     <select
                       value={nomineeDetails.relationship}
                       onChange={(e) => setNomineeDetails({...nomineeDetails, relationship: e.target.value})}
-                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-blue-500"
+                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-primary"
                     >
                       <option>Mother</option>
                       <option>Father</option>
@@ -553,7 +553,7 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
                       type="date" 
                       value={nomineeDetails.dob}
                       onChange={(e) => setNomineeDetails({...nomineeDetails, dob: e.target.value})}
-                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-blue-500" 
+                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-primary" 
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -562,13 +562,13 @@ export const ProfileSettingsCenter: React.FC<ProfileSettingsCenterProps> = ({ on
                       type="text" 
                       value={nomineeDetails.share}
                       onChange={(e) => setNomineeDetails({...nomineeDetails, share: e.target.value})}
-                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-blue-500" 
+                      className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-primary" 
                     />
                   </div>
                 </div>
 
-                <div className="p-4 bg-blue-50 border border-blue-100 text-blue-800 text-xs rounded-xl flex items-center gap-2 font-bold mt-2">
-                  <UserPlus className="w-4 h-4 shrink-0 text-blue-600" />
+                <div className="p-4 bg-primary-light border border-[#E2E8F0] text-primary-dark text-xs rounded-xl flex items-center gap-2 font-bold mt-2">
+                  <UserPlus className="w-4 h-4 shrink-0 text-primary" />
                   <span>Regulatory nominee status: Registered under NSDL Demat schema. Share allocation is locked at 100%.</span>
                 </div>
               </div>

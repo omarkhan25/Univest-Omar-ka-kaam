@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Home, TrendingUp, Compass, Briefcase, User, Sparkles } from 'lucide-react';
 
 interface MobileNavProps {
@@ -25,13 +25,13 @@ export const MobileNav: React.FC<MobileNavProps> = ({ activeTab, onTabChange }) 
             key={tab.id}
             onClick={() => onTabChange(tab.id)}
             className={`flex flex-col items-center justify-center gap-1 min-w-[56px] min-h-[44px] py-1 relative transition-colors ${
-              isActive ? 'text-blue-600 font-black' : 'text-slate-500 font-bold'
+              isActive ? 'text-primary font-black' : 'text-slate-500 font-bold'
             }`}
           >
             <div className="relative">
               <Icon className={`w-5 h-5 ${isActive ? 'scale-110' : ''} transition-transform`} />
               {tab.badge && (
-                <span className="absolute -top-1 -right-2 bg-rose-500 text-white text-[8px] font-black px-1 rounded-full">
+                <span className="absolute -top-1 -right-2 bg-danger text-white text-[8px] font-black px-1 rounded-full">
                   {tab.badge}
                 </span>
               )}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Clock, Info, ExternalLink, Calendar, HelpCircle, AlertCircle, ChevronDown } from 'lucide-react';
 import { HolidayCalendarModal } from './HolidayCalendarModal';
@@ -136,7 +136,7 @@ export const LiveMarketStatusWidget: React.FC = () => {
       {/* TRIGGER WIDGET BUTTON */}
       <button
         onClick={() => setIsPopoverOpen(!isPopoverOpen)}
-        className="flex items-center gap-2.5 h-10 px-3.5 rounded-full border border-[#E2E8F0] bg-[#F8FAFC] hover:bg-white hover:border-slate-300 transition-all text-xs font-bold text-[#0F172A] shadow-2xs cursor-pointer"
+        className="flex items-center gap-2.5 h-10 px-3.5 rounded-full border border-[#E2E8F0] bg-[#F8FAFC] hover:bg-white hover:border-slate-300 transition-all text-xs font-bold text-[#172033] shadow-2xs cursor-pointer"
       >
         <span className="flex items-center gap-1.5 shrink-0">
           {statusState === 'open' ? (
@@ -147,9 +147,9 @@ export const LiveMarketStatusWidget: React.FC = () => {
           ) : statusState === 'opening_soon' ? (
             <span className="h-2 w-2 rounded-full bg-amber-500" />
           ) : (
-            <span className="h-2 w-2 rounded-full bg-rose-500" />
+            <span className="h-2 w-2 rounded-full bg-danger" />
           )}
-          <span className="font-black text-[#0F172A]">{statusText}</span>
+          <span className="font-black text-[#172033]">{statusText}</span>
         </span>
 
         <span className="text-slate-300 font-normal">•</span>
@@ -175,7 +175,7 @@ export const LiveMarketStatusWidget: React.FC = () => {
           >
             {/* Popover Header */}
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <span className="font-black text-[#0F172A] text-sm">Market Status</span>
+              <span className="font-black text-[#172033] text-sm">Market Status</span>
               <span className={`px-2.5 py-0.5 rounded-lg text-[9px] font-black uppercase ${
                 statusState === 'open' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600'
               }`}>
@@ -187,15 +187,15 @@ export const LiveMarketStatusWidget: React.FC = () => {
             <div className="flex flex-col gap-2.5">
               <div className="flex justify-between items-center">
                 <span className="font-bold text-slate-400 text-[10px] uppercase">Current Time</span>
-                <span className="font-black text-[#0F172A]">{timeDisplayStr}</span>
+                <span className="font-black text-[#172033]">{timeDisplayStr}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="font-bold text-slate-400 text-[10px] uppercase">Trading Session</span>
-                <span className="font-black text-[#0F172A]">09:15 AM – 03:30 PM</span>
+                <span className="font-black text-[#172033]">09:15 AM – 03:30 PM</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="font-bold text-slate-400 text-[10px] uppercase">Time Remaining</span>
-                <span className="font-black text-blue-600">{countdownText}</span>
+                <span className="font-black text-primary">{countdownText}</span>
               </div>
             </div>
 
@@ -221,7 +221,7 @@ export const LiveMarketStatusWidget: React.FC = () => {
               <div className="flex flex-col gap-1.5 text-[10.5px]">
                 <div className="flex justify-between">
                   <span className="text-slate-600 font-medium">RBI Monetary Policy</span>
-                  <span className="font-black text-[#0F172A]">Tomorrow, 10:00 AM</span>
+                  <span className="font-black text-[#172033]">Tomorrow, 10:00 AM</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-600 font-medium">Monthly F&O Expiry</span>
@@ -229,11 +229,11 @@ export const LiveMarketStatusWidget: React.FC = () => {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-600 font-medium">Federal Budget Session</span>
-                  <span className="font-black text-[#0F172A]">28 Jul</span>
+                  <span className="font-black text-[#172033]">28 Jul</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-600 font-medium">Reliance Q1 Earnings</span>
-                  <span className="font-black text-[#0F172A]">Today after close</span>
+                  <span className="font-black text-[#172033]">Today after close</span>
                 </div>
               </div>
             </div>
@@ -244,11 +244,11 @@ export const LiveMarketStatusWidget: React.FC = () => {
               <div className="grid grid-cols-2 gap-2 text-[10px]">
                 <div className="flex justify-between items-center p-2 bg-[#F8FAFC] border border-slate-100 rounded-xl">
                   <span>🇺🇸 NASDAQ</span>
-                  <span className="text-rose-600 font-black">Closed</span>
+                  <span className="text-danger font-black">Closed</span>
                 </div>
                 <div className="flex justify-between items-center p-2 bg-[#F8FAFC] border border-slate-100 rounded-xl">
                   <span>🇺🇸 NYSE</span>
-                  <span className="text-rose-600 font-black">Closed</span>
+                  <span className="text-danger font-black">Closed</span>
                 </div>
                 <div className="flex justify-between items-center p-2 bg-[#F8FAFC] border border-slate-100 rounded-xl">
                   <span>🇯🇵 Nikkei 225</span>
@@ -262,7 +262,7 @@ export const LiveMarketStatusWidget: React.FC = () => {
             </div>
 
             {/* Links Footer */}
-            <div className="flex items-center justify-between border-t border-slate-100 pt-3 text-[10px] font-black text-blue-600">
+            <div className="flex items-center justify-between border-t border-slate-100 pt-3 text-[10px] font-black text-primary">
               <button 
                 onClick={() => {
                   setIsPopoverOpen(false);

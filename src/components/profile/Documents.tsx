@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { FileText, Download, Eye, UploadCloud, RefreshCw } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -19,7 +19,7 @@ export const Documents: React.FC = () => {
         </h3>
         <button 
           onClick={() => toast('Opening file picker...', { icon: '📂' })}
-          className="text-xs font-black bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition flex items-center gap-1 shadow-glow-blue"
+          className="text-xs font-black bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary transition flex items-center gap-1 shadow-glow-blue"
         >
           <UploadCloud className="w-4 h-4" /> Upload New
         </button>

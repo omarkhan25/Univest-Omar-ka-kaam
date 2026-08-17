@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import marketService from '../../services/market.service';
 import { 
   Building2, ArrowUpRight, ArrowDownRight, ChevronRight, TrendingUp,
@@ -65,13 +65,13 @@ export const SectorsTab: React.FC = () => {
       {/* ── 1. HEADER ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white border border-slate-200 rounded-[24px] p-5 shadow-xs">
         <div>
-          <span className="text-[10px] font-black uppercase tracking-wider text-blue-600 bg-blue-50 border border-blue-100 px-3 py-1.5 rounded-xl">Sector Performance</span>
+          <span className="text-[10px] font-black uppercase tracking-wider text-primary bg-primary-light border border-[#E2E8F0] px-3 py-1.5 rounded-xl">Sector Performance</span>
           <h2 className="text-xl font-black text-slate-900 mt-2">Industry & Sector Analysis</h2>
         </div>
         <button
           onClick={fetchSectors}
           disabled={loading}
-          className="flex items-center gap-2 text-xs font-black text-blue-600 bg-blue-50 border border-blue-100 px-3.5 py-2 rounded-xl hover:bg-blue-100 transition cursor-pointer w-fit"
+          className="flex items-center gap-2 text-xs font-black text-primary bg-primary-light border border-[#E2E8F0] px-3.5 py-2 rounded-xl hover:bg-primary-light transition cursor-pointer w-fit"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
           {loading ? 'Loading Sectors...' : 'Refresh Sectors'}
@@ -88,14 +88,14 @@ export const SectorsTab: React.FC = () => {
               className="bg-white border border-slate-200 rounded-[24px] p-6 shadow-xs hover:shadow-lg transition cursor-pointer group"
             >
               <div className="flex items-center justify-between mb-4">
-                <span className="text-base font-black text-slate-900 group-hover:text-blue-600 transition-colors">{sec.name}</span>
+                <span className="text-base font-black text-slate-900 group-hover:text-primary transition-colors">{sec.name}</span>
                 <span className={`text-xs font-black px-2.5 py-1 rounded-lg border ${sec.positive ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : 'bg-rose-50 text-rose-700 border-rose-100'}`}>
                   {sec.performance}
                 </span>
               </div>
               <div className="flex items-center justify-between text-xs text-slate-400 font-bold border-t border-slate-100 pt-4">
                 <span>Market Cap: {sec.marketCap}</span>
-                <span className="text-blue-600 flex items-center gap-1 group-hover:translate-x-1 transition-all">
+                <span className="text-primary flex items-center gap-1 group-hover:translate-x-1 transition-all">
                   Details <ChevronRight className="w-3.5 h-3.5" />
                 </span>
               </div>

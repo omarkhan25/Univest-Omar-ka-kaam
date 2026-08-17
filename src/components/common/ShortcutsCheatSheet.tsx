@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { X, Command, Keyboard } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -28,8 +28,8 @@ export const ShortcutsCheatSheet: React.FC<ShortcutsCheatSheetProps> = ({ isOpen
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} className="fixed inset-0 bg-slate-900/60 backdrop-blur-md" />
         <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} className="relative w-full max-w-md bg-white rounded-[28px] shadow-2xl p-6 overflow-hidden z-10 font-sans text-slate-800">
           <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
-            <h3 className="text-lg font-black text-[#0F172A] flex items-center gap-2">
-              <Keyboard className="w-5 h-5 text-blue-600" /> Keyboard Shortcuts
+            <h3 className="text-lg font-black text-[#172033] flex items-center gap-2">
+              <Keyboard className="w-5 h-5 text-primary" /> Keyboard Shortcuts
             </h3>
             <button onClick={onClose} className="p-1.5 rounded-full hover:bg-slate-100 text-slate-400 cursor-pointer">
               <X className="w-5 h-5" />
@@ -48,7 +48,7 @@ export const ShortcutsCheatSheet: React.FC<ShortcutsCheatSheetProps> = ({ isOpen
           </div>
 
           <div className="mt-5 text-center">
-            <button onClick={onClose} className="w-full py-2.5 bg-[#0F172A] text-white font-black text-xs rounded-xl cursor-pointer">
+            <button onClick={onClose} className="w-full py-2.5 bg-[#172033] text-white font-black text-xs rounded-xl cursor-pointer">
               Close Shortcuts
             </button>
           </div>

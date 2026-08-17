@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Coins, Flame, ArrowUpRight, ShieldCheck, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
@@ -28,7 +28,7 @@ export const CommoditiesTab: React.FC<{
             onClick={() => setSelectedCategory(cat)}
             className={`px-4 py-2 rounded-xl transition cursor-pointer whitespace-nowrap ${
               selectedCategory === cat
-                ? 'bg-[#0F172A] text-white font-black'
+                ? 'bg-[#172033] text-white font-black'
                 : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
             }`}
           >
@@ -47,17 +47,17 @@ export const CommoditiesTab: React.FC<{
           >
             <div>
               <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-black uppercase bg-[#0F172A] text-white px-2 py-0.5 rounded">
+                <span className="text-[10px] font-black uppercase bg-[#172033] text-white px-2 py-0.5 rounded">
                   MCX {comm.category}
                 </span>
                 <span className="text-xs font-mono font-black text-slate-900">{comm.symbol}</span>
               </div>
 
-              <h3 className="font-black text-base text-[#0F172A] mb-3">{comm.name}</h3>
+              <h3 className="font-black text-base text-[#172033] mb-3">{comm.name}</h3>
 
               <div className="flex items-baseline justify-between mb-4">
                 <span className="text-2xl font-black text-slate-900">{comm.price}</span>
-                <span className={`text-xs font-black ${comm.change.startsWith('+') ? 'text-emerald-600' : 'text-rose-600'}`}>
+                <span className={`text-xs font-black ${comm.change.startsWith('+') ? 'text-emerald-600' : 'text-danger'}`}>
                   {comm.change}
                 </span>
               </div>
@@ -77,7 +77,7 @@ export const CommoditiesTab: React.FC<{
             <div className="pt-4 border-t border-slate-100 flex justify-end">
               <button
                 onClick={() => onTrade({ symbol: comm.symbol, company: comm.name })}
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black cursor-pointer shadow-xs"
+                className="px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-xl text-xs font-black cursor-pointer shadow-xs"
               >
                 Trade MCX Futures
               </button>

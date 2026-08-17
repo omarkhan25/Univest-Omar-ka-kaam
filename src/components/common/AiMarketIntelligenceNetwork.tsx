@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+﻿import React, { useEffect, useRef, useState } from 'react';
 
 interface Node {
   x: number;
@@ -53,8 +53,8 @@ export const AiMarketIntelligenceNetwork: React.FC<AiMarketIntelligenceNetworkPr
 
     // Color Palette: Luxury restraint
     const COLORS = [
-      '#2563EB', // Royal Blue
-      '#2563EB', // Royal Blue (dominant)
+      '#15519D', // Royal Blue
+      '#15519D', // Royal Blue (dominant)
       '#16A34A', // Emerald Green
       '#38BDF8', // Soft Cyan
       '#FFFFFF', // Pure White (rare)
@@ -128,9 +128,9 @@ export const AiMarketIntelligenceNetwork: React.FC<AiMarketIntelligenceNetworkPr
         width / 2, height / 2, 50,
         width / 2, height / 2, width * 0.65
       );
-      bgGrad.addColorStop(0, 'rgba(37, 99, 235, 0.12)');
+      bgGrad.addColorStop(0, 'rgba(21, 81, 157, 0.12)');
       bgGrad.addColorStop(0.5, 'rgba(22, 163, 74, 0.05)');
-      bgGrad.addColorStop(1, '#0F172A');
+      bgGrad.addColorStop(1, '#172033');
       ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, width, height);
 

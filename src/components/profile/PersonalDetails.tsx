@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { UserCircle, Save, X } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -31,7 +31,7 @@ export const PersonalDetails: React.FC = () => {
                 setIsEditing(false);
                 toast.success('Personal details updated successfully!');
               }}
-              className="text-xs font-black bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition flex items-center gap-1 shadow-glow-blue"
+              className="text-xs font-black bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary transition flex items-center gap-1 shadow-glow-blue"
             >
               <Save className="w-4 h-4" /> Save
             </button>

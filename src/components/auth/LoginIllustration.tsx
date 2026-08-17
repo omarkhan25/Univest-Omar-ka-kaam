@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 
 export const LoginIllustration: React.FC = () => {
   return (
@@ -6,8 +6,8 @@ export const LoginIllustration: React.FC = () => {
       <svg viewBox="0 0 400 360" className="w-full h-auto drop-shadow-2xl">
         <defs>
           <linearGradient id="chartGrad1" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#2563EB" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="#1D4ED8" stopOpacity="0.2" />
+            <stop offset="0%" stopColor="#15519D" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#104280" stopOpacity="0.2" />
           </linearGradient>
           <linearGradient id="chartGrad2" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0%" stopColor="#10B981" stopOpacity="0.8" />
@@ -48,7 +48,7 @@ export const LoginIllustration: React.FC = () => {
         <path
           d="M 40 240 L 100 250 L 150 200 L 210 210 L 270 140 L 340 160"
           fill="none"
-          stroke="#2563EB"
+          stroke="#15519D"
           strokeWidth="2.5"
           strokeDasharray="6 4"
         />
@@ -63,13 +63,13 @@ export const LoginIllustration: React.FC = () => {
           { x: 340, h: 25, green: true }
         ].map((item, idx) => (
           <g key={idx} transform={`translate(${item.x}, 200)`}>
-            <line x1="0" y1="-25" x2="0" y2="25" stroke={item.green ? '#10B981' : '#EF4444'} strokeWidth="1.5" />
+            <line x1="0" y1="-25" x2="0" y2="25" stroke={item.green ? '#10B981' : '#DC2626'} strokeWidth="1.5" />
             <rect
               x="-5"
               y={item.green ? -item.h / 2 : 0}
               width="10"
               height={Math.abs(item.h)}
-              fill={item.green ? '#10B981' : '#EF4444'}
+              fill={item.green ? '#10B981' : '#DC2626'}
               rx="2"
             />
           </g>
@@ -84,7 +84,7 @@ export const LoginIllustration: React.FC = () => {
         </g>
 
         <g className="animate-bounce" style={{ animationDuration: '5s', animationDelay: '1s' }}>
-          <circle cx="190" cy="150" r="14" fill="#2563EB" />
+          <circle cx="190" cy="150" r="14" fill="#15519D" />
           <text x="190" y="154" textAnchor="middle" fill="#FFFFFF" fontSize="11" fontWeight="900">
             AI
           </text>

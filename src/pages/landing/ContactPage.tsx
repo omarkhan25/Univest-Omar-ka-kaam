@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { StablecoinNavbar } from '../../components/landing/StablecoinNavbar';
 import { ArrowRight, Mail } from 'lucide-react';
 
@@ -15,7 +15,7 @@ export const ContactPage: React.FC = () => {
           opacity: 0.7,
         }}
       />
-      <div className="fixed inset-0 z-0 bg-gradient-to-r from-[#F5F5F5] via-[#F5F5F5]/80 to-transparent" />
+      <div className="fixed inset-0 z-0 bg-gradient-to-r from-[#F8FAFC] via-[#F8FAFC]/80 to-transparent" />
 
       <div className="relative z-10 flex flex-col min-h-screen">
         <StablecoinNavbar />
@@ -99,7 +99,7 @@ export const ContactPage: React.FC = () => {
               
               {/* Subtle accent blob behind the form */}
               <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-              <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2 pointer-events-none" />
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2 pointer-events-none" />
             </div>
 
           </div>

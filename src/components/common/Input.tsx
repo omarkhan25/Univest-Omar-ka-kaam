@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Eye, EyeOff, Search, X, AlertCircle } from 'lucide-react';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -32,7 +32,7 @@ export const Input: React.FC<InputProps> = ({
       {label && (
         <label className="text-xs font-bold text-slate-700 flex items-center justify-between">
           <span>
-            {label} {required && <span className="text-rose-500">*</span>}
+            {label} {required && <span className="text-danger">*</span>}
           </span>
         </label>
       )}
@@ -46,7 +46,7 @@ export const Input: React.FC<InputProps> = ({
           type={inputType}
           value={value}
           onChange={onChange}
-          className={`w-full py-2.5 px-3.5 bg-slate-50 border border-slate-200 focus:border-blue-600 focus:bg-white rounded-xl text-xs font-medium outline-none transition ${
+          className={`w-full py-2.5 px-3.5 bg-slate-50 border border-slate-200 focus:border-primary focus:bg-white rounded-xl text-xs font-medium outline-none transition ${
             currencyPrefix ? 'pl-8' : ''
           } ${error ? 'border-rose-400 bg-rose-50/20' : ''} ${className}`}
           {...props}
@@ -74,7 +74,7 @@ export const Input: React.FC<InputProps> = ({
       </div>
 
       {error ? (
-        <span className="text-[11px] font-bold text-rose-500 flex items-center gap-1">
+        <span className="text-[11px] font-bold text-danger flex items-center gap-1">
           <AlertCircle className="w-3 h-3" /> {error}
         </span>
       ) : helperText ? (

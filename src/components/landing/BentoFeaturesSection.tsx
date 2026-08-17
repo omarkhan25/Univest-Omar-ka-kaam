@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   Brain, CandlestickChart, Briefcase, Zap,
@@ -10,10 +10,10 @@ import {
 function AISignalsMockup() {
   return (
     <div className="absolute top-2 left-6 right-0 bottom-0 sm:left-8">
-      <div className="w-full h-full bg-[#0F172A] border-t border-l border-slate-700/50 rounded-tl-2xl shadow-2xl overflow-hidden group-hover:-translate-y-2 group-hover:-translate-x-2 transition-transform duration-500 flex flex-col">
+      <div className="w-full h-full bg-[#172033] border-t border-l border-slate-700/50 rounded-tl-2xl shadow-2xl overflow-hidden group-hover:-translate-y-2 group-hover:-translate-x-2 transition-transform duration-500 flex flex-col">
         <div className="px-3 py-2 border-b border-slate-800 flex justify-between items-center bg-[#1E293B]/50 shrink-0">
           <div className="flex items-center gap-1.5">
-            <Activity className="w-3.5 h-3.5 text-blue-400" />
+            <Activity className="w-3.5 h-3.5 text-[#64748B]" />
             <span className="text-[10px] font-semibold text-slate-200 uppercase tracking-wider">Alpha Scanner</span>
           </div>
           <span className="flex h-1.5 w-1.5 relative">
@@ -47,7 +47,7 @@ function AISignalsMockup() {
 
 function ChartingMockup() {
   return (
-    <div className="absolute bottom-0 left-6 right-6 sm:left-8 sm:right-8 top-2 bg-[#0F172A] border-t border-x border-slate-700/50 rounded-t-2xl overflow-hidden group-hover:-translate-y-2 transition-transform duration-500">
+    <div className="absolute bottom-0 left-6 right-6 sm:left-8 sm:right-8 top-2 bg-[#172033] border-t border-x border-slate-700/50 rounded-t-2xl overflow-hidden group-hover:-translate-y-2 transition-transform duration-500">
       {/* Grid lines */}
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgMGg0MHY0MEgweiIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik0wIDM5LjVoNDBWNDBoLTQweiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjA0KSIvPjxwYXRoIGQ9Ik0zOS41IDB2NDBoLjVWMEgzOS41eiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjA0KSIvPjwvc3ZnPg==')] opacity-30" />
       
@@ -57,18 +57,18 @@ function ChartingMockup() {
           const isUp = i === 0 || h >= [40, 50, 45, 60, 55, 70, 65, 80, 85, 75, 90][i - 1];
           return (
             <div key={i} className="relative flex flex-col items-center justify-end h-full flex-1">
-              <div className={`absolute w-[1px] h-full ${isUp ? 'bg-purple-500/50' : 'bg-rose-500/50'}`} style={{ maxHeight: `${h + 15}%` }} />
+              <div className={`absolute w-[1px] h-full ${isUp ? 'bg-purple-500/50' : 'bg-danger/50'}`} style={{ maxHeight: `${h + 15}%` }} />
               <motion.div
                 initial={{ height: 0 }}
                 whileInView={{ height: `${h}%` }}
                 transition={{ duration: 0.5, delay: i * 0.05 }}
-                className={`relative w-full max-w-[8px] rounded-sm ${isUp ? 'bg-purple-500' : 'bg-rose-500'}`}
+                className={`relative w-full max-w-[8px] rounded-sm ${isUp ? 'bg-purple-500' : 'bg-danger'}`}
               />
             </div>
           );
         })}
       </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#172033] via-transparent to-transparent pointer-events-none" />
     </div>
   );
 }
@@ -118,7 +118,7 @@ function PortfolioMockup() {
             strokeLinecap="round"
           />
           <motion.circle
-            cx="50" cy="50" r="40" fill="none" stroke="#3B82F6" strokeWidth="12"
+            cx="50" cy="50" r="40" fill="none" stroke="#15519D" strokeWidth="12"
             strokeDasharray="251.2"
             initial={{ strokeDashoffset: 251.2 }}
             whileInView={{ strokeDashoffset: 251.2 * 0.7 }}
@@ -133,7 +133,7 @@ function PortfolioMockup() {
       </div>
       <div className="w-full mt-3 flex justify-center gap-4 text-[10px]">
         <div className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-amber-500 shadow-lg shadow-amber-500/20"/> <span className="text-slate-300">Equities</span> <span className="text-white font-bold">60%</span></div>
-        <div className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-blue-500 shadow-lg shadow-blue-500/20"/> <span className="text-slate-300">Debt</span> <span className="text-white font-bold">40%</span></div>
+        <div className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-primary shadow-lg shadow-[rgba(21,81,157,0.3)]/20"/> <span className="text-slate-300">Debt</span> <span className="text-white font-bold">40%</span></div>
       </div>
     </div>
   );
@@ -155,7 +155,7 @@ export const BentoFeaturesSection: React.FC<Props> = ({ theme }) => {
     <section id="capabilities" className="space-y-10 max-w-5xl mx-auto px-4 sm:px-6">
       {/* Header */}
       <div className="text-center space-y-4">
-        <span className="text-xs font-black uppercase tracking-widest text-blue-500 bg-blue-500/10 px-4 py-1.5 rounded-full border border-blue-500/20">
+        <span className="text-xs font-black uppercase tracking-widest text-primary bg-primary/10 px-4 py-1.5 rounded-full border border-primary/20">
           Platform Capabilities
         </span>
         <h2 className={`text-4xl sm:text-5xl font-black font-display tracking-tight ${dark ? 'text-white' : 'text-slate-900'}`}>
@@ -178,8 +178,8 @@ export const BentoFeaturesSection: React.FC<Props> = ({ theme }) => {
           className={`${cardBase} bg-gradient-to-br from-[#0B1120] to-blue-900/10`}
         >
           <div className="p-6 sm:p-8 z-10 shrink-0">
-            <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-4">
-              <Brain className="w-5 h-5 text-blue-500" />
+            <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4">
+              <Brain className="w-5 h-5 text-primary" />
             </div>
             <h3 className={`text-xl font-black mb-2 ${dark ? 'text-white' : 'text-slate-900'}`}>
               Autonomous AI Engine
@@ -189,7 +189,7 @@ export const BentoFeaturesSection: React.FC<Props> = ({ theme }) => {
             </p>
           </div>
           <div className="relative flex-1 min-h-0 w-full overflow-hidden rounded-br-[1.5rem]">
-            <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-blue-500/20 rounded-full blur-[80px] pointer-events-none group-hover:bg-blue-500/30 transition-colors duration-700" />
+            <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-primary/20 rounded-full blur-[80px] pointer-events-none group-hover:bg-primary/30 transition-colors duration-700" />
             <AISignalsMockup />
           </div>
         </motion.div>

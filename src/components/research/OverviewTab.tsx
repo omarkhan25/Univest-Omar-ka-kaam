@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { 
   Sparkles, TrendingUp, TrendingDown, ArrowRight, ShieldCheck, 
   Activity, Star, BarChart3, AlertCircle, Flame, Globe, 
@@ -53,8 +53,8 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({ onSelectResearchCall }
 
   const quickInsights = sectors.length > 0 ? [
     { title: 'Most Bullish Sector', value: sectors[0]?.name || '--', icon: TrendingUp, change: `${sectors[0]?.changePercent ? (sectors[0].changePercent >= 0 ? '+' : '') + sectors[0].changePercent + '%' : '--'}`, color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-100', badge: 'Outperforming' },
-    { title: 'Most Bearish Sector', value: sectors[sectors.length - 1]?.name || '--', icon: TrendingDown, change: `${sectors[sectors.length - 1]?.changePercent ? sectors[sectors.length - 1].changePercent + '%' : '--'}`, color: 'text-rose-600', bg: 'bg-rose-50', border: 'border-rose-100', badge: 'Underperforming' },
-    { title: 'Best Momentum', value: sectors[1]?.name || sectors[0]?.name || '--', icon: Zap, change: `${sectors[1]?.changePercent ? '+' + sectors[1].changePercent + '%' : '--'}`, color: 'text-blue-600', bg: 'bg-blue-50', border: 'border-blue-100', badge: 'Strong Inflows' },
+    { title: 'Most Bearish Sector', value: sectors[sectors.length - 1]?.name || '--', icon: TrendingDown, change: `${sectors[sectors.length - 1]?.changePercent ? sectors[sectors.length - 1].changePercent + '%' : '--'}`, color: 'text-danger', bg: 'bg-rose-50', border: 'border-rose-100', badge: 'Underperforming' },
+    { title: 'Best Momentum', value: sectors[1]?.name || sectors[0]?.name || '--', icon: Zap, change: `${sectors[1]?.changePercent ? '+' + sectors[1].changePercent + '%' : '--'}`, color: 'text-primary', bg: 'bg-primary-light', border: 'border-[#E2E8F0]', badge: 'Strong Inflows' },
     { title: 'Top Volume', value: sectors[2]?.name || sectors[0]?.name || '--', icon: BarChart3, change: `${sectors[2]?.changePercent ? '+' + sectors[2].changePercent + '%' : '--'}`, color: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-100', badge: 'FII Buying' },
   ] : [];
 
@@ -73,10 +73,10 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({ onSelectResearchCall }
     publishedAt: call.publishedTime,
     summary: call.summary,
     thesis: call.thesis,
-    gradient: 'from-blue-600 to-indigo-700',
-    accentBg: 'bg-blue-50',
-    accentText: 'text-blue-700',
-    accentBorder: 'border-blue-100'
+    gradient: 'from-primary to-indigo-700',
+    accentBg: 'bg-primary-light',
+    accentText: 'text-primary',
+    accentBorder: 'border-[#E2E8F0]'
   }));
 
   const todayPicks = researchCalls.map(call => ({
@@ -97,7 +97,7 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({ onSelectResearchCall }
 
       {/* ── 1. HERO EDITORIAL BANNER ── */}
       <div className="relative overflow-hidden rounded-[32px] bg-[#060D1F] text-white border border-slate-800/60 shadow-2xl min-h-[280px] flex flex-col justify-between">
-        <div className="absolute -right-24 -top-24 w-96 h-96 bg-blue-600/25 rounded-full blur-[120px] pointer-events-none animate-pulse" />
+        <div className="absolute -right-24 -top-24 w-96 h-96 bg-primary/25 rounded-full blur-[120px] pointer-events-none animate-pulse" />
         <div className="absolute left-1/3 bottom-0 w-72 h-72 bg-emerald-500/15 rounded-full blur-[100px] pointer-events-none" />
         
         <div className="absolute inset-0 opacity-[0.03]" style={{backgroundImage:'linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.5) 1px,transparent 1px)',backgroundSize:'40px 40px'}} />
@@ -127,7 +127,7 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({ onSelectResearchCall }
 
         <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-end justify-between gap-8 px-8 md:px-12 py-8">
           <div className="max-w-2xl">
-            <span className="text-[10px] font-black uppercase text-blue-400 tracking-widest block mb-2">Research Dashboard</span>
+            <span className="text-[10px] font-black uppercase text-[#64748B] tracking-widest block mb-2">Research Dashboard</span>
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tight text-white leading-[1.1] mb-3">
               Stock Research & Advisory Hub
             </h1>
@@ -147,7 +147,7 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({ onSelectResearchCall }
                 const Icon = stat.icon;
                 return (
                   <div key={i} className="bg-white/8 border border-white/12 p-3.5 rounded-2xl backdrop-blur-sm">
-                    <Icon className="w-4 h-4 text-blue-400 mb-1.5" />
+                    <Icon className="w-4 h-4 text-[#64748B] mb-1.5" />
                     <div className="text-lg font-black text-white">{stat.value}</div>
                     <div className="text-[9px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">{stat.label}</div>
                   </div>
@@ -162,7 +162,7 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({ onSelectResearchCall }
       <div className="bg-white border border-slate-200 rounded-[24px] p-5 shadow-xs">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <Activity className="w-4 h-4 text-blue-600" />
+            <Activity className="w-4 h-4 text-primary" />
             <span className="text-xs font-black text-slate-900 uppercase tracking-widest">Live Market Snapshot</span>
           </div>
           <div className="flex items-center gap-1.5 text-[10px] font-black text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full border border-slate-200">
@@ -172,15 +172,15 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({ onSelectResearchCall }
         {marketSnapshot.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
             {marketSnapshot.map((item, i) => (
-              <div key={i} className="flex flex-col gap-1 p-3.5 bg-slate-50/60 border border-slate-100 rounded-2xl hover:border-blue-200 transition">
+              <div key={i} className="flex flex-col gap-1 p-3.5 bg-slate-50/60 border border-slate-100 rounded-2xl hover:border-primary-light transition">
                 <span className="text-[9px] font-black text-slate-400 uppercase tracking-wider">{item.label}</span>
                 <span className="text-sm font-black text-slate-900">{item.value}</span>
                 <div className="flex items-center gap-1">
                   {item.positive
                     ? <TrendingUp className="w-3 h-3 text-emerald-500" />
-                    : <TrendingDown className="w-3 h-3 text-rose-500" />
+                    : <TrendingDown className="w-3 h-3 text-danger" />
                   }
-                  <span className={`text-[10px] font-black ${item.positive ? 'text-emerald-600' : 'text-rose-600'}`}>
+                  <span className={`text-[10px] font-black ${item.positive ? 'text-emerald-600' : 'text-danger'}`}>
                     {item.pct}
                   </span>
                 </div>
@@ -241,7 +241,7 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({ onSelectResearchCall }
                   </div>
 
                   <div className="mb-4">
-                    <h3 className="text-base font-black text-slate-900 group-hover:text-blue-600 transition-colors leading-tight">
+                    <h3 className="text-base font-black text-slate-900 group-hover:text-primary transition-colors leading-tight">
                       {r.company}
                     </h3>
                     <div className="flex items-center gap-2 mt-1">
@@ -274,7 +274,7 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({ onSelectResearchCall }
                     <div className="flex items-center gap-1.5">
                       <span className="text-[9px] font-black text-slate-700 block leading-none">{r.analyst}</span>
                     </div>
-                    <span className="text-xs font-black text-blue-600 flex items-center gap-1 group-hover:translate-x-0.5 transition-all">
+                    <span className="text-xs font-black text-primary flex items-center gap-1 group-hover:translate-x-0.5 transition-all">
                       Full Report <ArrowRight className="w-3.5 h-3.5" />
                     </span>
                   </div>
@@ -367,7 +367,7 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({ onSelectResearchCall }
                 </thead>
                 <tbody className="divide-y divide-slate-100/80">
                   {todayPicks.map((pick, i) => (
-                    <tr key={i} className="hover:bg-blue-50/30 transition group">
+                    <tr key={i} className="hover:bg-primary-light/30 transition group">
                       <td className="py-4 px-6">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 rounded-xl bg-slate-900 text-white text-[10px] font-black flex items-center justify-center shrink-0">
@@ -397,7 +397,7 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({ onSelectResearchCall }
                       <td className="py-4 px-6 text-right">
                         <button
                           onClick={() => onSelectResearchCall?.(pick)}
-                          className="text-[10px] font-black text-blue-600 hover:text-blue-800 inline-flex items-center gap-1 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-xl transition cursor-pointer"
+                          className="text-[10px] font-black text-primary hover:text-primary-dark inline-flex items-center gap-1 bg-primary-light hover:bg-primary-light px-3 py-1.5 rounded-xl transition cursor-pointer"
                         >
                           Read Report <ArrowRight className="w-3 h-3" />
                         </button>

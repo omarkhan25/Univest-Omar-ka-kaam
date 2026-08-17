@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Shield, ArrowRight, TrendingUp, TrendingDown, Sparkles, Mail, CheckCircle2, 
@@ -52,13 +52,13 @@ export const BentoLandingPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0F172A] text-white font-sans selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen bg-[#172033] text-white font-sans selection:bg-primary selection:text-white">
       
       {/* STICKY GLASSMORPHIC NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0F172A]/90 backdrop-blur-xl border-b border-white/[0.08] py-4">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#172033]/90 backdrop-blur-xl border-b border-white/[0.08] py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           <div onClick={() => navigate('/')} className="flex items-center gap-3 cursor-pointer">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-emerald-500 flex items-center justify-center font-black text-xl text-white shadow-lg shadow-blue-600/30">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-primary to-emerald-500 flex items-center justify-center font-black text-xl text-white shadow-lg shadow-[rgba(21,81,157,0.3)]/30">
               U
             </div>
             <div>
@@ -86,7 +86,7 @@ export const BentoLandingPage: React.FC = () => {
             </button>
             <button
               onClick={() => navigate('/signup')}
-              className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-emerald-500 hover:from-blue-700 hover:to-emerald-600 text-white text-xs font-black rounded-xl transition shadow-lg shadow-blue-600/25 flex items-center gap-1.5 cursor-pointer"
+              className="px-6 py-2.5 bg-gradient-to-r from-primary to-emerald-500 hover:from-primary hover:to-emerald-600 text-white text-xs font-black rounded-xl transition shadow-lg shadow-[rgba(21,81,157,0.3)]/25 flex items-center gap-1.5 cursor-pointer"
             >
               <span>Get Started</span>
               <ArrowRight className="w-4 h-4" />
@@ -102,7 +102,7 @@ export const BentoLandingPage: React.FC = () => {
         <section id="hero" className="space-y-4">
           <BentoGrid>
             {/* HERO LEAD CARD (8 col x 2 row) */}
-            <BentoCard colSpan={8} rowSpan={2} glowColor="blue" className="bg-gradient-to-br from-[#1E293B] via-[#0F172A] to-[#1E293B]">
+            <BentoCard colSpan={8} rowSpan={2} glowColor="blue" className="bg-gradient-to-br from-[#1E293B] via-[#172033] to-[#1E293B]">
               <div className="space-y-6">
                 <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-3.5 py-1">
                   <Shield className="w-4 h-4 text-emerald-400" />
@@ -132,14 +132,14 @@ export const BentoLandingPage: React.FC = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Enter your email to test AI platform"
-                        className="w-full pl-10 pr-4 py-3 bg-[#0F172A] border border-slate-700 rounded-xl text-xs font-semibold text-white placeholder-slate-500 outline-none focus:border-blue-500"
+                        className="w-full pl-10 pr-4 py-3 bg-[#172033] border border-slate-700 rounded-xl text-xs font-semibold text-white placeholder-slate-500 outline-none focus:border-primary"
                         required
                       />
                     </div>
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-black text-xs rounded-xl shadow-lg transition flex items-center justify-center gap-2 cursor-pointer shrink-0"
+                      className="px-6 py-3 bg-primary hover:bg-primary-dark text-white font-black text-xs rounded-xl shadow-lg transition flex items-center justify-center gap-2 cursor-pointer shrink-0"
                     >
                       {isSubmitting ? 'Verifying...' : emailSubmitted ? 'Redirecting...' : 'Start Free Trial'}
                       <ArrowRight className="w-4 h-4" />
@@ -161,7 +161,7 @@ export const BentoLandingPage: React.FC = () => {
 
               <div className="space-y-3 my-2">
                 {terminalWatchlist.map((item) => (
-                  <div key={item.symbol} className="flex items-center justify-between p-2.5 rounded-xl bg-[#0F172A] border border-slate-800 text-xs font-mono">
+                  <div key={item.symbol} className="flex items-center justify-between p-2.5 rounded-xl bg-[#172033] border border-slate-800 text-xs font-mono">
                     <div>
                       <span className="font-bold text-white block">{item.symbol}</span>
                       <span className="text-[10px] text-slate-500 font-semibold">NSE Equity</span>
@@ -186,7 +186,7 @@ export const BentoLandingPage: React.FC = () => {
             <BentoCard colSpan={4} rowSpan={1} glowColor="blue">
               <span className="text-xs font-bold text-slate-400 uppercase tracking-widest block">Active Investors</span>
               <span className="text-3xl font-black text-white font-mono mt-1 block">50,420+</span>
-              <span className="text-[11px] text-blue-400 font-semibold mt-1 block">▲ +12% Growth this month</span>
+              <span className="text-[11px] text-[#64748B] font-semibold mt-1 block">▲ +12% Growth this month</span>
             </BentoCard>
 
             {/* STAT CARD 2 (4 col x 1 row) */}
@@ -233,7 +233,7 @@ export const BentoLandingPage: React.FC = () => {
         {/* SECTION 2: CAPABILITIES BENTO GRID */}
         <section id="capabilities" className="space-y-6">
           <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="text-xs font-black uppercase tracking-wider text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">
+            <span className="text-xs font-black uppercase tracking-wider text-[#64748B] bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
               Bento Architecture
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-white font-display">
@@ -246,7 +246,7 @@ export const BentoLandingPage: React.FC = () => {
             {/* HERO CAPABILITY: AI INSIGHTS (6 col x 2 row) */}
             <BentoCard colSpan={6} rowSpan={2} glowColor="blue">
               <div className="space-y-4">
-                <div className="w-12 h-12 rounded-2xl bg-blue-600/20 text-blue-400 flex items-center justify-center border border-blue-500/30">
+                <div className="w-12 h-12 rounded-2xl bg-primary/20 text-[#64748B] flex items-center justify-center border border-primary/30">
                   <Brain className="w-6 h-6" />
                 </div>
                 <h3 className="text-xl font-black text-white font-display">Autonomous AI Signal Engine</h3>
@@ -254,7 +254,7 @@ export const BentoLandingPage: React.FC = () => {
                   Scans 4,000+ Indian equities 24/7. Detects candlestick patterns, volume surges, and RSI momentum breakouts before the retail crowd.
                 </p>
 
-                <div className="p-4 bg-[#0F172A] rounded-2xl border border-slate-800 space-y-2 font-mono text-xs">
+                <div className="p-4 bg-[#172033] rounded-2xl border border-slate-800 space-y-2 font-mono text-xs">
                   <div className="flex justify-between text-slate-400">
                     <span>Target Stock: TATAMOTORS</span>
                     <span className="text-emerald-400 font-bold">Conviction: 94%</span>
@@ -323,11 +323,11 @@ export const BentoLandingPage: React.FC = () => {
 
           <BentoGrid>
             {/* INTERACTIVE CHAT PREVIEW (6 col x 2 row) */}
-            <BentoCard colSpan={6} rowSpan={2} glowColor="purple" className="bg-[#0F172A]">
+            <BentoCard colSpan={6} rowSpan={2} glowColor="purple" className="bg-[#172033]">
               <div className="space-y-4">
                 <div className="flex items-center justify-between pb-3 border-b border-slate-800">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-blue-600 text-white font-black flex items-center justify-center text-xs">MA</div>
+                    <div className="w-8 h-8 rounded-lg bg-primary text-white font-black flex items-center justify-center text-xs">MA</div>
                     <div>
                       <span className="font-black text-xs text-white block">Market Analyst AI</span>
                       <span className="text-[10px] text-emerald-400 font-mono">● Online & Scanning Market</span>
@@ -341,7 +341,7 @@ export const BentoLandingPage: React.FC = () => {
                   <div className="p-3 rounded-2xl bg-slate-800 text-slate-200 max-w-[85%]">
                     User: "Which tech stock looks strong for a 2-week swing trade?"
                   </div>
-                  <div className="p-3 rounded-2xl bg-blue-600/20 border border-blue-500/30 text-blue-100 max-w-[90%] ml-auto space-y-1">
+                  <div className="p-3 rounded-2xl bg-primary/20 border border-primary/30 text-blue-100 max-w-[90%] ml-auto space-y-1">
                     <span className="font-bold block text-blue-300">Market Analyst AI:</span>
                     <p className="text-[11px] leading-relaxed">
                       INFY shows a bullish falling-wedge breakout at ₹1,560. Target: ₹1,640 with Stop-loss at ₹1,520. Risk-Reward: 1:2.5.
@@ -361,7 +361,7 @@ export const BentoLandingPage: React.FC = () => {
                 <p className="text-xs text-slate-400 font-medium leading-relaxed">
                   Evaluates drawdown risk, sector exposure, and auto-rebalances your holdings for target CAGR.
                 </p>
-                <div className="p-3 bg-[#0F172A] rounded-xl border border-slate-800 text-[10px] font-mono text-slate-300">
+                <div className="p-3 bg-[#172033] rounded-xl border border-slate-800 text-[10px] font-mono text-slate-300">
                   Risk Score: 3.8/10 (Balanced)
                 </div>
               </div>
@@ -377,7 +377,7 @@ export const BentoLandingPage: React.FC = () => {
                 <p className="text-xs text-slate-400 font-medium leading-relaxed">
                   Step-by-step mentor explaining options strategies, balance sheet ratios, and trading discipline.
                 </p>
-                <div className="p-3 bg-[#0F172A] rounded-xl border border-slate-800 text-[10px] font-mono text-slate-300">
+                <div className="p-3 bg-[#172033] rounded-xl border border-slate-800 text-[10px] font-mono text-slate-300">
                   Active Course: Options Strategy
                 </div>
               </div>
@@ -388,7 +388,7 @@ export const BentoLandingPage: React.FC = () => {
         {/* SECTION 4: MARKET INTELLIGENCE STRIP */}
         <section id="market-strip">
           <BentoGrid>
-            <BentoCard colSpan={12} rowSpan={1} glowColor="blue" className="bg-[#0F172A]">
+            <BentoCard colSpan={12} rowSpan={1} glowColor="blue" className="bg-[#172033]">
               <div className="flex flex-wrap items-center justify-between gap-6 font-mono text-xs">
                 <div className="flex items-center gap-2 shrink-0">
                   <Radio className="w-4 h-4 text-emerald-400 animate-pulse" />
@@ -421,7 +421,7 @@ export const BentoLandingPage: React.FC = () => {
                   </div>
                 </div>
 
-                <button onClick={() => navigate('/dashboard')} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-black rounded-lg text-xs transition cursor-pointer">
+                <button onClick={() => navigate('/dashboard')} className="px-4 py-2 bg-primary hover:bg-primary-dark text-white font-black rounded-lg text-xs transition cursor-pointer">
                   Open Terminal
                 </button>
               </div>
@@ -452,7 +452,7 @@ export const BentoLandingPage: React.FC = () => {
                 <p className="text-xs text-slate-400 font-medium leading-relaxed">
                   Grey Market Premium (GMP): <strong className="text-amber-400 font-mono">+₹42 (38.5% Expected Listing Gain)</strong>.
                 </p>
-                <div className="p-3 bg-[#0F172A] rounded-xl border border-slate-800 text-[10px] font-mono text-slate-300 space-y-1">
+                <div className="p-3 bg-[#172033] rounded-xl border border-slate-800 text-[10px] font-mono text-slate-300 space-y-1">
                   <div>Subscription: 14.8x (Retail: 22.1x)</div>
                   <div className="text-emerald-400">AI Recommendation: Apply</div>
                 </div>
@@ -477,7 +477,7 @@ export const BentoLandingPage: React.FC = () => {
                   <span className="text-xs font-bold text-slate-400 uppercase">Mutual Funds</span>
                   <span className="text-lg font-black text-white font-mono block mt-1">Top Fund: 24.2% CAGR</span>
                 </div>
-                <span className="text-xs font-mono font-bold text-blue-400">SIP Calculator</span>
+                <span className="text-xs font-mono font-bold text-[#64748B]">SIP Calculator</span>
               </div>
             </BentoCard>
 
@@ -508,7 +508,7 @@ export const BentoLandingPage: React.FC = () => {
         {/* SECTION 6: PORTFOLIO COMMAND CENTER PREVIEW */}
         <section id="portfolio-preview" className="space-y-6">
           <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="text-xs font-black uppercase tracking-wider text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">
+            <span className="text-xs font-black uppercase tracking-wider text-[#64748B] bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
               Wealth Command Center
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-white font-display">
@@ -541,7 +541,7 @@ export const BentoLandingPage: React.FC = () => {
                   </div>
                   <div>
                     <span className="text-slate-400 block text-[10px]">XIRR CAGR</span>
-                    <span className="font-bold text-blue-400">22.4%</span>
+                    <span className="font-bold text-[#64748B]">22.4%</span>
                   </div>
                 </div>
               </div>
@@ -593,7 +593,7 @@ export const BentoLandingPage: React.FC = () => {
             </BentoCard>
 
             {/* RECOMMENDED PRO PLAN (ELEVATED 6 col x 2 row HERO TIER) */}
-            <BentoCard colSpan={6} rowSpan={2} glowColor="emerald" className="bg-gradient-to-b from-[#1E293B] via-[#0F172A] to-[#1E293B] border-2 border-emerald-500/40">
+            <BentoCard colSpan={6} rowSpan={2} glowColor="emerald" className="bg-gradient-to-b from-[#1E293B] via-[#172033] to-[#1E293B] border-2 border-emerald-500/40">
               <div className="space-y-5">
                 <div className="flex justify-between items-center">
                   <span className="text-xs font-black uppercase tracking-wider text-emerald-400 bg-emerald-500/20 px-3 py-1 rounded-full">
@@ -616,7 +616,7 @@ export const BentoLandingPage: React.FC = () => {
                   <div>✓ Portfolio Rebalance Engine</div>
                 </div>
 
-                <button onClick={() => navigate('/signup')} className="w-full py-4 bg-gradient-to-r from-blue-600 to-emerald-500 hover:from-blue-700 hover:to-emerald-600 text-white font-black text-xs rounded-xl shadow-lg transition cursor-pointer">
+                <button onClick={() => navigate('/signup')} className="w-full py-4 bg-gradient-to-r from-primary to-emerald-500 hover:from-primary hover:to-emerald-600 text-white font-black text-xs rounded-xl shadow-lg transition cursor-pointer">
                   Start 14-Day Free Trial
                 </button>
               </div>
@@ -648,7 +648,7 @@ export const BentoLandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-slate-800">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-blue-600 text-white font-black flex items-center justify-center">U</div>
+              <div className="w-8 h-8 rounded-lg bg-primary text-white font-black flex items-center justify-center">U</div>
               <span className="font-black text-white font-display text-lg">UNIVEST</span>
             </div>
             <div className="text-[11px] text-emerald-400 font-bold">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   TrendingUp, ArrowUpRight, Sparkles, Shield, Briefcase, Zap, 
@@ -89,7 +89,7 @@ export const LivingPortfolioStackHero: React.FC<LivingPortfolioStackHeroProps> =
     >
       {/* BACKGROUND AMBIENT GLOW */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px] bg-gradient-to-tr from-blue-600/15 via-emerald-500/15 to-purple-600/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px] bg-gradient-to-tr from-primary/15 via-emerald-500/15 to-purple-600/10 rounded-full blur-3xl animate-pulse" />
       </div>
 
       {/* SATELLITE FLOATING WIDGET 1: PORTFOLIO ALLOCATION (Top Left) */}
@@ -97,7 +97,7 @@ export const LivingPortfolioStackHero: React.FC<LivingPortfolioStackHeroProps> =
         style={{ transform: `translate(${mousePos.x * -16}px, ${mousePos.y * -16}px)` }}
         animate={{ y: [0, -6, 0] }}
         transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute top-6 left-2 sm:left-6 z-40 bg-[#0F172A]/90 backdrop-blur-xl border border-white/10 p-3 rounded-2xl shadow-xl font-mono text-xs text-white"
+        className="absolute top-6 left-2 sm:left-6 z-40 bg-[#172033]/90 backdrop-blur-xl border border-white/10 p-3 rounded-2xl shadow-xl font-mono text-xs text-white"
       >
         <div className="flex items-center gap-2 mb-1">
           <div className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
@@ -106,7 +106,7 @@ export const LivingPortfolioStackHero: React.FC<LivingPortfolioStackHeroProps> =
         <div className="flex items-center gap-3 text-[11px]">
           <span>Stocks <strong className="text-emerald-400">72%</strong></span>
           <span className="text-slate-600">|</span>
-          <span>MFs <strong className="text-blue-400">18%</strong></span>
+          <span>MFs <strong className="text-[#64748B]">18%</strong></span>
           <span className="text-slate-600">|</span>
           <span>ETF <strong className="text-purple-400">10%</strong></span>
         </div>
@@ -117,10 +117,10 @@ export const LivingPortfolioStackHero: React.FC<LivingPortfolioStackHeroProps> =
         style={{ transform: `translate(${mousePos.x * 18}px, ${mousePos.y * -14}px)` }}
         animate={{ y: [0, 6, 0] }}
         transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-        className="absolute top-6 right-2 sm:right-6 z-40 bg-[#0F172A]/90 backdrop-blur-xl border border-white/10 p-3 rounded-2xl shadow-xl font-mono text-xs text-white"
+        className="absolute top-6 right-2 sm:right-6 z-40 bg-[#172033]/90 backdrop-blur-xl border border-white/10 p-3 rounded-2xl shadow-xl font-mono text-xs text-white"
       >
         <div className="flex items-center gap-2">
-          <Wallet className="w-3.5 h-3.5 text-blue-400" />
+          <Wallet className="w-3.5 h-3.5 text-[#64748B]" />
           <div>
             <span className="text-[10px] text-slate-400 block font-semibold">Available Cash</span>
             <span className="font-black text-xs text-white">₹84,250.00</span>
@@ -133,7 +133,7 @@ export const LivingPortfolioStackHero: React.FC<LivingPortfolioStackHeroProps> =
         style={{ transform: `translate(${mousePos.x * 20}px, ${mousePos.y * 18}px)` }}
         animate={{ y: [0, -6, 0] }}
         transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-        className="absolute bottom-6 right-2 sm:right-6 z-40 bg-[#0F172A]/90 backdrop-blur-xl border border-emerald-500/30 p-3 rounded-2xl shadow-xl font-mono text-xs text-white"
+        className="absolute bottom-6 right-2 sm:right-6 z-40 bg-[#172033]/90 backdrop-blur-xl border border-emerald-500/30 p-3 rounded-2xl shadow-xl font-mono text-xs text-white"
       >
         <div className="flex items-center gap-2">
           <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
@@ -197,7 +197,7 @@ export const LivingPortfolioStackHero: React.FC<LivingPortfolioStackHeroProps> =
             <div className="border-l border-slate-800 pl-3">
               <span className="text-[10px] text-slate-400 block font-semibold">PORTFOLIO HEALTH</span>
               <span className="text-sm font-black text-white">94%</span>
-              <span className="text-[10px] text-blue-400 font-bold">AI Status: Excellent</span>
+              <span className="text-[10px] text-[#64748B] font-bold">AI Status: Excellent</span>
             </div>
           </div>
 
@@ -229,7 +229,7 @@ export const LivingPortfolioStackHero: React.FC<LivingPortfolioStackHeroProps> =
           <div className="flex items-center gap-2 pt-2 border-t border-slate-800 text-[11px] font-mono">
             <button 
               onClick={(e) => { e.stopPropagation(); onActionClick?.('portfolio'); }}
-              className="flex-1 py-1.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition shadow-md flex items-center justify-center gap-1 cursor-pointer"
+              className="flex-1 py-1.5 bg-primary hover:bg-primary-dark text-white font-bold rounded-xl transition shadow-md flex items-center justify-center gap-1 cursor-pointer"
             >
               <span>View Portfolio</span>
             </button>
@@ -255,7 +255,7 @@ export const LivingPortfolioStackHero: React.FC<LivingPortfolioStackHeroProps> =
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           onClick={() => setActiveCardIndex(1)}
           style={{ transformOrigin: 'top center' }}
-          className="absolute inset-0 bg-[#0F172A]/95 backdrop-blur-2xl border border-purple-500/30 rounded-[32px] p-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col justify-between cursor-pointer group"
+          className="absolute inset-0 bg-[#172033]/95 backdrop-blur-2xl border border-purple-500/30 rounded-[32px] p-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col justify-between cursor-pointer group"
         >
           <div className="flex items-center justify-between font-mono">
             <div className="flex items-center gap-2 text-purple-400">
@@ -291,7 +291,7 @@ export const LivingPortfolioStackHero: React.FC<LivingPortfolioStackHeroProps> =
 
           <button 
             onClick={(e) => { e.stopPropagation(); onActionClick?.('ai-signal'); }}
-            className="w-full py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-mono font-bold text-xs rounded-xl shadow-lg transition flex items-center justify-center gap-1.5 cursor-pointer"
+            className="w-full py-2 bg-gradient-to-r from-purple-600 to-primary hover:from-purple-500 hover:to-primary text-white font-mono font-bold text-xs rounded-xl shadow-lg transition flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <span>Execute AI Trade Order</span>
             <ChevronRight className="w-4 h-4" />
@@ -305,7 +305,7 @@ export const LivingPortfolioStackHero: React.FC<LivingPortfolioStackHeroProps> =
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           onClick={() => setActiveCardIndex(2)}
           style={{ transformOrigin: 'top center' }}
-          className="absolute inset-0 bg-[#0F172A]/95 backdrop-blur-2xl border border-emerald-500/30 rounded-[32px] p-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col justify-between cursor-pointer group"
+          className="absolute inset-0 bg-[#172033]/95 backdrop-blur-2xl border border-emerald-500/30 rounded-[32px] p-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col justify-between cursor-pointer group"
         >
           <div className="flex items-center justify-between font-mono">
             <div className="flex items-center gap-2 text-emerald-400">

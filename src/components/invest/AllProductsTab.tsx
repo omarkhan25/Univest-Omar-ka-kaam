@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { 
   BarChart3, Compass, Gem, Rocket, Sparkles, TrendingUp, ArrowUpRight, 
   Flame, Zap, Layers, ArrowRight, ShieldCheck, PieChart, Coins
@@ -17,12 +17,12 @@ export const AllProductsTab: React.FC<AllProductsTabProps> = ({
   onTrade
 }) => {
   const assetOverviewCards = [
-    { key: 'stocks', title: 'Equities & Stocks', metric: '12,500+ Listed', trend: '+1.4% Today', icon: BarChart3, color: 'from-blue-600 to-indigo-700', badge: 'Popular' },
+    { key: 'stocks', title: 'Equities & Stocks', metric: '12,500+ Listed', trend: '+1.4% Today', icon: BarChart3, color: 'from-primary to-indigo-700', badge: 'Popular' },
     { key: 'mutual_funds', title: 'Mutual Funds & SIP', metric: '1,500+ Schemes', trend: 'Direct 0% Commission', icon: PieChart, color: 'from-emerald-600 to-teal-700', badge: 'High Yield' },
-    { key: 'etfs', title: 'Exchange Traded Funds', metric: '320 Active ETFs', trend: 'Low Cost Indexing', icon: Layers, color: 'from-cyan-600 to-blue-700', badge: 'Passive' },
+    { key: 'etfs', title: 'Exchange Traded Funds', metric: '320 Active ETFs', trend: 'Low Cost Indexing', icon: Layers, color: 'from-cyan-600 to-[#5A35F0]', badge: 'Passive' },
     { key: 'ipos', title: 'IPOs & New Listings', metric: '4 Open Today', trend: 'High GMP Signals', icon: Rocket, color: 'from-purple-600 to-indigo-800', badge: '4 Open' },
     { key: 'gold', title: 'Sovereign & Digital Gold', metric: '₹7,240 / gram', trend: '2.5% Govt Interest', icon: Gem, color: 'from-amber-500 to-orange-600', badge: 'Safe Haven' },
-    { key: 'commodities', title: 'MCX Commodities', metric: '24 Futures & Options', trend: 'Crude & Silver Volatile', icon: Coins, color: 'from-[#0F172A] to-slate-900', badge: 'F&O' }
+    { key: 'commodities', title: 'MCX Commodities', metric: '24 Futures & Options', trend: 'Crude & Silver Volatile', icon: Coins, color: 'from-[#172033] to-slate-900', badge: 'F&O' }
   ];
 
   const marketMovers = [
@@ -39,8 +39,8 @@ export const AllProductsTab: React.FC<AllProductsTabProps> = ({
       {/* 1.1 ASSET OVERVIEW CARDS GRID */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-base font-black text-[#0F172A] flex items-center gap-2">
-            <Compass className="w-5 h-5 text-blue-600" /> Explore Asset Classes
+          <h2 className="text-base font-black text-[#172033] flex items-center gap-2">
+            <Compass className="w-5 h-5 text-primary" /> Explore Asset Classes
           </h2>
           <span className="text-xs font-bold text-slate-400">SEBI Registered Investment Hub</span>
         </div>
@@ -53,19 +53,19 @@ export const AllProductsTab: React.FC<AllProductsTabProps> = ({
                 key={card.key}
                 whileHover={{ y: -3 }}
                 onClick={() => onSelectCategory(card.key)}
-                className="bg-white border border-[#E2E8F0] rounded-[24px] p-6 shadow-xs hover:shadow-xl hover:border-blue-200 transition-all flex flex-col justify-between cursor-pointer group"
+                className="bg-white border border-[#E2E8F0] rounded-[24px] p-6 shadow-xs hover:shadow-xl hover:border-primary-light transition-all flex flex-col justify-between cursor-pointer group"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
                     <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${card.color} text-white flex items-center justify-center shadow-md`}>
                       <Icon className="w-6 h-6" />
                     </div>
-                    <span className="text-[10px] font-black uppercase text-blue-600 bg-blue-50 border border-blue-200 px-2.5 py-0.5 rounded-full">
+                    <span className="text-[10px] font-black uppercase text-primary bg-primary-light border border-primary-light px-2.5 py-0.5 rounded-full">
                       {card.badge}
                     </span>
                   </div>
 
-                  <h3 className="font-black text-lg text-[#0F172A] group-hover:text-blue-600 transition-colors mb-1">
+                  <h3 className="font-black text-lg text-[#172033] group-hover:text-primary transition-colors mb-1">
                     {card.title}
                   </h3>
                   <span className="text-xs font-bold text-slate-500 block mb-2">{card.metric}</span>
@@ -73,7 +73,7 @@ export const AllProductsTab: React.FC<AllProductsTabProps> = ({
 
                 <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-slate-700">
                   <span className="text-emerald-600">{card.trend}</span>
-                  <span className="text-blue-600 font-black flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                  <span className="text-primary font-black flex items-center gap-1 group-hover:translate-x-1 transition-transform">
                     Explore <ArrowRight className="w-3.5 h-3.5" />
                   </span>
                 </div>
@@ -86,8 +86,8 @@ export const AllProductsTab: React.FC<AllProductsTabProps> = ({
       {/* 1.2 TOP MARKET MOVERS ACROSS ASSET CLASSES */}
       <div className="bg-white border border-[#E2E8F0] rounded-[24px] p-6 shadow-xs">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="font-black text-sm text-[#0F172A] flex items-center gap-2">
-            <Flame className="w-4 h-4 text-rose-500 fill-rose-500" /> Top Market Movers Across Assets
+          <h3 className="font-black text-sm text-[#172033] flex items-center gap-2">
+            <Flame className="w-4 h-4 text-danger fill-rose-500" /> Top Market Movers Across Assets
           </h3>
           <span className="text-xs font-bold text-slate-400">Live Tickers</span>
         </div>
@@ -101,7 +101,7 @@ export const AllProductsTab: React.FC<AllProductsTabProps> = ({
             >
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <span className="font-black text-xs text-[#0F172A]">{mover.symbol}</span>
+                  <span className="font-black text-xs text-[#172033]">{mover.symbol}</span>
                   <span className="text-[9px] font-bold text-slate-400 bg-white px-1.5 py-0.5 rounded border border-slate-200 uppercase">
                     {mover.category}
                   </span>

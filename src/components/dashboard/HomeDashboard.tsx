@@ -285,7 +285,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
 
   useEffect(() => {
     let isMounted = true;
-    const symbols = watchlistStocks.map(s => s.symbol);
+    const symbols = watchlistStocks.map(s => s?.symbol).filter((s): s is string => typeof s === 'string' && s.length > 0);
 
     if (symbols.length > 0) {
       symbols.forEach(s => wsService.subscribe(s));
@@ -415,7 +415,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
               </h2>
               <div className="flex items-center gap-2 mt-2">
                 <span className={`text-xs font-black px-2.5 py-0.5 rounded-md flex items-center gap-1 border ${
-                  portfolioMetrics.totalGain >= 0 ? 'text-emerald-600 bg-emerald-50 border-emerald-100' : 'text-rose-600 bg-rose-50 border-rose-100'
+                  portfolioMetrics.totalGain >= 0 ? 'text-emerald-600 bg-emerald-50 border-emerald-100' : 'text-danger bg-rose-50 border-rose-100'
                 }`}>
                   {portfolioMetrics.totalGain >= 0 ? <ArrowUpRight className="w-3.5 h-3.5" /> : <ArrowDownRight className="w-3.5 h-3.5" />} 
                   {portfolioMetrics.totalGain >= 0 ? '+' : ''}₹{portfolioMetrics.totalGain.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ({portfolioMetrics.totalGainPerc >= 0 ? '+' : ''}{portfolioMetrics.totalGainPerc.toFixed(2)}%) Today
@@ -430,7 +430,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
                   if (onDepositFunds) onDepositFunds();
                   else if (onNavigateTab) onNavigateTab('Portfolio');
                 }}
-                className="px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-black text-xs transition cursor-pointer shadow-sm flex items-center gap-1.5"
+                className="px-5 py-3 rounded-xl bg-primary hover:bg-primary-dark text-white font-black text-xs transition cursor-pointer shadow-sm flex items-center gap-1.5"
               >
                 <Plus className="w-4 h-4" /> Invest / Add Funds
               </button>
@@ -448,7 +448,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div className="bg-slate-50 border border-slate-100 p-3.5 rounded-2xl">
               <span className="text-[9px] font-black text-slate-400 uppercase tracking-wider block">Total Gain</span>
-              <span className={`text-sm font-black block mt-0.5 ${portfolioMetrics.totalGain >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
+              <span className={`text-sm font-black block mt-0.5 ${portfolioMetrics.totalGain >= 0 ? 'text-emerald-600' : 'text-danger'}`}>
                 {portfolioMetrics.totalGain >= 0 ? '+' : ''}₹{portfolioMetrics.totalGain.toLocaleString('en-IN')} ({portfolioMetrics.totalGainPerc >= 0 ? '+' : ''}{portfolioMetrics.totalGainPerc.toFixed(1)}%)
               </span>
             </div>
@@ -460,7 +460,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
             </div>
             <div className="bg-slate-50 border border-slate-100 p-3.5 rounded-2xl">
               <span className="text-[9px] font-black text-slate-400 uppercase tracking-wider block">Available Cash</span>
-              <span className="text-sm font-black text-blue-600 block mt-0.5">
+              <span className="text-sm font-black text-primary block mt-0.5">
                 ₹{portfolioMetrics.cash.toLocaleString('en-IN')}
               </span>
             </div>
@@ -483,7 +483,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
                     onClick={() => setActiveTimeframe(tf)}
                     className={`px-3 py-1.5 rounded-lg text-[10px] font-black tracking-wider transition cursor-pointer select-none ${
                       activeTimeframe === tf 
-                        ? 'bg-blue-600 text-white shadow-xs' 
+                        ? 'bg-primary text-white shadow-xs' 
                         : 'text-slate-500 hover:text-slate-800'
                     }`}
                   >
@@ -498,8 +498,8 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
                 <AreaChart data={chartData} margin={{ top: 10, right: 5, left: -10, bottom: 0 }}>
                   <defs>
                     <linearGradient id="growthGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#2563EB" stopOpacity={0.15} />
-                      <stop offset="95%" stopColor="#2563EB" stopOpacity={0.01} />
+                      <stop offset="5%" stopColor="#15519D" stopOpacity={0.15} />
+                      <stop offset="95%" stopColor="#15519D" stopOpacity={0.01} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F5F9" />
@@ -521,7 +521,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
                   <Area 
                     type="monotone" 
                     dataKey="value" 
-                    stroke="#2563EB" 
+                    stroke="#15519D" 
                     strokeWidth={3} 
                     fillOpacity={1} 
                     fill="url(#growthGradient)" 
@@ -541,7 +541,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
               </div>
               <button 
                 onClick={() => setShowCreateWatchlistModal(true)}
-                className="text-[11px] font-black text-blue-600 hover:text-blue-700 bg-blue-50 border border-blue-100 px-2.5 py-1 rounded-xl transition cursor-pointer"
+                className="text-[11px] font-black text-primary hover:text-primary bg-primary-light border border-[#E2E8F0] px-2.5 py-1 rounded-xl transition cursor-pointer"
               >
                 + Create
               </button>
@@ -574,11 +574,11 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
                           setShowWatchlistDropdown(false);
                         }}
                         className={`w-full text-left px-3 py-2 rounded-xl text-xs font-bold transition cursor-pointer flex items-center justify-between ${
-                          selectedWatchlist?.id === w.id ? 'bg-blue-50 text-blue-700 font-black' : 'text-slate-700 hover:bg-slate-50'
+                          selectedWatchlist?.id === w.id ? 'bg-primary-light text-primary font-black' : 'text-slate-700 hover:bg-slate-50'
                         }`}
                       >
                         <span className="truncate">{w.name}</span>
-                        {selectedWatchlist?.id === w.id && <Check className="w-3.5 h-3.5 text-blue-600 shrink-0" />}
+                        {selectedWatchlist?.id === w.id && <Check className="w-3.5 h-3.5 text-primary shrink-0" />}
                       </button>
                     ))}
                     <button
@@ -586,7 +586,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
                         setShowWatchlistDropdown(false);
                         setShowCreateWatchlistModal(true);
                       }}
-                      className="w-full text-left px-3 py-2 rounded-xl text-xs font-black text-blue-600 hover:bg-blue-50 transition cursor-pointer border-t border-slate-100 mt-1 flex items-center gap-1"
+                      className="w-full text-left px-3 py-2 rounded-xl text-xs font-black text-primary hover:bg-primary-light transition cursor-pointer border-t border-slate-100 mt-1 flex items-center gap-1"
                     >
                       <Plus className="w-3.5 h-3.5" /> Create New Watchlist
                     </button>
@@ -634,7 +634,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
                 <div className="flex items-center gap-3">
                   <div className="text-right">
                     <span className="font-extrabold text-xs text-slate-900 block leading-tight">{st.ltp}</span>
-                    <span className={`text-[9px] font-bold block ${st.isPositive ? 'text-emerald-600' : 'text-rose-600'}`}>
+                    <span className={`text-[9px] font-bold block ${st.isPositive ? 'text-emerald-600' : 'text-danger'}`}>
                       {st.change}
                     </span>
                   </div>
@@ -644,7 +644,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
                       e.stopPropagation();
                       if (onTrade) onTrade({ symbol: st.symbol, company: st.name, rec: st.isPositive ? 'BUY' : 'SELL' });
                     }}
-                    className="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-black text-[10px] transition cursor-pointer shadow-xs"
+                    className="px-2.5 py-1 rounded-lg bg-primary hover:bg-primary-dark text-white font-black text-[10px] transition cursor-pointer shadow-xs"
                   >
                     Trade
                   </button>
@@ -660,7 +660,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
         <section className="bg-white border border-slate-200 rounded-[28px] p-6 shadow-xs flex flex-col gap-5 h-[380px]">
           <div className="flex items-center justify-between border-b border-slate-100 pb-3.5">
             <div className="flex items-center gap-2">
-              <Sparkles className="w-4.5 h-4.5 text-blue-600 fill-blue-500/20 animate-pulse" />
+              <Sparkles className="w-4.5 h-4.5 text-primary fill-primary/20 animate-pulse" />
               <div>
                 <h3 className="text-base font-black text-slate-900 leading-tight">Today's High-Conviction AI Picks</h3>
               </div>
@@ -670,13 +670,13 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
           <div className="flex flex-col gap-4 flex-1 overflow-y-auto pr-1">
             {isAiLoading ? (
               <div className="p-6 bg-slate-50 border border-slate-100 rounded-2xl flex flex-col items-center justify-center gap-3">
-                <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
                 <span className="text-xs font-black text-slate-500">Analyzing market data...</span>
               </div>
             ) : aiOpportunities.length === 0 ? (
               <div className="p-8 bg-slate-50 border border-slate-100 rounded-2xl flex flex-col items-center justify-center gap-3 text-center">
-                <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center mb-1">
-                  <Sparkles className="w-6 h-6 text-blue-500" />
+                <div className="w-12 h-12 bg-primary-light rounded-full flex items-center justify-center mb-1">
+                  <Sparkles className="w-6 h-6 text-primary" />
                 </div>
                 <span className="text-sm font-black text-slate-900">AI is gathering intelligence</span>
                 <p className="text-xs text-slate-500 font-medium max-w-[200px]">Our models are analyzing the market. Check back soon for high-conviction picks.</p>
@@ -687,21 +687,21 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
                   key={opp.symbol}
                   className="p-4 bg-white border border-slate-200 hover:border-blue-300 hover:shadow-md rounded-2xl transition-all duration-300 flex flex-col gap-3 group relative overflow-hidden"
                 >
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50/50 rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-primary-light/50 rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
                   
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-start gap-3">
                       <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
                         opp.type === 'Mutual Fund' 
                           ? 'bg-violet-100 text-violet-600' 
-                          : 'bg-blue-100 text-blue-600'
+                          : 'bg-primary-light text-primary'
                       }`}>
                         {opp.type === 'Mutual Fund' ? <Layers className="w-5 h-5" /> : <BarChart3 className="w-5 h-5" />}
                       </div>
                       <div className="flex flex-col">
                         <div className="flex items-center gap-2">
                           <span className="font-black text-sm text-slate-900">{opp.symbol}</span>
-                          <span className="text-[9px] font-black bg-blue-50 text-blue-700 border border-blue-100 px-1.5 py-0.5 rounded uppercase tracking-wider">
+                          <span className="text-[9px] font-black bg-primary-light text-primary border border-[#E2E8F0] px-1.5 py-0.5 rounded uppercase tracking-wider">
                             {opp.type}
                           </span>
                         </div>
@@ -730,7 +730,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
                       </div>
                       {opp.targetPrice && (
                         <div className="flex items-center gap-1.5">
-                          <Zap className="w-3.5 h-3.5 text-blue-500" />
+                          <Zap className="w-3.5 h-3.5 text-primary" />
                           <span className="text-[10px] font-bold text-slate-600">Target: <span className="text-slate-900">{opp.targetPrice}</span></span>
                         </div>
                       )}
@@ -771,7 +771,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
         <section className="bg-white border border-slate-200 rounded-[28px] p-6 shadow-xs flex flex-col gap-5 h-[380px]">
           <div className="flex items-center justify-between border-b border-slate-100 pb-3.5">
             <div className="flex items-center gap-2">
-              <Activity className="w-4.5 h-4.5 text-blue-600" />
+              <Activity className="w-4.5 h-4.5 text-primary" />
               <div>
                 <h3 className="text-base font-black text-slate-900 leading-tight">Highly Profitable Stocks</h3>
               </div>
@@ -783,7 +783,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
               <div key={idx.name} className="p-3.5 bg-slate-50 border border-slate-100 rounded-2xl flex flex-col gap-1.5">
                 <span className="text-[9px] font-black text-slate-400 uppercase">{idx.name}</span>
                 <span className="text-xs font-black text-slate-900">{idx.value}</span>
-                <span className={`text-[9px] font-bold ${idx.isPositive ? 'text-emerald-600' : 'text-rose-600'}`}>
+                <span className={`text-[9px] font-bold ${idx.isPositive ? 'text-emerald-600' : 'text-danger'}`}>
                   {idx.change}
                 </span>
                 
@@ -791,7 +791,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
                   <path
                     d={`M ${idx.sparkline.map((val: number, i: number) => `${(i / (idx.sparkline.length - 1)) * 100} ${20 - val}`).join(' L ')}`}
                     fill="none"
-                    stroke={idx.isPositive ? '#10B981' : '#EF4444'}
+                    stroke={idx.isPositive ? '#10B981' : '#DC2626'}
                     strokeWidth={1.5}
                     strokeLinecap="round"
                   />
@@ -816,7 +816,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
                 <div className="flex items-center justify-between">
                   <span className={`text-[9px] font-black px-2 py-0.5 rounded uppercase ${
                     act.type === 'BUY' ? 'bg-emerald-100 text-emerald-800' :
-                    act.type === 'DIVIDEND' ? 'bg-blue-100 text-blue-800' :
+                    act.type === 'DIVIDEND' ? 'bg-primary-light text-primary-dark' :
                     act.type === 'SIP' ? 'bg-violet-100 text-violet-800' : 'bg-slate-200 text-slate-800'
                   }`}>
                     {act.type}
@@ -869,7 +869,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
                   placeholder="e.g. EV & Clean Energy, Dividend Picks"
                   value={newWatchlistTitle}
                   onChange={(e) => setNewWatchlistTitle(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs font-bold text-slate-900 outline-none focus:border-blue-500 transition"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs font-bold text-slate-900 outline-none focus:border-primary transition"
                   autoFocus
                 />
               </div>
@@ -906,7 +906,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
                       toast.error('Failed to create watchlist');
                     }
                   }}
-                  className="flex-1 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-black text-xs transition cursor-pointer shadow-md"
+                  className="flex-1 py-3 rounded-xl bg-primary hover:bg-primary-dark text-white font-black text-xs transition cursor-pointer shadow-md"
                 >
                   Create Watchlist
                 </button>
@@ -952,10 +952,10 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
                         toast.error(`Failed to save to ${w.name}`);
                       }
                     }}
-                    className="w-full text-left p-3 rounded-xl border border-slate-200 hover:border-blue-300 hover:bg-blue-50 transition cursor-pointer flex items-center justify-between group"
+                    className="w-full text-left p-3 rounded-xl border border-slate-200 hover:border-blue-300 hover:bg-primary-light transition cursor-pointer flex items-center justify-between group"
                   >
-                    <span className="text-sm font-bold text-slate-800 group-hover:text-blue-700">{w.name}</span>
-                    <Plus className="w-4 h-4 text-slate-400 group-hover:text-blue-600" />
+                    <span className="text-sm font-bold text-slate-800 group-hover:text-primary">{w.name}</span>
+                    <Plus className="w-4 h-4 text-slate-400 group-hover:text-primary" />
                   </button>
                 ))}
               </div>

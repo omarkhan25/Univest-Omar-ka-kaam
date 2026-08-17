@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { User, Mail, Phone, Calendar, MapPin, ChevronRight } from 'lucide-react';
 import { Button } from '../../components/atoms/Button';
@@ -78,9 +78,9 @@ export const PersonalDetailsStep: React.FC<PersonalDetailsProps> = ({ initialDat
       exit={{ opacity: 0, y: -10 }}
       className="w-full max-w-xl mx-auto space-y-6 font-sans text-slate-900"
     >
-      <div className="mb-6">
-        <h2 className="text-2xl font-black text-slate-900 tracking-tight">Personal Details</h2>
-        <p className="text-sm text-slate-500 font-medium mt-1">
+      <div className="mb-5">
+        <h2 className="text-xl font-bold text-slate-900 tracking-tight">Personal Details</h2>
+        <p className="text-xs text-slate-500 font-normal mt-0.5">
           Provide your demographic details to continue.
         </p>
       </div>
@@ -89,7 +89,7 @@ export const PersonalDetailsStep: React.FC<PersonalDetailsProps> = ({ initialDat
         {/* Full Name */}
         <div>
           <label className="block text-xs font-bold text-slate-700 mb-1.5">
-            Full Name (as per PAN Card) <span className="text-rose-500">*</span>
+            Full Name (as per PAN Card) <span className="text-danger">*</span>
           </label>
           <div className="relative">
             <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
@@ -99,18 +99,18 @@ export const PersonalDetailsStep: React.FC<PersonalDetailsProps> = ({ initialDat
               onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
               placeholder="e.g. Omar Khan"
               className={`w-full pl-10 pr-4 py-3 bg-white border rounded-xl text-sm font-medium text-slate-900 placeholder-slate-400 outline-none transition ${
-                errors.fullName ? 'border-rose-500 focus:ring-4 focus:ring-rose-50' : 'border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-50'
+                errors.fullName ? 'border-danger focus:ring-4 focus:ring-rose-50' : 'border-slate-200 focus:border-primary focus:ring-4 focus:ring-blue-50'
               }`}
             />
           </div>
-          {errors.fullName && <span className="text-[11px] font-bold text-rose-500 mt-1 block">{errors.fullName}</span>}
+          {errors.fullName && <span className="text-[11px] font-bold text-danger mt-1 block">{errors.fullName}</span>}
         </div>
 
         {/* Email & Mobile */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-xs font-bold text-slate-700 mb-1.5">
-              Email Address <span className="text-rose-500">*</span>
+              Email Address <span className="text-danger">*</span>
             </label>
             <div className="relative">
               <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
@@ -120,16 +120,16 @@ export const PersonalDetailsStep: React.FC<PersonalDetailsProps> = ({ initialDat
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 placeholder="you@example.com"
                 className={`w-full pl-10 pr-4 py-3 bg-white border rounded-xl text-sm font-medium text-slate-900 outline-none transition ${
-                  errors.email ? 'border-rose-500 focus:ring-4 focus:ring-rose-50' : 'border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-50'
+                  errors.email ? 'border-danger focus:ring-4 focus:ring-rose-50' : 'border-slate-200 focus:border-primary focus:ring-4 focus:ring-blue-50'
                 }`}
               />
             </div>
-            {errors.email && <span className="text-[11px] font-bold text-rose-500 mt-1 block">{errors.email}</span>}
+            {errors.email && <span className="text-[11px] font-bold text-danger mt-1 block">{errors.email}</span>}
           </div>
 
           <div>
             <label className="block text-xs font-bold text-slate-700 mb-1.5">
-              Mobile Number <span className="text-rose-500">*</span>
+              Mobile Number <span className="text-danger">*</span>
             </label>
             <div className="relative">
               <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
@@ -140,11 +140,11 @@ export const PersonalDetailsStep: React.FC<PersonalDetailsProps> = ({ initialDat
                 onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
                 placeholder="9876543210"
                 className={`w-full pl-10 pr-4 py-3 bg-white border rounded-xl text-sm font-medium text-slate-900 outline-none transition ${
-                  errors.mobile ? 'border-rose-500 focus:ring-4 focus:ring-rose-50' : 'border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-50'
+                  errors.mobile ? 'border-danger focus:ring-4 focus:ring-rose-50' : 'border-slate-200 focus:border-primary focus:ring-4 focus:ring-blue-50'
                 }`}
               />
             </div>
-            {errors.mobile && <span className="text-[11px] font-bold text-rose-500 mt-1 block">{errors.mobile}</span>}
+            {errors.mobile && <span className="text-[11px] font-bold text-danger mt-1 block">{errors.mobile}</span>}
           </div>
         </div>
 
@@ -152,7 +152,7 @@ export const PersonalDetailsStep: React.FC<PersonalDetailsProps> = ({ initialDat
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-xs font-bold text-slate-700 mb-1.5">
-              Date of Birth <span className="text-rose-500">*</span>
+              Date of Birth <span className="text-danger">*</span>
             </label>
             <div className="relative">
               <Calendar className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
@@ -161,22 +161,22 @@ export const PersonalDetailsStep: React.FC<PersonalDetailsProps> = ({ initialDat
                 value={formData.dateOfBirth}
                 onChange={(e) => setFormData({ ...formData, dateOfBirth: e.target.value })}
                 className={`w-full pl-10 pr-4 py-3 bg-white border rounded-xl text-sm font-medium text-slate-900 outline-none transition ${
-                  errors.dateOfBirth ? 'border-rose-500 focus:ring-4 focus:ring-rose-50' : 'border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-50'
+                  errors.dateOfBirth ? 'border-danger focus:ring-4 focus:ring-rose-50' : 'border-slate-200 focus:border-primary focus:ring-4 focus:ring-blue-50'
                 }`}
               />
             </div>
-            {errors.dateOfBirth && <span className="text-[11px] font-bold text-rose-500 mt-1 block">{errors.dateOfBirth}</span>}
+            {errors.dateOfBirth && <span className="text-[11px] font-bold text-danger mt-1 block">{errors.dateOfBirth}</span>}
           </div>
 
           <div>
             <label className="block text-xs font-bold text-slate-700 mb-1.5">
-              Gender <span className="text-rose-500">*</span>
+              Gender <span className="text-danger">*</span>
             </label>
             <select
               value={formData.gender}
               onChange={(e) => setFormData({ ...formData, gender: e.target.value as any })}
               className={`w-full px-3.5 py-3 bg-white border rounded-xl text-sm font-medium text-slate-900 outline-none transition ${
-                errors.gender ? 'border-rose-500 focus:ring-4 focus:ring-rose-50' : 'border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-50'
+                errors.gender ? 'border-danger focus:ring-4 focus:ring-rose-50' : 'border-slate-200 focus:border-primary focus:ring-4 focus:ring-blue-50'
               }`}
             >
               <option value="">Select Gender</option>
@@ -184,14 +184,14 @@ export const PersonalDetailsStep: React.FC<PersonalDetailsProps> = ({ initialDat
               <option value="female">Female</option>
               <option value="other">Other</option>
             </select>
-            {errors.gender && <span className="text-[11px] font-bold text-rose-500 mt-1 block">{errors.gender}</span>}
+            {errors.gender && <span className="text-[11px] font-bold text-danger mt-1 block">{errors.gender}</span>}
           </div>
         </div>
 
         {/* Address */}
         <div>
           <label className="block text-xs font-bold text-slate-700 mb-1.5">
-            Residential Address <span className="text-rose-500">*</span>
+            Residential Address <span className="text-danger">*</span>
           </label>
           <div className="relative">
             <MapPin className="absolute left-3.5 top-3.5 w-4 h-4 text-slate-400" />
@@ -201,11 +201,11 @@ export const PersonalDetailsStep: React.FC<PersonalDetailsProps> = ({ initialDat
               onChange={(e) => setFormData({ ...formData, address: e.target.value })}
               placeholder="House/Flat No, Street, Locality"
               className={`w-full pl-10 pr-4 py-3 bg-white border rounded-xl text-sm font-medium text-slate-900 placeholder-slate-400 outline-none transition ${
-                errors.address ? 'border-rose-500 focus:ring-4 focus:ring-rose-50' : 'border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-50'
+                errors.address ? 'border-danger focus:ring-4 focus:ring-rose-50' : 'border-slate-200 focus:border-primary focus:ring-4 focus:ring-blue-50'
               }`}
             />
           </div>
-          {errors.address && <span className="text-[11px] font-bold text-rose-500 mt-1 block">{errors.address}</span>}
+          {errors.address && <span className="text-[11px] font-bold text-danger mt-1 block">{errors.address}</span>}
         </div>
 
         {/* City, State, Pincode */}
@@ -217,9 +217,9 @@ export const PersonalDetailsStep: React.FC<PersonalDetailsProps> = ({ initialDat
               value={formData.city}
               onChange={(e) => setFormData({ ...formData, city: e.target.value })}
               placeholder="Mumbai"
-              className="w-full px-3 py-3 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-900 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-50 transition"
+              className="w-full px-3 py-3 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-900 outline-none focus:border-primary focus:ring-4 focus:ring-blue-50 transition"
             />
-            {errors.city && <span className="text-[10px] font-bold text-rose-500 mt-0.5 block">{errors.city}</span>}
+            {errors.city && <span className="text-[10px] font-bold text-danger mt-0.5 block">{errors.city}</span>}
           </div>
 
           <div>
@@ -229,9 +229,9 @@ export const PersonalDetailsStep: React.FC<PersonalDetailsProps> = ({ initialDat
               value={formData.state}
               onChange={(e) => setFormData({ ...formData, state: e.target.value })}
               placeholder="Maharashtra"
-              className="w-full px-3 py-3 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-900 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-50 transition"
+              className="w-full px-3 py-3 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-900 outline-none focus:border-primary focus:ring-4 focus:ring-blue-50 transition"
             />
-            {errors.state && <span className="text-[10px] font-bold text-rose-500 mt-0.5 block">{errors.state}</span>}
+            {errors.state && <span className="text-[10px] font-bold text-danger mt-0.5 block">{errors.state}</span>}
           </div>
 
           <div>
@@ -242,9 +242,9 @@ export const PersonalDetailsStep: React.FC<PersonalDetailsProps> = ({ initialDat
               value={formData.pincode}
               onChange={(e) => setFormData({ ...formData, pincode: e.target.value })}
               placeholder="400001"
-              className="w-full px-3 py-3 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-900 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-50 transition"
+              className="w-full px-3 py-3 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-900 outline-none focus:border-primary focus:ring-4 focus:ring-blue-50 transition"
             />
-            {errors.pincode && <span className="text-[10px] font-bold text-rose-500 mt-0.5 block">{errors.pincode}</span>}
+            {errors.pincode && <span className="text-[10px] font-bold text-danger mt-0.5 block">{errors.pincode}</span>}
           </div>
         </div>
 
@@ -255,7 +255,7 @@ export const PersonalDetailsStep: React.FC<PersonalDetailsProps> = ({ initialDat
             <select
               value={formData.occupation}
               onChange={(e) => setFormData({ ...formData, occupation: e.target.value })}
-              className="w-full px-3.5 py-3 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-900 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-50 transition"
+              className="w-full px-3.5 py-3 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-900 outline-none focus:border-primary focus:ring-4 focus:ring-blue-50 transition"
             >
               <option value="">Select Occupation</option>
               <option value="salaried">Salaried Employee</option>
@@ -263,7 +263,7 @@ export const PersonalDetailsStep: React.FC<PersonalDetailsProps> = ({ initialDat
               <option value="professional">Professional</option>
               <option value="student">Student / Homemaker</option>
             </select>
-            {errors.occupation && <span className="text-[11px] font-bold text-rose-500 mt-1 block">{errors.occupation}</span>}
+            {errors.occupation && <span className="text-[11px] font-bold text-danger mt-1 block">{errors.occupation}</span>}
           </div>
 
           <div>
@@ -271,7 +271,7 @@ export const PersonalDetailsStep: React.FC<PersonalDetailsProps> = ({ initialDat
             <select
               value={formData.annualIncome}
               onChange={(e) => setFormData({ ...formData, annualIncome: e.target.value })}
-              className="w-full px-3.5 py-3 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-900 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-50 transition"
+              className="w-full px-3.5 py-3 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-900 outline-none focus:border-primary focus:ring-4 focus:ring-blue-50 transition"
             >
               <option value="">Select Income Bracket</option>
               <option value="1-5lakh">₹1 Lakh - ₹5 Lakh</option>
@@ -279,7 +279,7 @@ export const PersonalDetailsStep: React.FC<PersonalDetailsProps> = ({ initialDat
               <option value="10-25lakh">₹10 Lakh - ₹25 Lakh</option>
               <option value=">25lakh">Above ₹25 Lakh</option>
             </select>
-            {errors.annualIncome && <span className="text-[11px] font-bold text-rose-500 mt-1 block">{errors.annualIncome}</span>}
+            {errors.annualIncome && <span className="text-[11px] font-bold text-danger mt-1 block">{errors.annualIncome}</span>}
           </div>
         </div>
 

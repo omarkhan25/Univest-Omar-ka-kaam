@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { ShieldCheck, Rocket, Eye, ArrowLeft, ArrowRight, HelpCircle, Lock, Award, Star } from 'lucide-react';
@@ -47,7 +47,7 @@ export const WelcomeContinue = () => {
       {/* Premium Ambient Glows */}
       <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-primary/5 dark:bg-primary/10 blur-[120px] pointer-events-none animate-pulse duration-[8s]" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-success/5 dark:bg-success/5 blur-[120px] pointer-events-none animate-pulse duration-[10s]" />
-      <div className="absolute top-[30%] left-[40%] w-[30vw] h-[30vw] rounded-full bg-indigo-500/5 dark:bg-indigo-500/5 blur-[140px] pointer-events-none" />
+      <div className="absolute top-[30%] left-[40%] w-[30vw] h-[30vw] rounded-full bg-primary-light0/5 dark:bg-primary-light0/5 blur-[140px] pointer-events-none" />
 
       {/* Top Header */}
       <header className="max-w-5xl w-full mx-auto flex items-center justify-between z-10">
@@ -60,7 +60,7 @@ export const WelcomeContinue = () => {
         </button>
 
         <div className="flex items-center gap-2 bg-white/40 dark:bg-white/5 backdrop-blur-md px-3 py-1.5 rounded-full border border-slate-200/50 dark:border-white/10 shadow-premium-sm">
-          <div className="w-6 h-6 rounded-md bg-gradient-to-tr from-primary to-indigo-600 flex items-center justify-center text-white font-extrabold text-xs shadow-premium-sm border border-white/5">
+          <div className="w-6 h-6 rounded-md bg-gradient-to-tr from-primary to-primary flex items-center justify-center text-white font-extrabold text-xs shadow-premium-sm border border-white/5">
             U
           </div>
           <span className="text-xs font-black tracking-wider text-brand-navy dark:text-dark-text">
@@ -74,7 +74,7 @@ export const WelcomeContinue = () => {
         
         {/* Title Section */}
         <div className="flex flex-col gap-3 text-center max-w-xl mx-auto">
-          <div className="inline-flex items-center gap-1.5 self-center bg-primary/10 dark:bg-primary/20 text-primary dark:text-blue-400 px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase shadow-premium-sm">
+          <div className="inline-flex items-center gap-1.5 self-center bg-primary/10 dark:bg-primary/20 text-primary dark:text-[#64748B] px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase shadow-premium-sm">
             <Star className="w-3.5 h-3.5 fill-current" />
             <span>Investment Intelligence</span>
           </div>
@@ -112,11 +112,11 @@ export const WelcomeContinue = () => {
             <div className={`absolute inset-0 rounded-card bg-primary/[0.01] dark:bg-primary/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`} />
 
             <div className="flex flex-col gap-5 relative z-10">
-              <div className="w-12 h-12 rounded-2xl bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-blue-400 shrink-0 border border-primary/15 transition-transform duration-500 group-hover:scale-110">
+              <div className="w-12 h-12 rounded-2xl bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-[#64748B] shrink-0 border border-primary/15 transition-transform duration-500 group-hover:scale-110">
                 <ShieldCheck className="w-6 h-6" />
               </div>
               <div className="flex flex-col gap-2">
-                <h3 className="text-base font-bold text-brand-navy dark:text-dark-text group-hover:text-primary dark:group-hover:text-blue-400 transition-colors">
+                <h3 className="text-base font-bold text-brand-navy dark:text-dark-text group-hover:text-primary dark:group-hover:text-[#64748B] transition-colors">
                   I already have an account
                 </h3>
                 <p className="text-xs text-brand-secondary dark:text-dark-muted leading-relaxed">
@@ -128,7 +128,7 @@ export const WelcomeContinue = () => {
             <div className="flex flex-col gap-3 mt-8 relative z-10">
               <Button 
                 variant="primary" 
-                className="w-full text-xs py-3.5 text-white bg-gradient-to-r from-primary to-indigo-600 hover:from-primary/95 hover:to-indigo-600/95 shadow-md shadow-primary/25 hover:shadow-glow-blue transition-all"
+                className="w-full text-xs py-3.5 text-white bg-gradient-to-r from-primary to-primary hover:from-primary/95 hover:to-primary/95 shadow-md shadow-primary/25 hover:shadow-glow-blue transition-all"
               >
                 <span>Continue with OTP</span>
                 <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
@@ -231,7 +231,7 @@ export const WelcomeContinue = () => {
         {/* Security & Compliance Highlights */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-2xl mx-auto w-full mt-4 text-[11px] text-brand-secondary dark:text-dark-muted border-y border-slate-200/60 dark:border-white/5 py-4">
           <div className="flex items-center justify-center gap-2">
-            <Lock className="w-4 h-4 text-primary dark:text-blue-400" />
+            <Lock className="w-4 h-4 text-primary dark:text-[#64748B]" />
             <span className="font-semibold">Bank-grade Security</span>
           </div>
           <div className="flex items-center justify-center gap-2">

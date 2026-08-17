@@ -127,6 +127,7 @@ class WebSocketService {
   }
 
   public subscribe(symbol: string) {
+    if (!symbol || typeof symbol !== 'string') return;
     const uppercaseSymbol = symbol.toUpperCase();
     this.subscribedSymbols.add(uppercaseSymbol);
     if (this.ws && this.ws.readyState === WebSocket.OPEN) {
@@ -135,6 +136,7 @@ class WebSocketService {
   }
 
   public unsubscribe(symbol: string) {
+    if (!symbol || typeof symbol !== 'string') return;
     const uppercaseSymbol = symbol.toUpperCase();
     this.subscribedSymbols.delete(uppercaseSymbol);
     if (this.ws && this.ws.readyState === WebSocket.OPEN) {

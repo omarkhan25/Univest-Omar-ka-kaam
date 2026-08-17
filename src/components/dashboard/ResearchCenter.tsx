@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Search, RefreshCw, LayoutDashboard, Radio, Sparkles, 
@@ -80,8 +80,8 @@ export const ResearchCenter: React.FC<ResearchCenterProps> = ({ onTrade, onSelec
 
   const TABS = [
     { id: 'overview', name: 'Overview', icon: <LayoutDashboard className="w-4 h-4" />, count: null },
-    { id: 'calls', name: 'Live Calls', icon: <Radio className="w-4 h-4 text-rose-500" />, count: 28 },
-    { id: 'ai-advisor', name: 'AI Advisor', icon: <Sparkles className="w-4 h-4 text-blue-500" />, count: 'Live' },
+    { id: 'calls', name: 'Live Calls', icon: <Radio className="w-4 h-4 text-danger" />, count: 28 },
+    { id: 'ai-advisor', name: 'AI Advisor', icon: <Sparkles className="w-4 h-4 text-primary" />, count: 'Live' },
     { id: 'outlook', name: 'Market Outlook', icon: <Newspaper className="w-4 h-4" />, count: null },
     { id: 'sectors', name: 'Sectors', icon: <Compass className="w-4 h-4" />, count: null },
     { id: 'saved', name: 'Saved', icon: <FolderHeart className="w-4 h-4" />, count: '4 Items' },
@@ -101,7 +101,7 @@ export const ResearchCenter: React.FC<ResearchCenterProps> = ({ onTrade, onSelec
       {/* PAGE HEADER & CONTROLS */}
       <div className="w-full pt-2 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
-          <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-[#0F172A] mb-2">
+          <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-[#172033] mb-2">
             Research Center
           </h1>
           <p className="text-sm text-slate-500 font-medium">
@@ -112,7 +112,7 @@ export const ResearchCenter: React.FC<ResearchCenterProps> = ({ onTrade, onSelec
         <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
           <div 
             onClick={() => setIsUniversalSearchOpen(true)}
-            className="relative flex-1 sm:w-80 flex items-center bg-white border border-[#E2E8F0] rounded-2xl px-3.5 py-2.5 cursor-pointer hover:border-blue-500 transition shadow-xs select-none"
+            className="relative flex-1 sm:w-80 flex items-center bg-white border border-[#E2E8F0] rounded-2xl px-3.5 py-2.5 cursor-pointer hover:border-primary transition shadow-xs select-none"
           >
             <Search className="w-4 h-4 text-slate-400 mr-2 shrink-0" />
             <span className="text-xs text-slate-400 font-medium truncate flex-1">Search stocks, research, reports...</span>
@@ -121,10 +121,10 @@ export const ResearchCenter: React.FC<ResearchCenterProps> = ({ onTrade, onSelec
 
           <button 
             onClick={handleRefresh}
-            className="p-2.5 bg-white border border-[#E2E8F0] rounded-2xl text-slate-500 hover:text-[#0F172A] hover:bg-slate-50 transition shadow-xs cursor-pointer"
+            className="p-2.5 bg-white border border-[#E2E8F0] rounded-2xl text-slate-500 hover:text-[#172033] hover:bg-slate-50 transition shadow-xs cursor-pointer"
             title="Refresh Research"
           >
-            <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-blue-600' : ''}`} />
+            <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-primary' : ''}`} />
           </button>
         </div>
       </div>
@@ -138,14 +138,14 @@ export const ResearchCenter: React.FC<ResearchCenterProps> = ({ onTrade, onSelec
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
               className={`relative flex items-center gap-2 px-5 py-2.5 rounded-2xl font-black text-xs transition-all shrink-0 select-none cursor-pointer ${
-                isActive ? 'text-[#0F172A] bg-[#F1F5F9] shadow-xs' : 'text-slate-500 hover:text-[#0F172A] hover:bg-slate-50'
+                isActive ? 'text-[#172033] bg-[#F1F5F9] shadow-xs' : 'text-slate-500 hover:text-[#172033] hover:bg-slate-50'
               }`}
             >
               <span className="relative z-10">{tab.icon}</span>
               <span className="relative z-10">{tab.name}</span>
               {tab.count && (
                 <span className={`relative z-10 text-[10px] px-2 py-0.5 rounded-md border ${
-                  isActive ? 'bg-white text-blue-600 border-white font-bold' : 'bg-slate-100 text-slate-500 border-slate-200'
+                  isActive ? 'bg-white text-primary border-white font-bold' : 'bg-slate-100 text-slate-500 border-slate-200'
                 }`}>
                   {tab.count}
                 </span>

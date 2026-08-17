@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Lock, Check, RefreshCw } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -31,7 +31,7 @@ export const ResetPassword: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#070B14] flex items-center justify-center p-4 font-sans text-slate-100">
-      <div className="w-full max-w-md bg-[#0F172A] border border-slate-800 rounded-[32px] p-8 shadow-2xl">
+      <div className="w-full max-w-md bg-[#172033] border border-slate-800 rounded-[32px] p-8 shadow-2xl">
         
         {isSuccess ? (
           <div className="flex flex-col items-center text-center gap-4">
@@ -42,7 +42,7 @@ export const ResetPassword: React.FC = () => {
             <p className="text-xs text-slate-400">Your password has been reset securely. You can now login with your new password.</p>
             <button
               onClick={() => navigate('/login')}
-              className="w-full py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-black text-xs rounded-xl transition shadow-md cursor-pointer mt-2"
+              className="w-full py-3.5 bg-primary hover:bg-primary-dark text-white font-black text-xs rounded-xl transition shadow-md cursor-pointer mt-2"
             >
               Sign In Now
             </button>
@@ -63,7 +63,7 @@ export const ResetPassword: React.FC = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Minimum 8 characters"
-                  className="w-full pl-10 pr-4 py-3 bg-[#1E293B] border border-slate-700 rounded-xl text-xs font-medium text-white outline-none focus:border-blue-500"
+                  className="w-full pl-10 pr-4 py-3 bg-[#1E293B] border border-slate-700 rounded-xl text-xs font-medium text-white outline-none focus:border-primary"
                 />
               </div>
             </div>
@@ -77,7 +77,7 @@ export const ResetPassword: React.FC = () => {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="Re-enter password"
-                  className="w-full pl-10 pr-4 py-3 bg-[#1E293B] border border-slate-700 rounded-xl text-xs font-medium text-white outline-none focus:border-blue-500"
+                  className="w-full pl-10 pr-4 py-3 bg-[#1E293B] border border-slate-700 rounded-xl text-xs font-medium text-white outline-none focus:border-primary"
                 />
               </div>
             </div>
@@ -85,7 +85,7 @@ export const ResetPassword: React.FC = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-black text-xs rounded-xl transition shadow-md flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-3.5 bg-primary hover:bg-primary-dark text-white font-black text-xs rounded-xl transition shadow-md flex items-center justify-center gap-2 cursor-pointer"
             >
               {isLoading ? <RefreshCw className="w-4 h-4 animate-spin" /> : null}
               <span>{isLoading ? 'Updating Password...' : 'Reset Password'}</span>

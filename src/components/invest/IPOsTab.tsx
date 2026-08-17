@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Rocket, Clock, CheckCircle2, ArrowRight, ShieldCheck, Flame } from 'lucide-react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
@@ -61,7 +61,7 @@ export const IPOsTab: React.FC = () => {
             onClick={() => setSelectedStatus(st)}
             className={`px-4 py-2 rounded-xl transition cursor-pointer whitespace-nowrap ${
               selectedStatus === st
-                ? 'bg-[#0F172A] text-white font-black'
+                ? 'bg-[#172033] text-white font-black'
                 : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
             }`}
           >
@@ -88,7 +88,7 @@ export const IPOsTab: React.FC = () => {
                 </span>
               </div>
 
-              <h3 className="font-black text-base text-[#0F172A] mb-3 leading-snug">{ipo.name}</h3>
+              <h3 className="font-black text-base text-[#172033] mb-3 leading-snug">{ipo.name}</h3>
 
               <div className="grid grid-cols-2 gap-2 p-3.5 bg-slate-50 border border-slate-200/80 rounded-2xl mb-4 text-xs font-bold">
                 <div>
@@ -105,7 +105,7 @@ export const IPOsTab: React.FC = () => {
                 </div>
                 <div>
                   <span className="text-[10px] uppercase text-slate-400 block">Subscription Rate</span>
-                  <span className="text-blue-600 font-black">{ipo.subscription}</span>
+                  <span className="text-primary font-black">{ipo.subscription}</span>
                 </div>
               </div>
             </div>

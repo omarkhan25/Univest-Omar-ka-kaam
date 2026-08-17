@@ -47,37 +47,63 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   return (
     <button
       onClick={onClick}
-      className={`group relative w-full flex items-center justify-between px-4 py-3.5 mb-1 rounded-2xl text-sm font-bold transition-all duration-300 overflow-hidden ${
+      style={{
+        height: active ? '54px' : '48px',
+        borderRadius: active ? '17px' : '12px',
+        padding: '0 18px',
+      }}
+      className={`group relative w-full flex items-center justify-between mb-0 text-sm font-semibold transition-all duration-200 overflow-hidden ${
         active
           ? 'text-white'
-          : 'text-slate-500 hover:text-slate-900'
+          : 'text-[#64748B] hover:text-primary'
       }`}
     >
-      {/* Active State Background & Glow */}
+      {/* Active State Background */}
       {active && (
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl shadow-[0_8px_20px_-6px_rgba(79,70,229,0.5)]" />
+        <div
+          className="absolute inset-0 rounded-[17px]"
+          style={{
+            background: '#15519D',
+            boxShadow: '0 8px 24px -6px rgba(21, 81, 157, 0.45)',
+          }}
+        />
       )}
       
       {/* Hover State Background */}
       {!active && (
-        <div className="absolute inset-0 bg-slate-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
+        <div
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+          style={{ background: '#EBF3FC', borderRadius: '12px' }}
+        />
       )}
 
-      <div className="relative z-10 flex items-center gap-3.5 w-full">
-        <span className={`flex-shrink-0 transition-all duration-300 ${active ? 'scale-110 drop-shadow-md text-white' : 'group-hover:scale-110 text-slate-400 group-hover:text-blue-600'}`}>
+      <div className="relative z-10 flex items-center w-full" style={{ gap: collapsed ? 0 : '18px' }}>
+        <span
+          className="flex-shrink-0 transition-all duration-200"
+          style={{ width: '22px', height: '22px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+        >
           {icon}
         </span>
         {!collapsed && (
-          <span className="truncate flex-1 text-left tracking-wide">{label}</span>
+          <span className="truncate flex-1 text-left" style={{ fontSize: '16px', fontWeight: 600, lineHeight: '24px' }}>
+            {label}
+          </span>
         )}
       </div>
       
       {!collapsed && badgeCount && badgeCount > 0 ? (
-        <span className={`relative z-10 ml-2 flex items-center justify-center min-w-[20px] h-5 px-1.5 text-[10px] font-black rounded-full border shadow-sm transition-all duration-300 ${
-          active 
-            ? 'bg-white/20 border-white/30 text-white backdrop-blur-md' 
-            : 'bg-rose-50 border-rose-100 text-rose-600 group-hover:bg-rose-500 group-hover:text-white group-hover:border-rose-500'
-        }`}>
+        <span
+          className={`relative z-10 flex items-center justify-center font-black rounded-full transition-all duration-200`}
+          style={{
+            width: '22px',
+            height: '22px',
+            fontSize: '11px',
+            flexShrink: 0,
+            background: active ? 'rgba(255,255,255,0.2)' : '#EBF3FC',
+            color: active ? '#fff' : '#15519D',
+            border: active ? '1px solid rgba(255,255,255,0.3)' : '1px solid #B3D4F5',
+          }}
+        >
           {badgeCount}
         </span>
       ) : null}
@@ -130,6 +156,10 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
   const [isCompareOpen, setIsCompareOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isAddFundsOpen, setIsAddFundsOpen] = useState(false);
+  const [addFundsMode, setAddFundsMode] = useState<'deposit' | 'withdraw'>('deposit');
+  
+  const handleOpenDeposit = () => { setAddFundsMode('deposit'); setIsAddFundsOpen(true); };
+  const handleOpenWithdraw = () => { setAddFundsMode('withdraw'); setIsAddFundsOpen(true); };
   
   const handleTradeIntent = (tr: any) => {
     if (!tr) return;
@@ -293,7 +323,7 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
     switch (status) {
       case 'target-hit': return 'bg-[#DCFCE7] text-[#166534]';
       case 'volume-spike': return 'bg-[#FEF3C7] text-[#92400E]';
-      case 'ai-alert': return 'bg-[#DBEAFE] text-[#1D4ED8]';
+      case 'ai-alert': return 'bg-[#EBF3FC] text-[#104280]';
       case 'stop-loss': return 'bg-[#FEECEC] text-[#991B1B]';
       default: return 'bg-slate-100 text-slate-600';
     }
@@ -304,26 +334,48 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
       
       {/* DESKTOP SIDEBAR NAVIGATION (lg:flex) */}
       <aside
-        className={`hidden lg:flex flex-col bg-white border-r border-brand-border h-screen sticky top-0 transition-all duration-300 z-30 ${
-          collapsed ? 'w-20' : 'w-64'
-        }`}
+        className={`hidden lg:flex flex-col bg-white border-r h-screen sticky top-0 transition-all duration-300 z-30`}
+        style={{
+          width: collapsed ? '80px' : '286px',
+          borderColor: '#E2E8F0',
+          minWidth: collapsed ? '80px' : '260px',
+        }}
       >
         {/* Brand Header */}
-        <div className="h-20 flex items-center justify-between px-6 border-b border-slate-100">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-primary to-success flex items-center justify-center text-white font-extrabold text-base shadow-premium-sm border border-white/5">
+        <div
+          className="flex items-center justify-between border-b"
+          style={{ height: '72px', padding: '0 18px', borderColor: '#E2E8F0' }}
+        >
+          <div className="flex items-center gap-2.5">
+            <div
+              className="flex items-center justify-center text-white font-extrabold text-base border"
+              style={{
+                width: '36px',
+                height: '36px',
+                borderRadius: '10px',
+                background: '#15519D',
+                borderColor: 'rgba(255,255,255,0.08)',
+                flexShrink: 0,
+              }}
+            >
               U
             </div>
             {!collapsed && (
-              <span className="font-sans font-black text-lg tracking-tight text-brand-navy">
+              <span
+                className="font-black tracking-tight"
+                style={{ fontSize: '18px', color: '#172033', letterSpacing: '-0.02em' }}
+              >
                 UNIVEST
               </span>
             )}
           </div>
         </div>
 
-        {/* Sidebar Tabs */}
-        <nav className="flex-1 px-4 py-6 flex flex-col gap-1.5 overflow-y-auto">
+        {/* Sidebar Navigation Items */}
+        <nav
+          className="flex-1 overflow-y-auto flex flex-col"
+          style={{ padding: collapsed ? '20px 12px' : '20px 17px', gap: '17px' }}
+        >
           {tabs.map((tab) => (
             <SidebarItem
               key={tab.name}
@@ -337,23 +389,52 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
           ))}
         </nav>
 
-        {/* Sidebar Footer */}
-        <div className="p-4 border-t border-slate-100 flex flex-col gap-3">
+        {/* Sidebar Footer — 125px bottom section */}
+        <div
+          className="flex flex-col border-t"
+          style={{ height: '125px', padding: '18px', borderColor: '#E2E8F0', gap: '12px', justifyContent: 'center' }}
+        >
+          {/* Collapse Button */}
           <button
             onClick={() => setCollapsed(!collapsed)}
-            className="flex items-center justify-center p-2 rounded-button border border-brand-border text-brand-secondary hover:text-brand-navy hover:bg-slate-50"
+            className="flex items-center justify-center transition-colors"
+            style={{
+              height: '38px',
+              width: '100%',
+              borderRadius: '20px',
+              border: '1px solid #E2E8F0',
+              background: '#fff',
+              color: '#64748B',
+            }}
+            onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = '#EBF3FC'; (e.currentTarget as HTMLButtonElement).style.color = '#15519D'; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = '#fff'; (e.currentTarget as HTMLButtonElement).style.color = '#64748B'; }}
           >
-            {collapsed ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
+            {collapsed ? <ArrowRight style={{ width: '18px', height: '18px' }} /> : <ArrowLeft style={{ width: '18px', height: '18px' }} />}
           </button>
           
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-xs font-bold text-brand-navy shrink-0 border border-brand-border">
-              OK
+          {/* User Profile */}
+          <div className="flex items-center" style={{ gap: '14px' }}>
+            <div
+              className="flex items-center justify-center font-black text-white shrink-0"
+              style={{
+                width: '44px',
+                height: '44px',
+                borderRadius: '50%',
+                background: '#15519D',
+                fontSize: '14px',
+                fontWeight: 600,
+              }}
+            >
+              {user?.full_name ? user.full_name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2) : 'OK'}
             </div>
             {!collapsed && (
-              <div className="flex flex-col min-w-0">
-                <span className="text-xs font-bold text-brand-navy truncate">Omar Khan</span>
-                <span className="text-[10px] text-brand-secondary truncate">Verified Investor</span>
+              <div className="flex flex-col min-w-0" style={{ gap: '1px' }}>
+                <span style={{ fontSize: '14px', fontWeight: 600, lineHeight: '20px', color: '#172033' }} className="truncate">
+                  {user?.full_name || 'Omar Khan'}
+                </span>
+                <span style={{ fontSize: '11px', fontWeight: 400, lineHeight: '16px', color: '#64748B' }} className="truncate">
+                  Verified Investor
+                </span>
               </div>
             )}
           </div>
@@ -361,12 +442,15 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
       </aside>
 
       {/* MOBILE HEADER BAR */}
-      <header className="lg:hidden h-16 bg-white border-b border-brand-border flex items-center justify-between px-6 sticky top-0 z-30 shadow-premium-sm">
-        <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-primary to-success flex items-center justify-center text-white font-extrabold text-sm shadow-premium-sm">
+      <header className="lg:hidden h-16 bg-white border-b flex items-center justify-between px-6 sticky top-0 z-30 shadow-premium-sm" style={{ borderColor: '#E2E8F0' }}>
+        <div className="flex items-center gap-2.5">
+          <div
+            className="flex items-center justify-center text-white font-extrabold text-sm"
+            style={{ width: '30px', height: '30px', borderRadius: '9px', background: '#15519D', flexShrink: 0 }}
+          >
             U
           </div>
-          <span className="font-sans font-black text-sm tracking-tight text-brand-navy">
+          <span className="font-black text-sm tracking-tight" style={{ color: '#172033', letterSpacing: '-0.02em' }}>
             UNIVEST
           </span>
         </div>
@@ -375,16 +459,17 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
           {/* Workspace Trigger (mobile) */}
           <button 
             onClick={() => setWorkspaceOpen(true)}
-            className="grid h-9 w-9 place-items-center rounded-xl border border-brand-border bg-white text-slate-500 hover:text-primary transition-colors"
+            className="grid h-9 w-9 place-items-center rounded-xl border bg-white transition-colors"
+            style={{ borderColor: '#E2E8F0', color: '#64748B' }}
             aria-label="Workspace"
           >
             <Bookmark className="w-4 h-4" />
           </button>
-          <button className="relative grid h-9 w-9 place-items-center rounded-xl border border-brand-border bg-white text-brand-secondary" aria-label="Notifications">
+          <button className="relative grid h-9 w-9 place-items-center rounded-xl border bg-white" style={{ borderColor: '#E2E8F0', color: '#64748B' }} aria-label="Notifications">
             <Bell className="h-4 w-4" />
-            <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full border-2 border-white bg-rose-500" />
+            <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full border-2 border-white bg-danger" />
           </button>
-          <button className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-primary to-blue-700 text-[10px] font-black text-white" aria-label="Open profile">OK</button>
+          <button className="grid h-9 w-9 place-items-center rounded-xl text-[10px] font-black text-white" style={{ background: '#15519D' }} aria-label="Open profile">OK</button>
         </div>
       </header>
 
@@ -392,16 +477,19 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
       <div className="flex-1 flex flex-col min-w-0">
         
         {/* DESKTOP TOP HEADER */}
-        <header className="hidden lg:flex h-20 bg-white border-b border-[#E2E8F0] items-center justify-between px-8 sticky top-0 z-40">
+        <header className="hidden lg:flex h-[72px] bg-white border-b items-center justify-between px-8 sticky top-0 z-40" style={{ borderColor: '#E2E8F0' }}>
 
           {/* Universal Search Bar */}
           <div 
             onClick={() => setIsSearchOpen(true)}
-            className="flex w-full max-w-md items-center gap-2.5 h-10 rounded-full border border-[#E2E8F0] bg-[#F8FAFC] px-4 text-slate-500 transition-all hover:border-blue-400 hover:bg-white cursor-pointer select-none shadow-2xs"
+            className="flex w-full max-w-md items-center gap-2.5 h-10 rounded-full border px-4 text-slate-500 transition-all cursor-pointer select-none"
+            style={{ borderColor: '#E2E8F0', background: '#F8FAFC' }}
+            onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = '#99F6E4'; (e.currentTarget as HTMLDivElement).style.background = '#fff'; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = '#E2E8F0'; (e.currentTarget as HTMLDivElement).style.background = '#F8FAFC'; }}
           >
-            <Search className="h-4 w-4 shrink-0 text-blue-600" />
-            <span className="min-w-0 flex-1 text-xs font-medium text-slate-400">Search stocks, research, mutual funds, IPOs...</span>
-            <kbd className="rounded-md border border-slate-200 bg-white px-1.5 py-0.5 text-[9px] font-bold text-slate-400">⌘ K</kbd>
+            <Search className="h-4 w-4 shrink-0" style={{ color: '#15519D' }} />
+            <span className="min-w-0 flex-1 text-xs font-medium" style={{ color: '#94A3B8' }}>Search stocks, research, mutual funds, IPOs...</span>
+            <kbd className="rounded-md border px-1.5 py-0.5 text-[9px] font-bold" style={{ borderColor: '#E2E8F0', background: '#fff', color: '#94A3B8' }}>⌘ K</kbd>
           </div>
 
           {/* Right Header Action Items */}
@@ -412,29 +500,35 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
             {/* Notifications Bell */}
             <button 
               onClick={() => setIsNotificationOpen(true)}
-              className="relative grid h-10 w-10 place-items-center rounded-full border border-[#E2E8F0] bg-white text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-600 shadow-2xs cursor-pointer" 
+              className="relative grid h-10 w-10 place-items-center rounded-full border bg-white transition shadow-2xs cursor-pointer"
+              style={{ borderColor: '#E2E8F0', color: '#64748B' }}
+              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = '#99F6E4'; (e.currentTarget as HTMLButtonElement).style.background = '#EBF3FC'; (e.currentTarget as HTMLButtonElement).style.color = '#15519D'; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = '#E2E8F0'; (e.currentTarget as HTMLButtonElement).style.background = '#fff'; (e.currentTarget as HTMLButtonElement).style.color = '#64748B'; }}
               aria-label="Notifications"
             >
               <Bell className="h-4 w-4" />
-              <span className="absolute right-2 top-2 h-2 w-2 rounded-full border-2 border-white bg-rose-500" />
+              <span className="absolute right-2 top-2 h-2 w-2 rounded-full border-2 border-white bg-danger" />
             </button>
 
             {/* User Profile Menu */}
             <div className="relative">
               <button 
                 onClick={() => setIsUserMenuOpen(true)}
-                className="flex items-center gap-2 h-10 rounded-full border border-[#E2E8F0] bg-white py-1 pl-1 pr-3 text-left transition hover:border-blue-200 hover:bg-slate-50 shadow-2xs cursor-pointer" 
+                className="flex items-center gap-2 h-10 rounded-full border bg-white py-1 pl-1 pr-3 text-left transition shadow-2xs cursor-pointer"
+                style={{ borderColor: '#E2E8F0' }}
+                onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = '#99F6E4'; (e.currentTarget as HTMLButtonElement).style.background = '#EBF3FC'; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = '#E2E8F0'; (e.currentTarget as HTMLButtonElement).style.background = '#fff'; }}
                 aria-label="Open profile menu"
               >
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-blue-600 to-blue-800 text-[10px] font-black text-white">
+                <span className="grid h-8 w-8 place-items-center rounded-full text-[10px] font-black text-white" style={{ background: '#15519D' }}>
                   {user?.full_name ? user.full_name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2) : 'OK'}
                 </span>
                 <span className="hidden xl:block">
-                  <span className="block text-[11px] font-bold leading-tight text-[#0F172A]">
+                  <span className="block text-[11px] font-bold leading-tight" style={{ color: '#172033' }}>
                     {user?.full_name || 'Omar Khan'}
                   </span>
                 </span>
-                <ChevronDown className="h-3.5 w-3.5 text-slate-400 ml-0.5" />
+                <ChevronDown className="h-3.5 w-3.5 ml-0.5" style={{ color: '#94A3B8' }} />
               </button>
               <UserMenuDropdown 
                 isOpen={isUserMenuOpen} 
@@ -463,7 +557,7 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
                     onSelectResearch: (res: any) => setSelectedResearch(res),
                     onTrade: (tr: any) => handleTradeIntent(tr),
                     onNavigateTab: (tb: string) => setActiveTab(tb as any),
-                    onDepositFunds: () => setIsAddFundsOpen(true),
+                    onDepositFunds: handleOpenDeposit,
                   })
                 ) : (
                   children
@@ -474,7 +568,7 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
                   onSelectResearch={(res) => setSelectedResearch(res)}
                   onTrade={(tr) => handleTradeIntent(tr)}
                   onNavigateTab={(tb) => setActiveTab(tb as any)}
-                  onDepositFunds={() => setIsAddFundsOpen(true)}
+                  onDepositFunds={handleOpenDeposit}
                 />
               )
             )}
@@ -496,6 +590,8 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
               <PortfolioDashboard
                 onTrade={(tr) => handleTradeIntent(tr)}
                 onSelectResearch={(res) => setSelectedResearch(res)}
+                onAddFunds={handleOpenDeposit}
+                onWithdraw={handleOpenWithdraw}
               />
             )}
             {activeTab === 'News' && (
@@ -511,27 +607,26 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
                 onSelectResearch={(res) => setSelectedResearch(res)}
               />
             )}
-            {activeTab === 'Profile' && <ProfileSettingsCenter onAddFunds={() => setIsAddFundsOpen(true)} />}
+            {activeTab === 'Profile' && <ProfileSettingsCenter onAddFunds={handleOpenDeposit} />}
           </div>
         </main>
       </div>
 
       {/* MOBILE STICKY BOTTOM NAVIGATION BAR (lg:hidden) */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 h-16 bg-white border-t border-brand-border flex items-center justify-around z-30 shadow-[0_-4px_16px_rgba(15,23,42,0.04)] px-4">
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 h-16 bg-white border-t flex items-center justify-around z-30 shadow-[0_-4px_16px_rgba(15,23,42,0.04)] px-4" style={{ borderColor: '#E2E8F0' }}>
         {tabs.map((tab) => {
           const isActive = activeTab === tab.name;
           return (
             <button
               key={tab.name}
               onClick={() => setActiveTab(tab.name)}
-              className={`flex flex-col items-center justify-center gap-1.5 relative py-1 focus:outline-none ${
-                isActive ? 'text-primary' : 'text-brand-secondary'
-              }`}
+              className={`flex flex-col items-center justify-center gap-1.5 relative py-1 focus:outline-none`}
+              style={{ color: isActive ? '#15519D' : '#64748B' }}
             >
               <span>{tab.icon}</span>
               <span className="text-[10px] font-bold">{tab.label}</span>
               {tab.badgeCount && tab.badgeCount > 0 ? (
-                <span className="absolute top-0 right-1.5 w-2 h-2 bg-rose-500 rounded-full animate-pulse" />
+                <span className="absolute top-0 right-1.5 w-2 h-2 bg-danger rounded-full animate-pulse" />
               ) : null}
             </button>
           );
@@ -543,7 +638,8 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
         onClick={() => setAiOpen(true)}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="fixed bottom-24 lg:bottom-8 right-6 lg:right-8 z-40 w-14 h-14 rounded-full bg-gradient-to-tr from-primary to-blue-700 flex items-center justify-center text-white shadow-glow-blue border border-white/10 focus:outline-none"
+        className="fixed bottom-24 lg:bottom-8 right-6 lg:right-8 z-40 w-14 h-14 rounded-full flex items-center justify-center text-white border border-white/10 focus:outline-none"
+        style={{ background: '#15519D', boxShadow: '0 0 24px 4px rgba(21,81,157,0.35)' }}
       >
         <Sparkles className="w-6 h-6 animate-pulse" />
       </motion.button>
@@ -640,7 +736,7 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
                       className={`px-2.5 py-1.5 rounded-lg font-black transition-colors shrink-0 ${
                         workspaceTab === tab.id
                           ? 'bg-brand-navy text-white'
-                          : 'text-[#64748B] hover:text-[#0F172A] hover:bg-slate-100'
+                          : 'text-[#64748B] hover:text-[#172033] hover:bg-slate-100'
                       }`}
                     >
                       {tab.label}
@@ -660,7 +756,7 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
                       <div>
                         <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Watchlist performance</span>
                         <div className="flex items-center gap-1.5 mt-0.5">
-                          <span className="font-extrabold text-[#0F172A]">+{watchlistStocks.length > 0 ? '2.45%' : '0.00%'}</span>
+                          <span className="font-extrabold text-[#172033]">+{watchlistStocks.length > 0 ? '2.45%' : '0.00%'}</span>
                           <span className="text-[9px] font-bold text-[#16A34A] bg-[#E8F8F0] px-1.5 py-0.2 rounded">Today</span>
                         </div>
                       </div>
@@ -700,8 +796,8 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
                           onClick={() => setActiveWatchlistTab(tab)}
                           className={`px-2.5 py-1 rounded-lg font-black transition-colors ${
                             activeWatchlistTab === tab 
-                              ? 'bg-blue-600 text-white' 
-                              : 'bg-slate-100 text-[#64748B] hover:text-[#0F172A]'
+                              ? 'bg-primary text-white' 
+                              : 'bg-slate-100 text-[#64748B] hover:text-[#172033]'
                           }`}
                         >
                           {tab}
@@ -714,13 +810,13 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
                       {filteredWatchlistStocks.length === 0 ? (
                         <div className="flex flex-col items-center justify-center text-center py-8">
                           <Bookmark className="w-8 h-8 text-slate-300" />
-                          <h4 className="text-xs font-black text-[#0F172A] mt-3">Build Your Watchlist</h4>
+                          <h4 className="text-xs font-black text-[#172033] mt-3">Build Your Watchlist</h4>
                           <p className="text-[10px] text-[#64748B] mt-1 leading-normal max-w-[170px]">
                             Track your favourite stocks and receive instant alerts.
                           </p>
                           <button 
                             onClick={handleAddStockToWatchlist}
-                            className="mt-3 text-[10px] font-black bg-blue-600 text-white px-3 py-1.5 rounded-lg hover:bg-blue-700"
+                            className="mt-3 text-[10px] font-black bg-primary text-white px-3 py-1.5 rounded-lg hover:bg-primary"
                           >
                             Add Stock Feed
                           </button>
@@ -750,7 +846,7 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
                                     {stock.logoText}
                                   </span>
                                   <div className="min-w-0">
-                                    <span className="text-xs font-black text-[#0F172A] block">{stock.symbol}</span>
+                                    <span className="text-xs font-black text-[#172033] block">{stock.symbol}</span>
                                     <span className="text-[9.5px] text-[#64748B] truncate block max-w-[100px]">{stock.companyName}</span>
                                   </div>
                                 </div>
@@ -771,15 +867,15 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
                                     <path 
                                       d={isPositive ? 'M0 15 L8 12 L16 14 L24 6 L32 8 L40 2' : 'M0 5 L8 8 L16 6 L24 14 L32 12 L40 18'} 
                                       fill="none" 
-                                      stroke={isPositive ? '#16A34A' : '#EF4444'} 
+                                      stroke={isPositive ? '#16A34A' : '#DC2626'} 
                                       strokeWidth="1.5"
                                       strokeLinecap="round"
                                     />
                                   </svg>
 
                                   <div className="text-right">
-                                    <span className="text-[11px] font-extrabold text-[#0F172A] block">₹{stock.price}</span>
-                                    <span className={`text-[9px] font-black block ${isPositive ? 'text-[#16A34A]' : 'text-[#EF4444]'}`}>
+                                    <span className="text-[11px] font-extrabold text-[#172033] block">₹{stock.price}</span>
+                                    <span className={`text-[9px] font-black block ${isPositive ? 'text-[#16A34A]' : 'text-loss'}`}>
                                       {isPositive ? '+' : ''}{stock.changePercent.toFixed(2)}%
                                     </span>
                                   </div>
@@ -789,7 +885,7 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
                               {/* Desktop Hover Quick Actions Overlay */}
                               {isHovered && (
                                 <div className="absolute inset-0 bg-slate-50/95 rounded-xl flex items-center justify-around px-3 z-10">
-                                  <button className="text-[9px] font-black text-white bg-blue-600 px-2 py-1 rounded-md hover:bg-blue-700">
+                                  <button className="text-[9px] font-black text-white bg-primary px-2 py-1 rounded-md hover:bg-primary">
                                     BUY
                                   </button>
                                   <button className="text-[9px] font-black text-brand-navy bg-slate-200 px-2 py-1 rounded-md hover:bg-slate-300">
@@ -800,7 +896,7 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
                                   </button>
                                   <button 
                                     onClick={() => handleRemoveStock(stock.symbol)}
-                                    className="p-1 hover:bg-rose-50 text-[#EF4444] rounded-md"
+                                    className="p-1 hover:bg-rose-50 text-loss rounded-md"
                                   >
                                     <Trash2 className="w-3.5 h-3.5" />
                                   </button>
@@ -816,7 +912,7 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
                     {watchlistStocks.length < 6 && (
                       <button 
                         onClick={handleAddStockToWatchlist}
-                        className="w-full py-2 bg-slate-50 border border-dashed border-[#E2E8F0] hover:border-slate-400 text-[#64748B] hover:text-[#0F172A] rounded-xl text-xs font-bold transition-colors text-center"
+                        className="w-full py-2 bg-slate-50 border border-dashed border-[#E2E8F0] hover:border-slate-400 text-[#64748B] hover:text-[#172033] rounded-xl text-xs font-bold transition-colors text-center"
                       >
                         + Add Stock from Recommendations
                       </button>
@@ -825,10 +921,10 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
                     {/* AI Suggested Stocks */}
                     <div className="mt-4 pt-4 border-t border-slate-100">
                       <h4 className="text-[10px] font-black uppercase tracking-wider text-slate-400 mb-2.5 flex items-center gap-1.5"><Sparkles className="w-3.5 h-3.5" /> AI Suggested Stocks</h4>
-                      <div className="bg-blue-50/40 border border-blue-100/60 p-3 rounded-xl flex items-start gap-2.5 text-xs">
-                        <Wand2 className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+                      <div className="bg-primary-light/40 border border-[#E2E8F0]/60 p-3 rounded-xl flex items-start gap-2.5 text-xs">
+                        <Wand2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
                         <div>
-                          <span className="font-bold text-blue-600">Add L&T (Larsen & Toubro)</span>
+                          <span className="font-bold text-primary">Add L&T (Larsen & Toubro)</span>
                           <p className="text-[10.5px] text-slate-600 mt-1 leading-normal">
                             Based on your watchlist momentum, L&T shows strong correlation and breakouts in the industrial sector.
                           </p>
@@ -858,15 +954,15 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
 
                     <div className="flex flex-col gap-2.5">
                       {savedResearch.map((res) => (
-                        <div key={res.id} className="bg-white border border-[#E2E8F0] p-3 rounded-xl hover:border-blue-200 transition-colors">
+                        <div key={res.id} className="bg-white border border-[#E2E8F0] p-3 rounded-xl hover:border-primary-light transition-colors">
                           <div className="flex items-center justify-between">
-                            <span className="text-[9px] font-black bg-blue-50 text-blue-600 px-2 py-0.5 rounded">{res.symbol}</span>
+                            <span className="text-[9px] font-black bg-primary-light text-primary px-2 py-0.5 rounded">{res.symbol}</span>
                             <span className="text-[9px] text-slate-400">{res.time}</span>
                           </div>
-                          <h4 className="text-xs font-black text-[#0F172A] mt-2 leading-relaxed">{res.title}</h4>
+                          <h4 className="text-xs font-black text-[#172033] mt-2 leading-relaxed">{res.title}</h4>
                           <div className="flex items-center justify-between mt-3.5 pt-2 border-t border-slate-50 text-[10px]">
                             <span className="text-slate-400">By <b>{res.analyst}</b></span>
-                            <button className="text-blue-600 font-bold hover:underline flex items-center gap-0.5">
+                            <button className="text-primary font-bold hover:underline flex items-center gap-0.5">
                               Read Call <ArrowUpRight className="w-3 h-3" />
                             </button>
                           </div>
@@ -892,13 +988,13 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
                           <div className="flex items-center gap-2">
                             <AlertCircle className="w-4 h-4 text-amber-500 shrink-0" />
                             <div>
-                              <span className="text-xs font-black text-[#0F172A]">{alert.symbol}</span>
+                              <span className="text-xs font-black text-[#172033]">{alert.symbol}</span>
                               <span className="block text-[9.5px] text-[#64748B] mt-0.5">{alert.condition} <b>{alert.target}</b></span>
                             </div>
                           </div>
                           <button 
                             onClick={() => setActiveAlerts(curr => curr.filter(a => a.id !== alert.id))}
-                            className="text-[9px] font-black text-[#EF4444] hover:bg-rose-50 px-2.5 py-1 rounded-md"
+                            className="text-[9px] font-black text-loss hover:bg-rose-50 px-2.5 py-1 rounded-md"
                           >
                             Delete
                           </button>
@@ -980,7 +1076,7 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
                   placeholder="e.g. Intraday Tech" 
                   value={newWatchlistName}
                   onChange={(e) => setNewWatchlistName(e.target.value)}
-                  className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-xs text-brand-navy outline-none focus:border-blue-600"
+                  className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-xs text-brand-navy outline-none focus:border-primary"
                 />
               </div>
 
@@ -1016,7 +1112,7 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
                       onClick={() => setNewWatchlistIcon(ic)}
                       className={`w-8 h-8 rounded-lg flex items-center justify-center border transition-colors ${
                         newWatchlistIcon === ic 
-                          ? 'bg-slate-200 border-slate-400 text-[#0F172A]' 
+                          ? 'bg-slate-200 border-slate-400 text-[#172033]' 
                           : 'bg-[#F8FAFC] hover:bg-slate-100 text-slate-500'
                       }`}
                     >
@@ -1123,6 +1219,7 @@ export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ chil
       <AddFundsModal
         isOpen={isAddFundsOpen}
         onClose={() => setIsAddFundsOpen(false)}
+        initialMode={addFundsMode}
       />
 
     </div>

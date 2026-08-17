@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Check, ShieldCheck, Zap } from 'lucide-react';
 import { Button } from '../components/atoms/Button';
@@ -59,7 +59,7 @@ export const Pricing = () => {
     <div className="min-h-screen bg-slate-50 py-20 px-6 font-sans">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-black text-[#0F172A] mb-4">
+          <h1 className="text-4xl md:text-5xl font-black text-[#172033] mb-4">
             Invest Smarter. Earn More.
           </h1>
           <p className="text-lg text-slate-500 max-w-2xl mx-auto">
@@ -81,19 +81,19 @@ export const Pricing = () => {
                 transition={{ delay: i * 0.1 }}
                 className={`bg-white rounded-3xl p-8 border ${
                   plan.plan_type === 'PREMIUM' 
-                    ? 'border-blue-500 shadow-xl shadow-blue-500/10 relative' 
+                    ? 'border-primary shadow-xl shadow-[rgba(21,81,157,0.3)]/10 relative' 
                     : 'border-slate-200 shadow-sm'
                 }`}
               >
                 {plan.plan_type === 'PREMIUM' && (
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-xs font-bold flex items-center">
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary text-white px-4 py-1 rounded-full text-xs font-bold flex items-center">
                     <Zap className="w-3 h-3 mr-1 fill-white" /> MOST POPULAR
                   </div>
                 )}
                 
                 <h3 className="text-xl font-bold text-slate-800 mb-2">{plan.name}</h3>
                 <div className="flex items-baseline gap-1 mb-4">
-                  <span className="text-4xl font-black text-[#0F172A]">₹{plan.price}</span>
+                  <span className="text-4xl font-black text-[#172033]">₹{plan.price}</span>
                   <span className="text-slate-500 font-medium">/ {plan.duration_days} days</span>
                 </div>
                 
@@ -109,9 +109,9 @@ export const Pricing = () => {
                     </li>
                   ))}
                   {plan.plan_type === 'PREMIUM' && (
-                    <li className="flex items-center text-sm font-bold text-blue-700">
-                      <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mr-3 shrink-0">
-                        <ShieldCheck className="w-3 h-3 text-blue-600" />
+                    <li className="flex items-center text-sm font-bold text-primary">
+                      <div className="w-5 h-5 rounded-full bg-primary-light flex items-center justify-center mr-3 shrink-0">
+                        <ShieldCheck className="w-3 h-3 text-primary" />
                       </div>
                       AI Advisors & Options Calls
                     </li>

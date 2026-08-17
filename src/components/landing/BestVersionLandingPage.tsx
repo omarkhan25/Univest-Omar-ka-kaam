@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Shield, ArrowRight, TrendingUp, TrendingDown, Sparkles, Mail, CheckCircle2, 
@@ -139,7 +139,7 @@ export const BestVersionLandingPage: React.FC = () => {
         />
         {/* Blob 1 — Blue, top-left */}
         <div className={`absolute top-[-5%] left-[-5%] w-[600px] h-[600px] rounded-full blur-[140px] ${
-          theme === 'dark' ? 'bg-blue-600/20' : 'bg-blue-400/10'
+          theme === 'dark' ? 'bg-primary/20' : 'bg-blue-400/10'
         }`} />
         {/* Blob 2 — Emerald, mid-right */}
         <div className={`absolute top-[35%] right-[-8%] w-[500px] h-[500px] rounded-full blur-[120px] ${
@@ -147,7 +147,7 @@ export const BestVersionLandingPage: React.FC = () => {
         }`} />
         {/* Blob 3 — Indigo, bottom-left */}
         <div className={`absolute bottom-[10%] left-[10%] w-[450px] h-[450px] rounded-full blur-[120px] ${
-          theme === 'dark' ? 'bg-indigo-600/15' : 'bg-indigo-400/8'
+          theme === 'dark' ? 'bg-primary/15' : 'bg-indigo-400/8'
         }`} />
         {/* Blob 4 — Cyan, top-right */}
         <div className={`absolute top-[15%] right-[20%] w-[350px] h-[350px] rounded-full blur-[100px] ${
@@ -155,7 +155,7 @@ export const BestVersionLandingPage: React.FC = () => {
         }`} />
         {/* Blob 5 — Blue, bottom-right */}
         <div className={`absolute bottom-[5%] right-[5%] w-[400px] h-[400px] rounded-full blur-[130px] ${
-          theme === 'dark' ? 'bg-blue-700/12' : 'bg-blue-400/6'
+          theme === 'dark' ? 'bg-primary/12' : 'bg-blue-400/6'
         }`} />
       </div>
 
@@ -163,13 +163,13 @@ export const BestVersionLandingPage: React.FC = () => {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${
           theme === 'dark'
-            ? 'bg-[#0F172A]/90 backdrop-blur-xl border-white/[0.08]'
+            ? 'bg-[#172033]/90 backdrop-blur-xl border-white/[0.08]'
             : 'bg-white/90 backdrop-blur-xl border-slate-200 shadow-xs'
         }`}
       >
         <div className="max-w-[1440px] mx-auto px-6 lg:px-[50px] py-3.5 flex items-center justify-between">
           <div onClick={() => navigate('/')} className="flex items-center gap-3 cursor-pointer">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-emerald-500 flex items-center justify-center font-black text-xl text-white shadow-lg shadow-blue-600/30">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-primary to-emerald-500 flex items-center justify-center font-black text-xl text-white shadow-lg shadow-[rgba(21,81,157,0.3)]/30">
               U
             </div>
             <div>
@@ -181,12 +181,12 @@ export const BestVersionLandingPage: React.FC = () => {
           </div>
 
           <div className="hidden md:flex items-center gap-8 text-xs font-semibold opacity-90">
-            <a href="#hero" className="hover:text-blue-500 transition">Overview</a>
-            <a href="#capabilities" className="hover:text-blue-500 transition">Capabilities</a>
-            <a href="#ai-advisors" className="hover:text-blue-500 transition">AI Advisors</a>
-            <a href="#how-it-works" className="hover:text-blue-500 transition">How It Works</a>
-            <a href="#invest-hub" className="hover:text-blue-500 transition">Asset Hub</a>
-            <a href="#pricing" className="hover:text-blue-500 transition">Pricing</a>
+            <a href="#hero" className="hover:text-primary transition">Overview</a>
+            <a href="#capabilities" className="hover:text-primary transition">Capabilities</a>
+            <a href="#ai-advisors" className="hover:text-primary transition">AI Advisors</a>
+            <a href="#how-it-works" className="hover:text-primary transition">How It Works</a>
+            <a href="#invest-hub" className="hover:text-primary transition">Asset Hub</a>
+            <a href="#pricing" className="hover:text-primary transition">Pricing</a>
           </div>
 
           <div className="flex items-center gap-3">
@@ -198,7 +198,7 @@ export const BestVersionLandingPage: React.FC = () => {
             </button>
             <button
               onClick={() => navigate('/signup')}
-              className="px-5 py-2.5 bg-gradient-to-r from-blue-600 to-emerald-500 hover:from-blue-700 hover:to-emerald-600 text-white text-xs font-black rounded-xl transition shadow-lg shadow-blue-600/25 flex items-center gap-1.5 cursor-pointer"
+              className="px-5 py-2.5 bg-gradient-to-r from-primary to-emerald-500 hover:from-primary hover:to-emerald-600 text-white text-xs font-black rounded-xl transition shadow-lg shadow-[rgba(21,81,157,0.3)]/25 flex items-center gap-1.5 cursor-pointer"
             >
               <span>Get Started</span>
               <ArrowRight className="w-4 h-4" />
@@ -215,9 +215,9 @@ export const BestVersionLandingPage: React.FC = () => {
 
         {/* Hero-specific extra-density blobs (layered on top of global background) */}
         <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute top-[-10%] left-[20%] w-[600px] h-[600px] bg-blue-600/25 rounded-full blur-[120px]" />
+          <div className="absolute top-[-10%] left-[20%] w-[600px] h-[600px] bg-primary/25 rounded-full blur-[120px]" />
           <div className="absolute bottom-[0%] right-[10%] w-[400px] h-[400px] bg-emerald-500/15 rounded-full blur-[100px]" />
-          <div className="absolute top-[10%] right-[5%] w-[350px] h-[350px] bg-indigo-600/15 rounded-full blur-[90px]" />
+          <div className="absolute top-[10%] right-[5%] w-[350px] h-[350px] bg-primary/15 rounded-full blur-[90px]" />
           <div className="absolute top-[40%] left-[-5%] w-[300px] h-[300px] bg-cyan-500/8 rounded-full blur-[80px]" />
         </div>
 
@@ -331,7 +331,7 @@ export const BestVersionLandingPage: React.FC = () => {
               <div>
                 <span className="opacity-70 block text-[10px]">BANKNIFTY</span>
                 <span className="font-black text-sm block">52,340.80</span>
-                <span className="text-rose-500 text-[11px] font-bold">▼ -0.18% (-94.2)</span>
+                <span className="text-danger text-[11px] font-bold">▼ -0.18% (-94.2)</span>
               </div>
               <div>
                 <span className="opacity-70 block text-[10px]">NIFTY IT</span>
@@ -340,7 +340,7 @@ export const BestVersionLandingPage: React.FC = () => {
               </div>
             </div>
 
-            <button onClick={() => navigate('/dashboard')} className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-black text-xs rounded-xl shadow-lg transition shrink-0 cursor-pointer">
+            <button onClick={() => navigate('/dashboard')} className="px-5 py-2.5 bg-primary hover:bg-primary-dark text-white font-black text-xs rounded-xl shadow-lg transition shrink-0 cursor-pointer">
               Launch Terminal
             </button>
           </div>
@@ -351,7 +351,7 @@ export const BestVersionLandingPage: React.FC = () => {
         {/* 6. ONE PLATFORM. EVERY INVESTMENT. (RE-DESIGNED ASSET HUB MOSAIC) */}
         <section id="invest-hub" className="space-y-16">
           <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="text-xs font-black uppercase tracking-wider text-blue-500 bg-blue-500/10 px-4 py-1.5 rounded-full border border-blue-500/20">
+            <span className="text-xs font-black uppercase tracking-wider text-primary bg-primary/10 px-4 py-1.5 rounded-full border border-primary/20">
               Asset Universe
             </span>
             <h2 className={`text-3xl sm:text-4xl lg:text-5xl font-black font-display tracking-tight ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
@@ -370,8 +370,8 @@ export const BestVersionLandingPage: React.FC = () => {
               whileHover={{ y: -5 }}
               className={`col-span-12 lg:col-span-8 p-6 rounded-3xl border flex flex-col justify-between min-h-[240px] transition-all duration-300 relative overflow-hidden group ${
                 theme === 'dark'
-                  ? 'bg-[#0A0F1D]/60 border-white/[0.08] hover:border-blue-500/40 hover:shadow-[0_8px_32px_rgba(59,130,246,0.06)]'
-                  : 'bg-white border-slate-200/80 hover:border-blue-500/30 hover:shadow-[0_8px_32px_rgba(59,130,246,0.04)] shadow-xs'
+                  ? 'bg-[#0A0F1D]/60 border-white/[0.08] hover:border-primary/40 hover:shadow-[0_8px_32px_rgba(21,81,157,0.06)]'
+                  : 'bg-white border-slate-200/80 hover:border-primary/30 hover:shadow-[0_8px_32px_rgba(21,81,157,0.04)] shadow-xs'
               }`}
             >
               {/* Card background sparkline graph drawing */}
@@ -388,8 +388,8 @@ export const BestVersionLandingPage: React.FC = () => {
 
               <div className="relative z-10 space-y-3 text-left">
                 <div className="flex justify-between items-start">
-                  <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-                    <TrendingUp className="w-5 h-5 text-blue-500" />
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                    <TrendingUp className="w-5 h-5 text-primary" />
                   </div>
                   <span className="text-[9px] font-black text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20 uppercase tracking-wider font-mono">
                     Live Today
@@ -410,7 +410,7 @@ export const BestVersionLandingPage: React.FC = () => {
                 </div>
                 <button
                   onClick={() => navigate('/dashboard')}
-                  className={`text-xs font-black flex items-center gap-1 group-hover:text-blue-400 transition-colors ${
+                  className={`text-xs font-black flex items-center gap-1 group-hover:text-[#64748B] transition-colors ${
                     theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
                   }`}
                 >
@@ -585,13 +585,13 @@ export const BestVersionLandingPage: React.FC = () => {
               whileHover={{ y: -5 }}
               className={`col-span-12 md:col-span-6 lg:col-span-3 p-6 rounded-3xl border flex flex-col justify-between min-h-[240px] transition-all duration-300 group ${
                 theme === 'dark'
-                  ? 'bg-[#0A0F1D]/60 border-white/[0.08] hover:border-rose-500/40 hover:shadow-[0_8px_32px_rgba(244,63,94,0.06)]'
-                  : 'bg-white border-slate-200/80 hover:border-rose-500/30 hover:shadow-[0_8px_32px_rgba(244,63,94,0.04)] shadow-xs'
+                  ? 'bg-[#0A0F1D]/60 border-white/[0.08] hover:border-danger/40 hover:shadow-[0_8px_32px_rgba(244,63,94,0.06)]'
+                  : 'bg-white border-slate-200/80 hover:border-danger/30 hover:shadow-[0_8px_32px_rgba(244,63,94,0.04)] shadow-xs'
               }`}
             >
               <div className="space-y-4 text-left">
-                <div className="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center">
-                  <Compass className="w-5 h-5 text-rose-500" />
+                <div className="w-10 h-10 rounded-xl bg-danger/10 border border-danger/20 flex items-center justify-center">
+                  <Compass className="w-5 h-5 text-danger" />
                 </div>
                 <div>
                   <h4 className={`text-lg font-black ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>MCX Commodities</h4>
@@ -617,13 +617,13 @@ export const BestVersionLandingPage: React.FC = () => {
               whileHover={{ y: -5 }}
               className={`col-span-12 md:col-span-6 lg:col-span-5 p-6 rounded-3xl border flex flex-col justify-between min-h-[240px] transition-all duration-300 group ${
                 theme === 'dark'
-                  ? 'bg-[#0A0F1D]/60 border-white/[0.08] hover:border-blue-500/40 hover:shadow-[0_8px_32px_rgba(59,130,246,0.06)]'
-                  : 'bg-white border-slate-200/80 hover:border-blue-500/30 hover:shadow-[0_8px_32px_rgba(59,130,246,0.04)] shadow-xs'
+                  ? 'bg-[#0A0F1D]/60 border-white/[0.08] hover:border-primary/40 hover:shadow-[0_8px_32px_rgba(21,81,157,0.06)]'
+                  : 'bg-white border-slate-200/80 hover:border-primary/30 hover:shadow-[0_8px_32px_rgba(21,81,157,0.04)] shadow-xs'
               }`}
             >
               <div className="space-y-4 text-left">
-                <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-                  <Landmark className="w-5 h-5 text-blue-500" />
+                <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                  <Landmark className="w-5 h-5 text-primary" />
                 </div>
                 <div>
                   <h4 className={`text-lg font-black ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>Bonds & Fixed Income</h4>
@@ -636,9 +636,9 @@ export const BestVersionLandingPage: React.FC = () => {
               <div className="border-t border-slate-800/40 pt-4 mt-4 flex justify-between items-center font-mono text-left">
                 <div>
                   <span className="text-[7px] text-slate-500 uppercase block font-bold">Tax-Free Yields</span>
-                  <span className="text-xs font-black text-blue-400">7.45% Avg Yield</span>
+                  <span className="text-xs font-black text-[#64748B]">7.45% Avg Yield</span>
                 </div>
-                <button onClick={() => navigate('/dashboard')} className="text-xs font-black flex items-center gap-1 group-hover:text-blue-400 transition-colors">
+                <button onClick={() => navigate('/dashboard')} className="text-xs font-black flex items-center gap-1 group-hover:text-[#64748B] transition-colors">
                   View Bonds <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>
@@ -652,10 +652,10 @@ export const BestVersionLandingPage: React.FC = () => {
             >
               <div className="space-y-4 text-left">
                 <div className="flex justify-between items-start">
-                  <div className="w-10 h-10 rounded-xl bg-blue-500/5 border border-blue-500/10 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-xl bg-primary/5 border border-primary/10 flex items-center justify-center">
                     <Globe className="w-5 h-5 text-slate-500" />
                   </div>
-                  <span className="text-[8px] font-black text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-md border border-blue-500/20 uppercase tracking-widest font-mono">
+                  <span className="text-[8px] font-black text-[#64748B] bg-primary/10 px-2 py-0.5 rounded-md border border-primary/20 uppercase tracking-widest font-mono">
                     Coming Soon
                   </span>
                 </div>
@@ -669,7 +669,7 @@ export const BestVersionLandingPage: React.FC = () => {
 
               <div className="border-t border-slate-800/40 pt-4 mt-4 flex justify-between items-center font-mono text-left">
                 <span className="text-[8px] text-slate-500 uppercase font-bold">Global Markets</span>
-                <span className="text-[10px] font-bold text-blue-500">Notify Me</span>
+                <span className="text-[10px] font-bold text-primary">Notify Me</span>
               </div>
             </motion.div>
 
@@ -683,7 +683,7 @@ export const BestVersionLandingPage: React.FC = () => {
             : 'bg-white border-slate-200/80 shadow-sm'
         }`}>
           {/* Subtle background glow mesh */}
-          <div className="absolute inset-0 z-0 bg-gradient-to-tr from-blue-500/5 via-transparent to-emerald-500/5 opacity-40 pointer-events-none" />
+          <div className="absolute inset-0 z-0 bg-gradient-to-tr from-primary/5 via-transparent to-emerald-500/5 opacity-40 pointer-events-none" />
 
           <div className="relative z-10 max-w-5xl mx-auto space-y-12">
             
@@ -738,9 +738,9 @@ export const BestVersionLandingPage: React.FC = () => {
                 return (
                   <div key={idx} className="space-y-3">
                     <div className={`w-12 h-12 rounded-xl border flex items-center justify-center ${
-                      theme === 'dark' ? 'bg-blue-500/10 border-blue-500/20' : 'bg-blue-500/5 border-blue-500/15'
+                      theme === 'dark' ? 'bg-primary/10 border-primary/20' : 'bg-primary/5 border-primary/15'
                     }`}>
-                      <AIcon className={`w-6 h-6 ${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}`} />
+                      <AIcon className={`w-6 h-6 ${theme === 'dark' ? 'text-[#64748B]' : 'text-primary'}`} />
                     </div>
                     <h4 className={`text-base sm:text-lg font-black ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>{adv.title}</h4>
                     <p className={`text-xs sm:text-sm leading-relaxed ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>{adv.desc}</p>
@@ -880,9 +880,9 @@ export const BestVersionLandingPage: React.FC = () => {
 
             {/* Pro Trader (Elevated Recommended Tier) */}
             <div className={`rounded-3xl p-8 border-2 border-emerald-500 shadow-2xl flex flex-col justify-between scale-105 relative ${
-              theme === 'dark' ? 'bg-gradient-to-b from-[#1E293B] via-[#0F172A] to-[#1E293B]' : 'bg-gradient-to-b from-white via-emerald-50/30 to-white'
+              theme === 'dark' ? 'bg-gradient-to-b from-[#1E293B] via-[#172033] to-[#1E293B]' : 'bg-gradient-to-b from-white via-emerald-50/30 to-white'
             }`}>
-              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-blue-600 to-emerald-500 rounded-full text-white text-[10px] font-black uppercase tracking-wider shadow-md">
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-primary to-emerald-500 rounded-full text-white text-[10px] font-black uppercase tracking-wider shadow-md">
                 Recommended Tier
               </div>
 
@@ -900,7 +900,7 @@ export const BestVersionLandingPage: React.FC = () => {
                   <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-500" /> Portfolio Rebalance Engine</li>
                 </ul>
               </div>
-              <button onClick={() => navigate('/signup')} className="w-full mt-8 py-4 bg-gradient-to-r from-blue-600 to-emerald-500 hover:from-blue-700 hover:to-emerald-600 text-white font-black text-xs rounded-xl shadow-lg transition cursor-pointer">
+              <button onClick={() => navigate('/signup')} className="w-full mt-8 py-4 bg-gradient-to-r from-primary to-emerald-500 hover:from-primary hover:to-emerald-600 text-white font-black text-xs rounded-xl shadow-lg transition cursor-pointer">
                 Start 14-Day Free Trial
               </button>
             </div>
@@ -940,7 +940,7 @@ export const BestVersionLandingPage: React.FC = () => {
             theme === 'dark' ? 'border-slate-800' : 'border-slate-300'
           }`}>
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-blue-600 text-white font-black flex items-center justify-center font-display">U</div>
+              <div className="w-8 h-8 rounded-lg bg-primary text-white font-black flex items-center justify-center font-display">U</div>
               <span className="font-black font-display text-lg">UNIVEST</span>
             </div>
             <div className="text-[11px] text-emerald-500 font-bold">
@@ -985,7 +985,7 @@ const LiveAiSignalGraph: React.FC<{ theme: 'dark' | 'light'; activeSignal: any }
               y={140 + (i % 3) * 15}
               width="14"
               height={30 + (i % 2) * 20}
-              fill={i % 2 === 0 ? "#10B981" : "#2563EB"}
+              fill={i % 2 === 0 ? "#10B981" : "#15519D"}
               rx="3"
             />
           </g>
@@ -994,7 +994,7 @@ const LiveAiSignalGraph: React.FC<{ theme: 'dark' | 'light'; activeSignal: any }
         {/* Actual Price Trend Line */}
         <path
           d="M 20 260 Q 80 200, 160 230 T 300 130 T 380 90"
-          stroke="#2563EB"
+          stroke="#15519D"
           strokeWidth="3.5"
           fill="none"
           strokeLinecap="round"

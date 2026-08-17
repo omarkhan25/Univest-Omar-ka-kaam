@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { 
   PieChart, Star, ShieldCheck, ArrowRight, Zap, RefreshCw, Filter, Search, CheckCircle2 
 } from 'lucide-react';
@@ -81,7 +81,7 @@ export const MutualFundsTab: React.FC = () => {
               onClick={() => setSelectedCategory(cat)}
               className={`px-4 py-2 rounded-xl transition cursor-pointer whitespace-nowrap ${
                 selectedCategory === cat
-                  ? 'bg-[#0F172A] text-white font-black'
+                  ? 'bg-[#172033] text-white font-black'
                   : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
               }`}
             >
@@ -113,10 +113,10 @@ export const MutualFundsTab: React.FC = () => {
             <div>
               <div className="flex items-start justify-between mb-3">
                 <div>
-                  <span className="text-[10px] font-black uppercase text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded">
+                  <span className="text-[10px] font-black uppercase text-primary bg-primary-light border border-primary-light px-2 py-0.5 rounded">
                     {fund.category}
                   </span>
-                  <h3 className="font-black text-base text-[#0F172A] mt-1.5 leading-snug">{fund.name}</h3>
+                  <h3 className="font-black text-base text-[#172033] mt-1.5 leading-snug">{fund.name}</h3>
                 </div>
 
                 <div className="flex items-center gap-1 text-amber-500 bg-amber-50 px-2 py-1 rounded-lg border border-amber-200 text-xs font-black">

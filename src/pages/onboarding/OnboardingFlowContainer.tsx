@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, Shield, FileText, Pen, Lock, ChevronLeft, Fingerprint, Banknote, Star } from 'lucide-react';
@@ -8,6 +8,8 @@ import { PANVerificationStep, type PANData } from './PANVerificationStep';
 import { BankDetailsStep, type BankData } from './BankDetailsStep';
 import { AgreementsStep } from './AgreementsStep';
 import { ReviewSubmitStep } from './ReviewSubmitStep';
+import { AccountSetupProgressStep } from './AccountSetupProgressStep';
+import { InvestorPersonalizationJourney } from './InvestorPersonalizationJourney';
 
 export const OnboardingFlowContainer: React.FC = () => {
   const navigate = useNavigate();
@@ -26,14 +28,14 @@ export const OnboardingFlowContainer: React.FC = () => {
 
   const leftPanelContent: Record<number, { heading: string; illustration: React.ReactNode; points: string[] }> = {
     1: {
-      heading: 'Identity Verification via DigiLocker',
+      heading: 'Aadhaar Identity Verification',
       points: [
-        'Fetch your Aadhaar securely via DigiLocker.',
-        'DigiLocker is a secure cloud-based platform by the Govt of India.'
+        'Verify your 12-digit Aadhaar via instant OTP.',
+        'Name & Date of Birth will be fetched directly from UIDAI.'
       ],
       illustration: (
-        <div className="relative flex flex-col items-center justify-center w-full h-48 bg-blue-50/50 rounded-2xl border border-blue-100">
-          <Fingerprint className="w-16 h-16 text-blue-500 mb-2" />
+        <div className="relative flex flex-col items-center justify-center w-full h-48 bg-primary-light/50 rounded-2xl border border-[#E2E8F0]">
+          <Fingerprint className="w-16 h-16 text-primary mb-2" />
           <div className="text-sm font-bold text-slate-700 bg-white px-4 py-1.5 rounded-full shadow-sm">
             UIDAI Authenticated
           </div>
@@ -93,7 +95,7 @@ export const OnboardingFlowContainer: React.FC = () => {
       heading: 'Final Review & Submit',
       points: [
         'Please review all the provided details carefully.',
-        'Once submitted, your account will be activated shortly.'
+        'Once submitted, your account setup process will begin.'
       ],
       illustration: (
         <div className="relative flex flex-col items-center justify-center w-full h-48 bg-slate-50 rounded-2xl border border-slate-200">
@@ -101,14 +103,34 @@ export const OnboardingFlowContainer: React.FC = () => {
             <Check className="w-10 h-10 text-emerald-600" />
           </div>
           <div className="text-sm font-bold text-slate-700 bg-white px-4 py-1.5 rounded-full shadow-sm">
-            Ready to Invest
+            Ready to Submit
+          </div>
+        </div>
+      )
+    },
+    6: {
+      heading: 'Setting Up Your Account',
+      points: [
+        'Application submitted successfully!',
+        'Initializing your SEBI Demat & Advisory credentials.'
+      ],
+      illustration: (
+        <div className="relative flex flex-col items-center justify-center w-full h-48 bg-primary-light rounded-2xl border border-[#E2E8F0]">
+          <Star className="w-16 h-16 text-primary mb-2 animate-bounce" />
+          <div className="text-sm font-bold text-slate-700 bg-white px-4 py-1.5 rounded-full shadow-sm">
+            Provisioning Account
           </div>
         </div>
       )
     }
   };
 
-  const leftContent = leftPanelContent[currentStep];
+  const leftContent = leftPanelContent[currentStep] || leftPanelContent[5];
+
+  // If user reaches step 7, render the full Account Setup Questions (Personalization Journey)
+  if (currentStep === 7) {
+    return <InvestorPersonalizationJourney />;
+  }
 
   return (
     <div className="min-h-screen w-full grid lg:grid-cols-[40%_60%] gap-0 font-sans bg-white">
@@ -116,9 +138,9 @@ export const OnboardingFlowContainer: React.FC = () => {
       <div className="hidden lg:flex flex-col p-10 relative border-r border-slate-100 bg-white">
         
         {/* Logo */}
-        <div className="flex items-center gap-3 mb-16">
-          <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center font-black text-xl text-white shadow-lg">U</div>
-          <span className="font-black text-xl tracking-tight text-slate-900">UNIVEST</span>
+        <div className="flex items-center gap-2.5 mb-10">
+          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center font-black text-base text-white shadow-md">U</div>
+          <span className="font-black text-base tracking-tight text-slate-900">UNIVEST</span>
         </div>
 
         {/* Dynamic content */}
@@ -126,21 +148,21 @@ export const OnboardingFlowContainer: React.FC = () => {
           <motion.div key={currentStep} initial={{ opacity:0, y:10 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0, y:-10 }} transition={{ duration:0.3 }}
             className="flex-1 flex flex-col justify-center">
             
-            <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-tight mb-8">
+            <h2 className="text-lg font-bold text-slate-900 tracking-tight leading-snug mb-5">
               {leftContent.heading}
             </h2>
 
-            <div className="mb-8 w-full">
+            <div className="mb-6 w-full">
               {leftContent.illustration}
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-3">
               {leftContent.points.map((pt, i) => (
-                <div key={i} className="flex gap-3">
-                  <div className="w-5 h-5 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-0.5">
-                    <span className="text-[10px] font-bold text-slate-600">{i + 1}</span>
+                <div key={i} className="flex gap-2.5">
+                  <div className="w-4 h-4 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-0.5">
+                    <span className="text-[9px] font-bold text-slate-600">{i + 1}</span>
                   </div>
-                  <p className="text-sm text-slate-600 font-medium leading-relaxed">{pt}</p>
+                  <p className="text-xs text-slate-600 font-normal leading-relaxed">{pt}</p>
                 </div>
               ))}
             </div>
@@ -148,8 +170,8 @@ export const OnboardingFlowContainer: React.FC = () => {
           </motion.div>
         </AnimatePresence>
 
-        <div className="mt-12 flex items-center gap-2 text-[10px] font-bold text-slate-400">
-          <Lock className="w-3.5 h-3.5 text-slate-300" />
+        <div className="mt-8 flex items-center gap-1.5 text-[10px] font-bold text-slate-400">
+          <Lock className="w-3 h-3 text-slate-300" />
           <span>256-bit encrypted · SEBI compliant · Secure platform</span>
         </div>
       </div>
@@ -158,15 +180,15 @@ export const OnboardingFlowContainer: React.FC = () => {
       <div className="min-h-screen flex flex-col bg-white">
         
         {/* Top Progress Bar */}
-        <div className="w-full px-12 pt-10 pb-6 border-b border-slate-50">
+        <div className="w-full px-8 pt-6 pb-4 border-b border-slate-50">
           <div className="flex items-center justify-between mb-2">
             {stepLabels.map((label, i) => (
-              <div key={label} className="flex-1 flex flex-col gap-2 relative px-1">
-                <div className={`text-sm font-bold ${currentStep === i + 1 ? 'text-blue-600' : currentStep > i + 1 ? 'text-slate-700' : 'text-slate-400'}`}>
+              <div key={label} className="flex-1 flex flex-col gap-1.5 relative px-1">
+                <div className={`text-xs font-bold ${currentStep === i + 1 ? 'text-primary' : currentStep > i + 1 ? 'text-slate-700' : 'text-slate-400'}`}>
                   0{i + 1}
                 </div>
-                <div className={`h-1 w-full rounded-full transition-colors ${currentStep === i + 1 ? 'bg-blue-600' : currentStep > i + 1 ? 'bg-slate-800' : 'bg-slate-100'}`} />
-                <div className={`text-sm font-bold absolute -bottom-7 left-1 whitespace-nowrap ${currentStep === i + 1 ? 'text-slate-900' : currentStep > i + 1 ? 'text-slate-500' : 'text-slate-300'}`}>
+                <div className={`h-1 w-full rounded-full transition-colors ${currentStep === i + 1 ? 'bg-primary' : currentStep > i + 1 ? 'bg-slate-800' : 'bg-slate-100'}`} />
+                <div className={`text-xs font-bold absolute -bottom-6 left-1 whitespace-nowrap ${currentStep === i + 1 ? 'text-slate-900' : currentStep > i + 1 ? 'text-slate-500' : 'text-slate-300'}`}>
                   {label}
                 </div>
               </div>
@@ -177,7 +199,7 @@ export const OnboardingFlowContainer: React.FC = () => {
         {/* Form area */}
         <div className="flex-1 overflow-y-auto px-12 py-12 flex justify-center">
           <div className="w-full max-w-lg">
-            {currentStep > 1 && (
+            {currentStep > 1 && currentStep < 6 && (
               <button 
                 onClick={() => setCurrentStep(prev => prev - 1)}
                 className="flex items-center gap-1 text-sm font-bold text-slate-500 hover:text-slate-900 transition-colors mb-6"
@@ -213,8 +235,13 @@ export const OnboardingFlowContainer: React.FC = () => {
                     aadhaarData={aadhaarData} 
                     panData={panData} 
                     bankData={bankData}
-                    onComplete={() => navigate('/dashboard')}
+                    onComplete={() => setCurrentStep(6)}
                   />
+                </motion.div>
+              )}
+              {currentStep === 6 && (
+                <motion.div key="s6" initial={{ opacity:0, scale:0.95 }} animate={{ opacity:1, scale:1 }} exit={{ opacity:0, x:-20 }} transition={{ duration:0.3 }}>
+                  <AccountSetupProgressStep onComplete={() => setCurrentStep(7)} />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -226,3 +253,4 @@ export const OnboardingFlowContainer: React.FC = () => {
 };
 
 export default OnboardingFlowContainer;
+

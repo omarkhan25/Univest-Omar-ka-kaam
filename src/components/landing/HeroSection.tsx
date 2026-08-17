@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Shield, TrendingUp, Users, CheckCircle, Mail, Sparkles, Award } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -22,12 +22,12 @@ export const HeroSection: React.FC = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden bg-[#0F172A] font-sans text-white">
+    <section className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden bg-[#172033] font-sans text-white">
       {/* Background Glow Orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 -left-1/4 w-96 h-96 bg-blue-600/15 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 -left-1/4 w-96 h-96 bg-primary/15 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 -right-1/4 w-96 h-96 bg-emerald-600/15 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-blue-600/5 to-emerald-600/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-primary/5 to-emerald-600/5 rounded-full blur-3xl" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -99,14 +99,14 @@ export const HeroSection: React.FC = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Enter your email to get started"
-                        className="w-full pl-11 pr-4 py-3.5 bg-[#0F172A] border border-slate-700 rounded-xl text-white text-xs font-semibold placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-all"
+                        className="w-full pl-11 pr-4 py-3.5 bg-[#172033] border border-slate-700 rounded-xl text-white text-xs font-semibold placeholder-slate-500 focus:outline-none focus:border-primary transition-all"
                         required
                       />
                     </div>
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="px-8 py-3.5 bg-gradient-to-r from-blue-600 to-emerald-500 hover:from-blue-700 hover:to-emerald-600 text-white text-xs font-black rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-600/30 cursor-pointer shrink-0"
+                      className="px-8 py-3.5 bg-gradient-to-r from-primary to-emerald-500 hover:from-primary hover:to-emerald-600 text-white text-xs font-black rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-[rgba(21,81,157,0.3)]/30 cursor-pointer shrink-0"
                     >
                       {isLoading ? (
                         <>
@@ -168,7 +168,7 @@ export const HeroSection: React.FC = () => {
                 className="absolute -bottom-5 -left-5 bg-[#1E293B] rounded-2xl p-4 border border-slate-700 shadow-2xl min-w-[180px] backdrop-blur-md"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0">
+                  <div className="w-9 h-9 rounded-xl bg-primary/20 text-[#64748B] flex items-center justify-center shrink-0">
                     <Sparkles className="w-5 h-5" />
                   </div>
                   <div>
@@ -201,7 +201,7 @@ const StockMarketIllustration: React.FC = () => {
         {/* Animated Trend Lines */}
         <path
           d="M 20 280 Q 90 220, 160 250 T 300 120 T 380 90"
-          stroke="#2563EB"
+          stroke="#15519D"
           strokeWidth="4"
           fill="none"
           strokeLinecap="round"
@@ -231,7 +231,7 @@ const StockMarketIllustration: React.FC = () => {
               y={160 + (i % 3) * 15}
               width="16"
               height={30 + (i % 2) * 25}
-              fill={i % 2 === 0 ? "#10B981" : "#2563EB"}
+              fill={i % 2 === 0 ? "#10B981" : "#15519D"}
               rx="3"
             />
           </g>

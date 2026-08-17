@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+﻿import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, CheckCircle2, Headphones, LockKeyhole, MessageSquareCode, ShieldCheck, Smartphone, UserRound, Mail } from 'lucide-react';
 import { Button } from '../atoms/Button';
@@ -146,29 +146,29 @@ export const LoginWithOtp = () => {
   };
 
   return (
-    <main className="min-h-screen bg-[#F8FAFC] px-5 py-6 text-[#111827] sm:grid sm:place-items-center sm:p-8">
+    <main className="min-h-screen bg-[#F8FAFC] px-5 py-6 text-[#172033] sm:grid sm:place-items-center sm:p-8">
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
         <div className="absolute -right-32 -top-28 h-[30rem] w-[30rem] rounded-full bg-blue-200/35 blur-[110px]" />
         <div className="absolute -bottom-36 -left-24 h-96 w-96 rounded-full bg-emerald-100/55 blur-[100px]" />
       </div>
       <motion.section initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .55 }} className="relative mx-auto w-full max-w-[470px] rounded-[28px] border border-[#E2E8F0] bg-white p-6 shadow-[0_24px_65px_-25px_rgba(15,23,42,.22)] sm:p-9">
-        <button onClick={() => window.location.href = '/get-started'} className="group mb-8 inline-flex items-center gap-1.5 text-xs font-semibold text-[#64748B] transition hover:text-[#0F172A]">
+        <button onClick={() => window.location.href = '/get-started'} className="group mb-8 inline-flex items-center gap-1.5 text-xs font-semibold text-[#64748B] transition hover:text-[#172033]">
           <ArrowLeft className="h-4 w-4 transition group-hover:-translate-x-1" /> Back to home
         </button>
         <div className="mb-7 flex items-center gap-3">
-          <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-[#2563EB] to-[#16A34A] text-sm font-black text-white shadow-lg shadow-blue-200">U</div>
+          <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-primary to-[#16A34A] text-sm font-black text-white shadow-lg shadow-[rgba(21,81,157,0.15)]">U</div>
           <div>
-            <p className="font-extrabold tracking-[-.04em] text-[#0F172A]">univest</p>
+            <p className="font-extrabold tracking-[-.04em] text-[#172033]">univest</p>
             <p className="text-[10px] font-semibold uppercase tracking-[.12em] text-[#64748B]">Investment intelligence</p>
           </div>
         </div>
-        <div className="mb-6 flex items-center gap-2 rounded-xl border border-[#93C5FD] bg-[#DBEAFE] px-3 py-2 text-[11px] font-semibold text-[#1D4ED8]">
+        <div className="mb-6 flex items-center gap-2 rounded-xl border border-[#5EEAD4] bg-[#EBF3FC] px-3 py-2 text-[11px] font-semibold text-[#104280]">
           <LockKeyhole className="h-4 w-4" /> Encrypted verification · Your details stay private
         </div>
         <AnimatePresence mode="wait">
           {!otpSent ? (
             <motion.form key="auth" initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 10 }} onSubmit={submitAuth}>
-              <h1 className="text-2xl font-black tracking-[-.045em] text-[#0F172A]">{isSignup ? 'Start investing with clarity' : 'Welcome back'}</h1>
+              <h1 className="text-2xl font-black tracking-[-.045em] text-[#172033]">{isSignup ? 'Start investing with clarity' : 'Welcome back'}</h1>
               <p className="mt-2 text-sm leading-6 text-[#64748B]">{isSignup ? 'Create your secure account in under a minute.' : 'Sign in to continue with your research and portfolio.'}</p>
               
               {errorMessage && (
@@ -178,31 +178,31 @@ export const LoginWithOtp = () => {
               )}
 
               <div className="mt-6 grid grid-cols-2 rounded-xl bg-[#F1F5F9] p-1">
-                <button type="button" onClick={() => switchTab('login')} className={`rounded-lg py-2.5 text-xs font-bold transition ${!isSignup ? 'bg-white text-[#2563EB] shadow-sm' : 'text-[#64748B]'}`}>Log in</button>
-                <button type="button" onClick={() => switchTab('signup')} className={`rounded-lg py-2.5 text-xs font-bold transition ${isSignup ? 'bg-white text-[#2563EB] shadow-sm' : 'text-[#64748B]'}`}>Create account</button>
+                <button type="button" onClick={() => switchTab('login')} className={`rounded-lg py-2.5 text-xs font-bold transition ${!isSignup ? 'bg-white text-primary shadow-sm' : 'text-[#64748B]'}`}>Log in</button>
+                <button type="button" onClick={() => switchTab('signup')} className={`rounded-lg py-2.5 text-xs font-bold transition ${isSignup ? 'bg-white text-primary shadow-sm' : 'text-[#64748B]'}`}>Create account</button>
               </div>
               {isSignup && (
-                <label className="mt-5 block text-xs font-bold text-[#0F172A]">
+                <label className="mt-5 block text-xs font-bold text-[#172033]">
                   Full name
-                  <div className="mt-2 flex items-center rounded-xl border border-[#CBD5E1] bg-[#F8FAFC] focus-within:border-[#2563EB] focus-within:ring-4 focus-within:ring-blue-100">
-                    <UserRound className="ml-3 h-4 w-4 text-[#2563EB]" />
+                  <div className="mt-2 flex items-center rounded-xl border border-[#CBD5E1] bg-[#F8FAFC] focus-within:border-primary focus-within:ring-4 focus-within:ring-blue-100">
+                    <UserRound className="ml-3 h-4 w-4 text-primary" />
                     <input autoFocus value={name} onChange={event => setName(event.target.value)} placeholder="Your full name" className="h-12 min-w-0 flex-1 bg-transparent px-3 text-sm font-normal outline-none placeholder:text-[#94A3B8]" />
                   </div>
                 </label>
               )}
-              <label className="mt-5 block text-xs font-bold text-[#0F172A]">
+              <label className="mt-5 block text-xs font-bold text-[#172033]">
                 Email address
-                <div className="mt-2 flex items-center overflow-hidden rounded-xl border border-[#CBD5E1] bg-[#F8FAFC] focus-within:border-[#2563EB] focus-within:ring-4 focus-within:ring-blue-100">
+                <div className="mt-2 flex items-center overflow-hidden rounded-xl border border-[#CBD5E1] bg-[#F8FAFC] focus-within:border-primary focus-within:ring-4 focus-within:ring-blue-100">
                   <span className="flex h-12 items-center gap-2 border-r border-[#E2E8F0] px-3 text-sm font-bold text-[#475569]">
-                    <Mail className="h-4 w-4 text-[#2563EB]" />
+                    <Mail className="h-4 w-4 text-primary" />
                   </span>
                   <input autoFocus={!isSignup} type="email" value={email} onChange={event => setEmail(event.target.value)} placeholder="you@example.com" className="h-12 min-w-0 flex-1 bg-transparent px-3 text-sm font-normal outline-none placeholder:text-[#94A3B8]" />
                 </div>
               </label>
               {isSignup && (
-                <label className="mt-5 block text-xs font-bold text-[#0F172A]">
+                <label className="mt-5 block text-xs font-bold text-[#172033]">
                   Mobile number <span className="font-normal text-[#94A3B8]">(optional)</span>
-                  <input type="tel" inputMode="numeric" value={phone} onChange={event => setPhone(event.target.value.replace(/\D/g, '').slice(0, 10))} placeholder="10-digit mobile number" className="mt-2 h-12 w-full rounded-xl border border-[#CBD5E1] bg-[#F8FAFC] px-3 text-sm font-normal outline-none transition placeholder:text-[#94A3B8] focus:border-[#2563EB] focus:bg-white focus:ring-4 focus:ring-blue-100" />
+                  <input type="tel" inputMode="numeric" value={phone} onChange={event => setPhone(event.target.value.replace(/\D/g, '').slice(0, 10))} placeholder="10-digit mobile number" className="mt-2 h-12 w-full rounded-xl border border-[#CBD5E1] bg-[#F8FAFC] px-3 text-sm font-normal outline-none transition placeholder:text-[#94A3B8] focus:border-primary focus:bg-white focus:ring-4 focus:ring-blue-100" />
                 </label>
               )}
               <Button type="submit" disabled={!email.includes('@') || (isSignup && !name.trim())} isLoading={isLoading} className="mt-6 w-full py-3.5 text-sm font-bold" icon={<MessageSquareCode className="h-4 w-4" />}>
@@ -210,9 +210,9 @@ export const LoginWithOtp = () => {
               </Button>
               <p className="mt-5 text-center text-xs text-[#64748B]">
                 {isSignup ? (
-                  <>Already have an account? <button type="button" onClick={() => switchTab('login')} className="font-bold text-[#2563EB] hover:underline">Log in</button></>
+                  <>Already have an account? <button type="button" onClick={() => switchTab('login')} className="font-bold text-primary hover:underline">Log in</button></>
                 ) : (
-                  <>New to Univest? <button type="button" onClick={() => switchTab('signup')} className="font-bold text-[#2563EB] hover:underline">Create account</button></>
+                  <>New to Univest? <button type="button" onClick={() => switchTab('signup')} className="font-bold text-primary hover:underline">Create account</button></>
                 )}
               </p>
             </motion.form>
@@ -220,9 +220,9 @@ export const LoginWithOtp = () => {
             <motion.div key="otp" initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -10 }}>
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <h1 className="text-2xl font-black tracking-[-.045em] text-[#0F172A]">Verify your email</h1>
+                  <h1 className="text-2xl font-black tracking-[-.045em] text-[#172033]">Verify your email</h1>
                   <p className="mt-2 text-sm leading-6 text-[#64748B]">
-                    {isSignup && name ? `Hi ${name.split(' ')[0]}, we` : 'We'} sent a 6-digit code to <span className="font-bold text-[#0F172A]">{email}</span>.
+                    {isSignup && name ? `Hi ${name.split(' ')[0]}, we` : 'We'} sent a 6-digit code to <span className="font-bold text-[#172033]">{email}</span>.
                   </p>
                 </div>
                 <span className="grid h-10 w-10 place-items-center rounded-full bg-[#DCFCE7] text-[#166534]">
@@ -231,11 +231,11 @@ export const LoginWithOtp = () => {
               </div>
               <div className="mt-7 flex justify-between gap-2" onPaste={pasteOtp}>
                 {otp.map((digit, index) => (
-                  <input key={index} ref={node => { otpRefs.current[index] = node; }} value={digit} onChange={event => setDigit(index, event.target.value)} onKeyDown={event => { if (event.key === 'Backspace' && !otp[index] && index) otpRefs.current[index - 1]?.focus(); }} inputMode="numeric" maxLength={1} aria-label={`OTP digit ${index + 1}`} className="h-12 w-11 rounded-xl border border-[#CBD5E1] bg-[#F8FAFC] text-center text-lg font-extrabold text-[#0F172A] outline-none transition focus:border-[#2563EB] focus:bg-white focus:ring-4 focus:ring-blue-100 sm:h-14 sm:w-12" />
+                  <input key={index} ref={node => { otpRefs.current[index] = node; }} value={digit} onChange={event => setDigit(index, event.target.value)} onKeyDown={event => { if (event.key === 'Backspace' && !otp[index] && index) otpRefs.current[index - 1]?.focus(); }} inputMode="numeric" maxLength={1} aria-label={`OTP digit ${index + 1}`} className="h-12 w-11 rounded-xl border border-[#CBD5E1] bg-[#F8FAFC] text-center text-lg font-extrabold text-[#172033] outline-none transition focus:border-primary focus:bg-white focus:ring-4 focus:ring-blue-100 sm:h-14 sm:w-12" />
                 ))}
               </div>
               <div className="mt-5 flex items-center justify-between text-xs">
-                <button onClick={() => setOtpSent(false)} className="font-semibold text-[#2563EB] hover:underline">Change details</button>
+                <button onClick={() => setOtpSent(false)} className="font-semibold text-primary hover:underline">Change details</button>
                 <button 
                   onClick={(e) => { 
                     if (!resendAfter) { 
@@ -244,7 +244,7 @@ export const LoginWithOtp = () => {
                     } 
                   }} 
                   disabled={Boolean(resendAfter)} 
-                  className="font-semibold text-[#2563EB] disabled:text-[#94A3B8]">
+                  className="font-semibold text-primary disabled:text-[#94A3B8]">
                   {resendAfter ? `Resend in ${resendAfter}s` : 'Resend code'}
                 </button>
               </div>
@@ -256,7 +256,7 @@ export const LoginWithOtp = () => {
         </AnimatePresence>
         <div className="mt-8 flex items-center justify-between border-t border-[#E2E8F0] pt-5 text-[11px] text-[#64748B]">
           <span className="flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5 text-[#16A34A]" /> SEBI compliant</span>
-          <a className="flex items-center gap-1 font-semibold text-[#2563EB] hover:underline" href="mailto:support@univest.in"><Headphones className="h-3.5 w-3.5" /> Need help</a>
+          <a className="flex items-center gap-1 font-semibold text-primary hover:underline" href="mailto:support@univest.in"><Headphones className="h-3.5 w-3.5" /> Need help</a>
         </div>
       </motion.section>
     </main>

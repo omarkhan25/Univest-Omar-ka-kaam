@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+﻿import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Search, Filter, Sparkles, TrendingUp, AlertCircle, ArrowRight, Bookmark, 
@@ -269,7 +269,7 @@ export const MarketIntelligenceCenter: React.FC<MarketIntelligenceCenterProps> =
                 <span className="text-[10px] text-slate-400 font-black uppercase tracking-wider px-3">Suggestions</span>
                 <button 
                   onClick={() => setShowSuggestions(false)} 
-                  className="text-[10px] text-blue-600 font-black hover:underline px-3 cursor-pointer"
+                  className="text-[10px] text-primary font-black hover:underline px-3 cursor-pointer"
                 >
                   Close
                 </button>
@@ -282,14 +282,14 @@ export const MarketIntelligenceCenter: React.FC<MarketIntelligenceCenterProps> =
                     className="flex items-center justify-between px-5 py-3 hover:bg-slate-50 cursor-pointer transition-colors border-b border-slate-50 last:border-0"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-2 h-2 rounded-full bg-blue-500" />
+                      <div className="w-2 h-2 rounded-full bg-primary" />
                       <span className="font-extrabold text-xs text-slate-800">{item.text}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest bg-slate-100 px-2 py-0.5 rounded">
                         {item.type}
                       </span>
-                      <span className="text-[10px] font-black text-blue-600 bg-blue-50 px-2 py-0.5 rounded">
+                      <span className="text-[10px] font-black text-primary bg-primary-light px-2 py-0.5 rounded">
                         ${item.symbol}
                       </span>
                     </div>
@@ -319,7 +319,7 @@ export const MarketIntelligenceCenter: React.FC<MarketIntelligenceCenterProps> =
                     : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'
                 }`}
               >
-                {tab === 'AI Brief' && <Sparkles className="w-3 h-3 inline mr-1 fill-blue-400 text-blue-400 animate-pulse" />}
+                {tab === 'AI Brief' && <Sparkles className="w-3 h-3 inline mr-1 fill-[#64748B] text-[#64748B] animate-pulse" />}
                 {tab}
               </button>
             );
@@ -334,7 +334,7 @@ export const MarketIntelligenceCenter: React.FC<MarketIntelligenceCenterProps> =
           {selectedCompanyFilter && (
             <button 
               onClick={() => setSelectedCompanyFilter(null)}
-              className="text-[10px] font-black text-rose-600 hover:underline flex items-center gap-1"
+              className="text-[10px] font-black text-danger hover:underline flex items-center gap-1"
             >
               Clear Filter <X className="w-3 h-3" />
             </button>
@@ -356,7 +356,7 @@ export const MarketIntelligenceCenter: React.FC<MarketIntelligenceCenterProps> =
                 }}
                 className={`px-4 py-2 rounded-xl text-xs font-black border transition cursor-pointer shrink-0 ${
                   isSelected 
-                    ? 'bg-blue-50 border-blue-500 text-blue-700 shadow-xs' 
+                    ? 'bg-primary-light border-primary text-primary shadow-xs' 
                     : 'bg-white border-slate-200 text-slate-700 hover:border-slate-400'
                 }`}
               >
@@ -378,19 +378,19 @@ export const MarketIntelligenceCenter: React.FC<MarketIntelligenceCenterProps> =
             <section className="bg-white border border-slate-200 rounded-[28px] p-6 sm:p-8 shadow-xs flex flex-col gap-6">
               <div className="flex items-center justify-between border-b border-slate-100 pb-4">
                 <div className="flex items-center gap-2">
-                  <Sparkles className="w-6 h-6 text-blue-600 fill-blue-500/20 animate-pulse" />
+                  <Sparkles className="w-6 h-6 text-primary fill-primary/20 animate-pulse" />
                   <div>
-                    <h3 className="text-xl font-black text-[#0F172A]">AI Daily Intelligence Brief</h3>
+                    <h3 className="text-xl font-black text-[#172033]">AI Daily Intelligence Brief</h3>
                     <span className="text-xs text-slate-400 font-bold">SEBI-Compliant Automated Market Synthesis</span>
                   </div>
                 </div>
-                <span className="text-xs font-black bg-blue-50 text-blue-800 border border-blue-100 px-3 py-1 rounded-full">
+                <span className="text-xs font-black bg-primary-light text-primary-dark border border-[#E2E8F0] px-3 py-1 rounded-full">
                   08:30 AM IST
                 </span>
               </div>
 
               <div className="bg-[#F8FAFC] border border-[#E2E8F0] p-6 rounded-2xl flex flex-col gap-3">
-                <h4 className="text-xs font-black text-blue-700 uppercase tracking-wider">Executive Synthesis</h4>
+                <h4 className="text-xs font-black text-primary uppercase tracking-wider">Executive Synthesis</h4>
                 <p className="text-sm text-slate-800 font-medium leading-relaxed">
                   Indian markets continue to consolidate with minor bullish bias near record highs. FII support in financial services provides a solid valuation floor. Short-term volatility levels are low, favoring active rotation into quality banking and green energy conglomerates.
                 </p>
@@ -414,21 +414,21 @@ export const MarketIntelligenceCenter: React.FC<MarketIntelligenceCenterProps> =
                 <div className="flex flex-col gap-2 text-xs">
                   <div className="flex justify-between border-b border-slate-100 pb-2">
                     <span className="font-extrabold text-slate-700">US Core Consumer Inflation (CPI)</span>
-                    <span className="font-black text-blue-600 bg-blue-50 px-2 py-0.5 rounded">High Impact</span>
+                    <span className="font-black text-primary bg-primary-light px-2 py-0.5 rounded">High Impact</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-extrabold text-slate-700">Infosys Q1 Earnings Release</span>
-                    <span className="font-black text-blue-600 bg-blue-50 px-2 py-0.5 rounded">High Impact</span>
+                    <span className="font-black text-primary bg-primary-light px-2 py-0.5 rounded">High Impact</span>
                   </div>
                 </div>
               </div>
 
-              <div className="flex justify-between items-center bg-blue-50/40 border border-blue-100 rounded-xl p-4">
+              <div className="flex justify-between items-center bg-primary-light/40 border border-[#E2E8F0] rounded-xl p-4">
                 <div className="flex flex-col gap-0.5">
-                  <span className="text-[9px] text-blue-800 font-black uppercase tracking-wider">Market Sentiment Bias</span>
+                  <span className="text-[9px] text-primary-dark font-black uppercase tracking-wider">Market Sentiment Bias</span>
                   <span className="text-xs font-bold text-slate-700">Bullish setup backed by institutional inflows.</span>
                 </div>
-                <span className="text-xs font-black text-blue-700 bg-white border border-blue-200 px-3 py-1.5 rounded-lg shrink-0">
+                <span className="text-xs font-black text-primary bg-white border border-primary-light px-3 py-1.5 rounded-lg shrink-0">
                   92% Conviction
                 </span>
               </div>
@@ -458,7 +458,7 @@ export const MarketIntelligenceCenter: React.FC<MarketIntelligenceCenterProps> =
                         </span>
                       </div>
                       <div className="absolute bottom-0 inset-x-0 h-1/2 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent p-6 flex flex-col justify-end">
-                        <span className="text-[9px] text-blue-400 font-black uppercase tracking-wider mb-1.5 flex items-center gap-1">
+                        <span className="text-[9px] text-[#64748B] font-black uppercase tracking-wider mb-1.5 flex items-center gap-1">
                           <Award className="w-3.5 h-3.5" /> Lead Editorial Analysis
                         </span>
                         <h2 className="text-xl sm:text-2xl font-black text-white leading-tight">
@@ -477,10 +477,10 @@ export const MarketIntelligenceCenter: React.FC<MarketIntelligenceCenterProps> =
                         {heroArticle.summary}
                       </p>
 
-                      <div className="bg-blue-50/60 border border-blue-100 rounded-2xl p-4 flex flex-col gap-2">
+                      <div className="bg-primary-light/60 border border-[#E2E8F0] rounded-2xl p-4 flex flex-col gap-2">
                         <div className="flex items-center gap-1.5">
-                          <Sparkles className="w-4 h-4 text-blue-600 fill-blue-500/20" />
-                          <span className="text-[10px] text-blue-700 font-black uppercase tracking-wider">AI Impact Forecast</span>
+                          <Sparkles className="w-4 h-4 text-primary fill-primary/20" />
+                          <span className="text-[10px] text-primary font-black uppercase tracking-wider">AI Impact Forecast</span>
                         </div>
                         <p className="text-[11px] text-slate-700 font-medium leading-relaxed">
                           {heroArticle.impact}
@@ -506,9 +506,9 @@ export const MarketIntelligenceCenter: React.FC<MarketIntelligenceCenterProps> =
                         <div className="flex items-center gap-3">
                           <button 
                             onClick={(e) => toggleBookmark(heroArticle.id, e)}
-                            className="p-2 rounded-xl border border-slate-200 text-slate-400 hover:text-blue-600 hover:bg-blue-50/30 transition cursor-pointer"
+                            className="p-2 rounded-xl border border-slate-200 text-slate-400 hover:text-primary hover:bg-primary-light/30 transition cursor-pointer"
                           >
-                            <Bookmark className={`w-4 h-4 ${bookmarkedIds.includes(heroArticle.id) ? 'fill-blue-600 text-blue-600' : ''}`} />
+                            <Bookmark className={`w-4 h-4 ${bookmarkedIds.includes(heroArticle.id) ? 'fill-primary text-primary' : ''}`} />
                           </button>
                           <button className="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-black text-xs transition cursor-pointer">
                             Read Analysis
@@ -552,13 +552,13 @@ export const MarketIntelligenceCenter: React.FC<MarketIntelligenceCenterProps> =
                             <div className="flex flex-wrap items-center justify-between gap-2 text-[10px] text-slate-400 font-bold">
                               <span>{art.source} • {art.time}</span>
                               <span className={`px-2 py-0.5 rounded text-[8px] font-black uppercase ${
-                                art.sentiment === 'Bullish' ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-rose-50 text-rose-600 border border-rose-100'
+                                art.sentiment === 'Bullish' ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-rose-50 text-danger border border-rose-100'
                               }`}>
                                 {art.sentiment}
                               </span>
                             </div>
                             
-                            <h4 className="font-black text-sm sm:text-base text-slate-900 leading-snug group-hover:text-blue-600 transition-colors mt-1">
+                            <h4 className="font-black text-sm sm:text-base text-slate-900 leading-snug group-hover:text-primary transition-colors mt-1">
                               {art.headline}
                             </h4>
                             
@@ -586,9 +586,9 @@ export const MarketIntelligenceCenter: React.FC<MarketIntelligenceCenterProps> =
                             <div className="flex items-center gap-2">
                               <button 
                                 onClick={(e) => toggleBookmark(art.id, e)}
-                                className="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 transition cursor-pointer"
+                                className="p-1.5 rounded-lg text-slate-400 hover:text-primary transition cursor-pointer"
                               >
-                                <Bookmark className={`w-3.5 h-3.5 ${bookmarkedIds.includes(art.id) ? 'fill-blue-600 text-blue-600' : ''}`} />
+                                <Bookmark className={`w-3.5 h-3.5 ${bookmarkedIds.includes(art.id) ? 'fill-primary text-primary' : ''}`} />
                               </button>
                               <ChevronRight className="w-4 h-4 text-slate-300 group-hover:translate-x-0.5 transition" />
                             </div>
@@ -626,7 +626,7 @@ export const MarketIntelligenceCenter: React.FC<MarketIntelligenceCenterProps> =
           <section className="bg-white border border-slate-200 rounded-[28px] p-5 shadow-xs flex flex-col gap-4">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
-                <Activity className="w-3.5 h-3.5 text-blue-600" /> Live Market Indices
+                <Activity className="w-3.5 h-3.5 text-primary" /> Live Market Indices
               </span>
               <span className="text-[9px] text-emerald-600 font-black bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded-md animate-pulse">LIVE</span>
             </div>
@@ -637,7 +637,7 @@ export const MarketIntelligenceCenter: React.FC<MarketIntelligenceCenterProps> =
                   <span className="text-[9px] font-black text-slate-400 uppercase">{idx.name}</span>
                   <div className="flex flex-col">
                     <span className="text-xs font-black text-slate-800">{idx.value}</span>
-                    <span className={`text-[9px] font-bold ${idx.isPositive ? 'text-emerald-600' : 'text-rose-600'}`}>
+                    <span className={`text-[9px] font-bold ${idx.isPositive ? 'text-emerald-600' : 'text-danger'}`}>
                       {idx.change} ({idx.percent})
                     </span>
                   </div>
@@ -647,7 +647,7 @@ export const MarketIntelligenceCenter: React.FC<MarketIntelligenceCenterProps> =
                     <path
                       d={`M ${idx.sparkline.map((val, i) => `${(i / (idx.sparkline.length - 1)) * 100} ${20 - val}`).join(' L ')}`}
                       fill="none"
-                      stroke={idx.isPositive ? '#10B981' : '#EF4444'}
+                      stroke={idx.isPositive ? '#10B981' : '#DC2626'}
                       strokeWidth={1.5}
                       strokeLinecap="round"
                     />
@@ -660,11 +660,11 @@ export const MarketIntelligenceCenter: React.FC<MarketIntelligenceCenterProps> =
           {/* AI DAILY BRIEF SIDEBAR WIDGET */}
           {activeTab !== 'AI Brief' && (
             <section className="bg-gradient-to-br from-blue-900 to-slate-950 text-white rounded-[28px] p-6 shadow-md border border-slate-800 relative overflow-hidden flex flex-col gap-5">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/20 rounded-full blur-2xl pointer-events-none" />
+              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 rounded-full blur-2xl pointer-events-none" />
               
               <div className="flex items-center justify-between border-b border-white/10 pb-3.5">
                 <div className="flex items-center gap-2">
-                  <Sparkles className="w-5 h-5 text-blue-400 fill-blue-400 animate-pulse" />
+                  <Sparkles className="w-5 h-5 text-[#64748B] fill-[#64748B] animate-pulse" />
                   <div>
                     <h4 className="text-xs font-black tracking-widest text-slate-200 uppercase">AI Intelligence Brief</h4>
                     <span className="text-[8px] text-slate-400 font-bold uppercase block mt-0.5">Updated 08:30 AM IST</span>
@@ -673,7 +673,7 @@ export const MarketIntelligenceCenter: React.FC<MarketIntelligenceCenterProps> =
               </div>
 
               <div className="flex flex-col gap-1">
-                <span className="text-[9px] text-blue-400 font-black uppercase tracking-wider">Today's Market Summary</span>
+                <span className="text-[9px] text-[#64748B] font-black uppercase tracking-wider">Today's Market Summary</span>
                 <p className="text-[11px] text-slate-300 font-medium leading-relaxed">
                   Markets consolidate near record high following robust FII flows in financials. Short term momentum favors large caps as corporate actions support yields.
                 </p>
@@ -708,7 +708,7 @@ export const MarketIntelligenceCenter: React.FC<MarketIntelligenceCenterProps> =
                   setActiveTab('AI Brief');
                   toast.success('Navigated to full AI Intelligence digest');
                 }}
-                className="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-black text-xs transition cursor-pointer flex items-center justify-center gap-1.5"
+                className="w-full py-2.5 rounded-xl bg-primary hover:bg-primary-dark text-white font-black text-xs transition cursor-pointer flex items-center justify-center gap-1.5"
               >
                 Read Full Intelligence Report <ArrowRight className="w-3.5 h-3.5" />
               </button>
@@ -719,7 +719,7 @@ export const MarketIntelligenceCenter: React.FC<MarketIntelligenceCenterProps> =
           <section className="bg-white border border-slate-200 rounded-[28px] p-5 shadow-xs flex flex-col gap-4">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
-                <Calendar className="w-3.5 h-3.5 text-blue-600" /> Corporate Actions Timeline
+                <Calendar className="w-3.5 h-3.5 text-primary" /> Corporate Actions Timeline
               </span>
               <span className="text-[9px] text-slate-500 font-bold">This Week</span>
             </div>
@@ -727,10 +727,10 @@ export const MarketIntelligenceCenter: React.FC<MarketIntelligenceCenterProps> =
             <div className="flex flex-col gap-4 relative pl-3 before:absolute before:inset-y-1 before:left-0.5 before:w-0.5 before:bg-slate-100">
               {corporateActions.map((ca) => (
                 <div key={ca.id} className="relative flex flex-col gap-1">
-                  <div className="absolute -left-[14.5px] top-1 w-2.5 h-2.5 rounded-full border-2 border-white bg-blue-600 shadow-xs" />
+                  <div className="absolute -left-[14.5px] top-1 w-2.5 h-2.5 rounded-full border-2 border-white bg-primary shadow-xs" />
                   
                   <div className="flex items-center justify-between gap-2">
-                    <span className="text-[8px] font-black bg-blue-50 text-blue-700 border border-blue-100 px-1.5 py-0.2 rounded uppercase">
+                    <span className="text-[8px] font-black bg-primary-light text-primary border border-[#E2E8F0] px-1.5 py-0.2 rounded uppercase">
                       {ca.type}
                     </span>
                     <span className="text-[9px] text-slate-400 font-bold">{ca.date}</span>
@@ -746,7 +746,7 @@ export const MarketIntelligenceCenter: React.FC<MarketIntelligenceCenterProps> =
                       onClick={() => {
                         if (onSelectStock) onSelectStock({ symbol: ca.symbol, company: ca.company });
                       }}
-                      className="text-[9px] font-black text-blue-600 hover:underline flex items-center cursor-pointer"
+                      className="text-[9px] font-black text-primary hover:underline flex items-center cursor-pointer"
                     >
                       Workspace <ChevronRight className="w-3 h-3" />
                     </button>

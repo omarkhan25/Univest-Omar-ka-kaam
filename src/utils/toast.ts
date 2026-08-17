@@ -1,11 +1,11 @@
-import toast from 'react-hot-toast';
+﻿import toast from 'react-hot-toast';
 
 export const customToast = {
   success: (message: string) => {
     toast.success(message, {
       style: {
         borderRadius: '16px',
-        background: '#0F172A',
+        background: '#172033',
         color: '#fff',
         fontSize: '12px',
         fontWeight: 700,
@@ -23,7 +23,7 @@ export const customToast = {
     toast.error(message, {
       style: {
         borderRadius: '16px',
-        background: '#0F172A',
+        background: '#172033',
         color: '#fff',
         fontSize: '12px',
         fontWeight: 700,
@@ -42,11 +42,11 @@ export const customToast = {
       duration: 4000,
       style: {
         borderRadius: '18px',
-        background: '#0F172A',
+        background: '#172033',
         color: '#fff',
         fontSize: '12px',
         fontWeight: 800,
-        border: '1px solid #2563EB',
+        border: '1px solid #6D4AFF',
       },
     });
   },
@@ -56,7 +56,7 @@ export const customToast = {
       duration: 4000,
       style: {
         borderRadius: '18px',
-        background: '#0F172A',
+        background: '#172033',
         color: '#fff',
         fontSize: '12px',
         fontWeight: 800,

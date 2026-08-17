@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+﻿import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   X, Check, ArrowRight, ArrowLeft, RefreshCw, 
@@ -266,7 +266,7 @@ export const OrderExecutionDrawer: React.FC<OrderExecutionDrawerProps> = ({
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <h3 className="font-black text-sm text-[#0F172A] tracking-tight">{companyName}</h3>
+                <h3 className="font-black text-sm text-[#172033] tracking-tight">{companyName}</h3>
                 <span className="text-[9px] font-black px-1.5 py-0.5 rounded bg-slate-200 text-slate-600 uppercase">
                   {symbol}
                 </span>
@@ -298,8 +298,8 @@ export const OrderExecutionDrawer: React.FC<OrderExecutionDrawerProps> = ({
                 className="flex flex-col gap-5"
               >
                 {/* Live Price Widget */}
-                <div className="bg-[#0F172A] text-white p-4 sm:p-5 rounded-2xl relative overflow-hidden shadow-md">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/20 rounded-full blur-2xl pointer-events-none" />
+                <div className="bg-[#172033] text-white p-4 sm:p-5 rounded-2xl relative overflow-hidden shadow-md">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 rounded-full blur-2xl pointer-events-none" />
                   <div className="flex justify-between items-center relative z-10">
                     <div>
                       <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-1">Live Market Price</span>
@@ -339,7 +339,7 @@ export const OrderExecutionDrawer: React.FC<OrderExecutionDrawerProps> = ({
                       onClick={() => setAction('SELL')}
                       className={`py-2 rounded-xl text-xs font-black tracking-wider transition-all cursor-pointer ${
                         action === 'SELL' 
-                          ? 'bg-[#EF4444] text-white shadow-sm' 
+                          ? 'bg-loss text-white shadow-sm' 
                           : 'text-slate-500 hover:text-slate-800'
                       }`}
                     >
@@ -410,7 +410,7 @@ export const OrderExecutionDrawer: React.FC<OrderExecutionDrawerProps> = ({
                         step="0.05"
                         value={limitPriceInput}
                         onChange={(e) => setLimitPriceInput(e.target.value)}
-                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 h-10 font-black text-slate-900 text-xs outline-none focus:border-blue-600 shadow-2xs"
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 h-10 font-black text-slate-900 text-xs outline-none focus:border-primary shadow-2xs"
                       />
                     )}
                   </div>
@@ -424,7 +424,7 @@ export const OrderExecutionDrawer: React.FC<OrderExecutionDrawerProps> = ({
                       onClick={() => setProductType('CNC')}
                       className={`p-3 rounded-xl border text-left transition cursor-pointer flex flex-col gap-0.5 ${
                         productType === 'CNC' 
-                          ? 'bg-blue-50/50 border-blue-600 text-blue-900 shadow-2xs' 
+                          ? 'bg-primary-light/50 border-primary text-primary-dark shadow-2xs' 
                           : 'bg-white border-slate-200 text-slate-600 hover:border-slate-300'
                       }`}
                     >
@@ -437,7 +437,7 @@ export const OrderExecutionDrawer: React.FC<OrderExecutionDrawerProps> = ({
                       onClick={() => setProductType('MIS')}
                       className={`p-3 rounded-xl border text-left transition cursor-pointer flex flex-col gap-0.5 ${
                         productType === 'MIS' 
-                          ? 'bg-blue-50/50 border-blue-600 text-blue-900 shadow-2xs' 
+                          ? 'bg-primary-light/50 border-primary text-primary-dark shadow-2xs' 
                           : 'bg-white border-slate-200 text-slate-600 hover:border-slate-300'
                       }`}
                     >
@@ -456,7 +456,7 @@ export const OrderExecutionDrawer: React.FC<OrderExecutionDrawerProps> = ({
                     <select
                       value={validity}
                       onChange={(e: any) => setValidity(e.target.value)}
-                      className="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 font-bold text-slate-800 text-xs outline-none focus:border-blue-600 shadow-2xs"
+                      className="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 font-bold text-slate-800 text-xs outline-none focus:border-primary shadow-2xs"
                     >
                       <option value="DAY">DAY (Standard)</option>
                       <option value="IOC">IOC (Immediate or Cancel)</option>
@@ -475,13 +475,13 @@ export const OrderExecutionDrawer: React.FC<OrderExecutionDrawerProps> = ({
                 </div>
 
                 {/* AI Trade Snapshot card */}
-                <div className="border border-blue-100 bg-blue-50/40 p-4 rounded-2xl flex flex-col gap-3 relative shadow-2xs">
+                <div className="border border-[#E2E8F0] bg-primary-light/40 p-4 rounded-2xl flex flex-col gap-3 relative shadow-2xs">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1.5">
-                      <Sparkles className="w-4 h-4 text-blue-600" />
-                      <span className="text-[10px] font-black text-blue-900 tracking-wider uppercase">AI Technical Trade Insights</span>
+                      <Sparkles className="w-4 h-4 text-primary" />
+                      <span className="text-[10px] font-black text-primary-dark tracking-wider uppercase">AI Technical Trade Insights</span>
                     </div>
-                    <span className="text-[9px] font-black bg-blue-100 text-blue-800 px-2 py-0.5 rounded border border-blue-200/50">
+                    <span className="text-[9px] font-black bg-primary-light text-primary-dark px-2 py-0.5 rounded border border-primary-light/50">
                       CONFIDENCE: {aiTradeSnapshot.confidence}%
                     </span>
                   </div>
@@ -505,7 +505,7 @@ export const OrderExecutionDrawer: React.FC<OrderExecutionDrawerProps> = ({
                     </div>
                   </div>
                   
-                  <p className="text-[9.5px] text-blue-900 font-medium leading-relaxed">
+                  <p className="text-[9.5px] text-primary-dark font-medium leading-relaxed">
                     {aiTradeSnapshot.summary}
                   </p>
                 </div>
@@ -543,10 +543,10 @@ export const OrderExecutionDrawer: React.FC<OrderExecutionDrawerProps> = ({
                     </div>
                     <div className="h-px bg-slate-200 my-1" />
                     <div className="flex justify-between items-center text-sm font-black">
-                      <span className="text-[#0F172A]">
+                      <span className="text-[#172033]">
                         {action === 'BUY' ? 'Estimated Total Bill:' : 'Estimated Net Proceeds:'}
                       </span>
-                      <span className={action === 'BUY' ? 'text-blue-600' : 'text-emerald-600'}>
+                      <span className={action === 'BUY' ? 'text-primary' : 'text-emerald-600'}>
                         ₹{estimatedTotal.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </span>
                     </div>
@@ -556,11 +556,11 @@ export const OrderExecutionDrawer: React.FC<OrderExecutionDrawerProps> = ({
                 {/* Available balance check info */}
                 <div className="flex justify-between items-center text-[10px] font-bold text-slate-500 bg-slate-50 border border-slate-200/50 p-3 rounded-xl shadow-2xs">
                   <div className="flex items-center gap-1.5">
-                    <div className="w-2.5 h-2.5 rounded-full bg-blue-600" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-primary" />
                     <span>Demat Balance: ₹{availableFunds.toLocaleString('en-IN')}</span>
                   </div>
                   {action === 'BUY' && (
-                    <span className={remainingFunds < 0 ? 'text-rose-600 font-black' : 'text-slate-600'}>
+                    <span className={remainingFunds < 0 ? 'text-danger font-black' : 'text-slate-600'}>
                       {remainingFunds < 0 ? 'Insufficient Margin Required' : `Remaining: ₹${remainingFunds.toLocaleString('en-IN')}`}
                     </span>
                   )}
@@ -585,12 +585,12 @@ export const OrderExecutionDrawer: React.FC<OrderExecutionDrawerProps> = ({
                       }`}>
                         {action} Order Execution
                       </span>
-                      <h4 className="text-lg font-black text-[#0F172A] mt-2 leading-none">{companyName}</h4>
+                      <h4 className="text-lg font-black text-[#172033] mt-2 leading-none">{companyName}</h4>
                       <span className="text-[10px] font-bold text-slate-400 block mt-1.5 uppercase">NSE · Equity</span>
                     </div>
                     <div className="text-right">
                       <span className="text-[9px] font-bold text-slate-400 block uppercase">Estimate Value</span>
-                      <span className="text-base font-black text-[#0F172A] block mt-1">
+                      <span className="text-base font-black text-[#172033] block mt-1">
                         ₹{estimatedTotal.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </span>
                     </div>
@@ -636,7 +636,7 @@ export const OrderExecutionDrawer: React.FC<OrderExecutionDrawerProps> = ({
                   className="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex gap-3 cursor-pointer select-none items-start"
                 >
                   <div className={`w-5 h-5 rounded-lg border flex items-center justify-center shrink-0 transition ${
-                    termsAccepted ? 'bg-blue-600 border-blue-600 text-white' : 'bg-white border-slate-300'
+                    termsAccepted ? 'bg-primary border-primary text-white' : 'bg-white border-slate-300'
                   }`}>
                     {termsAccepted && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                   </div>
@@ -658,12 +658,12 @@ export const OrderExecutionDrawer: React.FC<OrderExecutionDrawerProps> = ({
               >
                 <div className="relative w-20 h-20 flex items-center justify-center">
                   <div className="absolute inset-0 rounded-full border-4 border-slate-100" />
-                  <div className="absolute inset-0 rounded-full border-4 border-blue-600 border-t-transparent animate-spin" />
-                  <Sparkles className="w-8 h-8 text-blue-600 animate-pulse" />
+                  <div className="absolute inset-0 rounded-full border-4 border-primary border-t-transparent animate-spin" />
+                  <Sparkles className="w-8 h-8 text-primary animate-pulse" />
                 </div>
                 
                 <div className="flex flex-col gap-4 w-full max-w-xs text-xs font-bold text-slate-600">
-                  <h4 className="text-center font-black text-sm text-[#0F172A] mb-2">
+                  <h4 className="text-center font-black text-sm text-[#172033] mb-2">
                     Executing Simulated Order...
                   </h4>
                   {processingMessages.map((msg, idx) => {
@@ -680,18 +680,18 @@ export const OrderExecutionDrawer: React.FC<OrderExecutionDrawerProps> = ({
                           isCompleted 
                             ? 'bg-emerald-100 border-emerald-500 text-emerald-600' 
                             : isActive 
-                            ? 'border-blue-600 text-blue-600' 
+                            ? 'border-primary text-primary' 
                             : 'border-slate-200 text-slate-300'
                         }`}>
                           {isCompleted ? (
                             <Check className="w-3.5 h-3.5 stroke-[3]" />
                           ) : isActive ? (
-                            <div className="w-2 h-2 rounded-full bg-blue-600 animate-ping" />
+                            <div className="w-2 h-2 rounded-full bg-primary animate-ping" />
                           ) : (
                             <span className="text-[9px]">{idx + 1}</span>
                           )}
                         </div>
-                        <span className={isActive ? 'text-blue-700 font-black' : isCompleted ? 'text-slate-700' : ''}>
+                        <span className={isActive ? 'text-primary font-black' : isCompleted ? 'text-slate-700' : ''}>
                           {msg}
                         </span>
                       </div>
@@ -719,7 +719,7 @@ export const OrderExecutionDrawer: React.FC<OrderExecutionDrawerProps> = ({
                   <span className="text-[10px] font-black text-emerald-600 bg-emerald-50 border border-emerald-100 px-3 py-1 rounded-full uppercase tracking-wider shadow-2xs">
                     Order Placed Successfully
                   </span>
-                  <h2 className="text-2xl font-black text-[#0F172A] mt-4 tracking-tight">{symbol}</h2>
+                  <h2 className="text-2xl font-black text-[#172033] mt-4 tracking-tight">{symbol}</h2>
                   <p className="text-xs text-slate-500 font-bold mt-1.5 max-w-xs mx-auto">
                     Your simulated {action.toLowerCase()} order was successfully executed and processed on NSE.
                   </p>
@@ -728,21 +728,21 @@ export const OrderExecutionDrawer: React.FC<OrderExecutionDrawerProps> = ({
                 <div className="w-full bg-slate-50 p-5 rounded-2xl border border-slate-200/80 shadow-2xs grid grid-cols-2 gap-4 text-xs text-left my-2">
                   <div>
                     <span className="text-[9px] font-bold text-slate-400 uppercase block">Order ID</span>
-                    <span className="font-black text-[#0F172A]">#ORD-{Date.now().toString().slice(-6)}</span>
+                    <span className="font-black text-[#172033]">#ORD-{Date.now().toString().slice(-6)}</span>
                   </div>
                   <div>
                     <span className="text-[9px] font-bold text-slate-400 uppercase block">Transaction Type</span>
-                    <span className={`font-black ${action === 'BUY' ? 'text-emerald-600' : 'text-rose-600'}`}>
+                    <span className={`font-black ${action === 'BUY' ? 'text-emerald-600' : 'text-danger'}`}>
                       {action} · {productType}
                     </span>
                   </div>
                   <div>
                     <span className="text-[9px] font-bold text-slate-400 uppercase block">Average Price</span>
-                    <span className="font-black text-[#0F172A]">₹{activePrice.toFixed(2)}</span>
+                    <span className="font-black text-[#172033]">₹{activePrice.toFixed(2)}</span>
                   </div>
                   <div>
                     <span className="text-[9px] font-bold text-slate-400 uppercase block">Quantity</span>
-                    <span className="font-black text-[#0F172A]">{quantity} Shares</span>
+                    <span className="font-black text-[#172033]">{quantity} Shares</span>
                   </div>
                   <div className="col-span-2 border-t border-slate-200/60 pt-3 flex justify-between items-center">
                     <span className="text-[9px] font-bold text-slate-400 uppercase">Settled Total Value</span>
@@ -752,8 +752,8 @@ export const OrderExecutionDrawer: React.FC<OrderExecutionDrawerProps> = ({
                   </div>
                 </div>
 
-                <div className="p-3 bg-blue-50 border border-blue-100 rounded-xl flex gap-2 w-full text-[9px] font-medium leading-normal text-blue-900">
-                  <ShieldCheck className="w-4 h-4 text-blue-600 shrink-0" />
+                <div className="p-3 bg-primary-light border border-[#E2E8F0] rounded-xl flex gap-2 w-full text-[9px] font-medium leading-normal text-primary-dark">
+                  <ShieldCheck className="w-4 h-4 text-primary shrink-0" />
                   <span>
                     <strong>Demat Order Refreshed</strong>: The transaction is saved in your local session log. Holdings and balances are updated.
                   </span>
@@ -770,15 +770,15 @@ export const OrderExecutionDrawer: React.FC<OrderExecutionDrawerProps> = ({
                 exit={{ opacity: 0, scale: 0.95 }}
                 className="flex flex-col items-center justify-center py-8 gap-6"
               >
-                <div className="w-20 h-20 rounded-full bg-rose-100 border border-rose-200 text-rose-600 flex items-center justify-center shadow-lg animate-pulse">
+                <div className="w-20 h-20 rounded-full bg-rose-100 border border-rose-200 text-danger flex items-center justify-center shadow-lg animate-pulse">
                   <AlertTriangle className="w-10 h-10" />
                 </div>
 
                 <div className="text-center">
-                  <span className="text-[10px] font-black text-rose-600 bg-rose-50 border border-rose-100 px-3 py-1 rounded-full uppercase tracking-wider">
+                  <span className="text-[10px] font-black text-danger bg-rose-50 border border-rose-100 px-3 py-1 rounded-full uppercase tracking-wider">
                     Order Rejected
                   </span>
-                  <h2 className="text-2xl font-black text-[#0F172A] mt-4 tracking-tight">Insufficient Margin Available</h2>
+                  <h2 className="text-2xl font-black text-[#172033] mt-4 tracking-tight">Insufficient Margin Available</h2>
                   <p className="text-xs text-slate-500 font-bold mt-2 max-w-xs mx-auto leading-relaxed">
                     You do not have enough funds in your available cash balance to execute this simulated buy order.
                   </p>
@@ -787,25 +787,25 @@ export const OrderExecutionDrawer: React.FC<OrderExecutionDrawerProps> = ({
                 <div className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl text-xs text-left flex flex-col gap-2.5 my-2">
                   <div className="flex justify-between font-bold text-slate-600">
                     <span>Required Bill Amount:</span>
-                    <span className="text-[#0F172A] font-extrabold">
+                    <span className="text-[#172033] font-extrabold">
                       ₹{estimatedTotal.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                     </span>
                   </div>
                   <div className="flex justify-between font-bold text-slate-600">
                     <span>Available Demat Balance:</span>
-                    <span className="text-[#0F172A] font-extrabold">
+                    <span className="text-[#172033] font-extrabold">
                       ₹{availableFunds.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                     </span>
                   </div>
                   <div className="h-px bg-slate-200" />
-                  <div className="flex justify-between items-center text-xs font-black text-rose-600">
+                  <div className="flex justify-between items-center text-xs font-black text-danger">
                     <span>Deficit Margin:</span>
                     <span>₹{(estimatedTotal - availableFunds).toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
                   </div>
                 </div>
 
                 <div className="p-3.5 bg-rose-50 border border-rose-100 rounded-xl flex gap-2 w-full text-[9.5px] font-medium text-rose-900 leading-normal">
-                  <Info className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                  <Info className="w-4 h-4 text-danger shrink-0 mt-0.5" />
                   <span>
                     <strong>Resolution</strong>: You can add simulated funds to your Demat account instantly using the "Invest / Add Funds" button on the main Dashboard.
                   </span>
@@ -824,7 +824,7 @@ export const OrderExecutionDrawer: React.FC<OrderExecutionDrawerProps> = ({
               className={`w-full py-3.5 rounded-2xl font-black text-xs text-white transition flex items-center justify-center gap-2 cursor-pointer shadow-md select-none ${
                 action === 'BUY' 
                   ? 'bg-[#16A34A] hover:bg-emerald-700 shadow-emerald-500/10' 
-                  : 'bg-[#EF4444] hover:bg-rose-700 shadow-rose-500/10'
+                  : 'bg-loss hover:bg-rose-700 shadow-rose-500/10'
               }`}
             >
               Review {action} Order <ArrowRight className="w-4.5 h-4.5" />
@@ -844,7 +844,7 @@ export const OrderExecutionDrawer: React.FC<OrderExecutionDrawerProps> = ({
                 className={`flex-1 py-3.5 rounded-2xl font-black text-xs text-white transition flex items-center justify-center gap-2 cursor-pointer shadow-md select-none ${
                   action === 'BUY' 
                     ? 'bg-[#16A34A] hover:bg-emerald-700 shadow-emerald-500/10' 
-                    : 'bg-[#EF4444] hover:bg-rose-700 shadow-rose-500/10'
+                    : 'bg-loss hover:bg-rose-700 shadow-rose-500/10'
                 }`}
               >
                 Confirm & Place {action} Order

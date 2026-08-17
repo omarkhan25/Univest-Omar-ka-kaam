@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { StablecoinNavbar } from '../../components/landing/StablecoinNavbar';
 import { Check } from 'lucide-react';
 
@@ -23,7 +23,7 @@ export const PricingPage: React.FC = () => {
           opacity: 0.6,
         }}
       />
-      <div className="fixed inset-0 z-0 bg-gradient-to-b from-transparent to-[#F5F5F5]" />
+      <div className="fixed inset-0 z-0 bg-gradient-to-b from-transparent to-[#F8FAFC]" />
 
       <div className="relative z-10 flex flex-col min-h-screen">
         <StablecoinNavbar />

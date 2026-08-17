@@ -1,10 +1,10 @@
-import React from 'react';
+﻿import React from 'react';
 import { StablecoinNavbar } from '../../components/landing/StablecoinNavbar';
 import { ArrowRight } from 'lucide-react';
 
 export const AiResearchPage: React.FC = () => {
   return (
-    <div className="flex flex-col bg-[#F5F5F5] min-h-screen font-sans">
+    <div className="flex flex-col bg-[#F8FAFC] min-h-screen font-sans">
       <StablecoinNavbar />
 
       <main className="flex-1 pt-32 pb-24 px-[50px]">

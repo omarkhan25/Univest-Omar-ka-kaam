@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   X, Wallet, TrendingUp, AlertCircle, ArrowRight, ShieldCheck,
@@ -127,13 +127,13 @@ export const TradeDrawer: React.FC<TradeDrawerProps> = ({ isOpen, onClose, resea
           <div className="bg-white border-b border-[#E2E8F0] px-6 py-4 flex items-center justify-between z-10 shadow-xs">
             <div className="flex items-center gap-3">
               <div className={`w-10 h-10 rounded-2xl flex items-center justify-center font-black text-white text-xs ${
-                orderAction === 'BUY' ? 'bg-[#16A34A]' : 'bg-[#EF4444]'
+                orderAction === 'BUY' ? 'bg-[#16A34A]' : 'bg-loss'
               }`}>
                 {orderAction}
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="font-black text-lg leading-tight text-[#0F172A]">{symbol}</h3>
+                  <h3 className="font-black text-lg leading-tight text-[#172033]">{symbol}</h3>
                   <span className="text-[10px] font-extrabold bg-slate-100 text-slate-600 px-2 py-0.5 rounded">
                     {exchange}
                   </span>
@@ -143,7 +143,7 @@ export const TradeDrawer: React.FC<TradeDrawerProps> = ({ isOpen, onClose, resea
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="text-xs font-black text-[#0F172A]">
+              <span className="text-xs font-black text-[#172033]">
                 ₹{basePrice.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
               </span>
               <button
@@ -167,7 +167,7 @@ export const TradeDrawer: React.FC<TradeDrawerProps> = ({ isOpen, onClose, resea
                   <button
                     onClick={() => setOrderAction('BUY')}
                     className={`py-2.5 rounded-xl font-black text-xs transition-all ${
-                      orderAction === 'BUY' ? 'bg-[#16A34A] text-white shadow-md' : 'text-slate-500 hover:text-[#0F172A]'
+                      orderAction === 'BUY' ? 'bg-[#16A34A] text-white shadow-md' : 'text-slate-500 hover:text-[#172033]'
                     }`}
                   >
                     BUY ORDER
@@ -175,7 +175,7 @@ export const TradeDrawer: React.FC<TradeDrawerProps> = ({ isOpen, onClose, resea
                   <button
                     onClick={() => setOrderAction('SELL')}
                     className={`py-2.5 rounded-xl font-black text-xs transition-all ${
-                      orderAction === 'SELL' ? 'bg-[#EF4444] text-white shadow-md' : 'text-slate-500 hover:text-[#0F172A]'
+                      orderAction === 'SELL' ? 'bg-loss text-white shadow-md' : 'text-slate-500 hover:text-[#172033]'
                     }`}
                   >
                     SELL ORDER
@@ -189,7 +189,7 @@ export const TradeDrawer: React.FC<TradeDrawerProps> = ({ isOpen, onClose, resea
                     <button
                       onClick={() => setProductType('CNC')}
                       className={`p-3 rounded-xl border text-left transition ${
-                        productType === 'CNC' ? 'bg-blue-50 border-blue-600 text-blue-900' : 'bg-[#F8FAFC] border-[#E2E8F0] text-slate-600'
+                        productType === 'CNC' ? 'bg-primary-light border-primary text-primary-dark' : 'bg-[#F8FAFC] border-[#E2E8F0] text-slate-600'
                       }`}
                     >
                       <span className="font-black text-xs block">Delivery (CNC)</span>
@@ -198,7 +198,7 @@ export const TradeDrawer: React.FC<TradeDrawerProps> = ({ isOpen, onClose, resea
                     <button
                       onClick={() => setProductType('MIS')}
                       className={`p-3 rounded-xl border text-left transition ${
-                        productType === 'MIS' ? 'bg-blue-50 border-blue-600 text-blue-900' : 'bg-[#F8FAFC] border-[#E2E8F0] text-slate-600'
+                        productType === 'MIS' ? 'bg-primary-light border-primary text-primary-dark' : 'bg-[#F8FAFC] border-[#E2E8F0] text-slate-600'
                       }`}
                     >
                       <span className="font-black text-xs block">Intraday (MIS)</span>
@@ -217,8 +217,8 @@ export const TradeDrawer: React.FC<TradeDrawerProps> = ({ isOpen, onClose, resea
                         onClick={() => setOrderType(type)}
                         className={`px-3.5 py-1.5 rounded-xl font-extrabold text-xs transition shrink-0 ${
                           orderType === type
-                            ? 'bg-[#0F172A] text-white shadow-sm'
-                            : 'bg-[#F8FAFC] border border-[#E2E8F0] text-slate-500 hover:text-[#0F172A]'
+                            ? 'bg-[#172033] text-white shadow-sm'
+                            : 'bg-[#F8FAFC] border border-[#E2E8F0] text-slate-500 hover:text-[#172033]'
                         }`}
                       >
                         {type}
@@ -250,7 +250,7 @@ export const TradeDrawer: React.FC<TradeDrawerProps> = ({ isOpen, onClose, resea
                     <div className="flex items-center gap-3 bg-[#F8FAFC] border border-[#E2E8F0] rounded-2xl p-2">
                       <button
                         onClick={() => setQuantity(q => Math.max(1, q - 1))}
-                        className="w-10 h-10 rounded-xl bg-white border border-[#E2E8F0] font-black text-lg text-[#0F172A] hover:bg-slate-100 flex items-center justify-center shadow-xs"
+                        className="w-10 h-10 rounded-xl bg-white border border-[#E2E8F0] font-black text-lg text-[#172033] hover:bg-slate-100 flex items-center justify-center shadow-xs"
                       >
                         -
                       </button>
@@ -259,11 +259,11 @@ export const TradeDrawer: React.FC<TradeDrawerProps> = ({ isOpen, onClose, resea
                         min="1"
                         value={quantity}
                         onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
-                        className="flex-1 bg-transparent text-center font-black text-xl text-[#0F172A] outline-none"
+                        className="flex-1 bg-transparent text-center font-black text-xl text-[#172033] outline-none"
                       />
                       <button
                         onClick={() => setQuantity(q => q + 1)}
-                        className="w-10 h-10 rounded-xl bg-white border border-[#E2E8F0] font-black text-lg text-[#0F172A] hover:bg-slate-100 flex items-center justify-center shadow-xs"
+                        className="w-10 h-10 rounded-xl bg-white border border-[#E2E8F0] font-black text-lg text-[#172033] hover:bg-slate-100 flex items-center justify-center shadow-xs"
                       >
                         +
                       </button>
@@ -279,7 +279,7 @@ export const TradeDrawer: React.FC<TradeDrawerProps> = ({ isOpen, onClose, resea
                         step="0.05"
                         value={limitPrice}
                         onChange={(e) => setLimitPrice(parseFloat(e.target.value) || basePrice)}
-                        className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-2.5 font-black text-[#0F172A] text-base outline-none focus:border-blue-600"
+                        className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-2.5 font-black text-[#172033] text-base outline-none focus:border-primary"
                       />
                     </div>
                   )}
@@ -289,7 +289,7 @@ export const TradeDrawer: React.FC<TradeDrawerProps> = ({ isOpen, onClose, resea
                 <div className="bg-white p-5 rounded-[20px] border border-[#E2E8F0] shadow-xs flex flex-col gap-3">
                   <div className="flex justify-between items-center border-b border-slate-100 pb-3">
                     <span className="text-xs font-bold text-slate-400">Total Order Value</span>
-                    <span className="font-black text-lg text-[#0F172A]">
+                    <span className="font-black text-lg text-[#172033]">
                       ₹{totalOrderValue.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </span>
                   </div>
@@ -297,13 +297,13 @@ export const TradeDrawer: React.FC<TradeDrawerProps> = ({ isOpen, onClose, resea
                   <div className="grid grid-cols-2 gap-3 text-xs">
                     <div>
                       <span className="text-[10px] font-bold text-slate-400 uppercase block">Required Margin</span>
-                      <span className="font-black text-blue-600">
+                      <span className="font-black text-primary">
                         ₹{marginRequired.toLocaleString('en-IN', { maximumFractionDigits: 0 })}
                       </span>
                     </div>
                     <div>
                       <span className="text-[10px] font-bold text-slate-400 uppercase block">Available Funds</span>
-                      <span className="font-black text-[#0F172A]">
+                      <span className="font-black text-[#172033]">
                         ₹{availableMargin.toLocaleString('en-IN', { maximumFractionDigits: 0 })}
                       </span>
                     </div>
@@ -318,7 +318,7 @@ export const TradeDrawer: React.FC<TradeDrawerProps> = ({ isOpen, onClose, resea
                   >
                     <span>Estimated Charges & Taxes</span>
                     <div className="flex items-center gap-1">
-                      <span className="font-black text-[#0F172A]">₹{totalCharges.toFixed(2)}</span>
+                      <span className="font-black text-[#172033]">₹{totalCharges.toFixed(2)}</span>
                       {showCharges ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                     </div>
                   </button>
@@ -335,9 +335,9 @@ export const TradeDrawer: React.FC<TradeDrawerProps> = ({ isOpen, onClose, resea
                 </div>
 
                 {/* AI Risk & Suitability Check */}
-                <div className="p-4 bg-blue-50 border border-blue-100 rounded-[20px] flex items-start gap-3">
-                  <Sparkles className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
-                  <div className="text-xs text-blue-900 font-medium leading-relaxed">
+                <div className="p-4 bg-primary-light border border-[#E2E8F0] rounded-[20px] flex items-start gap-3">
+                  <Sparkles className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                  <div className="text-xs text-primary-dark font-medium leading-relaxed">
                     <span className="font-black block text-blue-950 mb-0.5">Univest AI Risk Meter: Medium Risk</span>
                     Order is suitable for your long-term capital growth profile. Risk/reward ratio: 1:3.2.
                   </div>
@@ -357,9 +357,9 @@ export const TradeDrawer: React.FC<TradeDrawerProps> = ({ isOpen, onClose, resea
                       }`}>
                         CONFIRM {orderAction} ORDER
                       </span>
-                      <h3 className="text-xl font-black text-[#0F172A] mt-1">{symbol}</h3>
+                      <h3 className="text-xl font-black text-[#172033] mt-1">{symbol}</h3>
                     </div>
-                    <span className="text-2xl font-black text-[#0F172A]">
+                    <span className="text-2xl font-black text-[#172033]">
                       ₹{netPayable.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                     </span>
                   </div>
@@ -367,21 +367,21 @@ export const TradeDrawer: React.FC<TradeDrawerProps> = ({ isOpen, onClose, resea
                   <div className="grid grid-cols-2 gap-4 text-xs">
                     <div>
                       <span className="text-[10px] font-bold text-slate-400 uppercase block">Quantity</span>
-                      <span className="font-black text-[#0F172A]">{quantity} Shares</span>
+                      <span className="font-black text-[#172033]">{quantity} Shares</span>
                     </div>
                     <div>
                       <span className="text-[10px] font-bold text-slate-400 uppercase block">Price</span>
-                      <span className="font-black text-[#0F172A]">
+                      <span className="font-black text-[#172033]">
                         {orderType === 'MARKET' ? 'Market Price' : `₹${limitPrice}`}
                       </span>
                     </div>
                     <div>
                       <span className="text-[10px] font-bold text-slate-400 uppercase block">Product</span>
-                      <span className="font-black text-[#0F172A]">{productType === 'CNC' ? 'Delivery (CNC)' : 'Intraday (MIS)'}</span>
+                      <span className="font-black text-[#172033]">{productType === 'CNC' ? 'Delivery (CNC)' : 'Intraday (MIS)'}</span>
                     </div>
                     <div>
                       <span className="text-[10px] font-bold text-slate-400 uppercase block">Charges</span>
-                      <span className="font-black text-[#0F172A]">₹{totalCharges.toFixed(2)}</span>
+                      <span className="font-black text-[#172033]">₹{totalCharges.toFixed(2)}</span>
                     </div>
                   </div>
                 </div>
@@ -404,7 +404,7 @@ export const TradeDrawer: React.FC<TradeDrawerProps> = ({ isOpen, onClose, resea
                   <span className="text-xs font-extrabold uppercase text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">
                     ORDER EXECUTED
                   </span>
-                  <h2 className="text-3xl font-black text-[#0F172A] mt-3">{symbol}</h2>
+                  <h2 className="text-3xl font-black text-[#172033] mt-3">{symbol}</h2>
                   <p className="text-sm font-bold text-slate-500 mt-1">
                     Successfully placed {orderAction} order for {quantity} shares at ₹{executionPrice.toFixed(2)}
                   </p>
@@ -413,15 +413,15 @@ export const TradeDrawer: React.FC<TradeDrawerProps> = ({ isOpen, onClose, resea
                 <div className="w-full bg-white p-5 rounded-[24px] border border-[#E2E8F0] shadow-sm grid grid-cols-2 gap-4 text-xs text-left">
                   <div>
                     <span className="text-[10px] font-bold text-slate-400 uppercase block">Order ID</span>
-                    <span className="font-black text-[#0F172A]">#ORD-{Date.now().toString().slice(-6)}</span>
+                    <span className="font-black text-[#172033]">#ORD-{Date.now().toString().slice(-6)}</span>
                   </div>
                   <div>
                     <span className="text-[10px] font-bold text-slate-400 uppercase block">Execution Time</span>
-                    <span className="font-black text-[#0F172A]">Just Now</span>
+                    <span className="font-black text-[#172033]">Just Now</span>
                   </div>
                   <div>
                     <span className="text-[10px] font-bold text-slate-400 uppercase block">Average Price</span>
-                    <span className="font-black text-[#0F172A]">₹{executionPrice.toFixed(2)}</span>
+                    <span className="font-black text-[#172033]">₹{executionPrice.toFixed(2)}</span>
                   </div>
                   <div>
                     <span className="text-[10px] font-bold text-slate-400 uppercase block">Total Settled</span>
@@ -431,7 +431,7 @@ export const TradeDrawer: React.FC<TradeDrawerProps> = ({ isOpen, onClose, resea
 
                 <button
                   onClick={onClose}
-                  className="w-full py-4 rounded-xl bg-[#0F172A] text-white font-black text-sm hover:bg-slate-800 transition shadow-lg"
+                  className="w-full py-4 rounded-xl bg-[#172033] text-white font-black text-sm hover:bg-slate-800 transition shadow-lg"
                 >
                   Done & Close Terminal
                 </button>
@@ -458,7 +458,7 @@ export const TradeDrawer: React.FC<TradeDrawerProps> = ({ isOpen, onClose, resea
                 className={`flex-1 font-black py-4 rounded-xl transition shadow-lg flex items-center justify-center gap-2 text-sm text-white ${
                   orderAction === 'BUY'
                     ? 'bg-[#16A34A] hover:bg-emerald-700 shadow-emerald-500/20'
-                    : 'bg-[#EF4444] hover:bg-rose-700 shadow-rose-500/20'
+                    : 'bg-loss hover:bg-rose-700 shadow-rose-500/20'
                 }`}
               >
                 {isSubmitting ? (

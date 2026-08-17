@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Shield, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -35,7 +35,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onSignupClick }) =
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-sans ${
         isScrolled
-          ? 'bg-[#0F172A]/95 backdrop-blur-xl border-b border-slate-800 shadow-2xl py-3'
+          ? 'bg-[#172033]/95 backdrop-blur-xl border-b border-slate-800 shadow-2xl py-3'
           : 'bg-transparent py-5'
       }`}
     >
@@ -46,7 +46,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onSignupClick }) =
             onClick={() => navigate('/')}
             className="flex items-center gap-3 cursor-pointer group"
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-emerald-500 flex items-center justify-center shadow-lg shadow-blue-600/30 group-hover:scale-105 transition-transform">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-primary to-emerald-500 flex items-center justify-center shadow-lg shadow-[rgba(21,81,157,0.3)]/30 group-hover:scale-105 transition-transform">
               <span className="text-white font-black text-xl">U</span>
             </div>
             <div>
@@ -97,7 +97,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onSignupClick }) =
             </button>
             <button
               onClick={handleSignup}
-              className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-emerald-500 hover:from-blue-700 hover:to-emerald-600 text-white text-sm font-black rounded-xl transition shadow-lg shadow-blue-600/25 hover:shadow-blue-600/40 flex items-center gap-2 cursor-pointer"
+              className="px-6 py-2.5 bg-gradient-to-r from-primary to-emerald-500 hover:from-primary hover:to-emerald-600 text-white text-sm font-black rounded-xl transition shadow-lg shadow-[rgba(21,81,157,0.3)]/25 hover:shadow-[rgba(21,81,157,0.3)]/40 flex items-center gap-2 cursor-pointer"
             >
               <span>Get Started</span>
               <ArrowRight className="w-4 h-4" />
@@ -166,7 +166,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onSignupClick }) =
                       setIsMobileMenuOpen(false);
                       handleSignup();
                     }}
-                    className="w-full py-3 bg-gradient-to-r from-blue-600 to-emerald-500 text-white font-black rounded-xl shadow-lg"
+                    className="w-full py-3 bg-gradient-to-r from-primary to-emerald-500 text-white font-black rounded-xl shadow-lg"
                   >
                     Get Started Free
                   </button>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TrendingUp, TrendingDown, Sparkles, Shield, DollarSign, Activity, ArrowUpRight, ArrowDownRight } from 'lucide-react';
 
@@ -89,7 +89,7 @@ export const LiveMovingGraphAnimation: React.FC<LiveMovingGraphAnimationProps> =
       {/* TOP FLOATING LIVE P&L HEADER BADGE */}
       <div className="flex items-center justify-between mb-4 font-mono">
         <div className="flex items-center gap-2">
-          <div className={`w-3 h-3 rounded-full ${isProfit ? 'bg-emerald-500 animate-ping' : 'bg-rose-500 animate-ping'}`} />
+          <div className={`w-3 h-3 rounded-full ${isProfit ? 'bg-emerald-500 animate-ping' : 'bg-danger animate-ping'}`} />
           <span className="text-xs font-black uppercase tracking-wider text-slate-400">
             LIVE P&L ADVISORY MONITOR
           </span>
@@ -100,7 +100,7 @@ export const LiveMovingGraphAnimation: React.FC<LiveMovingGraphAnimationProps> =
           className={`px-3 py-1.5 rounded-xl border text-xs font-black flex items-center gap-1.5 shadow-md ${
             isProfit
               ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
-              : 'bg-rose-500/10 border-rose-500/30 text-rose-400'
+              : 'bg-danger/10 border-danger/30 text-rose-400'
           }`}
         >
           {isProfit ? <ArrowUpRight className="w-4 h-4" /> : <ArrowDownRight className="w-4 h-4" />}
@@ -184,7 +184,7 @@ export const LiveMovingGraphAnimation: React.FC<LiveMovingGraphAnimationProps> =
           <motion.path
             d={pathString}
             fill="none"
-            stroke="#2563EB"
+            stroke="#15519D"
             strokeWidth="2"
             strokeDasharray="4 4"
             opacity="0.7"

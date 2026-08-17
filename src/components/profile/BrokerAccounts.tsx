@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { RefreshCw, CheckCircle2, AlertCircle, Link2, Unlink, Plus, ExternalLink } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -47,12 +47,12 @@ export const BrokerAccounts: React.FC = () => {
     <div className="flex flex-col gap-6 w-full">
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-lg font-black text-[#0F172A]">Connected Broker Accounts</h3>
+          <h3 className="text-lg font-black text-[#172033]">Connected Broker Accounts</h3>
           <p className="text-xs text-slate-500 font-medium">Direct API integrations for seamless order routing & portfolio sync.</p>
         </div>
         <button
           onClick={() => toast.success('Connecting new broker via OAuth...')}
-          className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-black text-xs transition flex items-center gap-1.5 shadow-sm"
+          className="px-4 py-2 rounded-xl bg-primary hover:bg-primary-dark text-white font-black text-xs transition flex items-center gap-1.5 shadow-sm"
         >
           <Plus className="w-4 h-4" /> Connect Broker
         </button>
@@ -65,11 +65,11 @@ export const BrokerAccounts: React.FC = () => {
             <div key={b.id} className="bg-white border border-[#E2E8F0] rounded-[24px] p-6 shadow-sm flex flex-col justify-between gap-6 hover:shadow-md transition">
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl bg-[#0F172A] text-white flex items-center justify-center font-black text-sm shadow-sm">
+                  <div className="w-12 h-12 rounded-2xl bg-[#172033] text-white flex items-center justify-center font-black text-sm shadow-sm">
                     {b.logo}
                   </div>
                   <div>
-                    <h4 className="font-black text-base text-[#0F172A]">{b.name}</h4>
+                    <h4 className="font-black text-base text-[#172033]">{b.name}</h4>
                     <span className="text-xs text-slate-400 font-bold block">Client ID: {b.clientId}</span>
                   </div>
                 </div>
@@ -86,7 +86,7 @@ export const BrokerAccounts: React.FC = () => {
                 <div className="bg-[#F8FAFC] border border-[#E2E8F0] p-4 rounded-2xl grid grid-cols-2 gap-3 text-xs">
                   <div>
                     <span className="text-[10px] text-slate-400 font-bold uppercase block mb-0.5">Portfolio Value</span>
-                    <strong className="text-[#0F172A] text-sm">{b.portfolioValue}</strong>
+                    <strong className="text-[#172033] text-sm">{b.portfolioValue}</strong>
                   </div>
                   <div>
                     <span className="text-[10px] text-slate-400 font-bold uppercase block mb-0.5">Last Sync</span>
@@ -104,14 +104,14 @@ export const BrokerAccounts: React.FC = () => {
                   <>
                     <button
                       onClick={() => handleSync(b.name)}
-                      className="text-blue-600 font-black hover:underline flex items-center gap-1"
+                      className="text-primary font-black hover:underline flex items-center gap-1"
                     >
                       <RefreshCw className="w-3.5 h-3.5" /> Sync Portfolio
                     </button>
 
                     <button
                       onClick={() => handleToggleConnect(b.id)}
-                      className="text-rose-600 font-bold hover:underline flex items-center gap-1"
+                      className="text-danger font-bold hover:underline flex items-center gap-1"
                     >
                       <Unlink className="w-3.5 h-3.5" /> Disconnect
                     </button>
@@ -119,7 +119,7 @@ export const BrokerAccounts: React.FC = () => {
                 ) : (
                   <button
                     onClick={() => handleToggleConnect(b.id)}
-                    className="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-black transition text-center flex items-center justify-center gap-1.5"
+                    className="w-full py-2.5 rounded-xl bg-primary hover:bg-primary-dark text-white font-black transition text-center flex items-center justify-center gap-1.5"
                   >
                     <Link2 className="w-4 h-4" /> Connect {b.name}
                   </button>

@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Edit3, Building2, UserPlus, Link2, Shield, Download, LifeBuoy, Wallet } from 'lucide-react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
@@ -42,7 +42,7 @@ export const QuickActions: React.FC<QuickActionsProps> = ({ onActionClick, onAdd
 
   return (
     <div className="w-full">
-      <h3 className="text-lg font-black text-[#0F172A] mb-3">Quick Actions</h3>
+      <h3 className="text-lg font-black text-[#172033] mb-3">Quick Actions</h3>
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
         {actions.map((action, index) => {
           const Icon = action.icon;
@@ -53,10 +53,10 @@ export const QuickActions: React.FC<QuickActionsProps> = ({ onActionClick, onAdd
               whileHover={{ y: -3 }}
               className="bg-white border border-[#E2E8F0] rounded-[20px] p-4 flex flex-col items-center justify-center gap-2.5 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group cursor-pointer"
             >
-              <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-blue-50 transition-colors">
-                <Icon className="w-5 h-5 text-slate-500 group-hover:text-blue-600 transition-colors" />
+              <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-primary-light transition-colors">
+                <Icon className="w-5 h-5 text-slate-500 group-hover:text-primary transition-colors" />
               </div>
-              <span className="text-[11px] font-bold text-[#0F172A] text-center leading-tight">
+              <span className="text-[11px] font-bold text-[#172033] text-center leading-tight">
                 {action.label}
               </span>
             </motion.button>

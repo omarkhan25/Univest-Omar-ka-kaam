@@ -1,12 +1,12 @@
-import React from 'react';
+﻿import React from 'react';
 import { Activity, ShieldCheck, UserCheck, Key, Laptop, FileText } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const activities = [
-  { id: '1', title: 'New Device Login', desc: 'Logged in from MacBook Pro 16" in Pune, India', date: 'Today', time: '10:45 AM', icon: Laptop, color: 'text-primary', bg: 'bg-blue-50' },
+  { id: '1', title: 'New Device Login', desc: 'Logged in from MacBook Pro 16" in Pune, India', date: 'Today', time: '10:45 AM', icon: Laptop, color: 'text-primary', bg: 'bg-primary-light' },
   { id: '2', title: 'Password Changed', desc: 'Account password was successfully updated.', date: 'Yesterday', time: '02:30 PM', icon: Key, color: 'text-amber-500', bg: 'bg-amber-50' },
   { id: '3', title: 'Bank Account Verified', desc: 'HDFC Bank Ltd. account ending in 4589 was verified.', date: '14 Jan 2024', time: '11:15 AM', icon: ShieldCheck, color: 'text-success', bg: 'bg-emerald-50' },
-  { id: '4', title: 'Document Uploaded', desc: 'Client Master Report (CMR) was uploaded successfully.', date: '12 Jan 2024', time: '04:20 PM', icon: FileText, color: 'text-indigo-500', bg: 'bg-indigo-50' },
+  { id: '4', title: 'Document Uploaded', desc: 'Client Master Report (CMR) was uploaded successfully.', date: '12 Jan 2024', time: '04:20 PM', icon: FileText, color: 'text-indigo-500', bg: 'bg-primary-light' },
   { id: '5', title: 'KYC Approved', desc: 'Your KYC application was approved by the compliance team.', date: '12 Jan 2024', time: '09:00 AM', icon: UserCheck, color: 'text-success', bg: 'bg-emerald-50' },
 ];
 

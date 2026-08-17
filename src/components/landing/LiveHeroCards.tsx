@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Shield, ArrowRight, TrendingUp, TrendingDown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -160,7 +160,7 @@ export const LiveHeroCards: React.FC = () => {
             <span className="text-xl font-black text-slate-900">₹500Cr+</span>
           </div>
           <div className="flex -space-x-1.5">
-            {['bg-blue-500', 'bg-emerald-500', 'bg-amber-500'].map((c, i) => (
+            {['bg-primary', 'bg-emerald-500', 'bg-amber-500'].map((c, i) => (
               <div key={i} className={`w-6 h-6 rounded-full ${c} border-2 border-white`} />
             ))}
             <div className="w-6 h-6 rounded-full bg-slate-200 border-2 border-white flex items-center justify-center">
@@ -212,7 +212,7 @@ export const LiveHeroCards: React.FC = () => {
         <svg viewBox="0 0 120 60" className="w-full h-12 mt-1" preserveAspectRatio="none">
           <defs>
             <linearGradient id="liveChartGrad" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="#2563EB" />
+              <stop offset="0%" stopColor="#15519D" />
               <stop offset="100%" stopColor="#10B981" />
             </linearGradient>
             <linearGradient id="liveAreaGrad" x1="0" y1="0" x2="0" y2="1">
@@ -249,7 +249,7 @@ export const LiveHeroCards: React.FC = () => {
               onClick={() => setActiveTab(t)}
               className={`px-1 py-0.5 rounded transition cursor-pointer ${
                 activeTab === t
-                  ? 'text-blue-400 font-bold bg-blue-400/10'
+                  ? 'text-[#64748B] font-bold bg-blue-400/10'
                   : 'text-slate-500 hover:text-slate-300'
               }`}
             >

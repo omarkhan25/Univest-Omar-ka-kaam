@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+﻿import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Sparkles, Send, Bot, User, TrendingUp, BarChart3, ShieldCheck, 
@@ -25,13 +25,13 @@ interface Message {
 
 const SUGGESTED_QUESTIONS = [
   { label: 'Market Outlook', icon: TrendingUp, q: 'What is the market outlook for this week?', color: 'text-emerald-600 bg-emerald-50 border-emerald-200 hover:border-emerald-300' },
-  { label: 'Best Stocks', icon: BarChart3, q: 'Which stocks should I watch right now?', color: 'text-blue-600 bg-blue-50 border-blue-200 hover:border-blue-300' },
+  { label: 'Best Stocks', icon: BarChart3, q: 'Which stocks should I watch right now?', color: 'text-primary bg-primary-light border-primary-light hover:border-blue-300' },
   { label: 'NIFTY Analysis', icon: Activity, q: 'Analyse NIFTY 50 today. Is it bullish or bearish?', color: 'text-violet-600 bg-violet-50 border-violet-200 hover:border-violet-300' },
   { label: 'Portfolio Risk', icon: PieChart, q: 'How should I diversify my portfolio to reduce risk?', color: 'text-orange-600 bg-orange-50 border-orange-200 hover:border-orange-300' },
-  { label: 'FII/DII Flows', icon: ArrowUpRight, q: "Explain today's FII and DII activity and its impact", color: 'text-rose-600 bg-rose-50 border-rose-200 hover:border-rose-300' },
+  { label: 'FII/DII Flows', icon: ArrowUpRight, q: "Explain today's FII and DII activity and its impact", color: 'text-danger bg-rose-50 border-rose-200 hover:border-rose-300' },
   { label: 'Sector Picks', icon: Lightbulb, q: 'Which sectors are showing momentum right now?', color: 'text-amber-600 bg-amber-50 border-amber-200 hover:border-amber-300' },
   { label: 'Risk Meter', icon: AlertCircle, q: 'What is the current risk level in the Indian market?', color: 'text-cyan-600 bg-cyan-50 border-cyan-200 hover:border-cyan-300' },
-  { label: 'Learning', icon: BookOpen, q: 'Explain SEBI research advisory rules in simple terms', color: 'text-indigo-600 bg-indigo-50 border-indigo-200 hover:border-indigo-300' },
+  { label: 'Learning', icon: BookOpen, q: 'Explain SEBI research advisory rules in simple terms', color: 'text-primary bg-primary-light border-indigo-200 hover:border-indigo-300' },
 ];
 
 const QUICK_FOLLOW_UPS = [
@@ -142,16 +142,16 @@ export const AiAdvisorsHub: React.FC<AiAdvisorsHubProps> = ({ onTradeStock }) =>
     <div className="flex flex-col gap-0 w-full font-sans text-slate-800 pb-8">
       
       {/* TOP HEADER */}
-      <div className="relative overflow-hidden rounded-[24px] p-5 bg-[#0F172A] text-white border border-slate-800 mb-6 shrink-0">
-        <div className="absolute right-0 top-0 w-72 h-72 bg-blue-600/15 rounded-full blur-[80px] pointer-events-none" />
+      <div className="relative overflow-hidden rounded-[24px] p-5 bg-[#172033] text-white border border-slate-800 mb-6 shrink-0">
+        <div className="absolute right-0 top-0 w-72 h-72 bg-primary/15 rounded-full blur-[80px] pointer-events-none" />
         <div className="absolute left-0 bottom-0 w-48 h-48 bg-emerald-500/10 rounded-full blur-[80px] pointer-events-none" />
         <div className="relative z-10 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="relative shrink-0">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center shadow-lg shadow-blue-600/30">
-                <Sparkles className="w-6 h-6 text-blue-600" />
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center shadow-lg shadow-[rgba(21,81,157,0.3)]/30">
+                <Sparkles className="w-6 h-6 text-primary" />
               </div>
-              <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-emerald-400 rounded-full border-2 border-[#0F172A]" />
+              <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-emerald-400 rounded-full border-2 border-[#172033]" />
             </div>
             <div>
               <div className="flex items-center gap-2 mb-0.5">
@@ -197,7 +197,7 @@ export const AiAdvisorsHub: React.FC<AiAdvisorsHubProps> = ({ onTradeStock }) =>
                   {/* Avatar */}
                   <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 mt-1 ${
                     msg.sender === 'ai' 
-                      ? 'bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-md shadow-blue-500/20' 
+                      ? 'bg-gradient-to-br from-primary to-primary text-white shadow-md shadow-[rgba(21,81,157,0.3)]/20' 
                       : 'bg-slate-100 text-slate-600 border border-slate-200'
                   }`}>
                     {msg.sender === 'ai' ? <Sparkles className="w-4 h-4" /> : <User className="w-4 h-4" />}
@@ -207,7 +207,7 @@ export const AiAdvisorsHub: React.FC<AiAdvisorsHubProps> = ({ onTradeStock }) =>
                   <div className={`max-w-[78%] ${msg.sender === 'user' ? 'items-end' : 'items-start'} flex flex-col gap-1`}>
                     <div className={`px-4 py-3 rounded-2xl ${
                       msg.sender === 'user'
-                        ? 'bg-blue-600 text-white rounded-tr-sm'
+                        ? 'bg-primary text-white rounded-tr-sm'
                         : 'bg-slate-50 border border-slate-200 text-slate-800 rounded-tl-sm'
                     }`}>
                       {msg.sender === 'ai' 
@@ -235,12 +235,12 @@ export const AiAdvisorsHub: React.FC<AiAdvisorsHubProps> = ({ onTradeStock }) =>
             {/* Thinking indicator */}
             {isThinking && (
               <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="flex gap-3 items-start">
-                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shrink-0 mt-1 shadow-md shadow-blue-500/20">
+                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary to-primary flex items-center justify-center shrink-0 mt-1 shadow-md shadow-[rgba(21,81,157,0.3)]/20">
                   <Sparkles className="w-4 h-4 text-white" />
                 </div>
                 <div className="px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl rounded-tl-sm flex items-center gap-2">
                   <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
-                    className="w-2 h-2 bg-blue-500 rounded-full" />
+                    className="w-2 h-2 bg-primary rounded-full" />
                   <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.15 }}
                     className="w-2 h-2 bg-blue-400 rounded-full" />
                   <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.3 }}
@@ -258,7 +258,7 @@ export const AiAdvisorsHub: React.FC<AiAdvisorsHubProps> = ({ onTradeStock }) =>
                     <button
                       key={fu}
                       onClick={() => handleSendMessage(fu)}
-                      className="text-[11px] font-bold text-blue-600 bg-blue-50 border border-blue-200 px-3 py-1.5 rounded-full hover:bg-blue-100 transition cursor-pointer flex items-center gap-1"
+                      className="text-[11px] font-bold text-primary bg-primary-light border border-primary-light px-3 py-1.5 rounded-full hover:bg-primary-light transition cursor-pointer flex items-center gap-1"
                     >
                       <ChevronRight className="w-3 h-3" />{fu}
                     </button>
@@ -272,8 +272,8 @@ export const AiAdvisorsHub: React.FC<AiAdvisorsHubProps> = ({ onTradeStock }) =>
 
           {/* INPUT BAR */}
           <div className="p-4 border-t border-slate-200 bg-white shrink-0">
-            <div className="flex items-center gap-3 bg-slate-50 border border-slate-200 focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-blue-50 rounded-2xl px-4 py-3 transition-all">
-              <Sparkles className="w-4 h-4 text-blue-400 shrink-0" />
+            <div className="flex items-center gap-3 bg-slate-50 border border-slate-200 focus-within:border-primary focus-within:ring-4 focus-within:ring-blue-50 rounded-2xl px-4 py-3 transition-all">
+              <Sparkles className="w-4 h-4 text-[#64748B] shrink-0" />
               <input
                 ref={inputRef}
                 type="text"
@@ -287,7 +287,7 @@ export const AiAdvisorsHub: React.FC<AiAdvisorsHubProps> = ({ onTradeStock }) =>
               <button
                 onClick={() => handleSendMessage()}
                 disabled={!inputMessage.trim() || isThinking}
-                className="w-9 h-9 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-slate-200 disabled:text-slate-400 text-white flex items-center justify-center transition shadow-sm shadow-blue-500/20 shrink-0 cursor-pointer disabled:cursor-not-allowed"
+                className="w-9 h-9 rounded-xl bg-primary hover:bg-primary-dark disabled:bg-slate-200 disabled:text-slate-400 text-white flex items-center justify-center transition shadow-sm shadow-[rgba(21,81,157,0.3)]/20 shrink-0 cursor-pointer disabled:cursor-not-allowed"
               >
                 {isThinking 
                   ? <RefreshCw className="w-4 h-4 animate-spin" /> 

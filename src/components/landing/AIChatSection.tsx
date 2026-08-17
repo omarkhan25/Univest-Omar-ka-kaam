@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Brain, TrendingUp, Shield, ArrowRight, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -20,7 +20,7 @@ const CONVERSATION: Array<{
     text: 'RELIANCE is forming a classic Cup & Handle breakout on the daily chart. RSI at 62 with rising volume confirms institutional accumulation. I recommend a BUY with a target of ₹3,120 and a stop-loss at ₹2,850.',
     highlight: [
       { label: 'Signal', value: 'BUY', color: 'text-emerald-400' },
-      { label: 'Target', value: '₹3,120', color: 'text-blue-400' },
+      { label: 'Target', value: '₹3,120', color: 'text-[#64748B]' },
       { label: 'Conviction', value: '96%', color: 'text-emerald-400' },
     ],
     delay: 800,
@@ -36,7 +36,7 @@ const CONVERSATION: Array<{
     highlight: [
       { label: 'Risk Score', value: '3.8 / 10', color: 'text-emerald-400' },
       { label: 'IT Exposure', value: '42%', color: 'text-amber-400' },
-      { label: 'Action', value: 'Rebalance', color: 'text-blue-400' },
+      { label: 'Action', value: 'Rebalance', color: 'text-[#64748B]' },
     ],
     delay: 900,
   },
@@ -51,7 +51,7 @@ const CONVERSATION: Array<{
     highlight: [
       { label: 'HDFCBANK', value: 'BUY · ₹1,720', color: 'text-emerald-400' },
       { label: 'TCS', value: 'BUY · ₹4,280', color: 'text-emerald-400' },
-      { label: 'INFY', value: 'BUY · ₹1,620', color: 'text-blue-400' },
+      { label: 'INFY', value: 'BUY · ₹1,620', color: 'text-[#64748B]' },
     ],
     delay: 900,
   },
@@ -65,7 +65,7 @@ const CONVERSATION: Array<{
     text: "MACD Divergence is when the stock price moves in one direction but the MACD indicator moves in the opposite direction. A bullish divergence (price falling, MACD rising) often signals an upcoming price reversal upward — a powerful early entry signal.",
     highlight: [
       { label: 'Type', value: 'Bullish Divergence', color: 'text-emerald-400' },
-      { label: 'Signal', value: 'Early Entry', color: 'text-blue-400' },
+      { label: 'Signal', value: 'Early Entry', color: 'text-[#64748B]' },
     ],
     delay: 800,
   },
@@ -103,7 +103,7 @@ function ChatBubble({ msg, isNew }: {
     >
       {/* AI avatar */}
       {!isUser && (
-        <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-blue-600 to-emerald-500 flex items-center justify-center shrink-0 mt-0.5 shadow-lg shadow-blue-600/30">
+        <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-primary to-emerald-500 flex items-center justify-center shrink-0 mt-0.5 shadow-lg shadow-[rgba(21,81,157,0.3)]/30">
           <Brain className="w-3.5 h-3.5 text-white" />
         </div>
       )}
@@ -112,7 +112,7 @@ function ChatBubble({ msg, isNew }: {
         {/* Bubble */}
         <div className={`px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${
           isUser
-            ? 'bg-blue-600 text-white rounded-tr-sm'
+            ? 'bg-primary text-white rounded-tr-sm'
             : 'bg-white/[0.06] border border-white/[0.08] text-slate-200 rounded-tl-sm backdrop-blur-sm'
         }`}>
           {msg.text}
@@ -232,7 +232,7 @@ export const AIChatSection: React.FC<Props> = ({ theme }) => {
         >
           {/* AI Brand */}
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-emerald-500 flex items-center justify-center shadow-xl shadow-blue-600/30">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-primary to-emerald-500 flex items-center justify-center shadow-xl shadow-[rgba(21,81,157,0.3)]/30">
               <Brain className="w-7 h-7 text-white" />
             </div>
             <div>
@@ -251,7 +251,7 @@ export const AIChatSection: React.FC<Props> = ({ theme }) => {
           {/* Capabilities */}
           <div className="space-y-3">
             {[
-              { icon: TrendingUp, label: 'Real-time stock signals with entry, target & stop-loss', color: 'text-blue-400', bg: 'bg-blue-500/10 border-blue-500/20' },
+              { icon: TrendingUp, label: 'Real-time stock signals with entry, target & stop-loss', color: 'text-[#64748B]', bg: 'bg-primary/10 border-primary/20' },
               { icon: Shield, label: 'Portfolio risk scoring & automated rebalancing advice', color: 'text-emerald-400', bg: 'bg-emerald-500/10 border-emerald-500/20' },
               { icon: Sparkles, label: 'Plain-English explanations of complex market concepts', color: 'text-purple-400', bg: 'bg-purple-500/10 border-purple-500/20' },
             ].map(item => (
@@ -280,7 +280,7 @@ export const AIChatSection: React.FC<Props> = ({ theme }) => {
 
           <button
             onClick={() => navigate('/signup')}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-emerald-500 hover:from-blue-700 hover:to-emerald-600 text-white text-sm font-black rounded-2xl transition shadow-lg w-fit"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary to-emerald-500 hover:from-primary hover:to-emerald-600 text-white text-sm font-black rounded-2xl transition shadow-lg w-fit"
           >
             Chat with AI Advisor <ArrowRight className="w-4 h-4" />
           </button>
@@ -301,7 +301,7 @@ export const AIChatSection: React.FC<Props> = ({ theme }) => {
         >
           {/* Chat header */}
           <div className={`flex items-center gap-3 px-5 py-4 border-b ${dark ? 'border-white/[0.06]' : 'border-slate-200/60'}`}>
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-emerald-500 flex items-center justify-center shadow-md shadow-blue-600/30">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-primary to-emerald-500 flex items-center justify-center shadow-md shadow-[rgba(21,81,157,0.3)]/30">
               <Brain className="w-4 h-4 text-white" />
             </div>
             <div>
@@ -328,7 +328,7 @@ export const AIChatSection: React.FC<Props> = ({ theme }) => {
 
             {/* Welcome message — always visible */}
             <div className="flex gap-3 justify-start">
-              <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-blue-600 to-emerald-500 flex items-center justify-center shrink-0 shadow-md">
+              <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-primary to-emerald-500 flex items-center justify-center shrink-0 shadow-md">
                 <Brain className="w-3.5 h-3.5 text-white" />
               </div>
               <div className="bg-white/[0.06] border border-white/[0.08] text-slate-200 px-4 py-2.5 rounded-2xl rounded-tl-sm text-sm leading-relaxed max-w-[82%] backdrop-blur-sm">
@@ -353,7 +353,7 @@ export const AIChatSection: React.FC<Props> = ({ theme }) => {
                   exit={{ opacity: 0, y: 8 }}
                   className="flex gap-3 justify-start"
                 >
-                  <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-blue-600 to-emerald-500 flex items-center justify-center shrink-0 shadow-md">
+                  <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-primary to-emerald-500 flex items-center justify-center shrink-0 shadow-md">
                     <Brain className="w-3.5 h-3.5 text-white" />
                   </div>
                   <div className="bg-white/[0.06] border border-white/[0.08] rounded-2xl rounded-tl-sm backdrop-blur-sm">
@@ -372,7 +372,7 @@ export const AIChatSection: React.FC<Props> = ({ theme }) => {
               </span>
               <button
                 onClick={() => navigate('/signup')}
-                className="w-7 h-7 rounded-xl bg-gradient-to-r from-blue-600 to-emerald-500 flex items-center justify-center cursor-pointer hover:opacity-90 transition"
+                className="w-7 h-7 rounded-xl bg-gradient-to-r from-primary to-emerald-500 flex items-center justify-center cursor-pointer hover:opacity-90 transition"
               >
                 <ArrowRight className="w-3.5 h-3.5 text-white" />
               </button>

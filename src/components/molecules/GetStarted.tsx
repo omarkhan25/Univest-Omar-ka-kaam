@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+﻿import { motion } from 'framer-motion';
 import { ArrowRight, BarChart3, BriefcaseBusiness, Check, CircleDollarSign, LineChart, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -38,13 +38,13 @@ export const GetStarted = () => {
         <div className="flex items-center gap-2 sm:gap-4">
           <div className="hidden items-center gap-5 text-xs font-medium text-slate-300 lg:flex"><a href="#products" className="hover:text-white">Products</a><a href="#research" className="hover:text-white">Research</a><a href="#pricing" className="hover:text-white">Pricing</a><a href="#about" className="hover:text-white">About</a><a href="#support" className="hover:text-white">Support</a></div>
           <button onClick={() => navigate('/login-otp?tab=login')} className="rounded-full border border-white/20 px-4 py-2 text-xs font-semibold text-slate-100 transition hover:border-blue-300 hover:bg-white/5">Log in</button>
-          <button onClick={() => navigate('/login-otp?tab=signup')} className="rounded-full bg-[#2563EB] px-4 py-2 text-xs font-bold text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#3b76ed]">Create account</button>
+          <button onClick={() => navigate('/login-otp?tab=signup')} className="rounded-full bg-primary px-4 py-2 text-xs font-bold text-white shadow-lg shadow-[rgba(21,81,157,0.3)]/25 transition hover:bg-[#3b76ed]">Create account</button>
         </div>
       </nav>
 
       <section className="relative z-10 mx-auto grid w-full max-w-6xl items-center gap-12 px-6 pb-10 pt-10 lg:grid-cols-[1.05fr_.95fr] lg:px-8 lg:pb-24 lg:pt-16">
         <div className="max-w-[620px]">
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .5 }} className="mb-7 inline-flex items-center gap-2 rounded-full border border-blue-400/25 bg-blue-400/10 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[.12em] text-blue-200">
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .5 }} className="mb-7 inline-flex items-center gap-2 rounded-full border border-primary-light/25 bg-blue-400/10 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[.12em] text-blue-200">
             <Sparkles className="h-3.5 w-3.5" /> AI-powered investment intelligence
           </motion.div>
           <motion.h1 initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .08, duration: .65 }} className="text-[clamp(2.7rem,5.3vw,4.65rem)] font-black leading-[.98] tracking-[-.065em]">
@@ -56,7 +56,7 @@ export const GetStarted = () => {
 
           <motion.form initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .24, duration: .6 }} onSubmit={continueWithEmail} className="mt-8 max-w-md">
             <label htmlFor="hero-email" className="mb-3 block text-sm font-semibold text-white">Get started with your email address</label>
-            <div className="flex rounded-xl border border-white/20 bg-[#101935]/80 p-1.5 shadow-2xl backdrop-blur-xl transition focus-within:border-blue-400 focus-within:ring-4 focus-within:ring-blue-400/10">
+            <div className="flex rounded-xl border border-white/20 bg-[#101935]/80 p-1.5 shadow-2xl backdrop-blur-xl transition focus-within:border-primary-light focus-within:ring-4 focus-within:ring-primary/10">
               <input id="hero-email" value={email} onChange={event => setEmail(event.target.value)} aria-label="Email address" className="min-w-0 flex-1 bg-transparent px-4 text-sm text-white outline-none placeholder:text-slate-500" placeholder="Enter your email address" type="email" />
               <button type="submit" disabled={!email.includes('@')} className="grid h-10 w-12 place-items-center rounded-lg bg-[#2879f5] text-white transition hover:bg-[#4c90ff] disabled:cursor-not-allowed disabled:opacity-45" aria-label="Continue"><ArrowRight className="h-5 w-5" /></button>
             </div>
@@ -70,7 +70,7 @@ export const GetStarted = () => {
         </div>
 
         <motion.div initial={{ opacity: 0, scale: .94, x: 20 }} animate={{ opacity: 1, scale: 1, x: 0 }} transition={{ delay: .14, duration: .8, ease: [0.16, 1, .3, 1] }} className="relative mx-auto w-full max-w-[470px] py-8 lg:py-0">
-          <div className="absolute -right-8 top-4 h-64 w-64 rounded-full bg-blue-500/25 blur-[80px]" />
+          <div className="absolute -right-8 top-4 h-64 w-64 rounded-full bg-primary/25 blur-[80px]" />
           <div className="hero-orbit hero-orbit-a"><CircleDollarSign /></div>
           <div className="hero-orbit hero-orbit-b"><span>₹</span></div>
           <div className="relative overflow-hidden rounded-[28px] border border-white/15 bg-[#101b3d]/80 p-6 shadow-[0_28px_80px_rgba(0,0,0,.42)] backdrop-blur-xl">

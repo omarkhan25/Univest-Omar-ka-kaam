@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Briefcase, TrendingUp, Sparkles, Shield, Newspaper, Star, 
@@ -56,7 +56,7 @@ export const FloatingWorkspaceHero: React.FC<FloatingWorkspaceHeroProps> = ({
     >
       {/* 1. CINEMATIC LUXURY MESH BACKGROUND */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-blue-600/15 via-purple-600/10 to-emerald-500/15 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-primary/15 via-purple-600/10 to-emerald-500/15 rounded-full blur-3xl animate-pulse" />
         <div className="absolute top-1/3 left-1/4 w-[280px] h-[280px] bg-cyan-500/10 rounded-full blur-2xl" />
       </div>
 
@@ -64,7 +64,7 @@ export const FloatingWorkspaceHero: React.FC<FloatingWorkspaceHeroProps> = ({
       <svg viewBox="0 0 740 560" className="absolute inset-0 w-full h-full pointer-events-none overflow-visible">
         <defs>
           <linearGradient id="workspaceLineGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#2563EB" stopOpacity="0.4" />
+            <stop offset="0%" stopColor="#15519D" stopOpacity="0.4" />
             <stop offset="50%" stopColor="#10B981" stopOpacity="0.2" />
             <stop offset="100%" stopColor="#8B5CF6" stopOpacity="0.4" />
           </linearGradient>
@@ -87,7 +87,7 @@ export const FloatingWorkspaceHero: React.FC<FloatingWorkspaceHeroProps> = ({
         {activeStep === 1 && <circle cx="220" cy="120" r="5" fill="#F59E0B" className="animate-ping" />}
         {activeStep === 2 && <circle cx="540" cy="280" r="5" fill="#8B5CF6" className="animate-ping" />}
         {activeStep === 3 && <circle cx="370" cy="280" r="5" fill="#10B981" className="animate-ping" />}
-        {activeStep === 4 && <circle cx="210" cy="440" r="5" fill="#2563EB" className="animate-ping" />}
+        {activeStep === 4 && <circle cx="210" cy="440" r="5" fill="#15519D" className="animate-ping" />}
       </svg>
 
       {/* 3. FLOATING INVESTMENT WORKSPACE MODULES */}
@@ -152,7 +152,7 @@ export const FloatingWorkspaceHero: React.FC<FloatingWorkspaceHeroProps> = ({
         onMouseEnter={() => setHoveredModule('research')}
         onMouseLeave={() => setHoveredModule(null)}
         onClick={() => onModuleClick?.('research')}
-        className={`absolute top-6 left-4 sm:left-12 z-20 w-60 sm:w-64 bg-[#0F172A]/90 backdrop-blur-xl border border-amber-500/30 p-4 rounded-2xl shadow-xl transition-all duration-300 cursor-pointer font-mono ${
+        className={`absolute top-6 left-4 sm:left-12 z-20 w-60 sm:w-64 bg-[#172033]/90 backdrop-blur-xl border border-amber-500/30 p-4 rounded-2xl shadow-xl transition-all duration-300 cursor-pointer font-mono ${
           hoveredModule === 'research' ? 'scale-105 border-amber-400 shadow-amber-500/20' : ''
         }`}
       >
@@ -190,12 +190,12 @@ export const FloatingWorkspaceHero: React.FC<FloatingWorkspaceHeroProps> = ({
         onMouseEnter={() => setHoveredModule('watchlist')}
         onMouseLeave={() => setHoveredModule(null)}
         onClick={() => onModuleClick?.('watchlist')}
-        className={`absolute top-6 right-4 sm:right-12 z-20 w-56 sm:w-60 bg-[#0F172A]/90 backdrop-blur-xl border border-blue-500/30 p-3.5 rounded-2xl shadow-xl transition-all duration-300 cursor-pointer font-mono ${
-          hoveredModule === 'watchlist' ? 'scale-105 border-blue-400 shadow-blue-500/20' : ''
+        className={`absolute top-6 right-4 sm:right-12 z-20 w-56 sm:w-60 bg-[#172033]/90 backdrop-blur-xl border border-primary/30 p-3.5 rounded-2xl shadow-xl transition-all duration-300 cursor-pointer font-mono ${
+          hoveredModule === 'watchlist' ? 'scale-105 border-primary-light shadow-[rgba(21,81,157,0.3)]/20' : ''
         }`}
       >
         <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-1.5 text-blue-400">
+          <div className="flex items-center gap-1.5 text-[#64748B]">
             <Star className="w-3.5 h-3.5" />
             <span className="text-[11px] font-black uppercase tracking-wider">WATCHLIST</span>
           </div>
@@ -227,7 +227,7 @@ export const FloatingWorkspaceHero: React.FC<FloatingWorkspaceHeroProps> = ({
         onMouseEnter={() => setHoveredModule('news')}
         onMouseLeave={() => setHoveredModule(null)}
         onClick={() => onModuleClick?.('news')}
-        className={`absolute bottom-24 left-2 sm:left-8 z-15 w-52 sm:w-56 bg-[#0F172A]/90 backdrop-blur-xl border border-cyan-500/30 p-3.5 rounded-2xl shadow-xl transition-all duration-300 cursor-pointer font-mono ${
+        className={`absolute bottom-24 left-2 sm:left-8 z-15 w-52 sm:w-56 bg-[#172033]/90 backdrop-blur-xl border border-cyan-500/30 p-3.5 rounded-2xl shadow-xl transition-all duration-300 cursor-pointer font-mono ${
           hoveredModule === 'news' ? 'scale-105 border-cyan-400 shadow-cyan-500/20' : ''
         }`}
       >
@@ -252,7 +252,7 @@ export const FloatingWorkspaceHero: React.FC<FloatingWorkspaceHeroProps> = ({
         onMouseEnter={() => setHoveredModule('ai-advisor')}
         onMouseLeave={() => setHoveredModule(null)}
         onClick={() => onModuleClick?.('ai-advisor')}
-        className={`absolute bottom-24 right-2 sm:right-8 z-15 w-56 sm:w-60 bg-[#0F172A]/90 backdrop-blur-xl border border-purple-500/30 p-3.5 rounded-2xl shadow-xl transition-all duration-300 cursor-pointer font-mono ${
+        className={`absolute bottom-24 right-2 sm:right-8 z-15 w-56 sm:w-60 bg-[#172033]/90 backdrop-blur-xl border border-purple-500/30 p-3.5 rounded-2xl shadow-xl transition-all duration-300 cursor-pointer font-mono ${
           hoveredModule === 'ai-advisor' ? 'scale-105 border-purple-400 shadow-purple-500/20' : ''
         }`}
       >
@@ -275,7 +275,7 @@ export const FloatingWorkspaceHero: React.FC<FloatingWorkspaceHeroProps> = ({
         animate={{ y: [0, -5, 0] }}
         transition={{ duration: 3.6, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
         onClick={() => onModuleClick?.('orders')}
-        className="absolute bottom-4 left-16 sm:left-24 z-10 bg-[#0F172A]/90 backdrop-blur-xl border border-emerald-500/30 px-3 py-1.5 rounded-full font-mono text-[10px] text-slate-300 shadow-lg flex items-center gap-2"
+        className="absolute bottom-4 left-16 sm:left-24 z-10 bg-[#172033]/90 backdrop-blur-xl border border-emerald-500/30 px-3 py-1.5 rounded-full font-mono text-[10px] text-slate-300 shadow-lg flex items-center gap-2"
       >
         <Zap className="w-3 h-3 text-emerald-400" />
         <span>3 Open Orders • <strong className="text-emerald-400">BUY TCS Filled</strong></span>
@@ -288,7 +288,7 @@ export const FloatingWorkspaceHero: React.FC<FloatingWorkspaceHeroProps> = ({
         animate={{ y: [0, 5, 0] }}
         transition={{ duration: 3.9, repeat: Infinity, ease: 'easeInOut', delay: 1.8 }}
         onClick={() => onModuleClick?.('goals')}
-        className="absolute bottom-4 right-16 sm:right-24 z-10 bg-[#0F172A]/90 backdrop-blur-xl border border-amber-500/30 px-3 py-1.5 rounded-full font-mono text-[10px] text-slate-300 shadow-lg flex items-center gap-2"
+        className="absolute bottom-4 right-16 sm:right-24 z-10 bg-[#172033]/90 backdrop-blur-xl border border-amber-500/30 px-3 py-1.5 rounded-full font-mono text-[10px] text-slate-300 shadow-lg flex items-center gap-2"
       >
         <Target className="w-3 h-3 text-amber-400" />
         <span>Retirement Goal: <strong className="text-amber-400">68% Complete (2039)</strong></span>

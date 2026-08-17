@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { 
   X, Send, Sparkles, Volume2, VolumeX, ShieldCheck, ArrowRight,
   TrendingUp, BarChart3, CandlestickChart, Briefcase, Target, Newspaper, ShieldAlert, GraduationCap,
@@ -67,9 +67,9 @@ export const AI_ADVISORS_LIST: AiAdvisorConfig[] = [
     tagline: 'Explains P/E ratios, revenue growth, earnings quality, risks & price targets',
     category: 'Analysis & News',
     icon: BarChart3,
-    colorFrom: 'from-blue-600',
+    colorFrom: 'from-primary',
     colorTo: 'to-indigo-700',
-    badgeColor: 'bg-blue-50 text-blue-700 border-blue-200',
+    badgeColor: 'bg-primary-light text-primary border-primary-light',
     description: 'Deep dives into corporate balance sheets, quarterly result reports, cash flows, and intrinsic valuation models.',
     primaryExpertise: ['P/E & DCF Valuation', 'Quarterly Earnings Breakdown', 'Competitive Moat Analysis', 'Price Target Models'],
     suggestedPrompts: [
@@ -126,7 +126,7 @@ export const AI_ADVISORS_LIST: AiAdvisorConfig[] = [
     category: 'Portfolio & Wealth',
     icon: Briefcase,
     colorFrom: 'from-cyan-600',
-    colorTo: 'to-blue-700',
+    colorTo: 'to-[#5A35F0]',
     badgeColor: 'bg-cyan-50 text-cyan-700 border-cyan-200',
     description: 'Continuously monitors your holdings for sector concentration risks, overlap, and provides customized rebalancing suggestions.',
     primaryExpertise: ['Sector Concentration Risk', 'Portfolio Health Score', 'Smart Rebalancing', 'Sharpe & Beta Analysis'],
@@ -435,17 +435,17 @@ export const AiAdvisorWorkspaceModal: React.FC<AiAdvisorWorkspaceModalProps> = (
                     <button
                       key={idx}
                       onClick={() => handleSendMessage(prompt)}
-                      className="p-3 bg-slate-50 hover:bg-blue-50/80 hover:border-blue-200 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 text-left transition-all group flex items-center justify-between cursor-pointer"
+                      className="p-3 bg-slate-50 hover:bg-primary-light/80 hover:border-primary-light border border-slate-200 rounded-xl text-xs font-bold text-slate-700 text-left transition-all group flex items-center justify-between cursor-pointer"
                     >
                       <span className="line-clamp-2">{prompt}</span>
-                      <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-600 transition-colors shrink-0 ml-1" />
+                      <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-primary transition-colors shrink-0 ml-1" />
                     </button>
                   ))}
                 </div>
               </div>
 
-              <div className="p-3 bg-blue-50/80 border border-blue-200/80 rounded-2xl flex items-center gap-2.5 text-xs text-blue-900 font-medium">
-                <ShieldCheck className="w-4 h-4 text-blue-600 shrink-0" />
+              <div className="p-3 bg-primary-light/80 border border-primary-light/80 rounded-2xl flex items-center gap-2.5 text-xs text-primary-dark font-medium">
+                <ShieldCheck className="w-4 h-4 text-primary shrink-0" />
                 <span className="text-[11px] leading-tight">Powered by Real-Time SEBI Compliance Algorithms</span>
               </div>
             </div>
@@ -473,7 +473,7 @@ export const AiAdvisorWorkspaceModal: React.FC<AiAdvisorWorkspaceModalProps> = (
                     <div
                       className={`p-4 rounded-2xl max-w-xl text-xs font-medium leading-relaxed shadow-2xs ${
                         msg.sender === 'user'
-                          ? 'bg-blue-600 text-white rounded-br-none font-bold'
+                          ? 'bg-primary text-white rounded-br-none font-bold'
                           : 'bg-slate-100/90 text-slate-900 border border-slate-200/80 rounded-bl-none'
                       }`}
                     >
@@ -487,7 +487,7 @@ export const AiAdvisorWorkspaceModal: React.FC<AiAdvisorWorkspaceModalProps> = (
                             <span className="text-emerald-600 font-black">₹3,280 – ₹3,450</span>
                           </div>
                           <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden flex">
-                            <div className="bg-blue-600 h-full w-[65%]" />
+                            <div className="bg-primary h-full w-[65%]" />
                             <div className="bg-emerald-500 h-full w-[35%]" />
                           </div>
                           <div className="flex justify-between text-[9px] font-bold text-slate-400">
@@ -541,7 +541,7 @@ export const AiAdvisorWorkspaceModal: React.FC<AiAdvisorWorkspaceModalProps> = (
                               <div className="flex items-center gap-3">
                                 <div className="text-right">
                                   <span className="font-black text-slate-900 block text-xs">{stk.price}</span>
-                                  <span className={`text-[10px] font-black ${stk.positive ? 'text-emerald-600' : 'text-rose-600'}`}>
+                                  <span className={`text-[10px] font-black ${stk.positive ? 'text-emerald-600' : 'text-danger'}`}>
                                     {stk.change}
                                   </span>
                                 </div>
@@ -549,7 +549,7 @@ export const AiAdvisorWorkspaceModal: React.FC<AiAdvisorWorkspaceModalProps> = (
                                   {onTradeStock && (
                                     <button
                                       onClick={() => onTradeStock(stk)}
-                                      className="px-2.5 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-black text-[10px] transition cursor-pointer"
+                                      className="px-2.5 py-1 bg-primary hover:bg-primary-dark text-white rounded-lg font-black text-[10px] transition cursor-pointer"
                                     >
                                       Trade
                                     </button>
@@ -574,7 +574,7 @@ export const AiAdvisorWorkspaceModal: React.FC<AiAdvisorWorkspaceModalProps> = (
 
                 {isThinking && (
                   <div className="flex items-center gap-2 text-xs font-bold text-slate-400 py-2">
-                    <RefreshCw className="w-4 h-4 animate-spin text-blue-600" />
+                    <RefreshCw className="w-4 h-4 animate-spin text-primary" />
                     <span>{advisor.name} is scanning market feeds...</span>
                   </div>
                 )}
@@ -603,7 +603,7 @@ export const AiAdvisorWorkspaceModal: React.FC<AiAdvisorWorkspaceModalProps> = (
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
-                  className="flex-1 px-4 py-3 bg-slate-50 border border-slate-200 focus:border-blue-600 focus:bg-white rounded-2xl text-xs font-medium outline-none transition"
+                  className="flex-1 px-4 py-3 bg-slate-50 border border-slate-200 focus:border-primary focus:bg-white rounded-2xl text-xs font-medium outline-none transition"
                 />
                 <button
                   onClick={() => handleSendMessage()}

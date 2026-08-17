@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   GraduationCap, BookOpen, CheckCircle2, Play, Award, Bookmark, 
@@ -129,14 +129,14 @@ export const LearningCenter: React.FC<LearningCenterProps> = ({
     <div className="flex flex-col gap-8 w-full animate-in fade-in duration-500 pb-16">
       
       {/* 1. HERO ACADEMY HEADER */}
-      <section className="relative overflow-hidden rounded-[28px] p-6 sm:p-8 bg-[#0F172A] text-white shadow-2xl border border-slate-800">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
+      <section className="relative overflow-hidden rounded-[28px] p-6 sm:p-8 bg-[#172033] text-white shadow-2xl border border-slate-800">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
           <div className="max-w-2xl">
             <div className="flex items-center gap-2 mb-3">
-              <GraduationCap className="w-5 h-5 text-blue-400 fill-blue-400" />
-              <span className="text-xs font-black text-blue-400 uppercase tracking-widest">UNIVEST INVESTOR ACADEMY</span>
+              <GraduationCap className="w-5 h-5 text-[#64748B] fill-[#64748B]" />
+              <span className="text-xs font-black text-[#64748B] uppercase tracking-widest">UNIVEST INVESTOR ACADEMY</span>
             </div>
 
             <h1 className="text-3xl sm:text-4xl font-black mb-3 leading-tight">
@@ -150,7 +150,7 @@ export const LearningCenter: React.FC<LearningCenterProps> = ({
             <div className="flex flex-wrap items-center gap-3">
               <button
                 onClick={() => setActiveSubTab('Courses')}
-                className="px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-black text-xs transition shadow-lg flex items-center gap-2"
+                className="px-6 py-3.5 rounded-xl bg-primary hover:bg-primary-dark text-white font-black text-xs transition shadow-lg flex items-center gap-2"
               >
                 Continue Active Course <ArrowRight className="w-4 h-4" />
               </button>
@@ -174,7 +174,7 @@ export const LearningCenter: React.FC<LearningCenterProps> = ({
 
             <div className="flex justify-between items-center border-b border-white/10 pb-3">
               <span className="text-[10px] font-bold text-slate-400 uppercase">Modules Completed</span>
-              <span className="text-xl font-black text-blue-400">14 / 20</span>
+              <span className="text-xl font-black text-[#64748B]">14 / 20</span>
             </div>
 
             <div className="flex justify-between items-center">
@@ -188,19 +188,19 @@ export const LearningCenter: React.FC<LearningCenterProps> = ({
       {/* 2. STICKY CONTINUE LEARNING CARD */}
       <section className="bg-white rounded-[24px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-            <Play className="w-5 h-5 fill-blue-600" />
+          <div className="w-12 h-12 rounded-2xl bg-primary-light text-primary flex items-center justify-center shrink-0">
+            <Play className="w-5 h-5 fill-primary" />
           </div>
           <div>
-            <span className="text-[10px] font-black text-blue-600 uppercase">Resume Learning · Technical Analysis</span>
-            <h3 className="font-black text-base text-[#0F172A]">Mastering Technical Analysis & Breakout Trading</h3>
+            <span className="text-[10px] font-black text-primary uppercase">Resume Learning · Technical Analysis</span>
+            <h3 className="font-black text-base text-[#172033]">Mastering Technical Analysis & Breakout Trading</h3>
             <span className="text-xs text-slate-400 font-bold">Module 3 of 5 · RSI & MACD Crossover Confirmation</span>
           </div>
         </div>
 
         <button
           onClick={() => toast.success('Launching Module 3 Video Masterclass...')}
-          className="px-6 py-3 rounded-xl bg-[#0F172A] hover:bg-slate-800 text-white font-black text-xs transition shadow-sm whitespace-nowrap"
+          className="px-6 py-3 rounded-xl bg-[#172033] hover:bg-slate-800 text-white font-black text-xs transition shadow-sm whitespace-nowrap"
         >
           Resume Lesson →
         </button>
@@ -214,7 +214,7 @@ export const LearningCenter: React.FC<LearningCenterProps> = ({
               key={tab}
               onClick={() => setActiveSubTab(tab)}
               className={`px-5 py-2.5 rounded-xl text-xs font-black transition ${
-                activeSubTab === tab ? 'bg-[#0F172A] text-white shadow-sm' : 'text-slate-500 hover:text-[#0F172A]'
+                activeSubTab === tab ? 'bg-[#172033] text-white shadow-sm' : 'text-slate-500 hover:text-[#172033]'
               }`}
             >
               {tab}
@@ -230,7 +230,7 @@ export const LearningCenter: React.FC<LearningCenterProps> = ({
             key={cat}
             onClick={() => setActiveCategory(cat)}
             className={`px-4 py-2 rounded-xl text-xs font-black transition whitespace-nowrap shrink-0 ${
-              activeCategory === cat ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-500 hover:text-[#0F172A]'
+              activeCategory === cat ? 'bg-primary text-white shadow-xs' : 'text-slate-500 hover:text-[#172033]'
             }`}
           >
             {cat}
@@ -252,7 +252,7 @@ export const LearningCenter: React.FC<LearningCenterProps> = ({
                   <span className="bg-black/60 backdrop-blur-md text-white text-[10px] font-black px-2.5 py-1 rounded-lg uppercase">
                     {course.category}
                   </span>
-                  <span className="bg-blue-600 text-white text-[10px] font-black px-2.5 py-1 rounded-lg uppercase">
+                  <span className="bg-primary text-white text-[10px] font-black px-2.5 py-1 rounded-lg uppercase">
                     {course.level}
                   </span>
                 </div>
@@ -264,7 +264,7 @@ export const LearningCenter: React.FC<LearningCenterProps> = ({
                     <span>By {course.author}</span>
                     <span>{course.duration}</span>
                   </div>
-                  <h3 className="font-black text-base text-[#0F172A] leading-snug group-hover:text-blue-600 transition mb-2">
+                  <h3 className="font-black text-base text-[#172033] leading-snug group-hover:text-primary transition mb-2">
                     {course.title}
                   </h3>
                   <p className="text-xs text-slate-600 font-medium leading-relaxed line-clamp-2">
@@ -280,7 +280,7 @@ export const LearningCenter: React.FC<LearningCenterProps> = ({
                   </div>
                   <div className="w-full h-2 rounded-full bg-slate-100 overflow-hidden">
                     <div
-                      className="h-full bg-blue-600 rounded-full transition-all duration-500"
+                      className="h-full bg-primary rounded-full transition-all duration-500"
                       style={{ width: `${(course.completedModules / course.modules) * 100}%` }}
                     />
                   </div>
@@ -288,15 +288,15 @@ export const LearningCenter: React.FC<LearningCenterProps> = ({
                   <div className="flex items-center justify-between gap-2 pt-2">
                     <button
                       onClick={() => toast.success(`Launching ${course.title}`)}
-                      className="flex-1 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-black text-xs transition text-center shadow-xs"
+                      className="flex-1 py-2.5 rounded-xl bg-primary hover:bg-primary-dark text-white font-black text-xs transition text-center shadow-xs"
                     >
                       {course.completedModules > 0 ? 'Continue Course' : 'Start Course'}
                     </button>
                     <button
                       onClick={(e) => toggleBookmark(course.id, e)}
-                      className="p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-400 hover:text-blue-600 transition"
+                      className="p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-400 hover:text-primary transition"
                     >
-                      <Bookmark className={`w-4 h-4 ${bookmarkedLessons.includes(course.id) ? 'fill-blue-600 text-blue-600' : ''}`} />
+                      <Bookmark className={`w-4 h-4 ${bookmarkedLessons.includes(course.id) ? 'fill-primary text-primary' : ''}`} />
                     </button>
                   </div>
                 </div>
@@ -311,7 +311,7 @@ export const LearningCenter: React.FC<LearningCenterProps> = ({
         <div className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 sm:p-8 shadow-sm flex flex-col gap-6">
           <div className="flex items-center justify-between border-b border-slate-100 pb-4">
             <div>
-              <h3 className="text-lg font-black text-[#0F172A]">SEBI Literacy Benchmark Quiz</h3>
+              <h3 className="text-lg font-black text-[#172033]">SEBI Literacy Benchmark Quiz</h3>
               <p className="text-xs text-slate-500 font-medium">Test your knowledge to unlock verified certificates.</p>
             </div>
             {quizScore !== null && (
@@ -324,7 +324,7 @@ export const LearningCenter: React.FC<LearningCenterProps> = ({
           <div className="flex flex-col gap-6">
             {quizQuestions.map((q, idx) => (
               <div key={q.id} className="bg-[#F8FAFC] border border-[#E2E8F0] p-5 rounded-2xl flex flex-col gap-3">
-                <h4 className="font-black text-sm text-[#0F172A]">
+                <h4 className="font-black text-sm text-[#172033]">
                   Q{idx + 1}: {q.question}
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-medium">
@@ -334,7 +334,7 @@ export const LearningCenter: React.FC<LearningCenterProps> = ({
                       onClick={() => handleAnswerQuiz(idx, optIdx)}
                       className={`p-3 rounded-xl border text-left transition font-bold ${
                         userAnswers[idx] === optIdx
-                          ? 'bg-blue-600 text-white border-blue-600'
+                          ? 'bg-primary text-white border-primary'
                           : 'bg-white text-slate-700 border-slate-200 hover:border-blue-300'
                       }`}
                     >
@@ -347,7 +347,7 @@ export const LearningCenter: React.FC<LearningCenterProps> = ({
 
             <button
               onClick={handleSubmitQuiz}
-              className="self-end px-8 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-black text-xs transition shadow-md"
+              className="self-end px-8 py-3.5 rounded-xl bg-primary hover:bg-primary-dark text-white font-black text-xs transition shadow-md"
             >
               Submit Quiz & Verify Score
             </button>
@@ -362,12 +362,12 @@ export const LearningCenter: React.FC<LearningCenterProps> = ({
           <div className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col gap-4">
             <div className="flex items-center gap-2">
               <Award className="w-5 h-5 text-emerald-600" />
-              <h3 className="text-base font-black text-[#0F172A]">SEBI Technical Analysis Certificate</h3>
+              <h3 className="text-base font-black text-[#172033]">SEBI Technical Analysis Certificate</h3>
             </div>
             <p className="text-xs text-slate-600">Issued to Omar Khan upon achieving 90%+ on Technical Chart Masterclass.</p>
             <button
               onClick={() => toast.success('Downloading Official SEBI Investor Literacy Certificate (PDF)...')}
-              className="py-3 rounded-xl bg-[#0F172A] text-white font-black text-xs hover:bg-slate-800 transition flex items-center justify-center gap-2"
+              className="py-3 rounded-xl bg-[#172033] text-white font-black text-xs hover:bg-slate-800 transition flex items-center justify-center gap-2"
             >
               <Download className="w-4 h-4" /> Download Certificate (PDF)
             </button>
@@ -375,8 +375,8 @@ export const LearningCenter: React.FC<LearningCenterProps> = ({
 
           <div className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col gap-4">
             <div className="flex items-center gap-2">
-              <Award className="w-5 h-5 text-blue-600" />
-              <h3 className="text-base font-black text-[#0F172A]">Fundamental Valuation Certificate</h3>
+              <Award className="w-5 h-5 text-primary" />
+              <h3 className="text-base font-black text-[#172033]">Fundamental Valuation Certificate</h3>
             </div>
             <p className="text-xs text-slate-600">Issued upon completion of Balance Sheet & Equity Valuation modules.</p>
             <button
@@ -393,19 +393,19 @@ export const LearningCenter: React.FC<LearningCenterProps> = ({
       {/* 8. TAB 4: BOOKMARKS */}
       {activeSubTab === 'Bookmarks' && (
         <div className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col gap-4">
-          <h3 className="text-base font-black text-[#0F172A]">Saved Courses & Bookmarks</h3>
+          <h3 className="text-base font-black text-[#172033]">Saved Courses & Bookmarks</h3>
           {bookmarkedLessons.length > 0 ? (
             <div className="flex flex-col gap-3">
               {courses.filter(c => bookmarkedLessons.includes(c.id)).map(c => (
                 <div key={c.id} className="p-4 bg-[#F8FAFC] rounded-2xl border border-slate-200 flex justify-between items-center">
                   <div>
-                    <span className="text-[10px] font-black text-blue-600 uppercase">{c.category}</span>
-                    <h4 className="font-black text-sm text-[#0F172A]">{c.title}</h4>
+                    <span className="text-[10px] font-black text-primary uppercase">{c.category}</span>
+                    <h4 className="font-black text-sm text-[#172033]">{c.title}</h4>
                     <span className="text-[10px] text-slate-400">{c.duration} · {c.level}</span>
                   </div>
                   <button
                     onClick={() => toast.success(`Launching ${c.title}`)}
-                    className="px-4 py-2 rounded-xl bg-blue-600 text-white font-black text-xs"
+                    className="px-4 py-2 rounded-xl bg-primary text-white font-black text-xs"
                   >
                     Open Course
                   </button>

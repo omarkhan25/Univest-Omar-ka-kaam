@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Loader2 } from 'lucide-react';
 
 interface SpinnerProps {
@@ -21,7 +21,7 @@ export const Spinner: React.FC<SpinnerProps> = ({
   };
 
   const spinnerIcon = (
-    <Loader2 className={`${sizeMap[size]} animate-spin text-blue-600 ${className}`} />
+    <Loader2 className={`${sizeMap[size]} animate-spin text-primary ${className}`} />
   );
 
   if (variant === 'FullPage') {

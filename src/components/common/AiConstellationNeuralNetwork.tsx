@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Brain, Briefcase, Search, Newspaper, Sparkles, Star, Target, 
@@ -22,7 +22,7 @@ const NODES: ConstellationNode[] = [
   { id: 'research', name: 'Research', metric: '28 Calls', subMetric: 'SEBI RA Compliant', icon: Shield, x: 390, y: 100, color: '#F59E0B', badge: '14 Live' },
   { id: 'ai-advisors', name: 'AI Copilots', metric: '96% Accuracy', subMetric: '3 Active Agents', icon: Sparkles, x: 260, y: 70, color: '#8B5CF6', badge: 'AI V4' },
   { id: 'news', name: 'News Intel', metric: '142 Updates', subMetric: 'RBI Policy Live', icon: Newspaper, x: 470, y: 240, color: '#38BDF8', badge: 'Breaking' },
-  { id: 'invest', name: 'Asset Hub', metric: '7 Assets', subMetric: 'Ola IPO GMP +38%', icon: Layers, x: 410, y: 390, color: '#2563EB', badge: 'High Yield' },
+  { id: 'invest', name: 'Asset Hub', metric: '7 Assets', subMetric: 'Ola IPO GMP +38%', icon: Layers, x: 410, y: 390, color: '#15519D', badge: 'High Yield' },
   { id: 'watchlist', name: 'Watchlist', metric: '18 Stocks', subMetric: '3 Breakouts Near', icon: Star, x: 70, y: 230, color: '#EC4899', badge: 'Live Ticks' },
   { id: 'orders', name: 'Execution', metric: '3 Active', subMetric: 'Instant NSE/BSE', icon: Zap, x: 120, y: 380, color: '#10B981', badge: '0.2s Execution' },
   { id: 'goals', name: 'Goals Tracker', metric: '68% Goal', subMetric: 'Retirement 2035', icon: Target, x: 260, y: 440, color: '#F59E0B', badge: 'On Track' },
@@ -76,7 +76,7 @@ export const AiConstellationNeuralNetwork: React.FC<AiConstellationNeuralNetwork
     >
       {/* 1. CINEMATIC BACKGROUND GLOW */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-tr from-blue-600/15 via-purple-600/10 to-emerald-500/15 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-tr from-primary/15 via-purple-600/10 to-emerald-500/15 rounded-full blur-3xl" />
         <div className="absolute top-1/4 left-1/3 w-[250px] h-[250px] bg-cyan-500/10 rounded-full blur-2xl animate-pulse" />
       </div>
 
@@ -84,7 +84,7 @@ export const AiConstellationNeuralNetwork: React.FC<AiConstellationNeuralNetwork
       <svg viewBox="0 0 540 500" className="absolute inset-0 w-full h-full pointer-events-none overflow-visible">
         <defs>
           <linearGradient id="neuralLineGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#2563EB" stopOpacity="0.4" />
+            <stop offset="0%" stopColor="#15519D" stopOpacity="0.4" />
             <stop offset="50%" stopColor="#10B981" stopOpacity="0.2" />
             <stop offset="100%" stopColor="#8B5CF6" stopOpacity="0.4" />
           </linearGradient>
@@ -131,7 +131,7 @@ export const AiConstellationNeuralNetwork: React.FC<AiConstellationNeuralNetwork
           <circle cx={NODES[0].x} cy={NODES[0].y} r="5" fill="#10B981" filter="url(#glow)" className="animate-ping" />
         )}
         {activeStep === 4 && (
-          <circle cx={NODES[6].x} cy={NODES[6].y} r="5" fill="#2563EB" filter="url(#glow)" className="animate-ping" />
+          <circle cx={NODES[6].x} cy={NODES[6].y} r="5" fill="#15519D" filter="url(#glow)" className="animate-ping" />
         )}
 
         {/* AI Scan Pulse Expanding Wave Circle */}
@@ -155,17 +155,17 @@ export const AiConstellationNeuralNetwork: React.FC<AiConstellationNeuralNetwork
             scale: { duration: 5, repeat: Infinity, ease: 'easeInOut' },
             rotate: { duration: 40, repeat: Infinity, ease: 'linear' },
           }}
-          className="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-600/30 via-cyan-400/20 to-purple-600/30 backdrop-blur-2xl border border-white/25 shadow-[0_0_50px_rgba(56,189,248,0.4)]"
+          className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary/30 via-cyan-400/20 to-purple-600/30 backdrop-blur-2xl border border-white/25 shadow-[0_0_50px_rgba(56,189,248,0.4)]"
         />
 
         {/* Inner Glass Nucleus */}
-        <div className="absolute inset-2.5 rounded-full bg-[#0F172A] border border-blue-400/40 overflow-hidden flex items-center justify-center">
+        <div className="absolute inset-2.5 rounded-full bg-[#172033] border border-primary-light/40 overflow-hidden flex items-center justify-center">
           <div className="absolute w-28 h-28 bg-cyan-500/30 rounded-full blur-xl animate-pulse" />
-          <div className="absolute w-20 h-20 bg-blue-600/40 rounded-full blur-lg top-1 right-1" />
+          <div className="absolute w-20 h-20 bg-primary/40 rounded-full blur-lg top-1 right-1" />
 
           {/* Core Content */}
           <div className="relative z-10 text-center space-y-1">
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-500 text-white flex items-center justify-center mx-auto shadow-lg shadow-cyan-500/40 group-hover:scale-110 transition-transform">
+            <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-primary to-cyan-500 text-white flex items-center justify-center mx-auto shadow-lg shadow-cyan-500/40 group-hover:scale-110 transition-transform">
               <Brain className="w-6 h-6" />
             </div>
             <span className="font-mono text-[9px] font-black tracking-widest text-cyan-400 block uppercase">
@@ -208,14 +208,14 @@ export const AiConstellationNeuralNetwork: React.FC<AiConstellationNeuralNetwork
             onMouseLeave={() => setHoveredNode(null)}
             onClick={() => onNodeClick?.(node.id)}
             className={`absolute z-40 -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all duration-300 ${
-              isNodeActiveInSequence ? 'ring-2 ring-cyan-400 ring-offset-2 ring-offset-[#0F172A]' : ''
+              isNodeActiveInSequence ? 'ring-2 ring-cyan-400 ring-offset-2 ring-offset-[#172033]' : ''
             }`}
           >
             {/* Node Circle */}
             <div className={`relative px-3 py-2 rounded-2xl border backdrop-blur-xl font-mono shadow-xl flex items-center gap-2.5 transition-all duration-300 ${
               isHovered 
                 ? 'bg-[#1E293B] border-cyan-400 scale-110 z-50 shadow-cyan-500/30 shadow-2xl' 
-                : 'bg-[#0F172A]/90 border-slate-700/80 hover:border-slate-500'
+                : 'bg-[#172033]/90 border-slate-700/80 hover:border-slate-500'
             }`}>
               <div 
                 className="w-7 h-7 rounded-xl flex items-center justify-center shrink-0"
@@ -247,7 +247,7 @@ export const AiConstellationNeuralNetwork: React.FC<AiConstellationNeuralNetwork
                   initial={{ opacity: 0, y: 8, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 8, scale: 0.95 }}
-                  className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-[#0F172A] border border-cyan-500/40 p-3 rounded-2xl shadow-2xl font-mono text-xs z-50 pointer-events-none"
+                  className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-[#172033] border border-cyan-500/40 p-3 rounded-2xl shadow-2xl font-mono text-xs z-50 pointer-events-none"
                 >
                   <span className="text-[10px] text-cyan-400 font-bold block uppercase tracking-wider">
                     MODULE DETAILS
@@ -267,7 +267,7 @@ export const AiConstellationNeuralNetwork: React.FC<AiConstellationNeuralNetwork
       })}
 
       {/* 5. NEURAL SEQUENCE LIVE ACTIVITY FEED FOOTER */}
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-40 bg-[#0F172A]/90 border border-slate-800 backdrop-blur-xl px-4 py-1.5 rounded-full font-mono text-[10px] text-slate-300 flex items-center gap-2 shadow-lg">
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-40 bg-[#172033]/90 border border-slate-800 backdrop-blur-xl px-4 py-1.5 rounded-full font-mono text-[10px] text-slate-300 flex items-center gap-2 shadow-lg">
         <Activity className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
         <span>
           NEURAL FLOW:{' '}

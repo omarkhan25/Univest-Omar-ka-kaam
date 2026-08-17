@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Mail, ArrowRight, RefreshCw, ShieldCheck, User } from 'lucide-react';
@@ -230,7 +230,7 @@ export const Login: React.FC = () => {
       {/* Right Column: Interactive Login Form (White Background) */}
       <div className="min-h-screen p-8 sm:p-16 md:p-24 bg-white relative flex flex-col justify-center text-slate-900 overflow-y-auto">
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-purple-600/5 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
         
         <div className="max-w-md w-full mx-auto relative z-10 flex flex-col justify-between min-h-[550px]">
           {isLoggingIn ? (
@@ -278,7 +278,7 @@ export const Login: React.FC = () => {
               {/* Form Header */}
               <div className="mb-8 text-left">
                 <div className="lg:hidden flex items-center gap-2 mb-6">
-                  <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-emerald-500 flex items-center justify-center font-black text-lg text-white shadow-md">
+                  <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-primary to-emerald-500 flex items-center justify-center font-black text-lg text-white shadow-md">
                     U
                   </div>
                   <span className="font-black text-lg text-slate-900 font-display">UNIVEST</span>
@@ -355,7 +355,7 @@ export const Login: React.FC = () => {
               )}
 
               {errorMessage && (
-                <div className="mb-6 rounded-xl border border-rose-500/30 bg-rose-500/5 p-3 text-[13px] font-bold text-rose-500 text-left">
+                <div className="mb-6 rounded-xl border border-danger/30 bg-danger/5 p-3 text-[13px] font-bold text-danger text-left">
                   {errorMessage}
                 </div>
               )}
@@ -363,7 +363,7 @@ export const Login: React.FC = () => {
               {!otpSent ? (
                 <form onSubmit={handleSendOtp} className="space-y-5">
                   {/* Email Address or Mobile */}
-                  <div className={`relative rounded-[16px] px-5 py-3 transition-all duration-300 text-left bg-slate-50 ${errorMessage ? 'border border-rose-500/50 bg-rose-50' : 'border border-slate-200/60 focus-within:bg-white focus-within:border-purple-500 focus-within:ring-4 focus-within:ring-purple-500/10 focus-within:shadow-sm'
+                  <div className={`relative rounded-[16px] px-5 py-3 transition-all duration-300 text-left bg-slate-50 ${errorMessage ? 'border border-danger/50 bg-rose-50' : 'border border-slate-200/60 focus-within:bg-white focus-within:border-purple-500 focus-within:ring-4 focus-within:ring-purple-500/10 focus-within:shadow-sm'
                     }`}>
                     <label className="block text-[11px] font-black uppercase tracking-widest text-slate-500 mb-1">
                       Email Address

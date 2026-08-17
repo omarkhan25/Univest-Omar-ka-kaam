@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+﻿import React, { useEffect, useRef } from 'react';
 
 export const FinancialConstellation: React.FC<{ className?: string, opacity?: number }> = ({ className = '', opacity = 0.05 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -44,7 +44,7 @@ export const FinancialConstellation: React.FC<{ className?: string, opacity?: nu
       draw(ctx: CanvasRenderingContext2D) {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(37, 99, 235, ${opacity * 4})`; // blue-600 with varying opacity
+        ctx.fillStyle = `rgba(21, 81, 157, ${opacity * 4})`; // blue-600 with varying opacity
         ctx.fill();
       }
     }
@@ -71,7 +71,7 @@ export const FinancialConstellation: React.FC<{ className?: string, opacity?: nu
           
           if (distance < 150) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(37, 99, 235, ${(1 - distance / 150) * opacity * 2})`;
+            ctx.strokeStyle = `rgba(21, 81, 157, ${(1 - distance / 150) * opacity * 2})`;
             ctx.lineWidth = 1;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);

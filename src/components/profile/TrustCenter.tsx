@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { ShieldCheck, Landmark, CheckCircle2, Shield, AlertCircle, ArrowRight } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -6,8 +6,8 @@ export const TrustCenter: React.FC = () => {
   return (
     <div className="w-full flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-black text-[#0F172A] flex items-center gap-2">
-          <ShieldCheck className="w-5 h-5 text-blue-600" /> Account Health & Security Dashboard
+        <h2 className="text-xl font-black text-[#172033] flex items-center gap-2">
+          <ShieldCheck className="w-5 h-5 text-primary" /> Account Health & Security Dashboard
         </h2>
         <span className="text-xs font-bold text-slate-400">SEBI Registered Identity Verification</span>
       </div>
@@ -35,17 +35,17 @@ export const TrustCenter: React.FC = () => {
                   strokeLinecap="round" 
                 />
               </svg>
-              <span className="absolute text-sm font-black text-[#0F172A]">96%</span>
+              <span className="absolute text-sm font-black text-[#172033]">96%</span>
             </div>
             <div>
-              <span className="text-xs font-black text-[#0F172A] block">Almost Complete</span>
+              <span className="text-xs font-black text-[#172033] block">Almost Complete</span>
               <span className="text-[10px] text-slate-500 font-medium">Add nominee details for 100% protection</span>
             </div>
           </div>
 
           <button 
             onClick={() => toast.success('Redirecting to nominee form...')}
-            className="text-[10px] font-black text-blue-600 uppercase flex items-center gap-1 hover:underline pt-2 border-t border-slate-100"
+            className="text-[10px] font-black text-primary uppercase flex items-center gap-1 hover:underline pt-2 border-t border-slate-100"
           >
             Add Nominee Details <ArrowRight className="w-3 h-3" />
           </button>
@@ -55,11 +55,11 @@ export const TrustCenter: React.FC = () => {
         <div className="bg-white border border-[#E2E8F0] rounded-[24px] p-5 shadow-sm hover:shadow-md transition flex flex-col justify-between">
           <div className="flex justify-between items-start mb-3">
             <span className="text-[10px] font-black uppercase text-slate-400 tracking-wider">Linked Accounts</span>
-            <span className="text-xs font-black text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">Active</span>
+            <span className="text-xs font-black text-primary bg-primary-light px-2 py-0.5 rounded-md">Active</span>
           </div>
 
           <div className="my-2">
-            <span className="text-xl font-black text-[#0F172A] block mb-1">2 Banks · 1 Broker</span>
+            <span className="text-xl font-black text-[#172033] block mb-1">2 Banks · 1 Broker</span>
             <p className="text-[10.5px] text-slate-500 font-medium leading-relaxed">
               HDFC Bank (Primary) & ICICI Bank linked. Zerodha Kite connected for live execution.
             </p>
@@ -79,7 +79,7 @@ export const TrustCenter: React.FC = () => {
           </div>
 
           <div className="my-2">
-            <span className="text-xl font-black text-[#0F172A] block mb-1">6/6 Clear</span>
+            <span className="text-xl font-black text-[#172033] block mb-1">6/6 Clear</span>
             <p className="text-[10.5px] text-slate-500 font-medium leading-relaxed">
               PAN, Aadhaar, Face KYC, Email, Mobile & Bank Account verified.
             </p>
@@ -94,18 +94,18 @@ export const TrustCenter: React.FC = () => {
         <div className="bg-white border border-[#E2E8F0] rounded-[24px] p-5 shadow-sm hover:shadow-md transition flex flex-col justify-between">
           <div className="flex justify-between items-start mb-3">
             <span className="text-[10px] font-black uppercase text-slate-400 tracking-wider">Security Status</span>
-            <span className="text-xs font-black text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">98/100</span>
+            <span className="text-xs font-black text-primary bg-primary-light px-2 py-0.5 rounded-md">98/100</span>
           </div>
 
           <div className="my-2">
-            <span className="text-xl font-black text-[#0F172A] block mb-1">High Protection</span>
+            <span className="text-xl font-black text-[#172033] block mb-1">High Protection</span>
             <p className="text-[10.5px] text-slate-500 font-medium leading-relaxed">
               2FA Authenticator active. Biometric Face ID enabled on 2 trusted devices.
             </p>
           </div>
 
           <div className="flex items-center gap-1.5 pt-2 border-t border-slate-100 text-[10px] font-extrabold text-slate-600">
-            <Shield className="w-3.5 h-3.5 text-blue-600" /> 2 Trusted Active Sessions
+            <Shield className="w-3.5 h-3.5 text-primary" /> 2 Trusted Active Sessions
           </div>
         </div>
 

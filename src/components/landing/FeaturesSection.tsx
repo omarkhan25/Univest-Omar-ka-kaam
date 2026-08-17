@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { motion } from 'framer-motion';
 import { 
   Brain, BarChart3, CandlestickChart, Briefcase, 
@@ -11,7 +11,7 @@ const features = [
     title: 'AI-Powered Insights',
     description: 'Get intelligent stock recommendations, sentiment signals, and market analysis powered by autonomous AI algorithms.',
     badge: 'AI Engine',
-    color: 'bg-blue-600/20 text-blue-400 border-blue-500/30'
+    color: 'bg-primary/20 text-[#64748B] border-primary/30'
   },
   {
     icon: BarChart3,
@@ -39,7 +39,7 @@ const features = [
     title: 'SEBI Compliant Advisory',
     description: 'Fully compliant with SEBI (Research Analysts) Regulations 2014, backed by certified market research experts.',
     badge: 'SEBI Registered',
-    color: 'bg-rose-600/20 text-rose-400 border-rose-500/30'
+    color: 'bg-danger/20 text-rose-400 border-danger/30'
   },
   {
     icon: Bell,
@@ -52,11 +52,11 @@ const features = [
 
 export const FeaturesSection: React.FC = () => {
   return (
-    <section id="features" className="py-24 bg-[#0F172A] relative font-sans text-white border-t border-slate-800">
+    <section id="features" className="py-24 bg-[#172033] relative font-sans text-white border-t border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="inline-block px-4 py-1.5 bg-blue-600/10 border border-blue-600/20 rounded-full text-blue-400 text-xs font-black uppercase tracking-wider mb-4">
+          <span className="inline-block px-4 py-1.5 bg-primary/10 border border-primary/20 rounded-full text-[#64748B] text-xs font-black uppercase tracking-wider mb-4">
             Platform Capabilities
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white">
@@ -79,7 +79,7 @@ export const FeaturesSection: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="group bg-[#1E293B] rounded-3xl p-8 border border-slate-700 hover:border-blue-500/50 transition-all hover:shadow-2xl hover:shadow-blue-600/10 flex flex-col justify-between"
+              className="group bg-[#1E293B] rounded-3xl p-8 border border-slate-700 hover:border-primary/50 transition-all hover:shadow-2xl hover:shadow-[rgba(21,81,157,0.3)]/10 flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between mb-6">
@@ -90,7 +90,7 @@ export const FeaturesSection: React.FC = () => {
                     {feature.badge}
                   </span>
                 </div>
-                <h3 className="text-xl font-black text-white mb-2 group-hover:text-blue-400 transition-colors">
+                <h3 className="text-xl font-black text-white mb-2 group-hover:text-[#64748B] transition-colors">
                   {feature.title}
                 </h3>
                 <p className="text-slate-400 text-xs font-medium leading-relaxed">
@@ -108,7 +108,7 @@ export const FeaturesSection: React.FC = () => {
             <span>SEBI Registered (INH000009821)</span>
           </div>
           <div className="flex items-center gap-2">
-            <Zap className="w-4 h-4 text-blue-400" />
+            <Zap className="w-4 h-4 text-[#64748B]" />
             <span>Real-Time Market Data</span>
           </div>
           <div className="flex items-center gap-2">

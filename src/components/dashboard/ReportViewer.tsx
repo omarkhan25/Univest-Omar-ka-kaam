@@ -30,8 +30,8 @@ export const ReportViewer: React.FC<ReportViewerProps> = ({ isOpen, onClose, rep
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-slate-200 bg-white">
             <div className="flex flex-col">
-              <span className="text-[10px] font-black text-blue-600 uppercase tracking-wider mb-1 bg-blue-50 w-fit px-2 py-0.5 rounded-md">{report.category}</span>
-              <h3 className="font-black text-xl text-[#0F172A] leading-tight line-clamp-1">{report.title}</h3>
+              <span className="text-[10px] font-black text-primary uppercase tracking-wider mb-1 bg-primary-light w-fit px-2 py-0.5 rounded-md">{report.category}</span>
+              <h3 className="font-black text-xl text-[#172033] leading-tight line-clamp-1">{report.title}</h3>
             </div>
             <div className="flex items-center gap-2">
               <button onClick={() => toast.success('Saved to Library')} className="p-2 hover:bg-slate-100 rounded-xl transition text-slate-500">
@@ -58,17 +58,17 @@ export const ReportViewer: React.FC<ReportViewerProps> = ({ isOpen, onClose, rep
             <div className="hidden md:flex flex-col w-64 border-r border-slate-200 bg-slate-50 overflow-y-auto p-6">
                <div className="flex items-center gap-2 mb-6">
                  <LayoutList className="w-5 h-5 text-slate-400" />
-                 <h4 className="font-black text-[#0F172A]">Contents</h4>
+                 <h4 className="font-black text-[#172033]">Contents</h4>
                </div>
                
                <div className="flex flex-col gap-2 relative">
                  <div className="absolute left-[9px] top-2 bottom-2 w-0.5 bg-slate-200" />
                  {['Executive Summary', 'Macro Environment', 'Sector Tailwinds', 'Valuation Multiples', 'Key Risks', 'Conclusion'].map((section, idx) => (
                    <button key={idx} className="flex items-center gap-4 text-left group z-10 relative">
-                     <div className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 transition ${idx === 0 ? 'bg-blue-600 border-2 border-blue-100 shadow-sm' : 'bg-white border-2 border-slate-200 group-hover:border-blue-400'}`}>
+                     <div className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 transition ${idx === 0 ? 'bg-primary border-2 border-[#E2E8F0] shadow-sm' : 'bg-white border-2 border-slate-200 group-hover:border-primary-light'}`}>
                        {idx === 0 && <div className="w-1.5 h-1.5 bg-white rounded-full" />}
                      </div>
-                     <span className={`text-sm font-bold transition ${idx === 0 ? 'text-blue-600' : 'text-slate-500 group-hover:text-[#0F172A]'}`}>
+                     <span className={`text-sm font-bold transition ${idx === 0 ? 'text-primary' : 'text-slate-500 group-hover:text-[#172033]'}`}>
                        {section}
                      </span>
                    </button>
@@ -77,24 +77,24 @@ export const ReportViewer: React.FC<ReportViewerProps> = ({ isOpen, onClose, rep
             </div>
 
             {/* Document Content */}
-            <div className="flex-1 overflow-y-auto p-8 md:p-12 bg-white relative">
-               <div className="max-w-2xl mx-auto flex flex-col gap-8 pb-20">
+            <div className="flex-1 overflow-y-auto p-6 md:p-10 bg-white relative">
+               <div className="max-w-4xl mx-auto flex flex-col gap-8 pb-20">
                  
                  <div className="flex items-center gap-4 mb-4 text-sm font-bold text-slate-500">
                    <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-black text-slate-700">
                      {report.author.charAt(0)}
                    </div>
                    <div>
-                     <span className="block text-[#0F172A]">{report.author}</span>
+                     <span className="block text-[#172033]">{report.author}</span>
                      <span>Published {report.date} • {report.time}</span>
                    </div>
                  </div>
 
-                 <h1 className="text-4xl font-black text-[#0F172A] leading-tight">{report.title}</h1>
+                 <h1 className="text-4xl font-black text-[#172033] leading-tight">{report.title}</h1>
 
-                 <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6 shadow-sm">
-                   <h4 className="text-xs font-black text-blue-600 uppercase tracking-wider mb-3">Executive Summary</h4>
-                   <p className="text-blue-900 font-medium leading-relaxed">
+                 <div className="bg-primary-light border border-[#E2E8F0] rounded-2xl p-6 shadow-sm">
+                   <h4 className="text-xs font-black text-primary uppercase tracking-wider mb-3">Executive Summary</h4>
+                   <p className="text-primary-dark font-medium leading-relaxed">
                      The global shift towards defensive large-caps is accelerating as valuation multiples in high-beta sectors peak. This report analyzes the fundamental resilience of the IT and Banking sectors, projecting a 12-15% margin expansion driven by operational efficiencies and stable deposit costs over the next two quarters.
                    </p>
                  </div>
@@ -107,12 +107,12 @@ export const ReportViewer: React.FC<ReportViewerProps> = ({ isOpen, onClose, rep
                    [ Embedded Interactive Chart: Sector Rotation Heatmap ]
                  </div>
 
-                 <h2 className="text-2xl font-black text-[#0F172A]">Sector Tailwinds</h2>
+                 <h2 className="text-2xl font-black text-[#172033]">Sector Tailwinds</h2>
                  <p className="text-slate-700 font-medium leading-relaxed text-lg">
                    The primary catalyst for the IT sector remains the stabilization of global macro environments, leading to un-pausing of deferred discretionary tech spends. Combined with aggressive cost-optimization strategies executed in the previous fiscal year, bottom-line growth is projected to outpace top-line recovery.
                  </p>
 
-                 <blockquote className="border-l-4 border-blue-600 pl-6 py-2 my-6 text-xl font-medium italic text-[#0F172A]">
+                 <blockquote className="border-l-4 border-primary pl-6 py-2 my-6 text-xl font-medium italic text-[#172033]">
                    "We expect large-cap IT to outperform the broader index by 800 basis points over the next 12 months, driven by earnings upgrades and multiple expansion."
                  </blockquote>
 
@@ -122,7 +122,7 @@ export const ReportViewer: React.FC<ReportViewerProps> = ({ isOpen, onClose, rep
 
                  <div className="flex items-center justify-between mt-12 pt-8 border-t border-slate-200">
                     <span className="text-sm font-bold text-slate-400">End of Preview</span>
-                    <button className="flex items-center gap-2 bg-[#0F172A] text-white px-6 py-3 rounded-xl font-bold hover:bg-slate-800 transition">
+                    <button className="flex items-center gap-2 bg-[#172033] text-white px-6 py-3 rounded-xl font-bold hover:bg-slate-800 transition">
                       Unlock Full Report <ChevronRight className="w-4 h-4" />
                     </button>
                  </div>

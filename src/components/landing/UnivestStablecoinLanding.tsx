@@ -85,7 +85,7 @@ export const UnivestStablecoinLanding: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-col bg-[#F5F5F5] min-h-screen">
+    <div className="flex flex-col bg-[#F8FAFC] min-h-screen">
 
       {/* 1. Navbar + Hero wrapper (h-screen) */}
       <div className="h-screen flex flex-col overflow-hidden relative w-full">
@@ -160,7 +160,7 @@ export const UnivestStablecoinLanding: React.FC = () => {
       </div>
 
       {/* 3. Info Section */}
-      <section className="bg-[#F5F5F5] px-[50px] py-24">
+      <section className="bg-[#F8FAFC] px-[50px] py-24">
         <div className="max-w-[88rem] mx-auto">
           {/* Row 1 */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16 items-start">
@@ -269,7 +269,7 @@ export const UnivestStablecoinLanding: React.FC = () => {
       </section>
 
       {/* 4. Trust Section */}
-      <section className="bg-[#F5F5F5] px-[50px] py-24 border-t border-b border-black/5">
+      <section className="bg-[#F8FAFC] px-[50px] py-24 border-t border-b border-black/5">
         <div className="max-w-[88rem] mx-auto text-center mb-16">
           <span className="text-black/50 font-bold text-xs uppercase tracking-widest block mb-4">TRUST & SECURITY</span>
           <h2
@@ -287,9 +287,9 @@ export const UnivestStablecoinLanding: React.FC = () => {
           {trustCards.map((card, idx) => (
             <div 
               key={idx}
-              className="bg-white rounded-[18px] border border-black/5 p-8 shadow-sm hover:shadow-md hover:-translate-y-1.5 hover:border-blue-500 transition-all duration-300 group"
+              className="bg-white rounded-[18px] border border-black/5 p-8 shadow-sm hover:shadow-md hover:-translate-y-1.5 hover:border-primary transition-all duration-300 group"
             >
-              <div className="mb-6 inline-flex p-3 rounded-xl bg-[#F5F5F5] text-black group-hover:text-blue-500 transition-colors duration-300">
+              <div className="mb-6 inline-flex p-3 rounded-xl bg-[#F8FAFC] text-black group-hover:text-primary transition-colors duration-300">
                 <card.icon className="w-8 h-8 transition-transform duration-300 group-hover:scale-105 group-hover:rotate-[4deg]" strokeWidth={1.5} />
               </div>
               <h4 className="text-black text-xl font-medium mb-3" style={{ letterSpacing: '-0.01em' }}>
@@ -304,7 +304,7 @@ export const UnivestStablecoinLanding: React.FC = () => {
       </section>
 
       {/* 5. Use Cases Section */}
-      <section className="bg-[#F5F5F5] px-[50px] py-24">
+      <section className="bg-[#F8FAFC] px-[50px] py-24">
         <div className="max-w-[88rem] mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
           {/* Left Column */}
           <div className="relative rounded-3xl overflow-hidden min-h-[720px] w-full">

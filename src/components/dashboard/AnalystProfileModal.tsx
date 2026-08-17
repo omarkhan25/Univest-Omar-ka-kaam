@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   X, ShieldCheck, Award, TrendingUp, CheckCircle2, 
@@ -81,11 +81,11 @@ export const AnalystProfileModal: React.FC<AnalystProfileModalProps> = ({
           {/* Header Bar */}
           <div className="px-6 py-5 border-b border-[#E2E8F0] flex items-center justify-between bg-[#F8FAFC]">
             <div className="flex items-center gap-2">
-              <span className="p-2 rounded-xl bg-blue-50 text-[#2563EB]">
+              <span className="p-2 rounded-xl bg-primary-light text-primary">
                 <ShieldCheck className="w-5 h-5" />
               </span>
               <div>
-                <h3 className="font-black text-lg text-[#0F172A]">SEBI Registered Analyst Profile</h3>
+                <h3 className="font-black text-lg text-[#172033]">SEBI Registered Analyst Profile</h3>
                 <span className="text-xs font-bold text-slate-400">Reg. No: INH000008492</span>
               </div>
             </div>
@@ -101,10 +101,10 @@ export const AnalystProfileModal: React.FC<AnalystProfileModalProps> = ({
           <div className="p-6 overflow-y-auto flex-1 flex flex-col gap-6">
             
             {/* Hero Profile Card */}
-            <div className="bg-[#0F172A] text-white p-6 rounded-[24px] relative overflow-hidden flex flex-col sm:flex-row items-center sm:items-start gap-6 shadow-lg">
-              <div className="absolute -top-12 -right-12 w-64 h-64 bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
+            <div className="bg-[#172033] text-white p-6 rounded-[24px] relative overflow-hidden flex flex-col sm:flex-row items-center sm:items-start gap-6 shadow-lg">
+              <div className="absolute -top-12 -right-12 w-64 h-64 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
               
-              <div className="w-24 h-24 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-3xl font-black text-white shrink-0 border-2 border-white/20 shadow-xl">
+              <div className="w-24 h-24 rounded-2xl bg-gradient-to-tr from-primary to-primary flex items-center justify-center text-3xl font-black text-white shrink-0 border-2 border-white/20 shadow-xl">
                 {analyst.name ? analyst.name.split(' ').map((n: string) => n[0]).join('') : 'AM'}
               </div>
 
@@ -112,14 +112,14 @@ export const AnalystProfileModal: React.FC<AnalystProfileModalProps> = ({
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
                   <div>
                     <h2 className="text-2xl font-black">{analyst.name || 'Aarav Mehta'}</h2>
-                    <span className="text-xs font-bold text-blue-400 block mt-0.5">{analyst.role || 'Senior Research Analyst · Capital Goods & Energy'}</span>
+                    <span className="text-xs font-bold text-[#64748B] block mt-0.5">{analyst.role || 'Senior Research Analyst · Capital Goods & Energy'}</span>
                   </div>
                   <button
                     onClick={() => setIsFollowing(!isFollowing)}
                     className={`px-5 py-2.5 rounded-xl font-extrabold text-xs transition-all shadow-sm ${
                       isFollowing
                         ? 'bg-white/10 text-white border border-white/20 hover:bg-white/20'
-                        : 'bg-blue-600 hover:bg-blue-700 text-white'
+                        : 'bg-primary hover:bg-primary-dark text-white'
                     }`}
                   >
                     {isFollowing ? '✓ Following' : '+ Follow Analyst'}
@@ -147,7 +147,7 @@ export const AnalystProfileModal: React.FC<AnalystProfileModalProps> = ({
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-xs font-bold text-slate-400">Expertise:</span>
               {['Large-Cap Equities', 'Capital Goods', 'Energy & Green Hydrogen', 'Swing Trading', 'SEBI Compliance'].map(tag => (
-                <span key={tag} className="px-3 py-1 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs font-bold text-[#0F172A]">
+                <span key={tag} className="px-3 py-1 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs font-bold text-[#172033]">
                   {tag}
                 </span>
               ))}
@@ -158,7 +158,7 @@ export const AnalystProfileModal: React.FC<AnalystProfileModalProps> = ({
               <button
                 onClick={() => setActiveSubTab('calls')}
                 className={`px-4 py-2 rounded-xl text-xs font-bold transition ${
-                  activeSubTab === 'calls' ? 'bg-[#0F172A] text-white' : 'text-slate-500 hover:bg-slate-100'
+                  activeSubTab === 'calls' ? 'bg-[#172033] text-white' : 'text-slate-500 hover:bg-slate-100'
                 }`}
               >
                 Live Calls ({mockActiveCalls.length})
@@ -166,7 +166,7 @@ export const AnalystProfileModal: React.FC<AnalystProfileModalProps> = ({
               <button
                 onClick={() => setActiveSubTab('reports')}
                 className={`px-4 py-2 rounded-xl text-xs font-bold transition ${
-                  activeSubTab === 'reports' ? 'bg-[#0F172A] text-white' : 'text-slate-500 hover:bg-slate-100'
+                  activeSubTab === 'reports' ? 'bg-[#172033] text-white' : 'text-slate-500 hover:bg-slate-100'
                 }`}
               >
                 Published Reports ({mockReports.length})
@@ -174,7 +174,7 @@ export const AnalystProfileModal: React.FC<AnalystProfileModalProps> = ({
               <button
                 onClick={() => setActiveSubTab('bio')}
                 className={`px-4 py-2 rounded-xl text-xs font-bold transition ${
-                  activeSubTab === 'bio' ? 'bg-[#0F172A] text-white' : 'text-slate-500 hover:bg-slate-100'
+                  activeSubTab === 'bio' ? 'bg-[#172033] text-white' : 'text-slate-500 hover:bg-slate-100'
                 }`}
               >
                 Biography & Methodology
@@ -192,7 +192,7 @@ export const AnalystProfileModal: React.FC<AnalystProfileModalProps> = ({
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
-                          <h4 className="font-black text-[#0F172A] text-base">{call.company}</h4>
+                          <h4 className="font-black text-[#172033] text-base">{call.company}</h4>
                           <span className="px-2 py-0.5 bg-emerald-100 text-emerald-700 font-extrabold text-[10px] rounded">
                             {call.rec}
                           </span>
@@ -205,14 +205,14 @@ export const AnalystProfileModal: React.FC<AnalystProfileModalProps> = ({
                     <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end border-t sm:border-t-0 pt-3 sm:pt-0 border-slate-100">
                       <div className="text-right">
                         <span className="text-[10px] font-bold text-slate-400 uppercase block">Target</span>
-                        <span className="font-black text-[#0F172A] text-sm">{call.target} ({call.return})</span>
+                        <span className="font-black text-[#172033] text-sm">{call.target} ({call.return})</span>
                       </div>
                       <button
                         onClick={() => {
                           onClose();
                           if (onSelectResearch) onSelectResearch(call);
                         }}
-                        className="px-4 py-2 rounded-xl bg-blue-50 text-blue-700 hover:bg-blue-100 font-bold text-xs transition"
+                        className="px-4 py-2 rounded-xl bg-primary-light text-primary hover:bg-primary-light font-bold text-xs transition"
                       >
                         Read Analysis
                       </button>
@@ -227,13 +227,13 @@ export const AnalystProfileModal: React.FC<AnalystProfileModalProps> = ({
                 {mockReports.map((report, idx) => (
                   <div key={idx} className="bg-white border border-[#E2E8F0] rounded-[20px] p-5 hover:border-blue-300 transition shadow-sm flex justify-between items-center">
                     <div>
-                      <span className="text-[10px] font-black uppercase text-blue-600 bg-blue-50 px-2 py-0.5 rounded mb-2 inline-block">
+                      <span className="text-[10px] font-black uppercase text-primary bg-primary-light px-2 py-0.5 rounded mb-2 inline-block">
                         {report.category}
                       </span>
-                      <h4 className="font-black text-[#0F172A] text-base">{report.title}</h4>
+                      <h4 className="font-black text-[#172033] text-base">{report.title}</h4>
                       <span className="text-xs text-slate-400 font-medium mt-1 block">{report.date} · {report.readTime}</span>
                     </div>
-                    <button className="px-4 py-2 rounded-xl bg-[#0F172A] text-white font-bold text-xs hover:bg-slate-800 transition">
+                    <button className="px-4 py-2 rounded-xl bg-[#172033] text-white font-bold text-xs hover:bg-slate-800 transition">
                       View Report
                     </button>
                   </div>
@@ -243,7 +243,7 @@ export const AnalystProfileModal: React.FC<AnalystProfileModalProps> = ({
 
             {activeSubTab === 'bio' && (
               <div className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-[20px] p-6 text-sm text-slate-600 font-medium leading-relaxed flex flex-col gap-4">
-                <h4 className="font-black text-[#0F172A] text-base">Investment Philosophy & Analytical Track Record</h4>
+                <h4 className="font-black text-[#172033] text-base">Investment Philosophy & Analytical Track Record</h4>
                 <p>
                   With over 12+ years of equity research experience covering Large-Cap Capital Goods and Energy sectors, Aarav Mehta combines quantitative factor screening with deep fundamental supply-chain validation.
                 </p>
@@ -259,7 +259,7 @@ export const AnalystProfileModal: React.FC<AnalystProfileModalProps> = ({
           <div className="px-6 py-4 bg-[#F8FAFC] border-t border-[#E2E8F0] flex justify-end">
             <button
               onClick={onClose}
-              className="px-6 py-2.5 rounded-xl bg-[#0F172A] text-white font-bold text-xs hover:bg-slate-800 transition"
+              className="px-6 py-2.5 rounded-xl bg-[#172033] text-white font-bold text-xs hover:bg-slate-800 transition"
             >
               Close Profile
             </button>

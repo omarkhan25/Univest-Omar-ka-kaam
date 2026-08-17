@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, Mail, Phone, Check, ArrowRight, RefreshCw, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -244,13 +244,13 @@ export const SignUp: React.FC = () => {
       {/* Right Column: Interactive Signup Form (White Background) */}
       <div className="min-h-screen p-8 sm:p-16 md:p-24 bg-white relative flex flex-col justify-center text-slate-900 overflow-y-auto">
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-purple-600/5 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
         
         <div className="max-w-md w-full mx-auto relative z-10 flex flex-col justify-between min-h-[550px]">
           <div>
             <div className="mb-6 text-left">
               <div className="lg:hidden flex items-center gap-2 mb-6">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-emerald-500 flex items-center justify-center font-black text-lg text-white shadow-md">
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-primary to-emerald-500 flex items-center justify-center font-black text-lg text-white shadow-md">
                   U
                 </div>
                 <span className="font-black text-lg text-slate-900 font-display">UNIVEST</span>
@@ -274,7 +274,7 @@ export const SignUp: React.FC = () => {
             </div>
 
             {errorMessage && (
-              <div className="mb-6 rounded-xl border border-rose-500/30 bg-rose-500/5 p-3 text-[13px] font-bold text-rose-500 text-left">
+              <div className="mb-6 rounded-xl border border-danger/30 bg-danger/5 p-3 text-[13px] font-bold text-danger text-left">
                 {errorMessage}
               </div>
             )}
@@ -293,7 +293,7 @@ export const SignUp: React.FC = () => {
                         className="w-full pl-8 bg-transparent border-none outline-none text-slate-900 placeholder-slate-400 text-[15px] font-medium py-1 focus:ring-0 focus:outline-none"
                       />
                     </div>
-                    {errors.name && <span className="text-[11px] font-bold text-rose-500 mt-1 block">{errors.name}</span>}
+                    {errors.name && <span className="text-[11px] font-bold text-danger mt-1 block">{errors.name}</span>}
                   </div>
 
                   <div>
@@ -308,7 +308,7 @@ export const SignUp: React.FC = () => {
                         className="w-full pl-8 bg-transparent border-none outline-none text-slate-900 placeholder-slate-400 text-[15px] font-medium py-1 focus:ring-0 focus:outline-none"
                       />
                     </div>
-                    {errors.email && <span className="text-[11px] font-bold text-rose-500 mt-1 block">{errors.email}</span>}
+                    {errors.email && <span className="text-[11px] font-bold text-danger mt-1 block">{errors.email}</span>}
                   </div>
 
                   <div className="flex items-center gap-2 pt-1 pb-2">
@@ -320,7 +320,7 @@ export const SignUp: React.FC = () => {
                     />
                     <span className="text-[13px] font-bold text-slate-400">I agree to SEBI advisory terms & privacy policy</span>
                   </div>
-                  {errors.acceptTerms && <span className="text-[11px] font-bold text-rose-500 block -mt-2 mb-2">{errors.acceptTerms}</span>}
+                  {errors.acceptTerms && <span className="text-[11px] font-bold text-danger block -mt-2 mb-2">{errors.acceptTerms}</span>}
 
                   <button
                     type="submit"

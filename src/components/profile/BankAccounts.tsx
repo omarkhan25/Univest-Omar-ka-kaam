@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Building2, Plus, Edit2, Trash2, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
@@ -37,7 +37,7 @@ export const BankAccounts: React.FC = () => {
                 <div>
                   <h4 className="text-base font-black text-brand-navy mb-1">{bank.name}</h4>
                   {bank.isPrimary && (
-                    <span className="text-[10px] font-black uppercase text-primary bg-blue-50 px-2 py-0.5 rounded border border-blue-100">
+                    <span className="text-[10px] font-black uppercase text-primary bg-primary-light px-2 py-0.5 rounded border border-[#E2E8F0]">
                       Primary Account
                     </span>
                   )}
@@ -76,7 +76,7 @@ export const BankAccounts: React.FC = () => {
               </button>
               <button 
                 onClick={() => toast.error(`Removing ${bank.name}...`)}
-                className="flex-1 flex items-center justify-center gap-1.5 text-xs font-bold text-rose-600 bg-rose-50 py-2.5 rounded-xl hover:bg-rose-100 hover:text-rose-700 transition"
+                className="flex-1 flex items-center justify-center gap-1.5 text-xs font-bold text-danger bg-rose-50 py-2.5 rounded-xl hover:bg-rose-100 hover:text-rose-700 transition"
               >
                 <Trash2 className="w-3.5 h-3.5" /> Remove
               </button>

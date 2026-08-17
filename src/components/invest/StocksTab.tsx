@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+﻿import React, { useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { 
   BarChart3, Search, Filter, ShieldCheck, ArrowUpRight, 
@@ -111,7 +111,7 @@ export const StocksTab: React.FC<{
               onClick={() => setSelectedCategory(cat.key)}
               className={`px-3.5 py-2 rounded-xl transition cursor-pointer whitespace-nowrap ${
                 selectedCategory === cat.key
-                  ? 'bg-[#0F172A] text-white font-black'
+                  ? 'bg-[#172033] text-white font-black'
                   : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
               }`}
             >
@@ -145,13 +145,13 @@ export const StocksTab: React.FC<{
           <div className="flex items-center bg-slate-100 p-1 rounded-xl">
             <button
               onClick={() => setViewMode('list')}
-              className={`p-1.5 rounded-lg transition ${viewMode === 'list' ? 'bg-white text-blue-600 shadow-2xs' : 'text-slate-500'}`}
+              className={`p-1.5 rounded-lg transition ${viewMode === 'list' ? 'bg-white text-primary shadow-2xs' : 'text-slate-500'}`}
             >
               <List className="w-4 h-4" />
             </button>
             <button
               onClick={() => setViewMode('grid')}
-              className={`p-1.5 rounded-lg transition ${viewMode === 'grid' ? 'bg-white text-blue-600 shadow-2xs' : 'text-slate-500'}`}
+              className={`p-1.5 rounded-lg transition ${viewMode === 'grid' ? 'bg-white text-primary shadow-2xs' : 'text-slate-500'}`}
             >
               <LayoutGrid className="w-4 h-4" />
             </button>
@@ -185,11 +185,11 @@ export const StocksTab: React.FC<{
                 <tr key={stk.id} className="hover:bg-slate-50 transition-colors">
                   <td className="py-3.5 px-5 cursor-pointer" onClick={() => onSelectStock(stk)}>
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-xl bg-[#0F172A] text-white font-black text-[11px] flex items-center justify-center">
+                      <div className="w-8 h-8 rounded-xl bg-[#172033] text-white font-black text-[11px] flex items-center justify-center">
                         {stk.symbol.slice(0, 2)}
                       </div>
                       <div>
-                        <span className="font-black text-[#0F172A] text-sm block">{stk.symbol}</span>
+                        <span className="font-black text-[#172033] text-sm block">{stk.symbol}</span>
                         <span className="text-[10px] text-slate-400 font-medium block truncate max-w-[160px]">{stk.companyName}</span>
                       </div>
                     </div>
@@ -200,7 +200,7 @@ export const StocksTab: React.FC<{
                     </span>
                   </td>
                   <td className="py-3.5 px-4 font-black text-slate-900">₹{stk.currentPrice.toLocaleString('en-IN', { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</td>
-                  <td className={`py-3.5 px-4 font-black ${stk.changePercent >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                  <td className={`py-3.5 px-4 font-black ${stk.changePercent >= 0 ? 'text-emerald-600' : 'text-danger'}`}>
                     {stk.changePercent >= 0 ? `+${stk.changePercent.toFixed(2)}%` : `${stk.changePercent.toFixed(2)}%`}
                   </td>
                   <td className="py-3.5 px-4 font-bold text-slate-700">{stk.peRatio ? stk.peRatio : 'N/A'}</td>
@@ -208,7 +208,7 @@ export const StocksTab: React.FC<{
                   <td className="py-3.5 px-4 text-right">
                     <button
                       onClick={() => onTrade(stk)}
-                      className="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-black text-xs transition cursor-pointer shadow-2xs"
+                      className="px-3.5 py-1.5 bg-primary hover:bg-primary-dark text-white rounded-xl font-black text-xs transition cursor-pointer shadow-2xs"
                     >
                       Trade
                     </button>
@@ -230,7 +230,7 @@ export const StocksTab: React.FC<{
               <div>
                 <div className="flex items-start justify-between mb-3">
                   <div>
-                    <h3 className="font-black text-base text-[#0F172A]">{stk.symbol}</h3>
+                    <h3 className="font-black text-base text-[#172033]">{stk.symbol}</h3>
                     <span className="text-xs text-slate-400 font-medium block truncate max-w-[160px]">{stk.companyName}</span>
                   </div>
                   <span className="text-[10px] font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded">
@@ -239,18 +239,18 @@ export const StocksTab: React.FC<{
                 </div>
 
                 <div className="my-4 flex items-baseline justify-between">
-                  <span className="text-2xl font-black text-[#0F172A]">₹{stk.currentPrice.toLocaleString('en-IN', { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</span>
-                  <span className={`text-xs font-black ${stk.changePercent >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                  <span className="text-2xl font-black text-[#172033]">₹{stk.currentPrice.toLocaleString('en-IN', { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</span>
+                  <span className={`text-xs font-black ${stk.changePercent >= 0 ? 'text-emerald-600' : 'text-danger'}`}>
                     {stk.changePercent >= 0 ? `+${stk.changePercent.toFixed(2)}%` : `${stk.changePercent.toFixed(2)}%`}
                   </span>
                 </div>
               </div>
 
               <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
-                <button onClick={() => onSelectStock(stk)} className="text-xs font-black text-slate-600 hover:text-blue-600 cursor-pointer">
+                <button onClick={() => onSelectStock(stk)} className="text-xs font-black text-slate-600 hover:text-primary cursor-pointer">
                   Details
                 </button>
-                <button onClick={() => onTrade(stk)} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black cursor-pointer shadow-xs">
+                <button onClick={() => onTrade(stk)} className="px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-xl text-xs font-black cursor-pointer shadow-xs">
                   Trade
                 </button>
               </div>

@@ -123,9 +123,11 @@ const TIMELINE_MONTHS = ['Jan 2026', 'Feb 2026', 'Mar 2026', 'Apr 2026', 'May 20
 interface PortfolioDashboardProps {
   onTrade?: (tradeIntent: any) => void;
   onSelectResearch?: (research: any) => void;
+  onAddFunds?: () => void;
+  onWithdraw?: () => void;
 }
 
-export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade, onSelectResearch }) => {
+export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade, onSelectResearch, onAddFunds, onWithdraw }) => {
   const [selectedMonth, setSelectedMonth] = useState<string>('Jul 2026');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [holdingsFilter, setHoldingsFilter] = useState<'ALL' | 'GAINS' | 'LOSSES'>('ALL');
@@ -373,7 +375,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
             </div>
             <LoadingSkeleton variant="Chart" />
           </div>
-          <div className="bg-[#0F172A] border border-slate-800 rounded-[32px] p-6 sm:p-8 flex flex-col gap-6">
+          <div className="bg-[#172033] border border-slate-800 rounded-[32px] p-6 sm:p-8 flex flex-col gap-6">
             <div className="w-24 h-4 bg-slate-800 rounded" />
             <div className="w-48 h-8 bg-slate-800 rounded mt-2" />
             <div className="flex flex-col gap-4 mt-6">
@@ -410,8 +412,8 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
         <div className="bg-white border border-slate-200 rounded-[32px] p-6 sm:p-8 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-2">
-              <Activity className="w-4.5 h-4.5 text-blue-600" />
-              <h2 className="text-sm font-black text-[#0F172A] uppercase tracking-wider">Growth Trajectory</h2>
+              <Activity className="w-4.5 h-4.5 text-primary" />
+              <h2 className="text-sm font-black text-[#172033] uppercase tracking-wider">Growth Trajectory</h2>
             </div>
             <span className="text-[10px] font-bold text-slate-400 uppercase">Growth vs Index</span>
           </div>
@@ -421,8 +423,8 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
               <AreaChart data={data.chartData} margin={{ top: 10, right: 0, left: 0, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#2563EB" stopOpacity={0.2} />
-                    <stop offset="95%" stopColor="#2563EB" stopOpacity={0} />
+                    <stop offset="5%" stopColor="#15519D" stopOpacity={0.2} />
+                    <stop offset="95%" stopColor="#15519D" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F5F9" />
@@ -430,17 +432,17 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
                 <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#94A3B8', fontWeight: 600 }} tickFormatter={(value) => `₹${(value / 100000).toFixed(1)}L`} dx={-10} />
                 <Tooltip
                   contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)', fontSize: '12px', fontWeight: 700 }}
-                  itemStyle={{ color: '#0F172A' }}
+                  itemStyle={{ color: '#172033' }}
                 />
-                <Area type="monotone" dataKey="value" stroke="#2563EB" strokeWidth={3} fillOpacity={1} fill="url(#colorValue)" />
+                <Area type="monotone" dataKey="value" stroke="#15519D" strokeWidth={3} fillOpacity={1} fill="url(#colorValue)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
 
         {/* Wealth Snapshot metrics panel */}
-        <div className="bg-[#0F172A] text-white border border-slate-800 rounded-[32px] p-6 sm:p-8 flex flex-col justify-between shadow-2xl relative overflow-hidden">
-          <div className="absolute -right-20 -top-20 w-64 h-64 bg-blue-600/10 rounded-full blur-[100px] pointer-events-none" />
+        <div className="bg-[#172033] text-white border border-slate-800 rounded-[32px] p-6 sm:p-8 flex flex-col justify-between shadow-2xl relative overflow-hidden">
+          <div className="absolute -right-20 -top-20 w-64 h-64 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
 
           <div className="flex flex-col gap-6">
             <div>
@@ -475,7 +477,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
           <div className="flex flex-col gap-2.5 mt-6 border-t border-white/10 pt-4">
             <button
               onClick={() => setShowDepositModal(true)}
-              className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black cursor-pointer transition text-center"
+              className="w-full py-3 bg-primary hover:bg-primary-dark text-white rounded-xl text-xs font-black cursor-pointer transition text-center"
             >
               Add Funds
             </button>
@@ -504,7 +506,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
       <section className="flex flex-col gap-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <Star className="w-4.5 h-4.5 text-blue-600 fill-blue-600" />
+            <Star className="w-4.5 h-4.5 text-primary fill-primary" />
             <h2 className="text-lg font-black text-slate-900 uppercase tracking-widest">Holdings</h2>
           </div>
 
@@ -516,7 +518,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
                 placeholder="Search holdings..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-blue-500 transition shadow-xs"
+                className="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold outline-none focus:border-primary transition shadow-xs"
               />
             </div>
 
@@ -575,10 +577,10 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
                       <td className="py-4 px-6 text-right font-black text-slate-900">{h.qty}</td>
                       <td className="py-4 px-6 text-right text-slate-600">₹{h.avgPrice.toLocaleString()}</td>
                       <td className="py-4 px-6 text-right text-slate-900 font-bold">₹{h.cmp.toLocaleString()}</td>
-                      <td className={`py-4 px-6 text-right font-bold ${h.todayPnL >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                      <td className={`py-4 px-6 text-right font-bold ${h.todayPnL >= 0 ? 'text-emerald-600' : 'text-danger'}`}>
                         {h.todayPnL >= 0 ? '+' : ''}₹{h.todayPnL.toLocaleString()}
                       </td>
-                      <td className={`py-4 px-6 text-right font-black ${totalReturnAmount >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                      <td className={`py-4 px-6 text-right font-black ${totalReturnAmount >= 0 ? 'text-emerald-600' : 'text-danger'}`}>
                         {totalReturnAmount >= 0 ? '+' : ''}{returnPercentage.toFixed(2)}%
                       </td>
                       <td className="py-4 px-6 text-right text-slate-900 font-black">₹{currentTotal.toLocaleString()}</td>
@@ -586,7 +588,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
                       <td className="py-4 px-6 text-right">
                         <button
                           onClick={() => setActiveHoldingDetail(h)}
-                          className="text-[10px] font-black text-blue-600 hover:text-blue-700 cursor-pointer"
+                          className="text-[10px] font-black text-primary hover:text-primary cursor-pointer"
                         >
                           View Detail
                         </button>
@@ -615,7 +617,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
         {/* Asset Classes Donut */}
         <div className="bg-white border border-slate-200 rounded-[32px] p-6 sm:p-8 shadow-xs flex flex-col justify-between">
           <h3 className="text-sm font-black uppercase tracking-wider text-slate-900 mb-6 flex items-center gap-2">
-            <PieChart className="w-4 h-4 text-blue-600" /> Asset Class Allocation
+            <PieChart className="w-4 h-4 text-primary" /> Asset Class Allocation
           </h3>
 
           <div className="flex flex-col sm:flex-row items-center gap-8">
@@ -660,7 +662,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
         {/* Sector Allocation */}
         <div className="bg-white border border-slate-200 rounded-[32px] p-6 sm:p-8 shadow-xs flex flex-col justify-between">
           <h3 className="text-sm font-black uppercase tracking-wider text-slate-900 mb-6 flex items-center gap-2">
-            <Activity className="w-4 h-4 text-blue-600" /> Sector Exposure
+            <Activity className="w-4 h-4 text-primary" /> Sector Exposure
           </h3>
 
           <div className="flex flex-col sm:flex-row items-center gap-8">
@@ -709,7 +711,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
           ---------------------------------------------------- */}
       <section className="flex flex-col gap-6">
         <div className="flex items-center gap-2">
-          <Landmark className="w-4.5 h-4.5 text-blue-600" />
+          <Landmark className="w-4.5 h-4.5 text-primary" />
           <h2 className="text-lg font-black text-slate-900 uppercase tracking-widest">Performance Analysis</h2>
         </div>
 
@@ -743,11 +745,11 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
 
           <div className="bg-rose-50 border border-rose-100 rounded-[24px] p-5 flex flex-col justify-between min-h-[140px]">
             <div>
-              <span className="text-[10px] font-black text-rose-600 uppercase tracking-wider block mb-2">Worst Performer</span>
+              <span className="text-[10px] font-black text-danger uppercase tracking-wider block mb-2">Worst Performer</span>
               <span className="text-base font-black text-slate-900 block">{data.performance.worstPerformer.symbol}</span>
               <span className="text-[10px] text-slate-500 font-bold block mt-0.5">{data.performance.worstPerformer.sector}</span>
             </div>
-            <span className="text-lg font-black text-rose-600 flex items-center gap-0.5 mt-4">
+            <span className="text-lg font-black text-danger flex items-center gap-0.5 mt-4">
               <ArrowDownRight className="w-5 h-5" /> {data.performance.worstPerformer.change}%
             </span>
           </div>
@@ -780,12 +782,12 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
       <section className="flex flex-col gap-6">
         <div className="flex items-center justify-between border-b border-slate-200 pb-4">
           <div className="flex items-center gap-2">
-            <Clock className="w-4.5 h-4.5 text-blue-600" />
+            <Clock className="w-4.5 h-4.5 text-primary" />
             <h2 className="text-lg font-black text-slate-900 uppercase tracking-widest">Transactions Timeline</h2>
           </div>
           <button
             onClick={() => handleExport('Transaction statement')}
-            className="text-xs font-black text-blue-600 hover:text-blue-700 flex items-center gap-1.5 cursor-pointer"
+            className="text-xs font-black text-primary hover:text-primary flex items-center gap-1.5 cursor-pointer"
           >
             <Download className="w-3.5 h-3.5" /> Export Statements
           </button>
@@ -800,7 +802,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
               } else if (t.type === 'Sell' || t.type === 'Withdrawal') {
                 tagColor = 'bg-rose-50 text-rose-700 border border-rose-100';
               } else if (t.type === 'Dividend' || t.type === 'Bonus') {
-                tagColor = 'bg-blue-50 text-blue-700 border border-blue-100';
+                tagColor = 'bg-primary-light text-primary border border-[#E2E8F0]';
               }
 
               return (
@@ -852,16 +854,16 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
           ---------------------------------------------------- */}
       <section className="flex flex-col gap-6">
         <div className="flex items-center gap-2">
-          <Sparkles className="w-4.5 h-4.5 text-blue-600" />
+          <Sparkles className="w-4.5 h-4.5 text-primary" />
           <h2 className="text-lg font-black text-slate-900 uppercase tracking-widest">AI Portfolio Insights</h2>
         </div>
 
-        <div className="bg-white border border-blue-100 rounded-[32px] p-6 sm:p-8 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-8 relative overflow-hidden">
-          <div className="absolute right-0 top-0 w-48 h-48 bg-blue-50/20 rounded-full blur-[80px] pointer-events-none" />
+        <div className="bg-white border border-[#E2E8F0] rounded-[32px] p-6 sm:p-8 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-8 relative overflow-hidden">
+          <div className="absolute right-0 top-0 w-48 h-48 bg-primary-light/20 rounded-full blur-[80px] pointer-events-none" />
 
           <div className="max-w-xl flex flex-col gap-4">
             <div className="flex items-center gap-3">
-              <span className="text-[10px] font-black text-blue-600 bg-blue-50 border border-blue-100 px-3 py-1 rounded-xl">
+              <span className="text-[10px] font-black text-primary bg-primary-light border border-[#E2E8F0] px-3 py-1 rounded-xl">
                 Portfolio Health Score: {data.aiInsights.healthScore}%
               </span>
               <span className="text-xs font-bold text-slate-400">Risk Assessment: <strong className="text-slate-900 font-black">{data.aiInsights.riskLevel}</strong></span>
@@ -884,7 +886,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
           <div className="flex flex-col gap-2 shrink-0 w-full md:w-60">
             <button
               onClick={() => setShowAnalysisModal(true)}
-              className="w-full py-3.5 bg-[#0F172A] hover:bg-slate-900 text-white font-black text-xs rounded-xl shadow-xs transition cursor-pointer text-center"
+              className="w-full py-3.5 bg-[#172033] hover:bg-slate-900 text-white font-black text-xs rounded-xl shadow-xs transition cursor-pointer text-center"
             >
               View Full Analysis
             </button>
@@ -898,8 +900,8 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
       <section className="flex flex-col gap-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-blue-50 flex items-center justify-center">
-              <Download className="w-4 h-4 text-blue-600" />
+            <div className="w-8 h-8 rounded-xl bg-primary-light flex items-center justify-center">
+              <Download className="w-4 h-4 text-primary" />
             </div>
             <div>
               <h2 className="text-lg font-black text-slate-900 leading-tight">Statements & Tax Reports</h2>
@@ -911,15 +913,15 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {([
-            { name: 'Holdings Statement', desc: 'Current portfolio snapshot with all open positions', Icon: BarChart3, color: 'blue', iconBg: 'bg-blue-100', iconText: 'text-blue-600' },
+            { name: 'Holdings Statement', desc: 'Current portfolio snapshot with all open positions', Icon: BarChart3, color: 'blue', iconBg: 'bg-primary-light', iconText: 'text-primary' },
             { name: 'Capital Gains', desc: 'Short-term & long-term gains for ITR filing', Icon: TrendingUp, color: 'emerald', iconBg: 'bg-emerald-100', iconText: 'text-emerald-600' },
             { name: 'Tax Report', desc: 'Tax liability summary for securities traded', Icon: Receipt, color: 'violet', iconBg: 'bg-violet-100', iconText: 'text-violet-600' },
             { name: 'Transaction Statement', desc: 'Chronological log of all debit & credit entries', Icon: FileText, color: 'amber', iconBg: 'bg-amber-100', iconText: 'text-amber-600' },
             { name: 'Portfolio Summary', desc: 'Asset-wise allocation and performance digest', Icon: Layers, color: 'sky', iconBg: 'bg-sky-100', iconText: 'text-sky-600' },
-            { name: 'P&L Report', desc: 'Realised & unrealised profit and loss breakdown', Icon: LineChart, color: 'rose', iconBg: 'bg-rose-100', iconText: 'text-rose-600' },
+            { name: 'P&L Report', desc: 'Realised & unrealised profit and loss breakdown', Icon: LineChart, color: 'rose', iconBg: 'bg-rose-100', iconText: 'text-danger' },
           ] as const).map((rep) => {
             const colorMap: Record<string, string> = {
-              blue: 'border-blue-100 hover:border-blue-300 bg-gradient-to-br from-blue-50/40 to-white',
+              blue: 'border-[#E2E8F0] hover:border-blue-300 bg-gradient-to-br from-blue-50/40 to-white',
               emerald: 'border-emerald-100 hover:border-emerald-300 bg-gradient-to-br from-emerald-50/40 to-white',
               violet: 'border-violet-100 hover:border-violet-300 bg-gradient-to-br from-violet-50/40 to-white',
               amber: 'border-amber-100 hover:border-amber-300 bg-gradient-to-br from-amber-50/40 to-white',
@@ -927,12 +929,12 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
               rose: 'border-rose-100 hover:border-rose-300 bg-gradient-to-br from-rose-50/40 to-white',
             };
             const btnColorMap: Record<string, string> = {
-              blue: 'bg-blue-600 hover:bg-blue-700',
+              blue: 'bg-primary hover:bg-primary-dark',
               emerald: 'bg-emerald-600 hover:bg-emerald-700',
               violet: 'bg-violet-600 hover:bg-violet-700',
               amber: 'bg-amber-500 hover:bg-amber-600',
               sky: 'bg-sky-600 hover:bg-sky-700',
-              rose: 'bg-rose-600 hover:bg-rose-700',
+              rose: 'bg-danger hover:bg-rose-700',
             };
             const { Icon } = rep;
             return (
@@ -977,7 +979,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
               className="bg-white rounded-[28px] border border-slate-200 p-6 sm:p-8 max-w-sm w-full shadow-2xl flex flex-col gap-6"
             >
               <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                <h3 className="font-black text-base text-[#0F172A]">Deposit Wealth Funds</h3>
+                <h3 className="font-black text-base text-[#172033]">Deposit Wealth Funds</h3>
                 <button onClick={() => setShowDepositModal(false)} className="p-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-400 cursor-pointer">
                   <X className="w-4 h-4" />
                 </button>
@@ -1009,7 +1011,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
 
               <button
                 onClick={() => handleDeposit(Number(depositAmount || 0))}
-                className="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black transition cursor-pointer"
+                className="w-full py-3.5 bg-primary hover:bg-primary-dark text-white rounded-xl text-xs font-black transition cursor-pointer"
               >
                 Complete Deposit
               </button>
@@ -1033,7 +1035,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
                 className="bg-white rounded-[28px] border border-slate-200 p-6 sm:p-8 max-w-md w-full shadow-2xl flex flex-col gap-6"
               >
                 <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                  <h3 className="font-black text-base text-[#0F172A]">Withdraw to Bank</h3>
+                  <h3 className="font-black text-base text-[#172033]">Withdraw to Bank</h3>
                   <button onClick={() => setShowWithdrawModal(false)} className="p-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-400 cursor-pointer">
                     <X className="w-4 h-4" />
                   </button>
@@ -1046,9 +1048,9 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
                       <span className="text-[9px] text-slate-400 uppercase block mb-1">Total Balance</span>
                       <span className="text-slate-950 font-black text-sm">₹{data.overview.cash.toLocaleString()}</span>
                     </div>
-                    <div className="p-3 bg-blue-50/50 border border-blue-100 rounded-xl">
-                      <span className="text-[9px] text-blue-500 uppercase block mb-1">Withdrawable Cash</span>
-                      <span className="text-blue-700 font-black text-sm">₹{withdrawableBalance.toLocaleString()}</span>
+                    <div className="p-3 bg-primary-light/50 border border-[#E2E8F0] rounded-xl">
+                      <span className="text-[9px] text-primary uppercase block mb-1">Withdrawable Cash</span>
+                      <span className="text-primary font-black text-sm">₹{withdrawableBalance.toLocaleString()}</span>
                     </div>
                   </div>
 
@@ -1089,7 +1091,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
                     }
                     handleWithdraw(amountVal);
                   }}
-                  className="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black transition cursor-pointer"
+                  className="w-full py-3.5 bg-primary hover:bg-primary-dark text-white rounded-xl text-xs font-black transition cursor-pointer"
                 >
                   Initiate Withdrawal
                 </button>
@@ -1111,7 +1113,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
               className="bg-white rounded-[28px] border border-slate-200 p-6 sm:p-8 max-w-sm w-full shadow-2xl flex flex-col gap-6"
             >
               <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                <h3 className="font-black text-base text-[#0F172A]">Export Statements</h3>
+                <h3 className="font-black text-base text-[#172033]">Export Statements</h3>
                 <button onClick={() => setShowExportModal(false)} className="p-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-400 cursor-pointer">
                   <X className="w-4 h-4" />
                 </button>
@@ -1155,9 +1157,9 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
               {/* Header */}
               <div className="flex items-center justify-between border-b border-slate-100 pb-4">
                 <div className="flex items-center gap-2.5">
-                  <Sparkles className="w-5 h-5 text-blue-600 animate-pulse animate-duration-1000" />
+                  <Sparkles className="w-5 h-5 text-primary animate-pulse animate-duration-1000" />
                   <div>
-                    <h3 className="font-black text-base text-[#0F172A] leading-tight">AI Portfolio Health Audit</h3>
+                    <h3 className="font-black text-base text-[#172033] leading-tight">AI Portfolio Health Audit</h3>
                     <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mt-0.5">SEBI Compliant Diagnostic Report</span>
                   </div>
                 </div>
@@ -1167,12 +1169,12 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
               </div>
 
               {/* Score Snapshot */}
-              <div className="bg-gradient-to-r from-blue-900 to-[#0F172A] text-white p-5 rounded-2xl flex items-center justify-between shadow-md relative overflow-hidden">
-                <div className="absolute right-0 top-0 w-24 h-24 bg-blue-500/10 rounded-full blur-xl pointer-events-none" />
+              <div className="bg-gradient-to-r from-blue-900 to-[#172033] text-white p-5 rounded-2xl flex items-center justify-between shadow-md relative overflow-hidden">
+                <div className="absolute right-0 top-0 w-24 h-24 bg-primary/10 rounded-full blur-xl pointer-events-none" />
                 <div>
                   <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-1">Overall Health Score</span>
                   <div className="flex items-baseline gap-1.5">
-                    <span className="text-3xl font-black text-blue-400">{data.aiInsights.healthScore}%</span>
+                    <span className="text-3xl font-black text-[#64748B]">{data.aiInsights.healthScore}%</span>
                     <span className="text-xs font-bold text-emerald-400">Excellent</span>
                   </div>
                 </div>
@@ -1213,7 +1215,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
                       <span className="text-[9px] text-slate-400 uppercase block mb-1">Dividend Yield Factor</span>
                       <div className="flex items-center justify-between">
                         <span className="text-slate-900 font-black">88/100</span>
-                        <span className="text-[9px] text-blue-600 font-black">Moderate</span>
+                        <span className="text-[9px] text-primary font-black">Moderate</span>
                       </div>
                     </div>
                   </div>
@@ -1235,7 +1237,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
                     </div>
                     <div className="p-3 bg-slate-50 border border-slate-100 rounded-xl text-center">
                       <span className="text-[8px] text-slate-400 uppercase block mb-1">Max Drawdown</span>
-                      <span className="text-rose-600 font-black text-xs block">-12.4%</span>
+                      <span className="text-danger font-black text-xs block">-12.4%</span>
                       <span className="text-[8px] text-slate-400 block mt-0.5">Well Hedged</span>
                     </div>
                   </div>
@@ -1258,7 +1260,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
                   toast.success('Downloading Health Audit Report PDF...');
                   setShowAnalysisModal(false);
                 }}
-                className="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black transition cursor-pointer shadow-md flex items-center justify-center gap-2"
+                className="w-full py-4 bg-primary hover:bg-primary-dark text-white rounded-xl text-xs font-black transition cursor-pointer shadow-md flex items-center justify-center gap-2"
               >
                 <Download className="w-4 h-4" /> Download Complete PDF Audit
               </button>
@@ -1296,7 +1298,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
                     </div>
                   </div>
 
-                  <span className={`text-[10px] font-black px-2.5 py-1 rounded bg-blue-50 text-blue-700 uppercase`}>
+                  <span className={`text-[10px] font-black px-2.5 py-1 rounded bg-primary-light text-primary uppercase`}>
                     AI Recommendation: {activeHoldingDetail.ai}
                   </span>
                 </div>
@@ -1313,7 +1315,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
                     </div>
                     <div className="bg-slate-50 border border-slate-100 p-4 rounded-2xl">
                       <span className="text-[9px] font-bold text-slate-400 uppercase block mb-1">Total Returns</span>
-                      <span className={`text-base font-black ${activeHoldingDetail.overallReturn >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                      <span className={`text-base font-black ${activeHoldingDetail.overallReturn >= 0 ? 'text-emerald-600' : 'text-danger'}`}>
                         {activeHoldingDetail.overallReturn >= 0 ? '+' : ''}{activeHoldingDetail.overallReturn}%
                       </span>
                     </div>
@@ -1402,7 +1404,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
                       toast.success(`Executing order payload for ${activeHoldingDetail.symbol}`);
                     }
                   }}
-                  className="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white font-black text-xs rounded-xl transition cursor-pointer text-center"
+                  className="flex-1 py-3 bg-primary hover:bg-primary-dark text-white font-black text-xs rounded-xl transition cursor-pointer text-center"
                 >
                   Trade Stock
                 </button>

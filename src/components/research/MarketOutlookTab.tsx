@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { 
   Sun, Activity, Sunset, Globe, Landmark, Calendar, Eye,
   TrendingUp, TrendingDown, RefreshCw, ArrowUpRight, ArrowDownRight,
@@ -34,7 +34,7 @@ export const MarketOutlookTab: React.FC = () => {
       {/* ── 1. DAILY HEADER ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white border border-slate-200 rounded-[24px] p-5 shadow-xs">
         <div className="flex items-center gap-4">
-          <span className="text-[10px] font-black uppercase tracking-wider text-blue-600 bg-blue-50 border border-blue-100 px-3 py-1.5 rounded-xl">Daily Market Outlook</span>
+          <span className="text-[10px] font-black uppercase tracking-wider text-primary bg-primary-light border border-[#E2E8F0] px-3 py-1.5 rounded-xl">Daily Market Outlook</span>
           <span className="text-xs font-bold text-slate-400 hidden sm:block">
             {new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
           </span>
@@ -43,7 +43,7 @@ export const MarketOutlookTab: React.FC = () => {
           <button 
             onClick={fetchOutlook}
             disabled={loading}
-            className="flex items-center gap-2 text-xs font-black text-blue-600 bg-blue-50 border border-blue-100 px-3 py-1.5 rounded-xl hover:bg-blue-100 transition cursor-pointer"
+            className="flex items-center gap-2 text-xs font-black text-primary bg-primary-light border border-[#E2E8F0] px-3 py-1.5 rounded-xl hover:bg-primary-light transition cursor-pointer"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
             {loading ? 'Fetching Outlook...' : 'Refresh Feed'}

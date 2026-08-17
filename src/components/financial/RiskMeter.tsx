@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { cn } from '../../utils/cn';
 
 export type RiskLevel = 'Low' | 'Moderate' | 'High' | 'Very High';
@@ -13,7 +13,7 @@ export const RiskMeter: React.FC<RiskMeterProps> = ({ level, className }) => {
     'Low': { percent: 15, color: 'bg-emerald-500', label: 'Low Risk' },
     'Moderate': { percent: 45, color: 'bg-sky-500', label: 'Moderate Risk' },
     'High': { percent: 75, color: 'bg-amber-500', label: 'High Risk' },
-    'Very High': { percent: 95, color: 'bg-rose-500', label: 'High Risk' },
+    'Very High': { percent: 95, color: 'bg-danger', label: 'High Risk' },
   };
 
   const current = levels[level];
@@ -39,7 +39,7 @@ export const RiskMeter: React.FC<RiskMeterProps> = ({ level, className }) => {
           <div className="w-[30%] h-full bg-emerald-500/20 border-r border-white/10" />
           <div className="w-[30%] h-full bg-sky-500/20 border-r border-white/10" />
           <div className="w-[20%] h-full bg-amber-500/20 border-r border-white/10" />
-          <div className="w-[20%] h-full bg-rose-500/20" />
+          <div className="w-[20%] h-full bg-danger/20" />
         </div>
 
         {/* Active meter indicator */}

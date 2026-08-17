@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Gem, ShieldCheck, ArrowRight, CheckCircle2, TrendingUp, Landmark } from 'lucide-react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
@@ -38,14 +38,14 @@ export const GoldTab: React.FC = () => {
             <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center mb-3">
               <Landmark className="w-5 h-5" />
             </div>
-            <h3 className="font-black text-base text-[#0F172A] mb-1">Sovereign Gold Bonds (SGB)</h3>
+            <h3 className="font-black text-base text-[#172033] mb-1">Sovereign Gold Bonds (SGB)</h3>
             <p className="text-xs text-slate-500 font-medium leading-relaxed mb-4">
               Issued by RBI on behalf of Govt of India. Earns 2.50% p.a. guaranteed interest + gold appreciation. Zero capital gains tax on maturity.
             </p>
           </div>
           <button
             onClick={() => toast.success('SGB Issue Tranche Selected')}
-            className="w-full py-2.5 bg-[#0F172A] hover:bg-slate-800 text-white rounded-xl text-xs font-black transition cursor-pointer"
+            className="w-full py-2.5 bg-[#172033] hover:bg-slate-800 text-white rounded-xl text-xs font-black transition cursor-pointer"
           >
             Invest in SGB (RBI Tranche)
           </button>
@@ -54,17 +54,17 @@ export const GoldTab: React.FC = () => {
         {/* Option 2: Gold ETFs */}
         <div className="bg-white border border-[#E2E8F0] rounded-[24px] p-6 shadow-xs flex flex-col justify-between">
           <div>
-            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-3">
+            <div className="w-10 h-10 rounded-xl bg-primary-light text-primary flex items-center justify-center mb-3">
               <TrendingUp className="w-5 h-5" />
             </div>
-            <h3 className="font-black text-base text-[#0F172A] mb-1">Gold ETFs (GOLDBEES)</h3>
+            <h3 className="font-black text-base text-[#172033] mb-1">Gold ETFs (GOLDBEES)</h3>
             <p className="text-xs text-slate-500 font-medium leading-relaxed mb-4">
               Trade physical gold backed units on NSE/BSE instantly with zero storage cost and high liquidity.
             </p>
           </div>
           <button
             onClick={() => toast.success('Order drawer triggered for GOLDBEES')}
-            className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black transition cursor-pointer"
+            className="w-full py-2.5 bg-primary hover:bg-primary-dark text-white rounded-xl text-xs font-black transition cursor-pointer"
           >
             Trade GOLDBEES ETF
           </button>
@@ -76,7 +76,7 @@ export const GoldTab: React.FC = () => {
             <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3">
               <Gem className="w-5 h-5" />
             </div>
-            <h3 className="font-black text-base text-[#0F172A] mb-1">Digital Gold (From ₹10)</h3>
+            <h3 className="font-black text-base text-[#172033] mb-1">Digital Gold (From ₹10)</h3>
             <p className="text-xs text-slate-500 font-medium leading-relaxed mb-4">
               Buy fractional 24K 99.9% pure physical gold stored safely in MMTC-PAMP vaults with 100% insurance.
             </p>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowLeft, Clock, Bookmark, Share2, Wallet, 
@@ -115,7 +115,7 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({
       ref={containerRef}
     >
       {/* READING PROGRESS BAR */}
-      <div className="fixed top-0 left-0 h-1 bg-blue-600 transition-all duration-75 z-[110]" style={{ width: `${scrollProgress}%` }} />
+      <div className="fixed top-0 left-0 h-1 bg-primary transition-all duration-75 z-[110]" style={{ width: `${scrollProgress}%` }} />
 
       {/* STICKY HEADER */}
       <header className="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex flex-wrap items-center justify-between z-30 shadow-xs gap-4">
@@ -128,7 +128,7 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({
           </button>
           <div className="h-6 w-px bg-slate-200 hidden sm:block" />
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-black bg-blue-50 text-blue-700 px-2.5 py-1 rounded-lg border border-blue-100 uppercase">
+            <span className="text-[10px] font-black bg-primary-light text-primary px-2.5 py-1 rounded-lg border border-[#E2E8F0] uppercase">
               {category}
             </span>
             <span className="text-xs font-bold text-slate-400 hidden sm:inline">
@@ -141,10 +141,10 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({
           <button
             onClick={handleBookmark}
             className={`w-10 h-10 rounded-xl border border-slate-200 flex items-center justify-center transition cursor-pointer ${
-              isBookmarked ? 'bg-blue-50 text-blue-600 border-blue-200' : 'text-slate-400 hover:bg-slate-50'
+              isBookmarked ? 'bg-primary-light text-primary border-primary-light' : 'text-slate-400 hover:bg-slate-50'
             }`}
           >
-            <Bookmark className="w-4.5 h-4.5" fill={isBookmarked ? '#2563EB' : 'none'} />
+            <Bookmark className="w-4.5 h-4.5" fill={isBookmarked ? '#15519D' : 'none'} />
           </button>
           <button
             onClick={() => toast.success('Article link copied to clipboard')}
@@ -156,7 +156,7 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({
             onClick={() => {
               if (onOpenCompany) onOpenCompany(primaryStock);
             }}
-            className="px-4 py-2.5 rounded-xl bg-[#0F172A] text-white font-black text-xs hover:bg-slate-800 transition cursor-pointer"
+            className="px-4 py-2.5 rounded-xl bg-[#172033] text-white font-black text-xs hover:bg-slate-800 transition cursor-pointer"
           >
             Open Workspace
           </button>
@@ -178,10 +178,10 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({
                 {sentiment} Impact
               </span>
               <span className="text-xs text-slate-400 font-bold flex items-center gap-1">
-                <Sparkles className="w-3.5 h-3.5 text-blue-500" /> AI Market Intelligence Verified
+                <Sparkles className="w-3.5 h-3.5 text-primary" /> AI Market Intelligence Verified
               </span>
             </div>
-            <h1 className="text-2xl sm:text-4.5xl font-black text-[#0F172A] leading-tight">
+            <h1 className="text-2xl sm:text-4.5xl font-black text-[#172033] leading-tight">
               {headline}
             </h1>
           </div>
@@ -197,12 +197,12 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({
           </div>
 
           {/* AI SUMMARY HIGHLIGHTED CARD */}
-          <section className="bg-blue-50/70 border border-blue-200/80 rounded-[28px] p-6 sm:p-8 flex flex-col gap-5 shadow-xs">
-            <div className="flex items-center justify-between border-b border-blue-100 pb-3">
-              <span className="text-xs font-black text-blue-700 uppercase tracking-wider flex items-center gap-1.5">
-                <Sparkles className="w-4 h-4 text-blue-600 fill-blue-500/10 animate-pulse" /> AI INVESTMENT THESIS & CRITICAL TAKEAWAYS
+          <section className="bg-primary-light/70 border border-primary-light/80 rounded-[28px] p-6 sm:p-8 flex flex-col gap-5 shadow-xs">
+            <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3">
+              <span className="text-xs font-black text-primary uppercase tracking-wider flex items-center gap-1.5">
+                <Sparkles className="w-4 h-4 text-primary fill-primary/10 animate-pulse" /> AI INVESTMENT THESIS & CRITICAL TAKEAWAYS
               </span>
-              <span className="text-[10px] font-black text-blue-600 bg-white border border-blue-200 px-2 py-0.5 rounded-full">
+              <span className="text-[10px] font-black text-primary bg-white border border-primary-light px-2 py-0.5 rounded-full">
                 Verified
               </span>
             </div>
@@ -212,24 +212,24 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs pt-2">
-              <div className="bg-white p-4 rounded-2xl border border-blue-100">
+              <div className="bg-white p-4 rounded-2xl border border-[#E2E8F0]">
                 <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block mb-1">Key Recommendation</span>
                 <strong className="text-slate-800">Accumulate core Large-Caps on target consolidation</strong>
               </div>
-              <div className="bg-white p-4 rounded-2xl border border-blue-100">
+              <div className="bg-white p-4 rounded-2xl border border-[#E2E8F0]">
                 <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block mb-1">Estimated Short-Term Impact</span>
                 <strong className="text-emerald-700">Moderate Bullish (+1.5% to +2.0% sector swing)</strong>
               </div>
-              <div className="bg-white p-4 rounded-2xl border border-blue-100">
+              <div className="bg-white p-4 rounded-2xl border border-[#E2E8F0]">
                 <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block mb-1">Estimated Long-Term Impact</span>
-                <strong className="text-blue-700">Highly Favorable structural margins re-rating</strong>
+                <strong className="text-primary">Highly Favorable structural margins re-rating</strong>
               </div>
-              <div className="bg-white p-4 rounded-2xl border border-blue-100 flex items-center justify-between gap-4">
+              <div className="bg-white p-4 rounded-2xl border border-[#E2E8F0] flex items-center justify-between gap-4">
                 <div>
                   <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block mb-0.5">Risk Rating</span>
                   <strong className="text-slate-800">Low Volatility</strong>
                 </div>
-                <div className="px-2.5 py-1 rounded bg-blue-100 text-blue-800 font-black text-[9px] uppercase">
+                <div className="px-2.5 py-1 rounded bg-primary-light text-primary-dark font-black text-[9px] uppercase">
                   LOW RISK
                 </div>
               </div>
@@ -238,11 +238,11 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({
 
           {/* EDITORIAL FULL TEXT */}
           <section className="bg-white rounded-[28px] border border-slate-200 p-8 shadow-xs text-slate-700 leading-relaxed text-sm font-medium flex flex-col gap-6 max-w-none">
-            <h3 className="text-lg font-black text-[#0F172A] border-b border-slate-100 pb-3">Strategic Intelligence Breakdown</h3>
+            <h3 className="text-lg font-black text-[#172033] border-b border-slate-100 pb-3">Strategic Intelligence Breakdown</h3>
             <p>
               In a comprehensive policy evaluation, banking regulators kept standard repo rates stable. Bank executives cited the policy as highly supportive of net interest margin sustainability, ensuring deposit costs are held constant.
             </p>
-            <blockquote className="border-l-4 border-blue-500 pl-4 py-1.5 italic text-slate-800 font-extrabold bg-slate-50 rounded-r-xl pr-4 my-2">
+            <blockquote className="border-l-4 border-primary pl-4 py-1.5 italic text-slate-800 font-extrabold bg-slate-50 rounded-r-xl pr-4 my-2">
               "The current liquidity setup provides banks with a solid structural base to expand credit portfolios while minimizing cost-of-fund spikes over Q3."
             </blockquote>
             <p>
@@ -254,16 +254,16 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({
           <section className="bg-white rounded-[28px] border border-slate-200 p-6 sm:p-8 shadow-xs flex flex-col gap-6">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
-                <h3 className="text-base font-black text-[#0F172A] leading-tight">Company News Evolution</h3>
+                <h3 className="text-base font-black text-[#172033] leading-tight">Company News Evolution</h3>
                 <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mt-0.5">Timeline & stock price reaction history for ${primaryStock}</span>
               </div>
-              <span className="text-[10px] text-blue-600 bg-blue-50 border border-blue-200 px-3 py-1 rounded-full font-black">AI Correlated</span>
+              <span className="text-[10px] text-primary bg-primary-light border border-primary-light px-3 py-1 rounded-full font-black">AI Correlated</span>
             </div>
 
             <div className="flex flex-col gap-6 relative pl-6 before:absolute before:inset-y-1 before:left-2 before:w-0.5 before:bg-slate-100">
               {timelineData.map((item, idx) => (
                 <div key={idx} className="relative flex flex-col sm:flex-row justify-between sm:items-center gap-4 bg-slate-50 hover:bg-slate-100/75 border border-slate-100 rounded-2xl p-4.5 transition">
-                  <div className="absolute -left-[28.5px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-4 border-white bg-blue-600 shadow-xs" />
+                  <div className="absolute -left-[28.5px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-4 border-white bg-primary shadow-xs" />
                   
                   <div className="flex-1 flex flex-col gap-1">
                     <div className="flex items-center gap-2">
@@ -280,7 +280,7 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({
                   {/* Stock price response */}
                   <div className="flex sm:flex-col items-center sm:items-end justify-between shrink-0 gap-1 border-t sm:border-t-0 border-slate-200 pt-2 sm:pt-0">
                     <span className="text-xs font-black text-slate-800">{item.price}</span>
-                    <span className={`text-[10px] font-black flex items-center ${item.isPositive ? 'text-emerald-600' : 'text-rose-600'}`}>
+                    <span className={`text-[10px] font-black flex items-center ${item.isPositive ? 'text-emerald-600' : 'text-danger'}`}>
                       {item.isPositive ? <ArrowUpRight className="w-3.5 h-3.5 inline" /> : <ArrowDownRight className="w-3.5 h-3.5 inline" />} {item.change}
                     </span>
                   </div>
@@ -291,7 +291,7 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({
 
           {/* RELATED INFORMATION */}
           <section className="bg-white rounded-[28px] border border-slate-200 p-6 shadow-xs flex flex-col gap-4">
-            <h3 className="text-sm font-black text-[#0F172A]">Related Research & Intelligence</h3>
+            <h3 className="text-sm font-black text-[#172033]">Related Research & Intelligence</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div 
                 onClick={() => {
@@ -300,7 +300,7 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({
                 className="p-4 bg-slate-50 border border-slate-100 rounded-2xl hover:border-slate-300 transition cursor-pointer flex justify-between items-center"
               >
                 <div className="flex flex-col gap-1">
-                  <span className="text-[9px] text-blue-600 font-black uppercase">RESEARCH REPORT</span>
+                  <span className="text-[9px] text-primary font-black uppercase">RESEARCH REPORT</span>
                   <span className="font-extrabold text-xs text-slate-800">SEBI Registered Research Report</span>
                   <span className="text-[10px] text-slate-400">Target upside +18.4%</span>
                 </div>
@@ -312,7 +312,7 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({
                 className="p-4 bg-slate-50 border border-slate-100 rounded-2xl hover:border-slate-300 transition cursor-pointer flex justify-between items-center"
               >
                 <div className="flex flex-col gap-1">
-                  <span className="text-[9px] text-blue-600 font-black uppercase">CORPORATE ACTION</span>
+                  <span className="text-[9px] text-primary font-black uppercase">CORPORATE ACTION</span>
                   <span className="font-extrabold text-xs text-slate-800">Dividend history details FY25-26</span>
                   <span className="text-[10px] text-slate-400">Payout record dates details</span>
                 </div>
@@ -341,7 +341,7 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({
 
               <div className="flex items-baseline justify-between">
                 <span className="text-2xl font-black text-slate-900">{companyData.price}</span>
-                <span className={`text-xs font-black flex items-center ${companyData.isPositive ? 'text-emerald-600' : 'text-rose-600'}`}>
+                <span className={`text-xs font-black flex items-center ${companyData.isPositive ? 'text-emerald-600' : 'text-danger'}`}>
                   {companyData.isPositive ? <ArrowUpRight className="w-4 h-4" /> : <ArrowDownRight className="w-4 h-4" />} {companyData.change}
                 </span>
               </div>
@@ -361,7 +361,7 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({
                 </div>
                 <div className="pt-2.5 border-t border-slate-200/60">
                   <span className="text-[9px] text-slate-400 font-black uppercase tracking-wider block">52 Week Low</span>
-                  <span className="font-extrabold text-rose-600">{companyData.low52}</span>
+                  <span className="font-extrabold text-danger">{companyData.low52}</span>
                 </div>
               </div>
 
@@ -370,7 +370,7 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({
                   onClick={() => {
                     if (onTrade) onTrade({ symbol: primaryStock, company: primaryStock, rec: sentiment === 'Bullish' ? 'BUY' : 'SELL' });
                   }}
-                  className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-black text-xs transition cursor-pointer flex items-center justify-center gap-1.5 shadow-sm"
+                  className="w-full py-3 rounded-xl bg-primary hover:bg-primary-dark text-white font-black text-xs transition cursor-pointer flex items-center justify-center gap-1.5 shadow-sm"
                 >
                   Trade Stock
                 </button>
@@ -429,7 +429,7 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({
             onClick={() => {
               if (onTrade) onTrade({ symbol: primaryStock, company: primaryStock, rec: sentiment === 'Bullish' ? 'BUY' : 'SELL' });
             }}
-            className="px-8 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-black text-xs transition cursor-pointer shadow-md"
+            className="px-8 py-3 rounded-xl bg-primary hover:bg-primary-dark text-white font-black text-xs transition cursor-pointer shadow-md"
           >
             Trade {primaryStock}
           </button>

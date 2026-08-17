@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Shield, ArrowRight, TrendingUp, TrendingDown, Sparkles, Mail, CheckCircle2, 
@@ -65,13 +65,13 @@ export const IllustratedLandingPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0F172A] text-white font-sans selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen bg-[#172033] text-white font-sans selection:bg-primary selection:text-white">
       
       {/* 1. STICKY GLASSMORPHIC NAVBAR & LIVE TICKER RIBBON */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0F172A]/90 backdrop-blur-xl border-b border-white/[0.08]">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#172033]/90 backdrop-blur-xl border-b border-white/[0.08]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
           <div onClick={() => navigate('/')} className="flex items-center gap-3 cursor-pointer">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-emerald-500 flex items-center justify-center font-black text-xl text-white shadow-lg shadow-blue-600/30">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-primary to-emerald-500 flex items-center justify-center font-black text-xl text-white shadow-lg shadow-[rgba(21,81,157,0.3)]/30">
               U
             </div>
             <div>
@@ -100,7 +100,7 @@ export const IllustratedLandingPage: React.FC = () => {
             </button>
             <button
               onClick={() => navigate('/signup')}
-              className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-emerald-500 hover:from-blue-700 hover:to-emerald-600 text-white text-xs font-black rounded-xl transition shadow-lg shadow-blue-600/25 flex items-center gap-1.5 cursor-pointer"
+              className="px-6 py-2.5 bg-gradient-to-r from-primary to-emerald-500 hover:from-primary hover:to-emerald-600 text-white text-xs font-black rounded-xl transition shadow-lg shadow-[rgba(21,81,157,0.3)]/25 flex items-center gap-1.5 cursor-pointer"
             >
               <span>Get Started</span>
               <ArrowRight className="w-4 h-4" />
@@ -128,9 +128,9 @@ export const IllustratedLandingPage: React.FC = () => {
             className="relative z-10 max-w-3xl mx-auto space-y-8 px-4"
           >
             {/* Small premium badge */}
-            <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-4.5 py-1.5 shadow-xs">
-              <Sparkles className="w-3.5 h-3.5 text-blue-400 animate-pulse" />
-              <span className="text-blue-400 text-xs font-mono font-bold uppercase tracking-wider">
+            <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4.5 py-1.5 shadow-xs">
+              <Sparkles className="w-3.5 h-3.5 text-[#64748B] animate-pulse" />
+              <span className="text-[#64748B] text-xs font-mono font-bold uppercase tracking-wider">
                 AI-Powered Investment Platform
               </span>
             </div>
@@ -138,7 +138,7 @@ export const IllustratedLandingPage: React.FC = () => {
             {/* Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-none font-display text-white">
               Invest Smarter.<br />
-              <span className="bg-gradient-to-r from-blue-500 via-teal-400 to-emerald-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-primary via-teal-400 to-emerald-500 bg-clip-text text-transparent">
                 Build Wealth with Confidence.
               </span>
             </h1>
@@ -152,7 +152,7 @@ export const IllustratedLandingPage: React.FC = () => {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
               <button
                 onClick={() => navigate('/signup')}
-                className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 to-emerald-500 hover:from-blue-700 hover:to-emerald-600 text-white font-black text-xs rounded-xl shadow-lg transition flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-primary to-emerald-500 hover:from-primary hover:to-emerald-600 text-white font-black text-xs rounded-xl shadow-lg transition flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>Get Started</span>
                 <ArrowRight className="w-4 h-4" />
@@ -192,7 +192,7 @@ export const IllustratedLandingPage: React.FC = () => {
         {/* 2. CAPABILITIES SECTION — FEATURE CARDS */}
         <section id="capabilities" className="space-y-12">
           <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="text-xs font-black uppercase tracking-wider text-blue-400 bg-blue-500/10 px-4 py-1.5 rounded-full border border-blue-500/20">
+            <span className="text-xs font-black uppercase tracking-wider text-[#64748B] bg-primary/10 px-4 py-1.5 rounded-full border border-primary/20">
               Platform Features
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white font-display">
@@ -203,17 +203,17 @@ export const IllustratedLandingPage: React.FC = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Feature 1: AI Signal (Hero Feature Card with animation flourish) */}
-            <div className="bg-[#1E293B] rounded-3xl p-8 border border-slate-700 hover:border-blue-500/50 transition-all hover:shadow-2xl flex flex-col justify-between group">
+            <div className="bg-[#1E293B] rounded-3xl p-8 border border-slate-700 hover:border-primary/50 transition-all hover:shadow-2xl flex flex-col justify-between group">
               <div>
-                <div className="w-14 h-14 rounded-2xl bg-blue-600/20 text-blue-400 flex items-center justify-center mb-6 border border-blue-500/30">
+                <div className="w-14 h-14 rounded-2xl bg-primary/20 text-[#64748B] flex items-center justify-center mb-6 border border-primary/30">
                   <Brain className="w-7 h-7" />
                 </div>
-                <h3 className="text-xl font-black text-white mb-2 group-hover:text-blue-400 transition-colors">AI-Powered Signal Engine</h3>
+                <h3 className="text-xl font-black text-white mb-2 group-hover:text-[#64748B] transition-colors">AI-Powered Signal Engine</h3>
                 <p className="text-xs text-slate-400 font-medium leading-relaxed mb-4">
                   Scans candlestick patterns, volume surges, and RSI breakouts across 4,000+ Indian stocks in real time.
                 </p>
               </div>
-              <div className="p-3 bg-[#0F172A] rounded-xl border border-slate-800 font-mono text-[11px] text-emerald-400 flex justify-between">
+              <div className="p-3 bg-[#172033] rounded-xl border border-slate-800 font-mono text-[11px] text-emerald-400 flex justify-between">
                 <span>RELIANCE Signal</span>
                 <span className="font-bold">Target: ₹3,120</span>
               </div>
@@ -230,7 +230,7 @@ export const IllustratedLandingPage: React.FC = () => {
                   Direct exchange tick streaming with order book depth and instant notifications.
                 </p>
               </div>
-              <div className="p-3 bg-[#0F172A] rounded-xl border border-slate-800 font-mono text-[11px] text-slate-300 flex justify-between">
+              <div className="p-3 bg-[#172033] rounded-xl border border-slate-800 font-mono text-[11px] text-slate-300 flex justify-between">
                 <span>Feed Latency</span>
                 <span className="font-bold text-emerald-400">&lt; 15ms</span>
               </div>
@@ -247,7 +247,7 @@ export const IllustratedLandingPage: React.FC = () => {
                   Professional technical charts with RSI, MACD, Moving Averages, and fundamental ratio filters.
                 </p>
               </div>
-              <div className="p-3 bg-[#0F172A] rounded-xl border border-slate-800 font-mono text-[11px] text-purple-400 flex justify-between">
+              <div className="p-3 bg-[#172033] rounded-xl border border-slate-800 font-mono text-[11px] text-purple-400 flex justify-between">
                 <span>Active Screener</span>
                 <span className="font-bold">Golden Crossover</span>
               </div>
@@ -264,16 +264,16 @@ export const IllustratedLandingPage: React.FC = () => {
                   Multi-asset wealth tracking with automated risk-adjusted CAGR optimization.
                 </p>
               </div>
-              <div className="p-3 bg-[#0F172A] rounded-xl border border-slate-800 font-mono text-[11px] text-amber-400 flex justify-between">
+              <div className="p-3 bg-[#172033] rounded-xl border border-slate-800 font-mono text-[11px] text-amber-400 flex justify-between">
                 <span>Target CAGR</span>
                 <span className="font-bold">22.4%</span>
               </div>
             </div>
 
             {/* Feature 5: SEBI Compliance */}
-            <div className="bg-[#1E293B] rounded-3xl p-8 border border-slate-700 hover:border-rose-500/50 transition-all hover:shadow-2xl flex flex-col justify-between group">
+            <div className="bg-[#1E293B] rounded-3xl p-8 border border-slate-700 hover:border-danger/50 transition-all hover:shadow-2xl flex flex-col justify-between group">
               <div>
-                <div className="w-14 h-14 rounded-2xl bg-rose-600/20 text-rose-400 flex items-center justify-center mb-6 border border-rose-500/30">
+                <div className="w-14 h-14 rounded-2xl bg-danger/20 text-rose-400 flex items-center justify-center mb-6 border border-danger/30">
                   <Shield className="w-7 h-7" />
                 </div>
                 <h3 className="text-xl font-black text-white mb-2 group-hover:text-rose-400 transition-colors">SEBI Compliant Advisory</h3>
@@ -281,7 +281,7 @@ export const IllustratedLandingPage: React.FC = () => {
                   All research calls undergo strict regulatory checks under SEBI RA Regulations 2014.
                 </p>
               </div>
-              <div className="p-3 bg-[#0F172A] rounded-xl border border-slate-800 font-mono text-[11px] text-rose-400 flex justify-between">
+              <div className="p-3 bg-[#172033] rounded-xl border border-slate-800 font-mono text-[11px] text-rose-400 flex justify-between">
                 <span>SEBI RA</span>
                 <span className="font-bold">INH000009821</span>
               </div>
@@ -298,7 +298,7 @@ export const IllustratedLandingPage: React.FC = () => {
                   Never miss an entry or exit target with automated price alerts and breaking news feeds.
                 </p>
               </div>
-              <div className="p-3 bg-[#0F172A] rounded-xl border border-slate-800 font-mono text-[11px] text-teal-400 flex justify-between">
+              <div className="p-3 bg-[#172033] rounded-xl border border-slate-800 font-mono text-[11px] text-teal-400 flex justify-between">
                 <span>Push Speed</span>
                 <span className="font-bold">Instant</span>
               </div>
@@ -320,21 +320,21 @@ export const IllustratedLandingPage: React.FC = () => {
 
           <div className="grid md:grid-cols-3 gap-8">
             {/* Advisor 1: Market Analyst AI (Blue) */}
-            <div className="bg-[#1E293B] rounded-3xl p-8 border border-slate-700 hover:border-blue-500/50 transition-all flex flex-col justify-between group">
+            <div className="bg-[#1E293B] rounded-3xl p-8 border border-slate-700 hover:border-primary/50 transition-all flex flex-col justify-between group">
               <div className="space-y-4">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white font-black text-xl shadow-lg shadow-blue-600/30">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-primary to-primary flex items-center justify-center text-white font-black text-xl shadow-lg shadow-[rgba(21,81,157,0.3)]/30">
                   MA
                 </div>
                 <h3 className="text-xl font-black text-white font-display">Market Analyst AI</h3>
                 <p className="text-xs text-slate-400 font-medium leading-relaxed">
                   Scans technical breakouts, RSI momentum, and financial news in real time to suggest high-conviction trade setups.
                 </p>
-                <div className="p-3 bg-[#0F172A] rounded-2xl border border-slate-800 space-y-1 font-mono text-[11px]">
-                  <span className="text-blue-400 font-bold block">Latest Insight:</span>
+                <div className="p-3 bg-[#172033] rounded-2xl border border-slate-800 space-y-1 font-mono text-[11px]">
+                  <span className="text-[#64748B] font-bold block">Latest Insight:</span>
                   <p className="text-slate-300">"RELIANCE forming bullish cup-and-handle pattern at ₹2,930."</p>
                 </div>
               </div>
-              <button onClick={() => navigate('/signup')} className="w-full mt-6 py-3 bg-slate-800 hover:bg-slate-700 text-blue-400 hover:text-white font-black text-xs rounded-xl transition flex items-center justify-center gap-2 cursor-pointer">
+              <button onClick={() => navigate('/signup')} className="w-full mt-6 py-3 bg-slate-800 hover:bg-slate-700 text-[#64748B] hover:text-white font-black text-xs rounded-xl transition flex items-center justify-center gap-2 cursor-pointer">
                 <span>Chat with Analyst AI</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
@@ -350,7 +350,7 @@ export const IllustratedLandingPage: React.FC = () => {
                 <p className="text-xs text-slate-400 font-medium leading-relaxed">
                   Evaluates drawdown risk, sector concentration, and suggests rebalancing moves tailored to your target CAGR.
                 </p>
-                <div className="p-3 bg-[#0F172A] rounded-2xl border border-slate-800 space-y-1 font-mono text-[11px]">
+                <div className="p-3 bg-[#172033] rounded-2xl border border-slate-800 space-y-1 font-mono text-[11px]">
                   <span className="text-emerald-400 font-bold block">Portfolio Health:</span>
                   <p className="text-slate-300">"Risk Score: 3.8/10. Optimal sector diversification active."</p>
                 </div>
@@ -371,7 +371,7 @@ export const IllustratedLandingPage: React.FC = () => {
                 <p className="text-xs text-slate-400 font-medium leading-relaxed">
                   Conversational mentor explaining complex options strategies, balance sheets, and market concepts step-by-step.
                 </p>
-                <div className="p-3 bg-[#0F172A] rounded-2xl border border-slate-800 space-y-1 font-mono text-[11px]">
+                <div className="p-3 bg-[#172033] rounded-2xl border border-slate-800 space-y-1 font-mono text-[11px]">
                   <span className="text-amber-400 font-bold block">Mentorship Mode:</span>
                   <p className="text-slate-300">"Lesson 4: Bull Call Spread Options Risk Management."</p>
                 </div>
@@ -418,7 +418,7 @@ export const IllustratedLandingPage: React.FC = () => {
               </div>
             </div>
 
-            <button onClick={() => navigate('/dashboard')} className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-black text-xs rounded-xl shadow-lg transition shrink-0 cursor-pointer">
+            <button onClick={() => navigate('/dashboard')} className="px-5 py-2.5 bg-primary hover:bg-primary-dark text-white font-black text-xs rounded-xl shadow-lg transition shrink-0 cursor-pointer">
               Launch Terminal
             </button>
           </div>
@@ -448,23 +448,23 @@ export const IllustratedLandingPage: React.FC = () => {
                   className={`
                     p-6 rounded-3xl border transition-all cursor-pointer flex flex-col justify-between
                     ${isActive 
-                      ? 'bg-[#1E293B] border-blue-500 shadow-xl shadow-blue-600/10 scale-105' 
-                      : 'bg-[#0F172A] border-slate-800 hover:border-slate-700'
+                      ? 'bg-[#1E293B] border-primary shadow-xl shadow-[rgba(21,81,157,0.3)]/10 scale-105' 
+                      : 'bg-[#172033] border-slate-800 hover:border-slate-700'
                     }
                   `}
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <span className="w-8 h-8 rounded-full bg-slate-800 text-blue-400 font-mono font-bold text-xs flex items-center justify-center">
+                      <span className="w-8 h-8 rounded-full bg-slate-800 text-[#64748B] font-mono font-bold text-xs flex items-center justify-center">
                         0{idx + 1}
                       </span>
-                      <StepIcon className={`w-5 h-5 ${isActive ? 'text-blue-400' : 'text-slate-500'}`} />
+                      <StepIcon className={`w-5 h-5 ${isActive ? 'text-[#64748B]' : 'text-slate-500'}`} />
                     </div>
                     <h4 className="font-black text-sm text-white">{s.title}</h4>
                     <p className="text-xs text-slate-400 font-medium leading-relaxed">{s.desc}</p>
                   </div>
 
-                  <div className={`h-1 rounded-full mt-6 ${isActive ? 'bg-blue-500' : 'bg-slate-800'}`} />
+                  <div className={`h-1 rounded-full mt-6 ${isActive ? 'bg-primary' : 'bg-slate-800'}`} />
                 </div>
               );
             })}
@@ -493,7 +493,7 @@ export const IllustratedLandingPage: React.FC = () => {
             <div className="bg-[#1E293B] p-5 rounded-2xl border border-slate-700 space-y-2 font-mono">
               <span className="text-xs font-bold text-slate-400 block">Mutual Funds</span>
               <span className="text-lg font-black text-white block">24.2% Top CAGR</span>
-              <span className="text-[11px] text-blue-400 block">SIP Calculator</span>
+              <span className="text-[11px] text-[#64748B] block">SIP Calculator</span>
             </div>
 
             <div className="bg-[#1E293B] p-5 rounded-2xl border border-slate-700 space-y-2 font-mono">
@@ -522,7 +522,7 @@ export const IllustratedLandingPage: React.FC = () => {
               <span className="text-[11px] text-rose-400 block">Margin Active</span>
             </div>
 
-            <div className="col-span-2 bg-gradient-to-r from-blue-600 to-emerald-500 p-5 rounded-2xl text-white font-mono flex items-center justify-between">
+            <div className="col-span-2 bg-gradient-to-r from-primary to-emerald-500 p-5 rounded-2xl text-white font-mono flex items-center justify-between">
               <div>
                 <span className="text-xs font-bold uppercase block opacity-90">All-in-One Asset Hub</span>
                 <span className="text-lg font-black block">Explore All Products</span>
@@ -538,7 +538,7 @@ export const IllustratedLandingPage: React.FC = () => {
         <section id="portfolio-spotlight" className="bg-[#1E293B] rounded-3xl p-8 sm:p-12 border border-slate-700 shadow-2xl relative overflow-hidden">
           <div className="grid lg:grid-cols-2 gap-10 items-center">
             <div className="space-y-6 font-mono">
-              <span className="text-xs font-bold text-blue-400 uppercase tracking-widest block">Portfolio Spotlight</span>
+              <span className="text-xs font-bold text-[#64748B] uppercase tracking-widest block">Portfolio Spotlight</span>
               <h2 className="text-3xl sm:text-4xl font-black text-white font-display leading-tight">
                 Total Net Wealth: <span className="text-emerald-400">₹8,42,150.00</span>
               </h2>
@@ -549,12 +549,12 @@ export const IllustratedLandingPage: React.FC = () => {
                 </div>
                 <div>
                   <span className="text-slate-400 block text-[10px]">CAGR XIRR</span>
-                  <span className="font-black text-blue-400 text-lg">22.4%</span>
+                  <span className="font-black text-[#64748B] text-lg">22.4%</span>
                 </div>
               </div>
             </div>
 
-            <div className="bg-[#0F172A] rounded-2xl p-6 border border-slate-800 space-y-4 font-mono text-xs">
+            <div className="bg-[#172033] rounded-2xl p-6 border border-slate-800 space-y-4 font-mono text-xs">
               <div className="flex justify-between items-center pb-3 border-b border-slate-800">
                 <span className="text-slate-400">Top Holding</span>
                 <span className="text-emerald-400 font-bold">RELIANCE (35% Weight)</span>
@@ -565,7 +565,7 @@ export const IllustratedLandingPage: React.FC = () => {
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-slate-400">Rebalance Signal</span>
-                <span className="text-blue-400 font-bold">Optimal Allocation</span>
+                <span className="text-[#64748B] font-bold">Optimal Allocation</span>
               </div>
             </div>
           </div>
@@ -634,8 +634,8 @@ export const IllustratedLandingPage: React.FC = () => {
             </div>
 
             {/* Pro Trader (Elevated Recommended Tier) */}
-            <div className="bg-gradient-to-b from-[#1E293B] via-[#0F172A] to-[#1E293B] rounded-3xl p-8 border-2 border-emerald-500 shadow-2xl shadow-emerald-500/10 flex flex-col justify-between scale-105 relative">
-              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-blue-600 to-emerald-500 rounded-full text-white text-[10px] font-black uppercase tracking-wider shadow-md">
+            <div className="bg-gradient-to-b from-[#1E293B] via-[#172033] to-[#1E293B] rounded-3xl p-8 border-2 border-emerald-500 shadow-2xl shadow-emerald-500/10 flex flex-col justify-between scale-105 relative">
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-primary to-emerald-500 rounded-full text-white text-[10px] font-black uppercase tracking-wider shadow-md">
                 Recommended Tier
               </div>
 
@@ -653,7 +653,7 @@ export const IllustratedLandingPage: React.FC = () => {
                   <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-400" /> Portfolio Rebalance Engine</li>
                 </ul>
               </div>
-              <button onClick={() => navigate('/signup')} className="w-full mt-8 py-4 bg-gradient-to-r from-blue-600 to-emerald-500 hover:from-blue-700 hover:to-emerald-600 text-white font-black text-xs rounded-xl shadow-lg transition cursor-pointer">
+              <button onClick={() => navigate('/signup')} className="w-full mt-8 py-4 bg-gradient-to-r from-primary to-emerald-500 hover:from-primary hover:to-emerald-600 text-white font-black text-xs rounded-xl shadow-lg transition cursor-pointer">
                 Start 14-Day Free Trial
               </button>
             </div>
@@ -687,7 +687,7 @@ export const IllustratedLandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-slate-800">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-blue-600 text-white font-black flex items-center justify-center">U</div>
+              <div className="w-8 h-8 rounded-lg bg-primary text-white font-black flex items-center justify-center">U</div>
               <span className="font-black text-white font-display text-lg">UNIVEST</span>
             </div>
             <div className="text-[11px] text-emerald-400 font-bold">
@@ -726,7 +726,7 @@ const MarketInMotionIllustration: React.FC = () => {
         {/* Animated Trend Line */}
         <path
           d="M 20 250 Q 80 180, 160 220 T 300 100 T 380 70"
-          stroke="#2563EB"
+          stroke="#15519D"
           strokeWidth="4"
           fill="none"
           strokeLinecap="round"
@@ -749,7 +749,7 @@ const MarketInMotionIllustration: React.FC = () => {
               y={140 + (i % 3) * 15}
               width="14"
               height={30 + (i % 2) * 20}
-              fill={i % 2 === 0 ? "#10B981" : "#2563EB"}
+              fill={i % 2 === 0 ? "#10B981" : "#15519D"}
               rx="3"
             />
           </g>

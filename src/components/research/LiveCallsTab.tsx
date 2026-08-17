@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+﻿import React, { useState, useMemo, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { 
   Radio, ShieldCheck, ArrowRight, Clock, Star,
@@ -117,7 +117,7 @@ export const LiveCallsTab: React.FC<LiveCallsTabProps> = ({ onSelectCall, onTrad
   };
   const riskColor = (r: string) => {
     if (r === 'Low') return 'text-emerald-600 bg-emerald-50 border-emerald-100';
-    if (r === 'High') return 'text-rose-600 bg-rose-50 border-rose-100';
+    if (r === 'High') return 'text-danger bg-rose-50 border-rose-100';
     return 'text-amber-600 bg-amber-50 border-amber-100';
   };
 
@@ -127,7 +127,7 @@ export const LiveCallsTab: React.FC<LiveCallsTabProps> = ({ onSelectCall, onTrad
       {/* ── STATS STRIP ── */}
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
         {[
-          { label: 'Active Calls', value: stats.total, icon: Radio, color: 'text-blue-600', bg: 'bg-blue-50', border: 'border-blue-100' },
+          { label: 'Active Calls', value: stats.total, icon: Radio, color: 'text-primary', bg: 'bg-primary-light', border: 'border-[#E2E8F0]' },
           { label: 'Buy Signals', value: stats.buy, icon: TrendingUp, color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-100' },
           { label: 'Hold Signals', value: stats.hold, icon: Activity, color: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-100' },
           { label: 'Avg Upside', value: `+${stats.avgReturn}%`, icon: Target, color: 'text-violet-600', bg: 'bg-violet-50', border: 'border-violet-100' },
@@ -218,7 +218,7 @@ export const LiveCallsTab: React.FC<LiveCallsTabProps> = ({ onSelectCall, onTrad
                 {/* Recommendation color strip */}
                 <div className={`h-1 w-full ${
                   call.recommendation === 'BUY' ? 'bg-emerald-500' :
-                  call.recommendation === 'SELL' ? 'bg-rose-500' : 'bg-amber-400'
+                  call.recommendation === 'SELL' ? 'bg-danger' : 'bg-amber-400'
                 }`} />
 
                 <div className="p-6">
@@ -263,7 +263,7 @@ export const LiveCallsTab: React.FC<LiveCallsTabProps> = ({ onSelectCall, onTrad
                     </div>
                     <div>
                       <span className="text-[8px] uppercase text-slate-400 block font-black mb-0.5">Stop Loss</span>
-                      <span className="text-xs font-black text-rose-600">₹{call.stopLoss.toLocaleString('en-IN')}</span>
+                      <span className="text-xs font-black text-danger">₹{call.stopLoss.toLocaleString('en-IN')}</span>
                     </div>
                     <div>
                       <span className="text-[8px] uppercase text-slate-400 block font-black mb-0.5">Upside</span>
@@ -282,7 +282,7 @@ export const LiveCallsTab: React.FC<LiveCallsTabProps> = ({ onSelectCall, onTrad
                         initial={{ width: 0 }}
                         animate={{ width: `${call.confidenceScore}%` }}
                         transition={{ delay: 0.2, duration: 0.8 }}
-                        className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full"
+                        className="h-full bg-gradient-to-r from-primary to-primary rounded-full"
                       />
                     </div>
                   </div>
@@ -326,8 +326,8 @@ export const LiveCallsTab: React.FC<LiveCallsTabProps> = ({ onSelectCall, onTrad
                               <span className="text-xs font-black text-emerald-600">{call.technicals.trend}</span>
                             </div>
                           </div>
-                          <div className="mt-3 p-3 bg-blue-50 border border-blue-100 rounded-xl">
-                            <p className="text-[10px] font-bold text-blue-800 leading-relaxed">
+                          <div className="mt-3 p-3 bg-primary-light border border-[#E2E8F0] rounded-xl">
+                            <p className="text-[10px] font-bold text-primary-dark leading-relaxed">
                               <strong>Investment Thesis:</strong> {call.thesis}
                             </p>
                           </div>
@@ -359,7 +359,7 @@ export const LiveCallsTab: React.FC<LiveCallsTabProps> = ({ onSelectCall, onTrad
                       </button>
                       <button
                         onClick={() => onTradeCall(call)}
-                        className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-[10px] font-black transition cursor-pointer shadow-xs"
+                        className="px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-xl text-[10px] font-black transition cursor-pointer shadow-xs"
                       >
                         Trade Now
                       </button>
@@ -386,7 +386,7 @@ export const LiveCallsTab: React.FC<LiveCallsTabProps> = ({ onSelectCall, onTrad
               </thead>
               <tbody className="divide-y divide-slate-100/80">
                 {filteredCalls.map((call) => (
-                  <tr key={call.id} className="hover:bg-blue-50/30 transition">
+                  <tr key={call.id} className="hover:bg-primary-light/30 transition">
                     <td className="py-4 px-5">
                       <div className="flex items-center gap-2.5">
                         <div className="w-8 h-8 rounded-xl bg-slate-900 text-white text-[10px] font-black flex items-center justify-center shrink-0">{call.symbol.substring(0, 2)}</div>
@@ -401,12 +401,12 @@ export const LiveCallsTab: React.FC<LiveCallsTabProps> = ({ onSelectCall, onTrad
                     </td>
                     <td className="py-4 px-5 text-[10px] font-bold text-slate-600 whitespace-nowrap">{call.entryRange}</td>
                     <td className="py-4 px-5 text-xs font-black text-emerald-600">₹{call.targetPrice.toLocaleString('en-IN')}</td>
-                    <td className="py-4 px-5 text-xs font-black text-rose-600">₹{call.stopLoss.toLocaleString('en-IN')}</td>
+                    <td className="py-4 px-5 text-xs font-black text-danger">₹{call.stopLoss.toLocaleString('en-IN')}</td>
                     <td className="py-4 px-5 text-xs font-black text-emerald-600">+{call.potentialReturn}%</td>
                     <td className="py-4 px-5">
                       <div className="flex items-center gap-1.5">
                         <div className="w-16 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                          <div className="h-full bg-blue-600 rounded-full" style={{ width: `${call.confidenceScore}%` }} />
+                          <div className="h-full bg-primary rounded-full" style={{ width: `${call.confidenceScore}%` }} />
                         </div>
                         <span className="text-xs font-black text-slate-900">{call.confidenceScore}%</span>
                       </div>
@@ -417,7 +417,7 @@ export const LiveCallsTab: React.FC<LiveCallsTabProps> = ({ onSelectCall, onTrad
                     <td className="py-4 px-5">
                       <div className="flex items-center gap-2">
                         <button onClick={() => onSelectCall(call)} className="text-[10px] font-black text-slate-600 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 border border-slate-200 px-2.5 py-1.5 rounded-lg transition cursor-pointer">Report</button>
-                        <button onClick={() => onTradeCall(call)} className="text-[10px] font-black text-white bg-blue-600 hover:bg-blue-700 px-3 py-1.5 rounded-lg transition cursor-pointer">Trade</button>
+                        <button onClick={() => onTradeCall(call)} className="text-[10px] font-black text-white bg-primary hover:bg-primary-dark px-3 py-1.5 rounded-lg transition cursor-pointer">Trade</button>
                       </div>
                     </td>
                   </tr>

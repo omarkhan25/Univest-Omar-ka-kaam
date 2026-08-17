@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Plus, Check, X, Search, RefreshCw, BarChart3, Clock, AlertCircle } from 'lucide-react';
 import { Button } from '../../components/atoms/Button';
@@ -78,7 +78,7 @@ export const AnalystDashboard = () => {
     <div className="p-6 md:p-8 font-sans text-slate-800">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-2xl font-black text-[#0F172A]">Analyst Dashboard</h1>
+          <h1 className="text-2xl font-black text-[#172033]">Analyst Dashboard</h1>
           <p className="text-sm text-slate-500 font-medium">Manage and publish research calls</p>
         </div>
         <Button onClick={() => setIsCreating(true)} icon={<Plus className="w-4 h-4" />}>
@@ -107,7 +107,7 @@ export const AnalystDashboard = () => {
             <div className="col-span-full">
               <label className="block text-xs font-bold text-slate-700 mb-1.5">Technical Notes</label>
               <textarea 
-                className="w-full p-3 border border-slate-200 rounded-xl outline-none focus:border-blue-500" 
+                className="w-full p-3 border border-slate-200 rounded-xl outline-none focus:border-primary" 
                 rows={3} 
                 value={formData.technical_notes}
                 onChange={e => setFormData({...formData, technical_notes: e.target.value})}
@@ -152,7 +152,7 @@ export const AnalystDashboard = () => {
               ) : (
                 calls.map((call) => (
                   <tr key={call.id} className="border-b border-slate-100 hover:bg-slate-50">
-                    <td className="p-4 font-bold text-sm text-[#0F172A]">{call.symbol}</td>
+                    <td className="p-4 font-bold text-sm text-[#172033]">{call.symbol}</td>
                     <td className="p-4">
                       <span className={`px-2.5 py-1 rounded-md text-[10px] font-bold ${
                         call.call_type === 'BUY' ? 'bg-emerald-100 text-emerald-700' : 
@@ -163,11 +163,11 @@ export const AnalystDashboard = () => {
                     </td>
                     <td className="p-4 text-sm font-medium">₹{call.entry_price}</td>
                     <td className="p-4 text-sm">
-                      <span className="text-emerald-600 font-bold">₹{call.target_price}</span> / <span className="text-rose-600 font-bold">₹{call.stop_loss}</span>
+                      <span className="text-emerald-600 font-bold">₹{call.target_price}</span> / <span className="text-danger font-bold">₹{call.stop_loss}</span>
                     </td>
                     <td className="p-4">
                       <span className={`px-2 py-1 rounded text-[10px] font-bold ${
-                        call.status === 'PUBLISHED' ? 'bg-blue-100 text-blue-700' : 'bg-amber-100 text-amber-700'
+                        call.status === 'PUBLISHED' ? 'bg-primary-light text-primary' : 'bg-amber-100 text-amber-700'
                       }`}>
                         {call.status}
                       </span>

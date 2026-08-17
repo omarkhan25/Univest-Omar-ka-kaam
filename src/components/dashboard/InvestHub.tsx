@@ -1,4 +1,4 @@
-import api from '../../services/api';
+﻿import api from '../../services/api';
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -190,15 +190,15 @@ export const InvestHub: React.FC<InvestHubProps> = ({
 
   // Categories Data
   const categoriesList = [
-    { id: 'all', name: 'All Products', count: 'Explore All', icon: <Compass className="w-5 h-5 text-blue-600" /> },
-    { id: 'stocks', name: 'Stocks', count: '12,500+ Companies', icon: <BarChart3 className="w-5 h-5 text-blue-600" /> },
+    { id: 'all', name: 'All Products', count: 'Explore All', icon: <Compass className="w-5 h-5 text-primary" /> },
+    { id: 'stocks', name: 'Stocks', count: '12,500+ Companies', icon: <BarChart3 className="w-5 h-5 text-primary" /> },
     { id: 'funds', name: 'Mutual Funds', count: '1,500+ Funds', icon: <Wallet className="w-5 h-5 text-emerald-600" /> },
-    { id: 'etf', name: 'ETFs', count: '320 Available', icon: <Layers className="w-5 h-5 text-indigo-600" /> },
+    { id: 'etf', name: 'ETFs', count: '320 Available', icon: <Layers className="w-5 h-5 text-primary" /> },
     { id: 'ipo', name: 'IPO', count: '4 Open Today', icon: <Rocket className="w-5 h-5 text-amber-600" /> },
     { id: 'gold', name: 'Gold', count: '₹7,240 / gram', icon: <Gem className="w-5 h-5 text-amber-500" /> },
-    { id: 'commodities', name: 'Commodities', count: 'MCX Live', icon: <Fuel className="w-5 h-5 text-rose-600" /> },
+    { id: 'commodities', name: 'Commodities', count: 'MCX Live', icon: <Fuel className="w-5 h-5 text-danger" /> },
     { id: 'bonds', name: 'FD & Bonds', count: '7.35% Yield', icon: <Landmark className="w-5 h-5 text-teal-600" /> },
-    { id: 'nps', name: 'NPS', count: 'Tax Free', icon: <Shield className="w-5 h-5 text-[#2563EB]" /> },
+    { id: 'nps', name: 'NPS', count: 'Tax Free', icon: <Shield className="w-5 h-5 text-primary" /> },
     { id: 'more', name: 'More', count: 'PMS & Smallcase', icon: <MoreHorizontal className="w-5 h-5 text-slate-500" /> }
   ];
 
@@ -299,7 +299,7 @@ export const InvestHub: React.FC<InvestHubProps> = ({
       {/* PAGE HEADER */}
       <div className="w-full pt-2 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
-          <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-[#0F172A] mb-2">
+          <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-[#172033] mb-2">
             Invest
           </h1>
           <p className="text-sm text-slate-500 font-medium">
@@ -319,7 +319,7 @@ export const InvestHub: React.FC<InvestHubProps> = ({
             <select 
               value={sortOption}
               onChange={(e) => setSortOption(e.target.value)}
-              className="bg-transparent font-black text-[#0F172A] outline-none cursor-pointer"
+              className="bg-transparent font-black text-[#172033] outline-none cursor-pointer"
             >
               <option>Popularity</option>
               <option>Highest Return</option>
@@ -331,15 +331,15 @@ export const InvestHub: React.FC<InvestHubProps> = ({
       </div>
 
       {/* 1. HERO MESH GRADIENT BANNER */}
-      <section className="bg-[#0F172A] text-white rounded-[28px] p-8 relative overflow-hidden shadow-2xl">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl -translate-y-1/3 translate-x-1/3 pointer-events-none" />
+      <section className="bg-[#172033] text-white rounded-[28px] p-8 relative overflow-hidden shadow-2xl">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl -translate-y-1/3 translate-x-1/3 pointer-events-none" />
         <div className="absolute left-10 bottom-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-8 items-center">
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <Sparkles className="w-4 h-4 text-blue-400" />
-              <span className="text-xs font-black text-blue-400 uppercase tracking-wider">INVESTMENT MARKETPLACE</span>
+              <Sparkles className="w-4 h-4 text-[#64748B]" />
+              <span className="text-xs font-black text-[#64748B] uppercase tracking-wider">INVESTMENT MARKETPLACE</span>
             </div>
 
             <h2 className="text-3xl sm:text-4xl font-black mb-3 leading-tight">
@@ -353,7 +353,7 @@ export const InvestHub: React.FC<InvestHubProps> = ({
             <div className="flex flex-wrap items-center gap-4">
               <button 
                 onClick={() => setSelectedCategory('stocks')}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-black px-6 py-3.5 rounded-xl transition shadow-lg flex items-center gap-2 text-sm"
+                className="bg-primary hover:bg-primary-dark text-white font-black px-6 py-3.5 rounded-xl transition shadow-lg flex items-center gap-2 text-sm"
               >
                 Explore Opportunities <ArrowRight className="w-4 h-4" />
               </button>
@@ -370,7 +370,7 @@ export const InvestHub: React.FC<InvestHubProps> = ({
 
           {/* Quick Metrics Overlay Widget */}
           <div className="bg-white/5 border border-white/10 rounded-[24px] p-6 backdrop-blur-md flex flex-col gap-4">
-            <span className="text-xs font-black uppercase text-blue-400 tracking-wider">Market Intelligence Snapshot</span>
+            <span className="text-xs font-black uppercase text-[#64748B] tracking-wider">Market Intelligence Snapshot</span>
             
             <div className="grid grid-cols-2 gap-3 text-xs">
               <div className="bg-white/5 p-3 rounded-xl border border-white/10">
@@ -398,7 +398,7 @@ export const InvestHub: React.FC<InvestHubProps> = ({
       <section className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <h3 className="text-lg font-black text-[#0F172A]">Browse Asset Classes</h3>
+            <h3 className="text-lg font-black text-[#172033]">Browse Asset Classes</h3>
             <span className="text-[10px] font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md">9 Categories</span>
           </div>
 
@@ -406,14 +406,14 @@ export const InvestHub: React.FC<InvestHubProps> = ({
           <div className="flex items-center gap-1.5">
             <button
               onClick={() => handleScroll('left')}
-              className="w-8 h-8 rounded-xl bg-white border border-[#E2E8F0] text-slate-600 hover:text-blue-600 hover:border-blue-300 flex items-center justify-center transition shadow-xs active:scale-95 cursor-pointer"
+              className="w-8 h-8 rounded-xl bg-white border border-[#E2E8F0] text-slate-600 hover:text-primary hover:border-blue-300 flex items-center justify-center transition shadow-xs active:scale-95 cursor-pointer"
               title="Scroll Left"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
             <button
               onClick={() => handleScroll('right')}
-              className="w-8 h-8 rounded-xl bg-white border border-[#E2E8F0] text-slate-600 hover:text-blue-600 hover:border-blue-300 flex items-center justify-center transition shadow-xs active:scale-95 cursor-pointer"
+              className="w-8 h-8 rounded-xl bg-white border border-[#E2E8F0] text-slate-600 hover:text-primary hover:border-blue-300 flex items-center justify-center transition shadow-xs active:scale-95 cursor-pointer"
               title="Scroll Right"
             >
               <ChevronRight className="w-4 h-4" />
@@ -436,8 +436,8 @@ export const InvestHub: React.FC<InvestHubProps> = ({
                 onClick={() => setSelectedCategory(cat.id)}
                 className={`shrink-0 flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs font-black transition-all border shadow-xs cursor-pointer ${
                   isActive
-                    ? 'bg-[#0F172A] text-white border-[#0F172A] shadow-md ring-2 ring-blue-600/20'
-                    : 'bg-white text-[#0F172A] border-[#E2E8F0] hover:border-blue-300 hover:bg-slate-50'
+                    ? 'bg-[#172033] text-white border-[#172033] shadow-md ring-2 ring-primary/20'
+                    : 'bg-white text-[#172033] border-[#E2E8F0] hover:border-blue-300 hover:bg-slate-50'
                 }`}
               >
                 <span className={`p-1 rounded-lg ${isActive ? 'bg-white/10 text-white' : 'bg-slate-100 text-slate-600'}`}>
@@ -446,7 +446,7 @@ export const InvestHub: React.FC<InvestHubProps> = ({
                 <span className="whitespace-nowrap">{cat.name}</span>
                 <span
                   className={`text-[9px] font-extrabold px-2 py-0.5 rounded-md whitespace-nowrap ${
-                    isActive ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-500'
+                    isActive ? 'bg-primary text-white' : 'bg-slate-100 text-slate-500'
                   }`}
                 >
                   {cat.count}
@@ -485,7 +485,7 @@ export const InvestHub: React.FC<InvestHubProps> = ({
 
       {/* 5. CURATED COLLECTIONS */}
       <section className="flex flex-col gap-4">
-        <h3 className="text-xl font-black text-[#0F172A]">Curated Investment Collections</h3>
+        <h3 className="text-xl font-black text-[#172033]">Curated Investment Collections</h3>
         
         <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
           {collections.map((col) => (
@@ -494,7 +494,7 @@ export const InvestHub: React.FC<InvestHubProps> = ({
               onClick={() => setActiveCollection(col.id)}
               className={`px-4 py-2 rounded-xl text-xs font-black transition shrink-0 ${
                 activeCollection === col.id
-                  ? 'bg-[#0F172A] text-white shadow-sm'
+                  ? 'bg-[#172033] text-white shadow-sm'
                   : 'bg-white border border-[#E2E8F0] text-slate-600 hover:bg-slate-50'
               }`}
             >
@@ -505,10 +505,10 @@ export const InvestHub: React.FC<InvestHubProps> = ({
       </section>
 
       {/* 6. AI RECOMMENDATIONS ("RECOMMENDED FOR YOU") */}
-      <section className="bg-white rounded-[28px] border border-blue-100 p-6 sm:p-8 shadow-sm flex flex-col gap-6">
+      <section className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 sm:p-8 shadow-sm flex flex-col gap-6">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 text-blue-600 font-black text-base">
-            <Sparkles className="w-5 h-5 fill-blue-600" /> Recommended For You (AI Match)
+          <div className="flex items-center gap-2 text-primary font-black text-base">
+            <Sparkles className="w-5 h-5 fill-primary" /> Recommended For You (AI Match)
           </div>
           <span className="text-[10px] font-bold text-slate-400">Based on Risk Profile & Portfolio</span>
         </div>
@@ -518,8 +518,8 @@ export const InvestHub: React.FC<InvestHubProps> = ({
             <div key={ai.symbol} className="p-6 bg-[#F8FAFC] border border-[#E2E8F0] rounded-[24px] flex flex-col justify-between gap-4">
               <div>
                 <div className="flex justify-between items-start mb-2">
-                  <h4 className="font-black text-[#0F172A] text-base">{ai.title}</h4>
-                  <span className="text-xs font-black text-blue-600 bg-blue-50 px-2.5 py-1 rounded-lg">
+                  <h4 className="font-black text-[#172033] text-base">{ai.title}</h4>
+                  <span className="text-xs font-black text-primary bg-primary-light px-2.5 py-1 rounded-lg">
                     {ai.confidence}% Confidence
                   </span>
                 </div>
@@ -527,8 +527,8 @@ export const InvestHub: React.FC<InvestHubProps> = ({
                   {ai.reason}
                 </p>
                 <div className="flex gap-4 text-xs font-bold text-slate-400">
-                  <span>Horizon: <strong className="text-[#0F172A]">{ai.horizon}</strong></span>
-                  <span>Risk: <strong className="text-[#0F172A]">{ai.risk}</strong></span>
+                  <span>Horizon: <strong className="text-[#172033]">{ai.horizon}</strong></span>
+                  <span>Risk: <strong className="text-[#172033]">{ai.risk}</strong></span>
                 </div>
               </div>
 
@@ -545,7 +545,7 @@ export const InvestHub: React.FC<InvestHubProps> = ({
                   onClick={() => {
                     if (onTrade) onTrade(ai);
                   }}
-                  className="flex-1 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-black text-xs transition shadow-sm"
+                  className="flex-1 py-2.5 rounded-xl bg-primary hover:bg-primary-dark text-white font-black text-xs transition shadow-sm"
                 >
                   Invest Now
                 </button>
@@ -557,7 +557,7 @@ export const InvestHub: React.FC<InvestHubProps> = ({
 
       {/* 7. INTERACTIVE INVESTMENT TOOLS */}
       <section className="flex flex-col gap-5">
-        <h3 className="text-xl font-black text-[#0F172A]">Interactive Investment Tools</h3>
+        <h3 className="text-xl font-black text-[#172033]">Interactive Investment Tools</h3>
         
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {[
@@ -571,11 +571,11 @@ export const InvestHub: React.FC<InvestHubProps> = ({
               onClick={() => setActiveToolModal(tool.id)}
               className="bg-white rounded-[24px] border border-[#E2E8F0] p-5 shadow-sm hover:shadow-md transition cursor-pointer group hover:border-blue-300 flex flex-col justify-between"
             >
-              <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+              <div className="w-10 h-10 rounded-xl bg-primary-light text-primary flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
                 <Calculator className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="font-black text-sm text-[#0F172A] group-hover:text-blue-600 transition mb-1">{tool.title}</h4>
+                <h4 className="font-black text-sm text-[#172033] group-hover:text-primary transition mb-1">{tool.title}</h4>
                 <p className="text-[10px] text-slate-400 font-medium">{tool.desc}</p>
               </div>
             </div>
@@ -594,8 +594,8 @@ export const InvestHub: React.FC<InvestHubProps> = ({
             {/* Modal Header */}
             <div className="flex items-center justify-between border-b border-slate-100 pb-4">
               <div className="flex items-center gap-2">
-                <Calculator className="w-5 h-5 text-blue-600" />
-                <h3 className="font-black text-lg text-[#0F172A]">
+                <Calculator className="w-5 h-5 text-primary" />
+                <h3 className="font-black text-lg text-[#172033]">
                   {activeToolModal === 'sip' && 'SIP Wealth Calculator'}
                   {activeToolModal === 'lumpsum' && 'Lumpsum Return Calculator'}
                   {activeToolModal === 'goal' && 'AI Goal Planner'}
@@ -613,7 +613,7 @@ export const InvestHub: React.FC<InvestHubProps> = ({
                 <div>
                   <div className="flex justify-between font-bold mb-1">
                     <span className="text-slate-400">Monthly SIP Amount</span>
-                    <span className="font-black text-[#0F172A]">₹{sipMonthly.toLocaleString('en-IN')}</span>
+                    <span className="font-black text-[#172033]">₹{sipMonthly.toLocaleString('en-IN')}</span>
                   </div>
                   <input
                     type="range"
@@ -622,14 +622,14 @@ export const InvestHub: React.FC<InvestHubProps> = ({
                     step="500"
                     value={sipMonthly}
                     onChange={(e) => setSipMonthly(Number(e.target.value))}
-                    className="w-full accent-blue-600"
+                    className="w-full accent-primary"
                   />
                 </div>
 
                 <div>
                   <div className="flex justify-between font-bold mb-1">
                     <span className="text-slate-400">Investment Horizon</span>
-                    <span className="font-black text-[#0F172A]">{sipYears} Years</span>
+                    <span className="font-black text-[#172033]">{sipYears} Years</span>
                   </div>
                   <input
                     type="range"
@@ -637,7 +637,7 @@ export const InvestHub: React.FC<InvestHubProps> = ({
                     max="30"
                     value={sipYears}
                     onChange={(e) => setSipYears(Number(e.target.value))}
-                    className="w-full accent-blue-600"
+                    className="w-full accent-primary"
                   />
                 </div>
 
@@ -652,11 +652,11 @@ export const InvestHub: React.FC<InvestHubProps> = ({
                     max="25"
                     value={sipReturnRate}
                     onChange={(e) => setSipReturnRate(Number(e.target.value))}
-                    className="w-full accent-blue-600"
+                    className="w-full accent-primary"
                   />
                 </div>
 
-                <div className="p-5 bg-[#0F172A] text-white rounded-2xl grid grid-cols-2 gap-4">
+                <div className="p-5 bg-[#172033] text-white rounded-2xl grid grid-cols-2 gap-4">
                   <div>
                     <span className="text-[10px] font-bold text-slate-400 uppercase block">Total Invested</span>
                     <span className="text-base font-black">₹{sipInvested.toLocaleString('en-IN')}</span>
@@ -675,7 +675,7 @@ export const InvestHub: React.FC<InvestHubProps> = ({
                 <div>
                   <div className="flex justify-between font-bold mb-1">
                     <span className="text-slate-400">One-Time Deposit</span>
-                    <span className="font-black text-[#0F172A]">₹{lumpsumPrincipal.toLocaleString('en-IN')}</span>
+                    <span className="font-black text-[#172033]">₹{lumpsumPrincipal.toLocaleString('en-IN')}</span>
                   </div>
                   <input
                     type="range"
@@ -684,14 +684,14 @@ export const InvestHub: React.FC<InvestHubProps> = ({
                     step="5000"
                     value={lumpsumPrincipal}
                     onChange={(e) => setLumpsumPrincipal(Number(e.target.value))}
-                    className="w-full accent-blue-600"
+                    className="w-full accent-primary"
                   />
                 </div>
 
                 <div>
                   <div className="flex justify-between font-bold mb-1">
                     <span className="text-slate-400">Horizon</span>
-                    <span className="font-black text-[#0F172A]">{lumpsumYears} Years</span>
+                    <span className="font-black text-[#172033]">{lumpsumYears} Years</span>
                   </div>
                   <input
                     type="range"
@@ -699,7 +699,7 @@ export const InvestHub: React.FC<InvestHubProps> = ({
                     max="30"
                     value={lumpsumYears}
                     onChange={(e) => setLumpsumYears(Number(e.target.value))}
-                    className="w-full accent-blue-600"
+                    className="w-full accent-primary"
                   />
                 </div>
 
@@ -714,11 +714,11 @@ export const InvestHub: React.FC<InvestHubProps> = ({
                     max="25"
                     value={lumpsumReturnRate}
                     onChange={(e) => setLumpsumReturnRate(Number(e.target.value))}
-                    className="w-full accent-blue-600"
+                    className="w-full accent-primary"
                   />
                 </div>
 
-                <div className="p-5 bg-[#0F172A] text-white rounded-2xl grid grid-cols-2 gap-4">
+                <div className="p-5 bg-[#172033] text-white rounded-2xl grid grid-cols-2 gap-4">
                   <div>
                     <span className="text-[10px] font-bold text-slate-400 uppercase block">Total Invested</span>
                     <span className="text-base font-black">₹{lumpsumInvested.toLocaleString('en-IN')}</span>
@@ -739,7 +739,7 @@ export const InvestHub: React.FC<InvestHubProps> = ({
                   <select
                     value={goalType}
                     onChange={(e) => setGoalType(e.target.value as any)}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none text-xs font-black text-[#0F172A]"
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none text-xs font-black text-[#172033]"
                   >
                     <option value="retirement">Retirement Wealth Target</option>
                     <option value="house">Dream Home Purchase</option>
@@ -751,7 +751,7 @@ export const InvestHub: React.FC<InvestHubProps> = ({
                 <div>
                   <div className="flex justify-between font-bold mb-1">
                     <span className="text-slate-400">Target Value (Present Cost)</span>
-                    <span className="font-black text-[#0F172A]">₹{goalTarget.toLocaleString('en-IN')}</span>
+                    <span className="font-black text-[#172033]">₹{goalTarget.toLocaleString('en-IN')}</span>
                   </div>
                   <input
                     type="range"
@@ -760,14 +760,14 @@ export const InvestHub: React.FC<InvestHubProps> = ({
                     step="50000"
                     value={goalTarget}
                     onChange={(e) => setGoalTarget(Number(e.target.value))}
-                    className="w-full accent-blue-600"
+                    className="w-full accent-primary"
                   />
                 </div>
 
                 <div>
                   <div className="flex justify-between font-bold mb-1">
                     <span className="text-slate-400">Time Horizon</span>
-                    <span className="font-black text-[#0F172A]">{goalYears} Years</span>
+                    <span className="font-black text-[#172033]">{goalYears} Years</span>
                   </div>
                   <input
                     type="range"
@@ -775,7 +775,7 @@ export const InvestHub: React.FC<InvestHubProps> = ({
                     max="30"
                     value={goalYears}
                     onChange={(e) => setGoalYears(Number(e.target.value))}
-                    className="w-full accent-blue-600"
+                    className="w-full accent-primary"
                   />
                 </div>
 
@@ -783,7 +783,7 @@ export const InvestHub: React.FC<InvestHubProps> = ({
                   <div>
                     <div className="flex justify-between font-bold mb-1">
                       <span className="text-slate-400">Expected Inflation</span>
-                      <span className="font-black text-rose-500">{goalInflation}%</span>
+                      <span className="font-black text-danger">{goalInflation}%</span>
                     </div>
                     <input
                       type="range"
@@ -791,7 +791,7 @@ export const InvestHub: React.FC<InvestHubProps> = ({
                       max="15"
                       value={goalInflation}
                       onChange={(e) => setGoalInflation(Number(e.target.value))}
-                      className="w-full accent-blue-600"
+                      className="w-full accent-primary"
                     />
                   </div>
                   <div>
@@ -805,12 +805,12 @@ export const InvestHub: React.FC<InvestHubProps> = ({
                       max="25"
                       value={goalReturnRate}
                       onChange={(e) => setGoalReturnRate(Number(e.target.value))}
-                      className="w-full accent-blue-600"
+                      className="w-full accent-primary"
                     />
                   </div>
                 </div>
 
-                <div className="p-4 bg-[#0F172A] text-white rounded-2xl grid grid-cols-2 gap-4">
+                <div className="p-4 bg-[#172033] text-white rounded-2xl grid grid-cols-2 gap-4">
                   <div>
                     <span className="text-[10px] font-bold text-slate-400 uppercase block">Inflation Adjusted Target</span>
                     <span className="text-sm font-black">₹{inflationAdjustedTarget.toLocaleString('en-IN')}</span>
@@ -829,7 +829,7 @@ export const InvestHub: React.FC<InvestHubProps> = ({
                 <div>
                   <div className="flex justify-between font-bold mb-1">
                     <span className="text-slate-400">Annual Gross Salary (CTC)</span>
-                    <span className="font-black text-[#0F172A]">₹{taxIncome.toLocaleString('en-IN')}</span>
+                    <span className="font-black text-[#172033]">₹{taxIncome.toLocaleString('en-IN')}</span>
                   </div>
                   <input
                     type="range"
@@ -838,7 +838,7 @@ export const InvestHub: React.FC<InvestHubProps> = ({
                     step="50000"
                     value={taxIncome}
                     onChange={(e) => setTaxIncome(Number(e.target.value))}
-                    className="w-full accent-blue-600"
+                    className="w-full accent-primary"
                   />
                 </div>
 
@@ -846,7 +846,7 @@ export const InvestHub: React.FC<InvestHubProps> = ({
                   <div>
                     <div className="flex justify-between font-bold mb-1">
                       <span className="text-slate-400">80C Deductions</span>
-                      <span className="font-black text-[#0F172A]">₹{taxDeductions80C.toLocaleString('en-IN')}</span>
+                      <span className="font-black text-[#172033]">₹{taxDeductions80C.toLocaleString('en-IN')}</span>
                     </div>
                     <input
                       type="range"
@@ -855,13 +855,13 @@ export const InvestHub: React.FC<InvestHubProps> = ({
                       step="5000"
                       value={taxDeductions80C}
                       onChange={(e) => setTaxDeductions80C(Number(e.target.value))}
-                      className="w-full accent-blue-600"
+                      className="w-full accent-primary"
                     />
                   </div>
                   <div>
                     <div className="flex justify-between font-bold mb-1">
                       <span className="text-slate-400">Other Deductions (80D/HRA)</span>
-                      <span className="font-black text-[#0F172A]">₹{taxDeductionsOther.toLocaleString('en-IN')}</span>
+                      <span className="font-black text-[#172033]">₹{taxDeductionsOther.toLocaleString('en-IN')}</span>
                     </div>
                     <input
                       type="range"
@@ -870,7 +870,7 @@ export const InvestHub: React.FC<InvestHubProps> = ({
                       step="5000"
                       value={taxDeductionsOther}
                       onChange={(e) => setTaxDeductionsOther(Number(e.target.value))}
-                      className="w-full accent-blue-600"
+                      className="w-full accent-primary"
                     />
                   </div>
                 </div>
@@ -886,7 +886,7 @@ export const InvestHub: React.FC<InvestHubProps> = ({
                   </div>
                 </div>
 
-                <div className="p-4 bg-[#0F172A] text-white rounded-2xl flex flex-col gap-1 items-center text-center">
+                <div className="p-4 bg-[#172033] text-white rounded-2xl flex flex-col gap-1 items-center text-center">
                   <span className="text-[10px] font-bold text-slate-400 uppercase block">Recommended Choice</span>
                   <span className="text-sm font-black text-emerald-400">{recommendedRegime}</span>
                   {taxSavings > 0 ? (
@@ -901,7 +901,7 @@ export const InvestHub: React.FC<InvestHubProps> = ({
             {/* Modal Footer / Action Button */}
             <button
               onClick={() => setActiveToolModal(null)}
-              className="w-full py-3.5 rounded-xl bg-blue-600 text-white font-black text-xs hover:bg-blue-700 transition cursor-pointer"
+              className="w-full py-3.5 rounded-xl bg-primary text-white font-black text-xs hover:bg-primary transition cursor-pointer"
             >
               {activeToolModal === 'sip' && 'Done & Explore SIP Mutual Funds'}
               {activeToolModal === 'lumpsum' && 'Done & Explore Lumpsum Mutual Funds'}

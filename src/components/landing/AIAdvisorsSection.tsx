@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { motion } from 'framer-motion';
 import { TrendingUp, Briefcase, GraduationCap, ArrowRight, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -8,7 +8,7 @@ const advisors = [
     icon: TrendingUp,
     name: 'Market Analyst AI',
     description: 'Scans technical indicators, candlestick breakouts, and financial news in real-time to find high-conviction trade setups.',
-    color: 'from-blue-600 to-indigo-600',
+    color: 'from-primary to-primary',
     badge: 'Most Popular',
     tags: ['Breakout Signals', 'RSI & MACD', 'News Sentiment']
   },
@@ -64,10 +64,10 @@ export const AIAdvisorsSection: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="relative bg-[#0F172A] rounded-3xl p-8 border border-slate-700 hover:border-purple-500/50 transition-all group flex flex-col justify-between"
+              className="relative bg-[#172033] rounded-3xl p-8 border border-slate-700 hover:border-purple-500/50 transition-all group flex flex-col justify-between"
             >
               {advisor.badge && (
-                <div className="absolute -top-3.5 right-6 px-3 py-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full text-white text-[10px] font-black uppercase tracking-wider shadow-md">
+                <div className="absolute -top-3.5 right-6 px-3 py-1 bg-gradient-to-r from-purple-600 to-primary rounded-full text-white text-[10px] font-black uppercase tracking-wider shadow-md">
                   {advisor.badge}
                 </div>
               )}
@@ -94,7 +94,7 @@ export const AIAdvisorsSection: React.FC = () => {
 
                 <button
                   onClick={() => navigate('/signup')}
-                  className="w-full py-3 bg-slate-800 hover:bg-slate-700 text-blue-400 hover:text-white font-black text-xs rounded-xl transition flex items-center justify-center gap-1.5 group cursor-pointer"
+                  className="w-full py-3 bg-slate-800 hover:bg-slate-700 text-[#64748B] hover:text-white font-black text-xs rounded-xl transition flex items-center justify-center gap-1.5 group cursor-pointer"
                 >
                   <span>Chat with {advisor.name.split(' ')[0]}</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -108,7 +108,7 @@ export const AIAdvisorsSection: React.FC = () => {
         <div className="mt-14 text-center">
           <button
             onClick={() => navigate('/signup')}
-            className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-black text-xs rounded-2xl transition-all shadow-xl shadow-purple-600/25 hover:shadow-purple-600/40 inline-flex items-center gap-2 cursor-pointer"
+            className="px-8 py-4 bg-gradient-to-r from-purple-600 to-primary hover:from-purple-700 hover:to-[#5A35F0] text-white font-black text-xs rounded-2xl transition-all shadow-xl shadow-purple-600/25 hover:shadow-purple-600/40 inline-flex items-center gap-2 cursor-pointer"
           >
             <Sparkles className="w-4 h-4" />
             <span>Meet Your Personal AI Team Free</span>

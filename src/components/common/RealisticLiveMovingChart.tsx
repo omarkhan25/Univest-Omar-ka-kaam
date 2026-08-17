@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { TrendingUp, TrendingDown, Sparkles, Activity, ShieldCheck } from 'lucide-react';
 
@@ -97,7 +97,7 @@ export const RealisticLiveMovingChart: React.FC<RealisticLiveMovingChartProps> =
       {/* REAL-TIME HEADER P&L STATUS DISPLAY */}
       <div className="flex items-center justify-between mb-3 font-mono">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
+          <div className="w-8 h-8 rounded-xl bg-primary/20 border border-primary/30 flex items-center justify-center text-[#64748B]">
             <Activity className="w-4 h-4" />
           </div>
           <div>
@@ -115,7 +115,7 @@ export const RealisticLiveMovingChart: React.FC<RealisticLiveMovingChartProps> =
         <div className={`px-3.5 py-1.5 rounded-xl border text-xs font-bold font-mono transition-colors shadow-lg ${
           isGain
             ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
-            : 'bg-rose-500/10 border-rose-500/30 text-rose-400'
+            : 'bg-danger/10 border-danger/30 text-rose-400'
         }`}>
           <div className="text-[10px] opacity-70 uppercase tracking-wider">Unrealized P&L</div>
           <div className="text-sm font-black flex items-center gap-1">
@@ -183,7 +183,7 @@ export const RealisticLiveMovingChart: React.FC<RealisticLiveMovingChartProps> =
           <path
             d={pathD}
             fill="none"
-            stroke="#2563EB"
+            stroke="#15519D"
             strokeWidth="2"
             strokeDasharray="5 5"
             opacity="0.5"

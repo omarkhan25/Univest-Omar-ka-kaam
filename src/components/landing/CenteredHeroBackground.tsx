@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+﻿import React, { useEffect, useRef } from 'react';
 
 interface CenteredHeroBackgroundProps {
   theme?: 'dark' | 'light';
@@ -71,7 +71,7 @@ export const CenteredHeroBackground: React.FC<CenteredHeroBackgroundProps> = ({
       const isDark = theme === 'dark';
 
       // 1. Solid Clean Background Color
-      ctx.fillStyle = isDark ? '#0F172A' : '#F8FAFC';
+      ctx.fillStyle = isDark ? '#172033' : '#F8FAFC';
       ctx.fillRect(0, 0, width, height);
 
       // 2. Liquid Mesh Gradients Behind Content (Low saturation, luxury atmosphere)
@@ -85,11 +85,11 @@ export const CenteredHeroBackground: React.FC<CenteredHeroBackgroundProps> = ({
       );
 
       if (isDark) {
-        gradient.addColorStop(0, 'rgba(37, 99, 235, 0.08)'); // Royal Blue
+        gradient.addColorStop(0, 'rgba(21, 81, 157, 0.08)'); // Royal Blue
         gradient.addColorStop(0.5, 'rgba(22, 163, 74, 0.03)'); // Emerald Green
         gradient.addColorStop(1, 'rgba(15, 23, 42, 0)');
       } else {
-        gradient.addColorStop(0, 'rgba(37, 99, 235, 0.04)'); // Light Royal Blue
+        gradient.addColorStop(0, 'rgba(21, 81, 157, 0.04)'); // Light Royal Blue
         gradient.addColorStop(0.5, 'rgba(22, 163, 74, 0.02)'); // Light Emerald Green
         gradient.addColorStop(1, 'rgba(248, 250, 252, 0)');
       }

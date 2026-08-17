@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Brain, TrendingUp, Briefcase, Newspaper, BarChart3, Star, 
@@ -53,7 +53,7 @@ export const AiMarketCoreGalaxy: React.FC<AiMarketCoreGalaxyProps> = ({
     >
       {/* 1. DEEP MESH GRADIENT & BACKGROUND PARTICLES */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[520px] bg-gradient-to-tr from-blue-600/15 via-purple-600/10 to-emerald-500/15 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[520px] bg-gradient-to-tr from-primary/15 via-purple-600/10 to-emerald-500/15 rounded-full blur-3xl animate-pulse" />
         <div className="absolute top-1/3 left-1/4 w-[300px] h-[300px] bg-cyan-500/10 rounded-full blur-2xl" />
       </div>
 
@@ -61,9 +61,9 @@ export const AiMarketCoreGalaxy: React.FC<AiMarketCoreGalaxyProps> = ({
       <svg viewBox="0 0 540 540" className="absolute inset-0 w-full h-full pointer-events-none overflow-visible">
         <defs>
           <linearGradient id="ringGrad1" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#2563EB" stopOpacity="0.4" />
+            <stop offset="0%" stopColor="#15519D" stopOpacity="0.4" />
             <stop offset="50%" stopColor="#10B981" stopOpacity="0.1" />
-            <stop offset="100%" stopColor="#2563EB" stopOpacity="0.4" />
+            <stop offset="100%" stopColor="#15519D" stopOpacity="0.4" />
           </linearGradient>
           <linearGradient id="ringGrad2" x1="1" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#06B6D4" stopOpacity="0.3" />
@@ -81,7 +81,7 @@ export const AiMarketCoreGalaxy: React.FC<AiMarketCoreGalaxyProps> = ({
         <circle cx="270" cy="270" r="245" stroke="#475569" strokeWidth="1" strokeDasharray="3 9" fill="none" opacity="0.35" />
 
         {/* Connection Lines from Center to Orbiting Modules */}
-        <line x1="270" y1="270" x2="180" y2="175" stroke="#2563EB" strokeWidth="1.5" opacity="0.4" strokeDasharray="3 3" />
+        <line x1="270" y1="270" x2="180" y2="175" stroke="#15519D" strokeWidth="1.5" opacity="0.4" strokeDasharray="3 3" />
         <line x1="270" y1="270" x2="360" y2="180" stroke="#10B981" strokeWidth="1.5" opacity="0.4" strokeDasharray="3 3" />
         <line x1="270" y1="270" x2="150" y2="350" stroke="#06B6D4" strokeWidth="1.5" opacity="0.4" strokeDasharray="3 3" />
         <line x1="270" y1="270" x2="390" y2="340" stroke="#8B5CF6" strokeWidth="1.5" opacity="0.4" strokeDasharray="3 3" />
@@ -102,23 +102,23 @@ export const AiMarketCoreGalaxy: React.FC<AiMarketCoreGalaxyProps> = ({
             scale: { duration: 4, repeat: Infinity, ease: 'easeInOut' },
             rotate: { duration: 45, repeat: Infinity, ease: 'linear' },
           }}
-          className="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-600/30 via-emerald-500/20 to-purple-600/30 backdrop-blur-2xl border border-white/20 shadow-[0_0_60px_rgba(37,99,235,0.4)]"
+          className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary/30 via-emerald-500/20 to-purple-600/30 backdrop-blur-2xl border border-white/20 shadow-[0_0_60px_rgba(21,81,157,0.4)]"
         />
 
         {/* Inner Rotating Energy Core */}
         <motion.div
           animate={{ rotate: -360 }}
           transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-          className="absolute inset-3 rounded-full bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#0F172A] border border-blue-400/40 overflow-hidden flex items-center justify-center"
+          className="absolute inset-3 rounded-full bg-gradient-to-br from-[#172033] via-[#1E293B] to-[#172033] border border-primary-light/40 overflow-hidden flex items-center justify-center"
         >
           {/* Internal Plasma Glows */}
-          <div className="absolute w-32 h-32 bg-blue-500/40 rounded-full blur-xl animate-pulse" />
+          <div className="absolute w-32 h-32 bg-primary/40 rounded-full blur-xl animate-pulse" />
           <div className="absolute w-24 h-24 bg-emerald-400/30 rounded-full blur-lg top-2 right-2" />
           <div className="absolute w-20 h-20 bg-purple-500/30 rounded-full blur-md bottom-2 left-2" />
 
           {/* Central AI Nucleus Icon */}
           <div className="relative z-10 text-center space-y-1">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-emerald-500 text-white flex items-center justify-center mx-auto shadow-lg shadow-blue-600/50 group-hover:scale-110 transition-transform">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-primary to-emerald-500 text-white flex items-center justify-center mx-auto shadow-lg shadow-[rgba(21,81,157,0.3)]/50 group-hover:scale-110 transition-transform">
               <Brain className="w-7 h-7" />
             </div>
             <span className="font-mono text-[10px] font-black tracking-widest text-emerald-400 block uppercase">
@@ -140,7 +140,7 @@ export const AiMarketCoreGalaxy: React.FC<AiMarketCoreGalaxyProps> = ({
         animate={{ y: [0, -6, 0] }}
         transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
         onClick={() => onModuleClick?.('portfolio')}
-        className="absolute top-16 left-8 sm:left-14 z-30 bg-[#0F172A]/90 backdrop-blur-xl border border-emerald-500/40 p-3 sm:p-3.5 rounded-2xl shadow-xl hover:border-emerald-400 hover:scale-105 transition cursor-pointer font-mono"
+        className="absolute top-16 left-8 sm:left-14 z-30 bg-[#172033]/90 backdrop-blur-xl border border-emerald-500/40 p-3 sm:p-3.5 rounded-2xl shadow-xl hover:border-emerald-400 hover:scale-105 transition cursor-pointer font-mono"
       >
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
@@ -160,7 +160,7 @@ export const AiMarketCoreGalaxy: React.FC<AiMarketCoreGalaxyProps> = ({
         animate={{ y: [0, 6, 0] }}
         transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
         onClick={() => onModuleClick?.('ai-advisors')}
-        className="absolute top-16 right-8 sm:right-14 z-30 bg-[#0F172A]/90 backdrop-blur-xl border border-purple-500/40 p-3 sm:p-3.5 rounded-2xl shadow-xl hover:border-purple-400 hover:scale-105 transition cursor-pointer font-mono"
+        className="absolute top-16 right-8 sm:right-14 z-30 bg-[#172033]/90 backdrop-blur-xl border border-purple-500/40 p-3 sm:p-3.5 rounded-2xl shadow-xl hover:border-purple-400 hover:scale-105 transition cursor-pointer font-mono"
       >
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center shrink-0">
@@ -181,10 +181,10 @@ export const AiMarketCoreGalaxy: React.FC<AiMarketCoreGalaxyProps> = ({
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
         onClick={() => onModuleClick?.('stocks')}
-        className="absolute bottom-16 left-6 sm:left-12 z-30 bg-[#0F172A]/90 backdrop-blur-xl border border-blue-500/40 p-3 sm:p-3.5 rounded-2xl shadow-xl hover:border-blue-400 hover:scale-105 transition cursor-pointer font-mono"
+        className="absolute bottom-16 left-6 sm:left-12 z-30 bg-[#172033]/90 backdrop-blur-xl border border-primary/40 p-3 sm:p-3.5 rounded-2xl shadow-xl hover:border-primary-light hover:scale-105 transition cursor-pointer font-mono"
       >
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0">
+          <div className="w-8 h-8 rounded-xl bg-primary/20 text-[#64748B] flex items-center justify-center shrink-0">
             <TrendingUp className="w-4 h-4" />
           </div>
           <div>
@@ -201,7 +201,7 @@ export const AiMarketCoreGalaxy: React.FC<AiMarketCoreGalaxyProps> = ({
         animate={{ y: [0, -8, 0] }}
         transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
         onClick={() => onModuleClick?.('research')}
-        className="absolute bottom-16 right-6 sm:right-12 z-30 bg-[#0F172A]/90 backdrop-blur-xl border border-amber-500/40 p-3 sm:p-3.5 rounded-2xl shadow-xl hover:border-amber-400 hover:scale-105 transition cursor-pointer font-mono"
+        className="absolute bottom-16 right-6 sm:right-12 z-30 bg-[#172033]/90 backdrop-blur-xl border border-amber-500/40 p-3 sm:p-3.5 rounded-2xl shadow-xl hover:border-amber-400 hover:scale-105 transition cursor-pointer font-mono"
       >
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
@@ -220,7 +220,7 @@ export const AiMarketCoreGalaxy: React.FC<AiMarketCoreGalaxyProps> = ({
       <motion.div
         animate={{ scale: [1, 1.04, 1] }}
         transition={{ duration: 3, repeat: Infinity }}
-        className="absolute top-4 left-1/2 -translate-x-1/2 z-30 bg-[#0F172A]/90 border border-slate-700 px-3 py-1 rounded-full text-[10px] font-mono text-slate-300 shadow-md flex items-center gap-1.5"
+        className="absolute top-4 left-1/2 -translate-x-1/2 z-30 bg-[#172033]/90 border border-slate-700 px-3 py-1 rounded-full text-[10px] font-mono text-slate-300 shadow-md flex items-center gap-1.5"
       >
         <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
         <span>GOLD 24K: <strong className="text-amber-400">₹7,240/g</strong></span>
@@ -230,7 +230,7 @@ export const AiMarketCoreGalaxy: React.FC<AiMarketCoreGalaxyProps> = ({
       <motion.div
         animate={{ scale: [1, 1.04, 1] }}
         transition={{ duration: 3, repeat: Infinity, delay: 1.5 }}
-        className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 bg-[#0F172A]/90 border border-slate-700 px-3 py-1 rounded-full text-[10px] font-mono text-slate-300 shadow-md flex items-center gap-1.5"
+        className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 bg-[#172033]/90 border border-slate-700 px-3 py-1 rounded-full text-[10px] font-mono text-slate-300 shadow-md flex items-center gap-1.5"
       >
         <Flame className="w-3 h-3 text-rose-400" />
         <span>OLA IPO GMP: <strong className="text-emerald-400">+38.5% Gain</strong></span>
@@ -244,9 +244,9 @@ export const AiMarketCoreGalaxy: React.FC<AiMarketCoreGalaxyProps> = ({
             initial={{ opacity: 0, y: 15, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -15, scale: 0.95 }}
-            className="absolute bottom-28 z-40 bg-gradient-to-r from-blue-900/90 via-[#0F172A] to-emerald-900/90 border border-blue-500/50 backdrop-blur-2xl px-4 py-2 rounded-2xl shadow-2xl font-mono text-xs text-white flex items-center gap-3"
+            className="absolute bottom-28 z-40 bg-gradient-to-r from-blue-900/90 via-[#172033] to-emerald-900/90 border border-primary/50 backdrop-blur-2xl px-4 py-2 rounded-2xl shadow-2xl font-mono text-xs text-white flex items-center gap-3"
           >
-            <div className="w-7 h-7 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0">
+            <div className="w-7 h-7 rounded-xl bg-primary text-white flex items-center justify-center shrink-0">
               <Zap className="w-4 h-4 fill-white" />
             </div>
             <div>

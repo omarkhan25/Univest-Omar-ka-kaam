@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Mail, Lock, Check, ArrowRight, RefreshCw } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -26,10 +26,10 @@ export const ForgotPassword: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#070B14] flex items-center justify-center p-4 font-sans text-slate-100">
-      <div className="w-full max-w-md bg-[#0F172A] border border-slate-800 rounded-[32px] p-8 shadow-2xl">
+      <div className="w-full max-w-md bg-[#172033] border border-slate-800 rounded-[32px] p-8 shadow-2xl">
         
         <div className="text-center mb-6">
-          <div className="w-16 h-16 mx-auto bg-blue-600/20 border border-blue-500/30 rounded-2xl flex items-center justify-center text-blue-400 mb-4">
+          <div className="w-16 h-16 mx-auto bg-primary/20 border border-primary/30 rounded-2xl flex items-center justify-center text-[#64748B] mb-4">
             <Lock className="w-8 h-8" />
           </div>
           <h1 className="text-2xl font-black text-white tracking-tight">Reset Password</h1>
@@ -47,7 +47,7 @@ export const ForgotPassword: React.FC = () => {
             <p className="text-xs text-slate-400">We sent instructions to <span className="text-white font-bold">{email}</span></p>
             <button
               onClick={() => navigate('/login')}
-              className="w-full py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-black text-xs rounded-xl transition shadow-md cursor-pointer mt-2"
+              className="w-full py-3.5 bg-primary hover:bg-primary-dark text-white font-black text-xs rounded-xl transition shadow-md cursor-pointer mt-2"
             >
               Return to Login
             </button>
@@ -63,7 +63,7 @@ export const ForgotPassword: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
-                  className="w-full pl-10 pr-4 py-3 bg-[#1E293B] border border-slate-700 rounded-xl text-xs font-medium text-white placeholder-slate-500 outline-none focus:border-blue-500"
+                  className="w-full pl-10 pr-4 py-3 bg-[#1E293B] border border-slate-700 rounded-xl text-xs font-medium text-white placeholder-slate-500 outline-none focus:border-primary"
                 />
               </div>
             </div>
@@ -71,7 +71,7 @@ export const ForgotPassword: React.FC = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-black text-xs rounded-xl transition shadow-md flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-3.5 bg-primary hover:bg-primary-dark text-white font-black text-xs rounded-xl transition shadow-md flex items-center justify-center gap-2 cursor-pointer"
             >
               {isLoading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <ArrowRight className="w-4 h-4" />}
               <span>{isLoading ? 'Sending Link...' : 'Send Reset Link'}</span>

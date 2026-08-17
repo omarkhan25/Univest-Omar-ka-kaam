@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bell, X, Check, ArrowRight, TrendingUp, AlertCircle, Sparkles, Trash2 } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -133,10 +133,10 @@ export const NotificationCenterModal: React.FC<NotificationCenterModalProps> = (
           {/* Header */}
           <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-white">
             <div className="flex items-center gap-2">
-              <Bell className="w-4 h-4 text-blue-600" />
-              <h3 className="font-black text-sm text-[#0F172A]">Notifications</h3>
+              <Bell className="w-4 h-4 text-primary" />
+              <h3 className="font-black text-sm text-[#172033]">Notifications</h3>
               {unreadCount > 0 && (
-                <span className="px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 text-[10px] font-black">
+                <span className="px-2 py-0.5 rounded-full bg-primary-light text-primary text-[10px] font-black">
                   {unreadCount} new
                 </span>
               )}
@@ -146,7 +146,7 @@ export const NotificationCenterModal: React.FC<NotificationCenterModalProps> = (
               {unreadCount > 0 && (
                 <button
                   onClick={handleMarkAllRead}
-                  className="text-[11px] font-bold text-blue-600 hover:underline"
+                  className="text-[11px] font-bold text-primary hover:underline"
                 >
                   Mark all read
                 </button>
@@ -164,13 +164,13 @@ export const NotificationCenterModal: React.FC<NotificationCenterModalProps> = (
           <div className="px-4 py-2 bg-[#F8FAFC] border-b border-slate-100 flex items-center gap-2 text-xs font-bold">
             <button
               onClick={() => setFilter('All')}
-              className={`px-3 py-1 rounded-lg transition ${filter === 'All' ? 'bg-[#0F172A] text-white font-black' : 'text-slate-500 hover:text-[#0F172A]'}`}
+              className={`px-3 py-1 rounded-lg transition ${filter === 'All' ? 'bg-[#172033] text-white font-black' : 'text-slate-500 hover:text-[#172033]'}`}
             >
               All
             </button>
             <button
               onClick={() => setFilter('Unread')}
-              className={`px-3 py-1 rounded-lg transition ${filter === 'Unread' ? 'bg-[#0F172A] text-white font-black' : 'text-slate-500 hover:text-[#0F172A]'}`}
+              className={`px-3 py-1 rounded-lg transition ${filter === 'Unread' ? 'bg-[#172033] text-white font-black' : 'text-slate-500 hover:text-[#172033]'}`}
             >
               Unread ({unreadCount})
             </button>
@@ -188,18 +188,18 @@ export const NotificationCenterModal: React.FC<NotificationCenterModalProps> = (
                   key={item.id}
                   onClick={() => handleItemClick(item)}
                   className={`p-4 hover:bg-slate-50 transition cursor-pointer flex gap-3 items-start ${
-                    !item.isRead ? 'bg-blue-50/30' : ''
+                    !item.isRead ? 'bg-primary-light/30' : ''
                   }`}
                 >
                   {!item.isRead ? (
-                    <span className="w-2 h-2 rounded-full bg-blue-600 mt-1.5 shrink-0" />
+                    <span className="w-2 h-2 rounded-full bg-primary mt-1.5 shrink-0" />
                   ) : (
                     <span className="w-2 h-2 rounded-full bg-transparent mt-1.5 shrink-0" />
                   )}
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2 mb-0.5">
-                      <h4 className="font-black text-xs text-[#0F172A] truncate">{item.title}</h4>
+                      <h4 className="font-black text-xs text-[#172033] truncate">{item.title}</h4>
                       <span className="text-[10px] text-slate-400 font-bold shrink-0">{item.time}</span>
                     </div>
                     <p className="text-xs text-slate-500 leading-snug line-clamp-2">{item.summary}</p>

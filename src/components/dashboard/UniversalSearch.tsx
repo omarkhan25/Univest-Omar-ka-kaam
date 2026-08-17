@@ -158,9 +158,9 @@ export const UniversalSearch: React.FC<UniversalSearchProps> = ({
           {/* SEARCH INPUT BAR */}
           <div className="p-4 border-b border-[#E2E8F0] flex items-center gap-3 bg-[#F8FAFC]">
             {isSearching ? (
-              <Loader2 className="w-5 h-5 text-blue-600 animate-spin shrink-0" />
+              <Loader2 className="w-5 h-5 text-primary animate-spin shrink-0" />
             ) : (
-              <Search className="w-5 h-5 text-blue-600 shrink-0" />
+              <Search className="w-5 h-5 text-primary shrink-0" />
             )}
 
             <input
@@ -169,7 +169,8 @@ export const UniversalSearch: React.FC<UniversalSearchProps> = ({
               placeholder="Search stocks, research, reports, analysts, mutual funds, ETFs, IPOs..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="flex-1 bg-transparent text-sm sm:text-base font-black text-[#0F172A] outline-none placeholder:text-slate-400 placeholder:font-medium"
+              className="flex-1 bg-transparent text-sm sm:text-base font-semibold text-[#172033] outline-none focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:outline-none border-none ring-0 placeholder:text-slate-400 placeholder:font-medium"
+              style={{ outline: 'none', border: 'none', boxShadow: 'none' }}
             />
 
             {query && (
@@ -196,7 +197,7 @@ export const UniversalSearch: React.FC<UniversalSearchProps> = ({
                 <button
                   key={term}
                   onClick={() => setQuery(term)}
-                  className="px-3 py-1 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs font-bold text-slate-600 hover:text-blue-600 hover:border-blue-200 transition"
+                  className="px-3 py-1 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs font-bold text-slate-600 hover:text-primary hover:border-primary-light transition"
                 >
                   {term}
                 </button>
@@ -218,15 +219,15 @@ export const UniversalSearch: React.FC<UniversalSearchProps> = ({
                     <div
                       key={stock.symbol}
                       onClick={() => handleSelectResult(stock)}
-                      className="p-3.5 bg-white border border-[#E2E8F0] rounded-2xl flex items-center justify-between hover:border-blue-400 hover:bg-blue-50/40 transition cursor-pointer group"
+                      className="p-3.5 bg-white border border-[#E2E8F0] rounded-2xl flex items-center justify-between hover:border-primary-light hover:bg-primary-light/40 transition cursor-pointer group"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-xl bg-[#0F172A] text-white flex items-center justify-center font-black text-xs shrink-0">
+                        <div className="w-9 h-9 rounded-xl bg-[#172033] text-white flex items-center justify-center font-black text-xs shrink-0">
                           {stock.logo}
                         </div>
                         <div>
                           <div className="flex items-center gap-2">
-                            <span className="font-black text-[#0F172A] text-sm group-hover:text-blue-600 transition">
+                            <span className="font-black text-[#172033] text-sm group-hover:text-primary transition">
                               {stock.company}
                             </span>
                             <span className="text-[10px] font-bold text-slate-400">NSE:{stock.symbol}</span>
@@ -235,7 +236,7 @@ export const UniversalSearch: React.FC<UniversalSearchProps> = ({
                         </div>
                       </div>
                       <div className="text-right">
-                        <span className="font-black text-sm text-[#0F172A] block">{stock.price}</span>
+                        <span className="font-black text-sm text-[#172033] block">{stock.price}</span>
                         <span className="text-[10px] font-extrabold text-emerald-600">{stock.change}</span>
                       </div>
                     </div>
@@ -255,7 +256,7 @@ export const UniversalSearch: React.FC<UniversalSearchProps> = ({
                     <div
                       key={res.title}
                       onClick={() => handleSelectResult(res)}
-                      className="p-3.5 bg-white border border-[#E2E8F0] rounded-2xl flex items-center justify-between hover:border-blue-400 hover:bg-blue-50/40 transition cursor-pointer group"
+                      className="p-3.5 bg-white border border-[#E2E8F0] rounded-2xl flex items-center justify-between hover:border-primary-light hover:bg-primary-light/40 transition cursor-pointer group"
                     >
                       <div className="flex items-center gap-3">
                         <span className={`px-2.5 py-1 rounded-lg text-[10px] font-black ${
@@ -264,17 +265,17 @@ export const UniversalSearch: React.FC<UniversalSearchProps> = ({
                           {res.rec}
                         </span>
                         <div>
-                          <h4 className="font-black text-[#0F172A] text-sm group-hover:text-blue-600 transition">
+                          <h4 className="font-black text-[#172033] text-sm group-hover:text-primary transition">
                             {res.title}
                           </h4>
                           <span className="text-[10px] text-slate-400 font-medium">By {res.analyst} · Target: {res.target}</span>
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-black text-blue-600 bg-blue-50 px-2 py-0.5 rounded">
+                        <span className="text-xs font-black text-primary bg-primary-light px-2 py-0.5 rounded">
                           {res.confidence}% AI
                         </span>
-                        <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition" />
+                        <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-primary transition" />
                       </div>
                     </div>
                   ))}
@@ -293,10 +294,10 @@ export const UniversalSearch: React.FC<UniversalSearchProps> = ({
                     <div
                       key={fund.name}
                       onClick={() => handleSelectResult(fund)}
-                      className="p-3.5 bg-white border border-[#E2E8F0] rounded-2xl flex items-center justify-between hover:border-blue-400 hover:bg-blue-50/40 transition cursor-pointer group"
+                      className="p-3.5 bg-white border border-[#E2E8F0] rounded-2xl flex items-center justify-between hover:border-primary-light hover:bg-primary-light/40 transition cursor-pointer group"
                     >
                       <div>
-                        <h4 className="font-black text-[#0F172A] text-sm group-hover:text-blue-600 transition">
+                        <h4 className="font-black text-[#172033] text-sm group-hover:text-primary transition">
                           {fund.name}
                         </h4>
                         <span className="text-[10px] text-slate-400 font-medium">{fund.category} · {fund.rating}</span>
@@ -319,12 +320,12 @@ export const UniversalSearch: React.FC<UniversalSearchProps> = ({
                     <div
                       key={rep.title}
                       onClick={() => handleSelectResult(rep)}
-                      className="p-3.5 bg-white border border-[#E2E8F0] rounded-2xl flex items-center justify-between hover:border-blue-400 hover:bg-blue-50/40 transition cursor-pointer group"
+                      className="p-3.5 bg-white border border-[#E2E8F0] rounded-2xl flex items-center justify-between hover:border-primary-light hover:bg-primary-light/40 transition cursor-pointer group"
                     >
                       <div className="flex items-center gap-3">
-                        <FileText className="w-5 h-5 text-blue-600 shrink-0" />
+                        <FileText className="w-5 h-5 text-primary shrink-0" />
                         <div>
-                          <h4 className="font-black text-[#0F172A] text-sm group-hover:text-blue-600 transition">
+                          <h4 className="font-black text-[#172033] text-sm group-hover:text-primary transition">
                             {rep.title}
                           </h4>
                           <span className="text-[10px] text-slate-400 font-medium">By {rep.author} · {rep.date}</span>
@@ -350,12 +351,12 @@ export const UniversalSearch: React.FC<UniversalSearchProps> = ({
                     <div
                       key={an.name}
                       onClick={() => handleSelectResult(an)}
-                      className="p-3.5 bg-white border border-[#E2E8F0] rounded-2xl flex items-center justify-between hover:border-blue-400 hover:bg-blue-50/40 transition cursor-pointer group"
+                      className="p-3.5 bg-white border border-[#E2E8F0] rounded-2xl flex items-center justify-between hover:border-primary-light hover:bg-primary-light/40 transition cursor-pointer group"
                     >
                       <div className="flex items-center gap-3">
                         <UserCheck className="w-5 h-5 text-emerald-600 shrink-0" />
                         <div>
-                          <h4 className="font-black text-[#0F172A] text-sm group-hover:text-blue-600 transition">
+                          <h4 className="font-black text-[#172033] text-sm group-hover:text-primary transition">
                             {an.name}
                           </h4>
                           <span className="text-[10px] text-slate-400 font-medium">{an.role}</span>
@@ -372,7 +373,7 @@ export const UniversalSearch: React.FC<UniversalSearchProps> = ({
             {totalResultsCount === 0 && (
               <div className="py-12 text-center flex flex-col items-center justify-center">
                 <Search className="w-10 h-10 text-slate-300 mb-3" />
-                <h4 className="font-black text-base text-[#0F172A]">No Investment Matches Found</h4>
+                <h4 className="font-black text-base text-[#172033]">No Investment Matches Found</h4>
                 <p className="text-xs text-slate-400 font-medium mt-1">Try searching for tickers like RELIANCE, TCS, or report keywords.</p>
               </div>
             )}

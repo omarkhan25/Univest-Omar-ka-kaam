@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowLeft, TrendingUp, Clock, Activity, Briefcase, 
@@ -128,12 +128,12 @@ export const StockDetail: React.FC<StockDetailProps> = ({
             <div className="h-6 w-px bg-slate-200 hidden sm:block" />
 
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-[#0F172A] text-white flex items-center justify-center font-black text-xs shrink-0 shadow-sm">
+              <div className="w-10 h-10 rounded-2xl bg-[#172033] text-white flex items-center justify-center font-black text-xs shrink-0 shadow-sm">
                 {logo || symbol.substring(0, 2)}
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h1 className="font-black text-lg text-[#0F172A] leading-tight">{companyName}</h1>
+                  <h1 className="font-black text-lg text-[#172033] leading-tight">{companyName}</h1>
                   <span className="text-[10px] font-black bg-slate-100 text-slate-700 px-2 py-0.5 rounded border border-slate-200 uppercase">
                     NSE : {symbol}
                   </span>
@@ -156,7 +156,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
 
           <div className="flex items-center gap-3">
             <div className="text-right mr-2">
-              <span className="text-xl font-black text-[#0F172A]">₹3,024.50</span>
+              <span className="text-xl font-black text-[#172033]">₹3,024.50</span>
               <span className="block text-xs font-extrabold text-emerald-600">▲ +₹37.10 (+1.24%)</span>
             </div>
 
@@ -166,10 +166,10 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                 toast.success(isBookmarked ? 'Removed from Watchlist' : 'Saved to Watchlist');
               }}
               className={`w-10 h-10 rounded-xl border border-[#E2E8F0] flex items-center justify-center transition ${
-                isBookmarked ? 'bg-blue-50 text-blue-600 border-blue-200' : 'text-slate-400 hover:bg-slate-50'
+                isBookmarked ? 'bg-primary-light text-primary border-primary-light' : 'text-slate-400 hover:bg-slate-50'
               }`}
             >
-              <Bookmark className="w-4.5 h-4.5" fill={isBookmarked ? '#2563EB' : 'none'} />
+              <Bookmark className="w-4.5 h-4.5" fill={isBookmarked ? '#15519D' : 'none'} />
             </button>
 
             <button
@@ -184,7 +184,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                 if (onTrade) onTrade({ symbol, action: 'BUY', company: companyName });
                 
               }}
-              className="px-5 py-2.5 rounded-xl bg-blue-600 text-white font-black text-xs hover:bg-blue-700 transition shadow-sm cursor-pointer"
+              className="px-5 py-2.5 rounded-xl bg-primary text-white font-black text-xs hover:bg-primary transition shadow-sm cursor-pointer"
             >
               Trade Asset
             </button>
@@ -198,8 +198,8 @@ export const StockDetail: React.FC<StockDetailProps> = ({
           <section className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col gap-4">
             <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
               <div className="flex items-center gap-2">
-                <BarChart3 className="w-5 h-5 text-blue-600" />
-                <h3 className="font-black text-lg text-[#0F172A]">Interactive Chart Feed</h3>
+                <BarChart3 className="w-5 h-5 text-primary" />
+                <h3 className="font-black text-lg text-[#172033]">Interactive Chart Feed</h3>
               </div>
 
               {/* Timeframes */}
@@ -210,8 +210,8 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                     onClick={() => setChartInterval(tf)}
                     className={`px-3 py-1.5 rounded-lg font-black transition ${
                       chartInterval === tf
-                        ? 'bg-[#0F172A] text-white shadow-sm'
-                        : 'text-slate-500 hover:text-[#0F172A]'
+                        ? 'bg-[#172033] text-white shadow-sm'
+                        : 'text-slate-500 hover:text-[#172033]'
                     }`}
                   >
                     {tf}
@@ -226,7 +226,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                     key={type}
                     onClick={() => setChartType(type)}
                     className={`px-3 py-1.5 rounded-lg font-bold transition ${
-                      chartType === type ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-500'
+                      chartType === type ? 'bg-primary text-white shadow-xs' : 'text-slate-500'
                     }`}
                   >
                     {type}
@@ -244,7 +244,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                       key={ind}
                       onClick={() => toggleIndicator(ind)}
                       className={`px-2.5 py-0.5 rounded-md text-[10px] font-black border transition ${
-                        isActive ? 'bg-blue-50 text-blue-700 border-blue-200' : 'bg-slate-50 text-slate-400 border-slate-200'
+                        isActive ? 'bg-primary-light text-primary border-primary-light' : 'bg-slate-50 text-slate-400 border-slate-200'
                       }`}
                     >
                       {ind}
@@ -255,7 +255,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
             </div>
 
             {/* TradingView Simulated Canvas */}
-            <div className="relative h-80 w-full bg-[#0F172A] rounded-2xl p-5 overflow-hidden flex flex-col justify-between shadow-inner">
+            <div className="relative h-80 w-full bg-[#172033] rounded-2xl p-5 overflow-hidden flex flex-col justify-between shadow-inner">
               <div className="absolute inset-0 flex flex-col justify-between p-5 pointer-events-none opacity-20">
                 <div className="border-b border-dashed border-slate-400 w-full" />
                 <div className="border-b border-dashed border-slate-400 w-full" />
@@ -264,7 +264,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
 
               <div className="absolute top-4 left-5 right-5 flex justify-between items-center text-xs font-black text-slate-300 z-10">
                 <span className="flex items-center gap-2">
-                  <Activity className="w-4 h-4 text-blue-500" /> TradingView Engine Feed
+                  <Activity className="w-4 h-4 text-primary" /> TradingView Engine Feed
                 </span>
                 <div className="flex gap-4 text-[10px] font-extrabold">
                   <span>O: ₹2,985.00</span>
@@ -277,8 +277,8 @@ export const StockDetail: React.FC<StockDetailProps> = ({
               <svg className="w-full h-full relative z-0 mt-4" viewBox="0 0 500 200" preserveAspectRatio="none">
                 <defs>
                   <linearGradient id="fullStockChartGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#2563EB" stopOpacity="0.4" />
-                    <stop offset="100%" stopColor="#2563EB" stopOpacity="0.0" />
+                    <stop offset="0%" stopColor="#15519D" stopOpacity="0.4" />
+                    <stop offset="100%" stopColor="#15519D" stopOpacity="0.0" />
                   </linearGradient>
                 </defs>
                 
@@ -300,7 +300,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                     return `${i === 0 ? 'M' : 'L'} ${x},${y}`;
                   }).join(' ')}
                   fill="none"
-                  stroke="#2563EB"
+                  stroke="#15519D"
                   strokeWidth="3.5"
                   strokeLinecap="round"
                 />
@@ -308,7 +308,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
 
               <div className="flex justify-between items-center text-[10px] text-slate-400 font-bold z-10 pt-2 border-t border-white/10">
                 <span>RSI (14): <strong className="text-emerald-400">64.5 (Bullish)</strong></span>
-                <span>MACD: <strong className="text-blue-400">Positive Crossover</strong></span>
+                <span>MACD: <strong className="text-[#64748B]">Positive Crossover</strong></span>
                 <span>Volume: <strong className="text-white">4.2M Shares</strong></span>
               </div>
             </div>
@@ -316,7 +316,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
 
           {/* 2. COMPANY OVERVIEW GRID */}
           <section className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 shadow-sm">
-            <h3 className="text-lg font-black text-[#0F172A] mb-4">Company Overview</h3>
+            <h3 className="text-lg font-black text-[#172033] mb-4">Company Overview</h3>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               {[
                 { label: 'Market Cap', val: '₹19,84,200 Cr' },
@@ -334,21 +334,21 @@ export const StockDetail: React.FC<StockDetailProps> = ({
               ].map((item) => (
                 <div key={item.label} className="bg-[#F8FAFC] p-3.5 rounded-2xl border border-[#E2E8F0]">
                   <span className="text-[10px] font-bold text-slate-400 uppercase block mb-1">{item.label}</span>
-                  <span className="font-black text-xs text-[#0F172A] truncate block">{item.val}</span>
+                  <span className="font-black text-xs text-[#172033] truncate block">{item.val}</span>
                 </div>
               ))}
             </div>
           </section>
 
           {/* 3. AI SUMMARY CARD */}
-          <section className="bg-[#0F172A] text-white rounded-[28px] p-6 shadow-xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-72 h-72 bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
+          <section className="bg-[#172033] text-white rounded-[28px] p-6 shadow-xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-72 h-72 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
             
             <div className="relative z-10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <Sparkles className="w-4 h-4 text-blue-400" />
-                  <span className="text-xs font-black text-blue-400 uppercase tracking-wider">UNIVEST AI INVESTMENT THESIS</span>
+                  <Sparkles className="w-4 h-4 text-[#64748B]" />
+                  <span className="text-xs font-black text-[#64748B] uppercase tracking-wider">UNIVEST AI INVESTMENT THESIS</span>
                 </div>
                 <h3 className="text-xl font-black mb-3">Strong Fundamental Base & Hydrogen Growth Re-Rating</h3>
                 <p className="text-xs text-slate-300 font-medium leading-relaxed max-w-xl">
@@ -358,7 +358,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
 
               <div className="bg-white/10 border border-white/20 p-5 rounded-2xl text-center shrink-0 min-w-[160px]">
                 <span className="text-[10px] font-bold text-slate-400 uppercase block mb-1">AI Confidence Score</span>
-                <span className="text-3xl font-black text-blue-400">94%</span>
+                <span className="text-3xl font-black text-[#64748B]">94%</span>
                 <span className="text-[10px] text-emerald-400 font-extrabold block mt-1">HIGH CONVICTION</span>
               </div>
             </div>
@@ -368,14 +368,14 @@ export const StockDetail: React.FC<StockDetailProps> = ({
           <section className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col gap-6">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-lg font-black text-[#0F172A]">Financial Performance</h3>
+                <h3 className="text-lg font-black text-[#172033]">Financial Performance</h3>
                 <p className="text-xs text-slate-500 font-medium">Visual quarterly & yearly metrics breakdown.</p>
               </div>
               <div className="flex items-center gap-1 bg-[#F8FAFC] p-1 rounded-xl border border-[#E2E8F0] text-xs">
                 <button
                   onClick={() => setFinancialPeriod('quarterly')}
                   className={`px-3 py-1 rounded-lg font-bold transition ${
-                    financialPeriod === 'quarterly' ? 'bg-[#0F172A] text-white shadow-xs' : 'text-slate-500'
+                    financialPeriod === 'quarterly' ? 'bg-[#172033] text-white shadow-xs' : 'text-slate-500'
                   }`}
                 >
                   Quarterly
@@ -383,7 +383,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                 <button
                   onClick={() => setFinancialPeriod('yearly')}
                   className={`px-3 py-1 rounded-lg font-bold transition ${
-                    financialPeriod === 'yearly' ? 'bg-[#0F172A] text-white shadow-xs' : 'text-slate-500'
+                    financialPeriod === 'yearly' ? 'bg-[#172033] text-white shadow-xs' : 'text-slate-500'
                   }`}
                 >
                   Yearly
@@ -404,7 +404,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                   <div className="flex items-end gap-2 h-20 pt-4">
                     <div className="flex-1 flex flex-col items-center">
                       <div 
-                        className="w-full bg-blue-600 rounded-t-sm transition-all duration-300"
+                        className="w-full bg-primary rounded-t-sm transition-all duration-300"
                         style={{ height: `${Math.min(100, (data.revenue / (financialPeriod === 'quarterly' ? 280000 : 1100000)) * 60)}px` }}
                       />
                       <span className="text-[8px] font-bold text-slate-400 mt-1">Rev</span>
@@ -418,7 +418,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                     </div>
                     <div className="flex-1 flex flex-col items-center">
                       <div 
-                        className="w-full bg-indigo-600 rounded-t-sm transition-all duration-300"
+                        className="w-full bg-primary rounded-t-sm transition-all duration-300"
                         style={{ height: `${Math.min(100, (data.ebitda / (financialPeriod === 'quarterly' ? 50000 : 200000)) * 60)}px` }}
                       />
                       <span className="text-[8px] font-bold text-slate-400 mt-1">EBIT</span>
@@ -428,7 +428,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                   <div className="border-t border-slate-100 pt-3 text-xs flex justify-between">
                     <div>
                       <span className="text-[9px] text-slate-400 font-bold block">Revenue</span>
-                      <strong className="text-[#0F172A]">₹{(data.revenue/1000).toFixed(1)}k Cr</strong>
+                      <strong className="text-[#172033]">₹{(data.revenue/1000).toFixed(1)}k Cr</strong>
                     </div>
                     <div className="text-right">
                       <span className="text-[9px] text-slate-400 font-bold block">Net Profit</span>
@@ -445,7 +445,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
             
             {/* Fundamental Ratios */}
             <div className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col gap-4">
-              <h4 className="font-black text-base text-[#0F172A]">Fundamental Metrics</h4>
+              <h4 className="font-black text-base text-[#172033]">Fundamental Metrics</h4>
               <div className="flex flex-col gap-3.5 text-xs">
                 <div className="flex justify-between py-2 border-b border-slate-100">
                   <span className="font-bold text-slate-500">Return on Equity (ROE)</span>
@@ -453,11 +453,11 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                 </div>
                 <div className="flex justify-between py-2 border-b border-slate-100">
                   <span className="font-bold text-slate-500">Return on Capital (ROCE)</span>
-                  <span className="font-black text-[#0F172A]">16.2%</span>
+                  <span className="font-black text-[#172033]">16.2%</span>
                 </div>
                 <div className="flex justify-between py-2 border-b border-slate-100">
                   <span className="font-bold text-slate-500">Debt to Equity</span>
-                  <span className="font-black text-[#0F172A]">0.38 (Low Risk)</span>
+                  <span className="font-black text-[#172033]">0.38 (Low Risk)</span>
                 </div>
                 <div className="flex justify-between py-2">
                   <span className="font-bold text-slate-500">Promoter Pledge %</span>
@@ -468,7 +468,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
 
             {/* Technical Indicators with interactive visual gauge */}
             <div className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col gap-4">
-              <h4 className="font-black text-base text-[#0F172A]">Technical Indicators</h4>
+              <h4 className="font-black text-base text-[#172033]">Technical Indicators</h4>
               
               {/* RSI gauge slider */}
               <div className="bg-[#F8FAFC] border border-[#E2E8F0] p-4 rounded-xl flex flex-col gap-2">
@@ -489,7 +489,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
               <div className="flex flex-col gap-3.5 text-xs">
                 <div className="flex justify-between py-2 border-b border-slate-100">
                   <span className="font-bold text-slate-500">Support / Resistance</span>
-                  <span className="font-black text-[#0F172A]">S: ₹2,960 · R: ₹3,375</span>
+                  <span className="font-black text-[#172033]">S: ₹2,960 · R: ₹3,375</span>
                 </div>
                 <div className="flex justify-between py-2 border-b border-slate-100">
                   <span className="font-bold text-slate-500">Moving Average crossover</span>
@@ -497,7 +497,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                 </div>
                 <div className="flex justify-between py-2">
                   <span className="font-bold text-slate-500">ADX Momentum</span>
-                  <span className="font-black text-blue-600">32.4 (Strong Trend)</span>
+                  <span className="font-black text-primary">32.4 (Strong Trend)</span>
                 </div>
               </div>
             </div>
@@ -506,7 +506,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
 
           {/* 6. PEER COMPARISON TABLE */}
           <section className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 shadow-sm">
-            <h3 className="text-lg font-black text-[#0F172A] mb-4">Peer Comparison</h3>
+            <h3 className="text-lg font-black text-[#172033] mb-4">Peer Comparison</h3>
             <div className="overflow-x-auto">
               <table className="w-full text-xs text-left">
                 <thead>
@@ -520,9 +520,9 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
-                  <tr className="font-black bg-blue-50/50 text-[#0F172A]">
+                  <tr className="font-black bg-primary-light/50 text-[#172033]">
                     <td className="py-3 px-2 flex items-center gap-2">
-                      <span className="w-6 h-6 rounded bg-[#0F172A] text-white flex items-center justify-center text-[10px]">RL</span>
+                      <span className="w-6 h-6 rounded bg-[#172033] text-white flex items-center justify-center text-[10px]">RL</span>
                       Reliance Industries
                     </td>
                     <td className="py-3 px-2">₹3,024.50</td>
@@ -560,12 +560,12 @@ export const StockDetail: React.FC<StockDetailProps> = ({
 
           {/* 7. SHAREHOLDING PATTERN WITH WORKING SEGMENTED PROGRESS BAR */}
           <section className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col gap-6">
-            <h3 className="text-lg font-black text-[#0F172A]">Shareholding Distribution</h3>
+            <h3 className="text-lg font-black text-[#172033]">Shareholding Distribution</h3>
             
             {/* Visual segmented bar */}
             <div className="flex h-4 rounded-full overflow-hidden w-full bg-slate-200">
-              <div className="bg-blue-600" style={{ width: '50.3%' }} title="Promoter: 50.3%" />
-              <div className="bg-indigo-500" style={{ width: '22.15%' }} title="FII: 22.15%" />
+              <div className="bg-primary" style={{ width: '50.3%' }} title="Promoter: 50.3%" />
+              <div className="bg-primary-light0" style={{ width: '22.15%' }} title="FII: 22.15%" />
               <div className="bg-purple-500" style={{ width: '16.45%' }} title="DII: 16.45%" />
               <div className="bg-slate-400" style={{ width: '11.1%' }} title="Public: 11.1%" />
             </div>
@@ -573,18 +573,18 @@ export const StockDetail: React.FC<StockDetailProps> = ({
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               <div className="bg-[#F8FAFC] p-4 rounded-2xl border border-[#E2E8F0]">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="w-2.5 h-2.5 rounded-full bg-blue-600" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-primary" />
                   <span className="text-[10px] font-bold text-slate-400 uppercase">Promoters</span>
                 </div>
-                <span className="text-xl font-black text-[#0F172A]">50.30%</span>
+                <span className="text-xl font-black text-[#172033]">50.30%</span>
                 <span className="text-[10px] text-emerald-600 block font-bold mt-1">Zero Pledge</span>
               </div>
               <div className="bg-[#F8FAFC] p-4 rounded-2xl border border-[#E2E8F0]">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="w-2.5 h-2.5 rounded-full bg-indigo-500" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-primary-light0" />
                   <span className="text-[10px] font-bold text-slate-400 uppercase">Foreign FIIs</span>
                 </div>
-                <span className="text-xl font-black text-blue-600">22.15%</span>
+                <span className="text-xl font-black text-primary">22.15%</span>
                 <span className="text-[10px] text-emerald-600 block font-bold mt-1">▲ +0.4% QoQ</span>
               </div>
               <div className="bg-[#F8FAFC] p-4 rounded-2xl border border-[#E2E8F0]">
@@ -592,7 +592,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                   <span className="w-2.5 h-2.5 rounded-full bg-purple-500" />
                   <span className="text-[10px] font-bold text-slate-400 uppercase">Domestic DIIs</span>
                 </div>
-                <span className="text-xl font-black text-blue-600">16.45%</span>
+                <span className="text-xl font-black text-primary">16.45%</span>
                 <span className="text-[10px] text-emerald-600 block font-bold mt-1">▲ +0.8% QoQ</span>
               </div>
               <div className="bg-[#F8FAFC] p-4 rounded-2xl border border-[#E2E8F0]">
@@ -609,8 +609,8 @@ export const StockDetail: React.FC<StockDetailProps> = ({
           <section className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col gap-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <MessageSquare className="w-5 h-5 text-blue-600" />
-                <h3 className="text-lg font-black text-[#0F172A]">Investor Community Stream</h3>
+                <MessageSquare className="w-5 h-5 text-primary" />
+                <h3 className="text-lg font-black text-[#172033]">Investor Community Stream</h3>
               </div>
               <span className="text-xs font-bold text-slate-400">{commentsList.length} Discussions</span>
             </div>
@@ -623,11 +623,11 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleAddComment()}
-                className="flex-1 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-2.5 text-xs text-[#0F172A] outline-none focus:border-blue-600"
+                className="flex-1 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-2.5 text-xs text-[#172033] outline-none focus:border-primary"
               />
               <button
                 onClick={handleAddComment}
-                className="px-5 py-2.5 rounded-xl bg-blue-600 text-white font-black text-xs hover:bg-blue-700 transition"
+                className="px-5 py-2.5 rounded-xl bg-primary text-white font-black text-xs hover:bg-primary transition"
               >
                 Post
               </button>
@@ -639,7 +639,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                 <div key={c.id} className="p-4 bg-[#F8FAFC] rounded-2xl border border-slate-100 flex flex-col gap-1.5 text-xs">
                   <div className="flex justify-between items-center">
                     <div className="flex items-center gap-2">
-                      <span className="font-black text-[#0F172A]">{c.user}</span>
+                      <span className="font-black text-[#172033]">{c.user}</span>
                       <span className="px-2 py-0.2 rounded bg-emerald-100 text-emerald-700 text-[9px] font-black">{c.sentiment}</span>
                     </div>
                     <span className="text-[10px] text-slate-400 font-bold">{c.time}</span>
@@ -667,7 +667,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                   toast('Trading is not available in this context. Please navigate to the main dashboard.', { icon: '⚠️' });
                 }
               }}
-              className="flex-1 sm:px-8 py-2.5 rounded-xl bg-[#EF4444] hover:bg-rose-700 text-white font-black text-xs transition shadow-sm cursor-pointer"
+              className="flex-1 sm:px-8 py-2.5 rounded-xl bg-loss hover:bg-rose-700 text-white font-black text-xs transition shadow-sm cursor-pointer"
             >
               SELL
             </button>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, TrendingUp, TrendingDown, Activity, ArrowRight, Zap, Shield } from 'lucide-react';
 
@@ -106,14 +106,14 @@ export const LiveDataCanvasHero: React.FC<LiveDataCanvasHeroProps> = ({
     >
       {/* 1. CINEMATIC LUXURY MESH BACKGROUND */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[540px] h-[540px] bg-gradient-to-tr from-blue-600/15 via-cyan-500/10 to-emerald-500/15 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[540px] h-[540px] bg-gradient-to-tr from-primary/15 via-cyan-500/10 to-emerald-500/15 rounded-full blur-3xl animate-pulse" />
       </div>
 
       {/* 2. DYNAMIC NEURAL DATA CONNECTIONS SVG */}
       <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-full pointer-events-none overflow-visible">
         <defs>
           <linearGradient id="canvasLineGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#2563EB" stopOpacity="0.4" />
+            <stop offset="0%" stopColor="#15519D" stopOpacity="0.4" />
             <stop offset="100%" stopColor="#10B981" stopOpacity="0.4" />
           </linearGradient>
         </defs>
@@ -145,7 +145,7 @@ export const LiveDataCanvasHero: React.FC<LiveDataCanvasHeroProps> = ({
           obj.flash === 'up'
             ? 'ring-2 ring-emerald-400/80 bg-emerald-500/20'
             : obj.flash === 'down'
-            ? 'ring-2 ring-rose-400/80 bg-rose-500/20'
+            ? 'ring-2 ring-rose-400/80 bg-danger/20'
             : '';
 
         return (
@@ -173,7 +173,7 @@ export const LiveDataCanvasHero: React.FC<LiveDataCanvasHeroProps> = ({
             <div className={`px-3 py-1.5 rounded-xl border backdrop-blur-md font-mono text-xs shadow-lg flex items-center gap-2 transition-all duration-300 ${
               isHovered
                 ? 'bg-[#1E293B] border-cyan-400 scale-110 shadow-cyan-500/30 z-50 shadow-2xl'
-                : 'bg-[#0F172A]/85 border-slate-800 hover:border-slate-600'
+                : 'bg-[#172033]/85 border-slate-800 hover:border-slate-600'
             } ${flashClass}`}>
               <span className={`w-1.5 h-1.5 rounded-full ${isPositive ? 'bg-emerald-400' : 'bg-rose-400'}`} />
               <span className="font-black text-white">{obj.symbol}:</span>
@@ -190,7 +190,7 @@ export const LiveDataCanvasHero: React.FC<LiveDataCanvasHeroProps> = ({
                   initial={{ opacity: 0, y: 6, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 6, scale: 0.95 }}
-                  className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-52 bg-[#0F172A] border border-cyan-500/40 p-3 rounded-2xl shadow-2xl font-mono text-xs z-50 pointer-events-none"
+                  className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-52 bg-[#172033] border border-cyan-500/40 p-3 rounded-2xl shadow-2xl font-mono text-xs z-50 pointer-events-none"
                 >
                   <div className="flex items-center justify-between text-[10px] text-cyan-400 font-bold mb-1">
                     <span>{obj.name}</span>
@@ -215,7 +215,7 @@ export const LiveDataCanvasHero: React.FC<LiveDataCanvasHeroProps> = ({
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.95 }}
-            className="absolute bottom-6 z-40 bg-gradient-to-r from-blue-900/90 via-[#0F172A] to-emerald-900/90 border border-cyan-500/50 backdrop-blur-2xl px-5 py-2 rounded-2xl shadow-2xl font-mono text-xs text-white flex items-center gap-3"
+            className="absolute bottom-6 z-40 bg-gradient-to-r from-blue-900/90 via-[#172033] to-emerald-900/90 border border-cyan-500/50 backdrop-blur-2xl px-5 py-2 rounded-2xl shadow-2xl font-mono text-xs text-white flex items-center gap-3"
           >
             <div className="w-7 h-7 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center shrink-0">
               <Sparkles className="w-4 h-4 animate-pulse" />

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
 import {
   Smartphone, FileCheck, Brain, TrendingUp, Check, ShieldCheck, Zap,
@@ -17,18 +17,18 @@ const STEPS = [
     security: 'AES-256 Encrypted',
     checklist: ['Enter phone number', 'Receive secure SMS OTP', 'Verify credentials'],
     color: 'blue',
-    accentFrom: 'from-blue-600',
+    accentFrom: 'from-primary',
     accentTo: 'to-blue-400',
-    textAccent: 'text-blue-400',
-    bgAccent: 'bg-blue-500/10',
-    borderAccent: 'border-blue-500/20',
+    textAccent: 'text-[#64748B]',
+    bgAccent: 'bg-primary/10',
+    borderAccent: 'border-primary/20',
   },
   {
     num: '02',
     badge: 'Step 2 of 4',
-    title: 'Complete eKYC',
+    title: 'Paperless Identity eKYC',
     tabTitle: '2. Complete eKYC',
-    desc: 'Connect your DigiLocker to auto-fetch official PAN and Aadhaar credentials. Certified paperless KYC happens in real time.',
+    desc: 'Verify your 12-digit Aadhaar via OTP to auto-fetch official credentials. Certified paperless KYC happens in real time.',
     avgTime: '45 seconds',
     security: 'NSDL & SEBI Compliant',
     checklist: ['NSDL PAN verification', 'Aadhaar matching registry', 'Face liveness scan'],
@@ -145,8 +145,8 @@ function Step1Showcase({ active }: { active: boolean }) {
                 className="w-full flex flex-col gap-4"
               >
                 <div className="text-center space-y-1">
-                  <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mx-auto mb-1">
-                    <Smartphone className="w-6 h-6 text-blue-400" />
+                  <div className="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-1">
+                    <Smartphone className="w-6 h-6 text-[#64748B]" />
                   </div>
                   <h4 className="text-sm font-bold text-white">Verification</h4>
                   <p className="text-[10px] text-slate-400">Enter mobile number to continue</p>
@@ -159,12 +159,12 @@ function Step1Showcase({ active }: { active: boolean }) {
                     <motion.span
                       animate={{ opacity: [1, 0, 1] }}
                       transition={{ duration: 0.8, repeat: Infinity }}
-                      className="w-0.5 h-4 bg-blue-500 ml-0.5"
+                      className="w-0.5 h-4 bg-primary ml-0.5"
                     />
                   </div>
                 </div>
 
-                <button type="button" className="w-full py-2.5 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-bold text-[11px] rounded-lg shadow-lg shadow-blue-600/15">
+                <button type="button" className="w-full py-2.5 bg-gradient-to-r from-primary to-primary text-white font-bold text-[11px] rounded-lg shadow-lg shadow-[rgba(21,81,157,0.3)]/15">
                   Request OTP
                 </button>
               </motion.div>
@@ -324,26 +324,26 @@ function Step2Showcase({ active }: { active: boolean }) {
           >
             {/* Facial Recognition camera frame */}
             <div className="relative">
-              <div className="w-32 h-32 rounded-full border-2 border-dashed border-blue-500/40 flex items-center justify-center p-1.5 relative">
+              <div className="w-32 h-32 rounded-full border-2 border-dashed border-primary/40 flex items-center justify-center p-1.5 relative">
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
-                  className="absolute inset-0 border border-dashed border-blue-400 rounded-full"
+                  className="absolute inset-0 border border-dashed border-primary-light rounded-full"
                 />
                 <div className="w-full h-full rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center overflow-hidden relative">
-                  <UserCheck className="w-14 h-14 text-blue-400/60" />
+                  <UserCheck className="w-14 h-14 text-[#64748B]/60" />
                   
                   {/* Face outline grid */}
-                  <div className="absolute inset-0 bg-blue-500/5 flex items-center justify-center">
-                    <div className="w-16 h-16 border border-blue-400/20 rounded-full absolute" />
-                    <div className="w-22 h-22 border border-blue-400/10 rounded-full absolute" />
+                  <div className="absolute inset-0 bg-primary/5 flex items-center justify-center">
+                    <div className="w-16 h-16 border border-primary-light/20 rounded-full absolute" />
+                    <div className="w-22 h-22 border border-primary-light/10 rounded-full absolute" />
                   </div>
                 </div>
               </div>
               <motion.div
                 animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.7, 0.3] }}
                 transition={{ duration: 2, repeat: Infinity }}
-                className="absolute -top-1 -right-1 w-4.5 h-4.5 rounded-full bg-blue-500 shadow-md shadow-blue-500/50"
+                className="absolute -top-1 -right-1 w-4.5 h-4.5 rounded-full bg-primary shadow-md shadow-[rgba(21,81,157,0.3)]/50"
               />
             </div>
 
@@ -370,7 +370,7 @@ function Step2Showcase({ active }: { active: boolean }) {
               >
                 <Check className="w-10 h-10" />
               </motion.div>
-              <div className="absolute -bottom-1 -right-1 bg-blue-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-[9.5px] font-black border border-[#0F172A]">
+              <div className="absolute -bottom-1 -right-1 bg-primary text-white w-6 h-6 rounded-full flex items-center justify-center text-[9.5px] font-black border border-[#172033]">
                 OK
               </div>
             </div>
@@ -633,7 +633,7 @@ function Step4Showcase({ active, onLaunch }: { active: boolean; onLaunch: () => 
         {/* Terminal Header */}
         <div className="flex justify-between items-center border-b border-slate-800 pb-2 text-left">
           <div className="flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+            <span className="w-1.5 h-1.5 rounded-full bg-danger" />
             <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
             <span className="text-[8.5px] text-slate-500 font-bold ml-1.5">univest-alpha-terminal v1.2</span>
@@ -720,7 +720,7 @@ function Step4Showcase({ active, onLaunch }: { active: boolean; onLaunch: () => 
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={onLaunch}
-                  className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-emerald-500 hover:from-blue-700 hover:to-emerald-600 text-white font-black text-[10.5px] rounded-lg shadow-xl shadow-blue-500/25 flex items-center gap-1.5 tracking-wider uppercase cursor-pointer"
+                  className="px-6 py-2.5 bg-gradient-to-r from-primary to-emerald-500 hover:from-primary hover:to-emerald-600 text-white font-black text-[10.5px] rounded-lg shadow-xl shadow-[rgba(21,81,157,0.3)]/25 flex items-center gap-1.5 tracking-wider uppercase cursor-pointer"
                 >
                   <span>Launch Dashboard</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -797,7 +797,7 @@ export const ScrollStepperSection: React.FC<Props> = ({ theme }) => {
             y: activeStep === 0 ? [-10, 20, -10] : activeStep === 2 ? [30, -10, 30] : [-20, 10, -20],
             backgroundColor:
               activeStep === 0
-                ? 'rgba(37, 99, 235, 0.22)' // blue-600
+                ? 'rgba(21, 81, 157, 0.22)' // blue-600
                 : activeStep === 1
                   ? 'rgba(16, 185, 129, 0.22)' // emerald-500
                   : activeStep === 2
@@ -814,7 +814,7 @@ export const ScrollStepperSection: React.FC<Props> = ({ theme }) => {
               activeStep === 0
                 ? 'rgba(6, 182, 212, 0.08)' // cyan-500
                 : activeStep === 1
-                  ? 'rgba(20, 184, 166, 0.08)' // teal-500
+                  ? 'rgba(21, 81, 157, 0.08)' // teal-500
                   : activeStep === 2
                     ? 'rgba(99, 102, 241, 0.08)' // indigo-500
                     : 'rgba(249, 115, 22, 0.08)' // orange-500
@@ -858,7 +858,7 @@ export const ScrollStepperSection: React.FC<Props> = ({ theme }) => {
             <motion.div
               animate={{ width: `${(activeStep / (STEPS.length - 1)) * 100}%` }}
               transition={{ duration: 0.5, ease: 'easeOut' }}
-              className="h-full bg-gradient-to-r from-blue-500 via-emerald-400 to-amber-400"
+              className="h-full bg-gradient-to-r from-primary via-emerald-400 to-amber-400"
             />
           </div>
 
@@ -882,7 +882,7 @@ export const ScrollStepperSection: React.FC<Props> = ({ theme }) => {
                         ? '#00000000'
                         : isCompleted
                           ? '#10b981'
-                          : dark ? '#0F172A' : '#F1F5F9',
+                          : dark ? '#172033' : '#F1F5F9',
                       borderColor: isActive
                         ? '#10b981'
                         : isCompleted
@@ -891,7 +891,7 @@ export const ScrollStepperSection: React.FC<Props> = ({ theme }) => {
                     }}
                     className={`w-10 h-10 rounded-full border-2 flex items-center justify-center text-xs font-black tracking-tight ${
                       isActive 
-                        ? `bg-gradient-to-br ${s.accentFrom} ${s.accentTo} text-white shadow-lg shadow-blue-500/20 ring-4 ${dark ? 'ring-blue-500/20' : 'ring-blue-500/10'}` 
+                        ? `bg-gradient-to-br ${s.accentFrom} ${s.accentTo} text-white shadow-lg shadow-[rgba(21,81,157,0.3)]/20 ring-4 ${dark ? 'ring-primary/20' : 'ring-primary/10'}` 
                         : isCompleted
                           ? 'text-white'
                           : dark ? 'text-slate-400' : 'text-slate-500'

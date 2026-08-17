@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 export interface StockTicker {
@@ -87,7 +87,7 @@ export const MovingTickerRibbon: React.FC<MovingTickerRibbonProps> = ({
       stock.flash === 'up'
         ? 'bg-emerald-500/20 text-emerald-300 ring-1 ring-emerald-500/50'
         : stock.flash === 'down'
-        ? 'bg-rose-500/20 text-rose-300 ring-1 ring-rose-500/50'
+        ? 'bg-danger/20 text-rose-300 ring-1 ring-rose-500/50'
         : '';
 
     return (

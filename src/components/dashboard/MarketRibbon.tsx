@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
 
@@ -345,7 +345,7 @@ export const MarketRibbon: React.FC<MarketRibbonProps> = ({
   }, [isMarketOpen, wsUrl]);
 
   return (
-    <div className="relative w-full bg-[#0F172A] border-y border-slate-800 h-12 flex items-center overflow-hidden z-20 select-none">
+    <div className="relative w-full bg-[#172033] border-y border-slate-800 h-12 flex items-center overflow-hidden z-20 select-none">
       <style>{`
         .no-scrollbar::-webkit-scrollbar {
           display: none !important;
@@ -404,7 +404,7 @@ export const MarketRibbon: React.FC<MarketRibbonProps> = ({
                   item.flash === 'green' 
                     ? 'bg-emerald-950/40 border-[#10B981]/30' 
                     : item.flash === 'red' 
-                    ? 'bg-rose-950/40 border-[#EF4444]/30' 
+                    ? 'bg-rose-950/40 border-loss/30' 
                     : 'hover:bg-slate-800/40 hover:border-slate-800'
                 }`}
               >
@@ -423,7 +423,7 @@ export const MarketRibbon: React.FC<MarketRibbonProps> = ({
                     <span className="text-[10px] font-black text-white">{item.symbol}</span>
                     {!isAlert && (
                       <span className={`text-[8.5px] font-extrabold flex items-center ${
-                        isPositive ? 'text-[#10B981]' : 'text-[#EF4444]'
+                        isPositive ? 'text-[#10B981]' : 'text-loss'
                       }`}>
                         {isPositive ? '▲' : '▼'}{Math.abs(item.changePercent).toFixed(2)}%
                       </span>
@@ -445,7 +445,7 @@ export const MarketRibbon: React.FC<MarketRibbonProps> = ({
                         : 'M0 4 L10 8 L20 6 L30 14 L40 12 L50 18'
                       }
                       fill="none"
-                      stroke={isPositive ? '#10B981' : '#EF4444'}
+                      stroke={isPositive ? '#10B981' : '#DC2626'}
                       strokeWidth="1.5"
                       strokeLinecap="round"
                     />
@@ -454,7 +454,7 @@ export const MarketRibbon: React.FC<MarketRibbonProps> = ({
 
                 {/* Expanded Hover Overlay Details Card */}
                 {isHovered && item.details && (
-                  <div className="absolute top-10 left-0 w-64 bg-[#0F172A] border border-[#334155] rounded-xl shadow-2xl p-4 z-50 text-white flex flex-col gap-3 transition-opacity">
+                  <div className="absolute top-10 left-0 w-64 bg-[#172033] border border-[#334155] rounded-xl shadow-2xl p-4 z-50 text-white flex flex-col gap-3 transition-opacity">
                     <div className="flex items-start justify-between border-b border-slate-700/50 pb-2">
                       <div>
                         <h4 className="text-xs font-black text-white">{item.name}</h4>
@@ -490,7 +490,7 @@ export const MarketRibbon: React.FC<MarketRibbonProps> = ({
                       </div>
                     </div>
 
-                    <button className="w-full bg-[#2563EB] hover:bg-blue-700 text-white font-bold py-1.5 rounded-lg text-[9px] flex items-center justify-center gap-1 transition-colors mt-1">
+                    <button className="w-full bg-primary hover:bg-primary text-white font-bold py-1.5 rounded-lg text-[9px] flex items-center justify-center gap-1 transition-colors mt-1">
                       Explore Stock Analytics <ExternalLink className="w-3.5 h-3.5" />
                     </button>
                   </div>

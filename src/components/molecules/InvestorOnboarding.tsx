@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+﻿import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShieldCheck, ArrowRight, ArrowLeft, Landmark, FileText, Camera, CheckCircle2, RotateCcw, PenTool, Check } from 'lucide-react';
 import { Button } from '../atoms/Button';
@@ -48,7 +48,7 @@ export const InvestorOnboarding = () => {
       const canvas = canvasRef.current;
       const ctx = canvas.getContext('2d');
       if (ctx) {
-        ctx.strokeStyle = '#0F172A'; // Dark Navy stroke
+        ctx.strokeStyle = '#172033'; // Dark Navy stroke
         ctx.lineWidth = 3;
         ctx.lineCap = 'round';
       }
@@ -681,7 +681,7 @@ export const InvestorOnboarding = () => {
                         variant="primary"
                         disabled={!agreeChecked || isSigningAgreement}
                         onClick={handleSignAgreement}
-                        className="flex-1 py-4 bg-gradient-to-r from-primary to-blue-700 text-white"
+                        className="flex-1 py-4 bg-gradient-to-r from-primary to-[#5A35F0] text-white"
                       >
                         Sign Agreement
                       </Button>
@@ -714,7 +714,7 @@ export const InvestorOnboarding = () => {
                     <span>KYC COMPLETED & VERIFIED</span>
                   </div>
 
-                  <Button variant="primary" onClick={handleFinalRedirect} className="w-full mt-4 py-4 bg-gradient-to-r from-primary to-blue-700 shadow-glow-blue border border-white/5 font-bold text-white">
+                  <Button variant="primary" onClick={handleFinalRedirect} className="w-full mt-4 py-4 bg-gradient-to-r from-primary to-[#5A35F0] shadow-glow-blue border border-white/5 font-bold text-white">
                     <span>Continue to Dashboard</span>
                     <ArrowRight className="w-4 h-4 ml-1" />
                   </Button>

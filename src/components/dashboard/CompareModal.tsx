@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   X, Scale, TrendingUp, BarChart3, AlertCircle, FileText, Download, 
@@ -172,13 +172,13 @@ export const CompareModal: React.FC<CompareModalProps> = ({
           {/* HEADER */}
           <div className="p-6 border-b border-[#E2E8F0] bg-white flex flex-wrap items-center justify-between gap-4 shadow-2xs">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center font-black">
-                <Scale className="w-5 h-5 text-blue-600" />
+              <div className="w-10 h-10 rounded-2xl bg-primary-light text-primary flex items-center justify-center font-black">
+                <Scale className="w-5 h-5 text-primary" />
               </div>
               <div>
-                <h3 className="font-black text-xl text-[#0F172A] leading-tight flex items-center gap-2">
+                <h3 className="font-black text-xl text-[#172033] leading-tight flex items-center gap-2">
                   Asset Comparison Matrix
-                  <span className="px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 text-[10px] font-black uppercase border border-blue-200">
+                  <span className="px-2.5 py-0.5 rounded-full bg-primary-light text-primary text-[10px] font-black uppercase border border-primary-light">
                     Side-by-Side Analysis
                   </span>
                 </h3>
@@ -189,9 +189,9 @@ export const CompareModal: React.FC<CompareModalProps> = ({
             <div className="flex items-center gap-3">
               <button
                 onClick={handleExportPDF}
-                className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#0F172A] font-black text-xs transition flex items-center gap-2"
+                className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#172033] font-black text-xs transition flex items-center gap-2"
               >
-                <Download className="w-4 h-4 text-blue-600" /> Export PDF Report
+                <Download className="w-4 h-4 text-primary" /> Export PDF Report
               </button>
 
               <button
@@ -210,7 +210,7 @@ export const CompareModal: React.FC<CompareModalProps> = ({
                 key={type}
                 onClick={() => setAssetType(type)}
                 className={`px-5 py-2.5 rounded-xl transition font-black ${
-                  assetType === type ? 'bg-[#0F172A] text-white shadow-sm' : 'text-slate-500 hover:text-[#0F172A]'
+                  assetType === type ? 'bg-[#172033] text-white shadow-sm' : 'text-slate-500 hover:text-[#172033]'
                 }`}
               >
                 {type}
@@ -230,7 +230,7 @@ export const CompareModal: React.FC<CompareModalProps> = ({
                     {currentOptions.map((asset) => (
                       <th key={asset.symbol} className="p-4 border-l border-[#E2E8F0] w-1/4">
                         <div className="flex flex-col">
-                          <span className="font-black text-sm text-[#0F172A]">{asset.symbol}</span>
+                          <span className="font-black text-sm text-[#172033]">{asset.symbol}</span>
                           <span className="text-[10px] text-slate-400 font-bold truncate max-w-[180px]">{asset.name}</span>
                         </div>
                       </th>
@@ -241,22 +241,22 @@ export const CompareModal: React.FC<CompareModalProps> = ({
                   
                   {/* 1. PRICE & SNAPSHOT */}
                   <tr className="bg-slate-50/40">
-                    <td className="p-4 font-black text-[#0F172A] uppercase text-[10px] tracking-wider" colSpan={4}>
+                    <td className="p-4 font-black text-[#172033] uppercase text-[10px] tracking-wider" colSpan={4}>
                       1. Price & Market Snapshot
                     </td>
                   </tr>
                   <tr>
                     <td className="p-4 font-bold text-slate-500">Live Price (LTP)</td>
                     {currentOptions.map(a => (
-                      <td key={a.symbol} className="p-4 border-l border-slate-100 font-black text-sm text-[#0F172A]">
-                        {a.price} <span className={`text-xs font-bold ${a.isPos ? 'text-emerald-600' : 'text-rose-600'}`}>{a.change}</span>
+                      <td key={a.symbol} className="p-4 border-l border-slate-100 font-black text-sm text-[#172033]">
+                        {a.price} <span className={`text-xs font-bold ${a.isPos ? 'text-emerald-600' : 'text-danger'}`}>{a.change}</span>
                       </td>
                     ))}
                   </tr>
 
                   {/* 2. RETURNS */}
                   <tr className="bg-slate-50/40">
-                    <td className="p-4 font-black text-[#0F172A] uppercase text-[10px] tracking-wider" colSpan={4}>
+                    <td className="p-4 font-black text-[#172033] uppercase text-[10px] tracking-wider" colSpan={4}>
                       2. Historical Performance & Returns
                     </td>
                   </tr>
@@ -275,13 +275,13 @@ export const CompareModal: React.FC<CompareModalProps> = ({
                   <tr>
                     <td className="p-4 font-bold text-slate-500">3-Year CAGR</td>
                     {currentOptions.map(a => (
-                      <td key={a.symbol} className="p-4 border-l border-slate-100 font-black text-blue-600">{a.returns.y3}</td>
+                      <td key={a.symbol} className="p-4 border-l border-slate-100 font-black text-primary">{a.returns.y3}</td>
                     ))}
                   </tr>
 
                   {/* 3. AI RATING & CONVICTION */}
                   <tr className="bg-slate-50/40">
-                    <td className="p-4 font-black text-[#0F172A] uppercase text-[10px] tracking-wider" colSpan={4}>
+                    <td className="p-4 font-black text-[#172033] uppercase text-[10px] tracking-wider" colSpan={4}>
                       3. AI Advisory Rating & Conviction
                     </td>
                   </tr>
@@ -298,7 +298,7 @@ export const CompareModal: React.FC<CompareModalProps> = ({
                   <tr>
                     <td className="p-4 font-bold text-slate-500">AI Conviction Score</td>
                     {currentOptions.map(a => (
-                      <td key={a.symbol} className="p-4 border-l border-slate-100 font-black text-blue-600 text-sm">
+                      <td key={a.symbol} className="p-4 border-l border-slate-100 font-black text-primary text-sm">
                         {a.aiRating.score}/100
                       </td>
                     ))}
@@ -314,7 +314,7 @@ export const CompareModal: React.FC<CompareModalProps> = ({
 
                   {/* 4. FINANCIALS */}
                   <tr className="bg-slate-50/40">
-                    <td className="p-4 font-black text-[#0F172A] uppercase text-[10px] tracking-wider" colSpan={4}>
+                    <td className="p-4 font-black text-[#172033] uppercase text-[10px] tracking-wider" colSpan={4}>
                       4. Financial Health Metrics
                     </td>
                   </tr>
@@ -339,7 +339,7 @@ export const CompareModal: React.FC<CompareModalProps> = ({
 
                   {/* 5. TECHNICAL INDICATORS */}
                   <tr className="bg-slate-50/40">
-                    <td className="p-4 font-black text-[#0F172A] uppercase text-[10px] tracking-wider" colSpan={4}>
+                    <td className="p-4 font-black text-[#172033] uppercase text-[10px] tracking-wider" colSpan={4}>
                       5. Technical Indicators
                     </td>
                   </tr>
@@ -358,14 +358,14 @@ export const CompareModal: React.FC<CompareModalProps> = ({
 
                   {/* 6. VALUATION */}
                   <tr className="bg-slate-50/40">
-                    <td className="p-4 font-black text-[#0F172A] uppercase text-[10px] tracking-wider" colSpan={4}>
+                    <td className="p-4 font-black text-[#172033] uppercase text-[10px] tracking-wider" colSpan={4}>
                       6. Valuation & Ratios
                     </td>
                   </tr>
                   <tr>
                     <td className="p-4 font-bold text-slate-500">P/E Ratio</td>
                     {currentOptions.map(a => (
-                      <td key={a.symbol} className="p-4 border-l border-slate-100 font-bold text-[#0F172A]">{a.valuation.pe}</td>
+                      <td key={a.symbol} className="p-4 border-l border-slate-100 font-bold text-[#172033]">{a.valuation.pe}</td>
                     ))}
                   </tr>
                   <tr>
@@ -377,20 +377,20 @@ export const CompareModal: React.FC<CompareModalProps> = ({
 
                   {/* 7. SHAREHOLDING PATTERN */}
                   <tr className="bg-slate-50/40">
-                    <td className="p-4 font-black text-[#0F172A] uppercase text-[10px] tracking-wider" colSpan={4}>
+                    <td className="p-4 font-black text-[#172033] uppercase text-[10px] tracking-wider" colSpan={4}>
                       7. Ownership & Shareholding
                     </td>
                   </tr>
                   <tr>
                     <td className="p-4 font-bold text-slate-500">Institutional FII Holding</td>
                     {currentOptions.map(a => (
-                      <td key={a.symbol} className="p-4 border-l border-slate-100 font-bold text-blue-600">{a.shareholding.fii}</td>
+                      <td key={a.symbol} className="p-4 border-l border-slate-100 font-bold text-primary">{a.shareholding.fii}</td>
                     ))}
                   </tr>
 
                   {/* 8. ACTIONS BAR */}
                   <tr className="bg-white">
-                    <td className="p-4 font-black text-[#0F172A]">Actions & Workspaces</td>
+                    <td className="p-4 font-black text-[#172033]">Actions & Workspaces</td>
                     {currentOptions.map(a => (
                       <td key={a.symbol} className="p-4 border-l border-slate-100">
                         <div className="flex flex-col gap-2">
@@ -399,7 +399,7 @@ export const CompareModal: React.FC<CompareModalProps> = ({
                               onClose();
                               if (onSelectStock) onSelectStock({ symbol: a.symbol, company: a.name });
                             }}
-                            className="w-full py-2 rounded-xl bg-white border border-[#E2E8F0] hover:bg-slate-50 text-[#0F172A] font-black text-[11px] transition text-center"
+                            className="w-full py-2 rounded-xl bg-white border border-[#E2E8F0] hover:bg-slate-50 text-[#172033] font-black text-[11px] transition text-center"
                           >
                             Open Workspace
                           </button>
@@ -408,7 +408,7 @@ export const CompareModal: React.FC<CompareModalProps> = ({
                               onClose();
                               if (onTrade) onTrade({ symbol: a.symbol, company: a.name, rec: 'BUY' });
                             }}
-                            className="w-full py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-black text-[11px] transition text-center shadow-xs"
+                            className="w-full py-2 rounded-xl bg-primary hover:bg-primary-dark text-white font-black text-[11px] transition text-center shadow-xs"
                           >
                             Trade {a.symbol}
                           </button>
@@ -422,10 +422,10 @@ export const CompareModal: React.FC<CompareModalProps> = ({
             </div>
 
             {/* SEBI AI RELATIVE VALUATION ADVISORY BOX */}
-            <div className="bg-blue-50 border border-blue-200 p-6 rounded-[24px] flex items-start gap-4">
-              <Sparkles className="w-6 h-6 text-blue-600 shrink-0 mt-1 fill-blue-600 animate-pulse" />
+            <div className="bg-primary-light border border-primary-light p-6 rounded-[24px] flex items-start gap-4">
+              <Sparkles className="w-6 h-6 text-primary shrink-0 mt-1 fill-primary animate-pulse" />
               <div className="flex-1 text-xs text-slate-800 leading-relaxed font-medium">
-                <strong className="block font-black text-blue-900 text-sm mb-1">
+                <strong className="block font-black text-primary-dark text-sm mb-1">
                   SEBI AI Relative Valuation Digest
                 </strong>
                 Comparing {currentOptions[0].symbol} against its peers reveals a favorable risk-reward setup. {currentOptions[0].symbol} is trading at a 15% discount to historical average valuation multiples while generating higher ROE ({currentOptions[0].financials.roe}). Institutional accumulation by FIIs ({currentOptions[0].shareholding.fii}) validates current buy recommendations.

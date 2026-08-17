@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Layers, ArrowUpRight, Search, ShieldCheck, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
@@ -28,7 +28,7 @@ export const ETFsTab: React.FC<{
             onClick={() => setSelectedCategory(cat)}
             className={`px-4 py-2 rounded-xl transition cursor-pointer whitespace-nowrap ${
               selectedCategory === cat
-                ? 'bg-[#0F172A] text-white font-black'
+                ? 'bg-[#172033] text-white font-black'
                 : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
             }`}
           >
@@ -53,7 +53,7 @@ export const ETFsTab: React.FC<{
                 <span className="text-xs font-mono font-black text-slate-900">{etf.symbol}</span>
               </div>
 
-              <h3 className="font-black text-base text-[#0F172A] mb-3">{etf.name}</h3>
+              <h3 className="font-black text-base text-[#172033] mb-3">{etf.name}</h3>
 
               <div className="flex items-baseline justify-between mb-4">
                 <span className="text-2xl font-black text-slate-900">₹{etf.price.toFixed(2)}</span>
@@ -79,7 +79,7 @@ export const ETFsTab: React.FC<{
             <div className="pt-4 border-t border-slate-100 flex justify-end">
               <button
                 onClick={() => onTrade({ symbol: etf.symbol, company: etf.name })}
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black cursor-pointer shadow-xs"
+                className="px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-xl text-xs font-black cursor-pointer shadow-xs"
               >
                 Trade ETF
               </button>

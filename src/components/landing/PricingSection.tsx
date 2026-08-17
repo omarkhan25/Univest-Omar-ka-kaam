@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { motion } from 'framer-motion';
 import { Check, Crown, Star, Shield, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -58,7 +58,7 @@ export const PricingSection: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <section id="pricing" className="py-24 bg-[#0F172A] relative font-sans text-white border-t border-slate-800">
+    <section id="pricing" className="py-24 bg-[#172033] relative font-sans text-white border-t border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -88,13 +88,13 @@ export const PricingSection: React.FC = () => {
               className={`
                 relative bg-[#1E293B] rounded-3xl p-8 border flex flex-col justify-between transition-all
                 ${plan.popular 
-                  ? 'border-blue-500 shadow-2xl shadow-blue-600/20 scale-105 z-10' 
+                  ? 'border-primary shadow-2xl shadow-[rgba(21,81,157,0.3)]/20 scale-105 z-10' 
                   : 'border-slate-700 hover:border-slate-500'
                 }
               `}
             >
               {plan.popular && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-blue-600 to-emerald-500 rounded-full text-white text-[10px] font-black uppercase tracking-wider shadow-md">
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-primary to-emerald-500 rounded-full text-white text-[10px] font-black uppercase tracking-wider shadow-md">
                   Most Popular
                 </div>
               )}
@@ -102,7 +102,7 @@ export const PricingSection: React.FC = () => {
               <div>
                 <div className="text-center mb-6">
                   {plan.popular ? (
-                    <Crown className="w-8 h-8 text-blue-400 mx-auto mb-2" />
+                    <Crown className="w-8 h-8 text-[#64748B] mx-auto mb-2" />
                   ) : (
                     <Star className="w-8 h-8 text-slate-400 mx-auto mb-2" />
                   )}
@@ -131,8 +131,8 @@ export const PricingSection: React.FC = () => {
                 className={`
                   w-full py-3.5 text-xs font-black rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer
                   ${plan.popular
-                    ? 'bg-gradient-to-r from-blue-600 to-emerald-500 hover:from-blue-700 hover:to-emerald-600 text-white shadow-lg shadow-blue-600/30'
-                    : 'bg-[#0F172A] hover:bg-slate-800 text-slate-200 border border-slate-700'
+                    ? 'bg-gradient-to-r from-primary to-emerald-500 hover:from-primary hover:to-emerald-600 text-white shadow-lg shadow-[rgba(21,81,157,0.3)]/30'
+                    : 'bg-[#172033] hover:bg-slate-800 text-slate-200 border border-slate-700'
                   }
                 `}
               >

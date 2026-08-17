@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, Shield, ArrowRight, Activity, Zap, CheckCircle2, TrendingUp } from 'lucide-react';
 
@@ -48,7 +48,7 @@ export const DynamicGradientMeshHero: React.FC<DynamicGradientMeshHeroProps> = (
       className="relative w-full max-w-2xl mx-auto h-[540px] flex items-center justify-center select-none overflow-hidden rounded-[32px]"
     >
       {/* 1. DYNAMIC LIQUID LIGHT MESH BLOBS (GPU-ACCELERATED) */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden bg-[#0F172A]">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden bg-[#172033]">
         
         {/* Blob 1: Royal Blue Core */}
         <motion.div
@@ -59,7 +59,7 @@ export const DynamicGradientMeshHero: React.FC<DynamicGradientMeshHeroProps> = (
           }}
           transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
           style={{ transform: `translate(${mousePos.x * 4}px, ${mousePos.y * 4}px)` }}
-          className="absolute top-1/4 left-1/4 w-[360px] h-[360px] bg-[#2563EB]/25 rounded-full blur-[100px]"
+          className="absolute top-1/4 left-1/4 w-[360px] h-[360px] bg-primary/25 rounded-full blur-[100px]"
         />
 
         {/* Blob 2: Emerald Green Intelligence Flow */}
@@ -139,12 +139,12 @@ export const DynamicGradientMeshHero: React.FC<DynamicGradientMeshHeroProps> = (
           opacity: isGlassRevealed ? 1 : 0.85,
         }}
         transition={{ duration: 1.5, ease: 'easeInOut' }}
-        className="relative z-20 w-[90%] sm:w-[460px] bg-[#0F172A]/75 border border-white/15 p-6 rounded-[28px] shadow-[0_30px_70px_rgba(0,0,0,0.6)] font-mono text-white"
+        className="relative z-20 w-[90%] sm:w-[460px] bg-[#172033]/75 border border-white/15 p-6 rounded-[28px] shadow-[0_30px_70px_rgba(0,0,0,0.6)] font-mono text-white"
       >
         {/* Glass Header */}
         <div className="flex items-center justify-between pb-4 border-b border-white/10">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-emerald-500 text-white flex items-center justify-center font-black shadow-lg shadow-blue-600/30">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-primary to-emerald-500 text-white flex items-center justify-center font-black shadow-lg shadow-[rgba(21,81,157,0.3)]/30">
               U
             </div>
             <div>
@@ -200,7 +200,7 @@ export const DynamicGradientMeshHero: React.FC<DynamicGradientMeshHeroProps> = (
         <div className="pt-2">
           <button
             onClick={onExploreClick}
-            className="w-full py-3 bg-gradient-to-r from-blue-600 via-emerald-500 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-black text-xs rounded-xl shadow-lg transition flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full py-3 bg-gradient-to-r from-primary via-emerald-500 to-cyan-500 hover:from-primary hover:to-cyan-600 text-white font-black text-xs rounded-xl shadow-lg transition flex items-center justify-center gap-2 cursor-pointer"
           >
             <span>Explore AI Investment System</span>
             <ArrowRight className="w-4 h-4" />

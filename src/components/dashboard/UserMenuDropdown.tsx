@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   Wallet, RefreshCcw, LogOut, ArrowUpRight, Plus, ShieldCheck, UserCheck, KeyRound
@@ -78,10 +78,10 @@ export const UserMenuDropdown: React.FC<UserMenuDropdownProps> = ({
           className="absolute right-6 top-[72px] w-[280px] bg-white border border-[#E2E8F0] rounded-[24px] shadow-2xl z-50 overflow-hidden font-sans text-slate-800 pointer-events-auto flex flex-col p-3.5 gap-3"
         >
           {/* 1. TOTAL NET WEALTH SNAPSHOT CARD */}
-          <div className="bg-[#0F172A] text-white rounded-2xl p-4 flex flex-col gap-2 shadow-md relative overflow-hidden">
+          <div className="bg-[#172033] text-white rounded-2xl p-4 flex flex-col gap-2 shadow-md relative overflow-hidden">
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1">
-                <Wallet className="w-3.5 h-3.5 text-blue-400" /> Total Net Wealth
+                <Wallet className="w-3.5 h-3.5 text-[#64748B]" /> Total Net Wealth
               </span>
               <span className="text-[9px] font-black text-emerald-400 bg-emerald-500/20 px-2 py-0.5 rounded">
                 +20.3%
@@ -95,7 +95,7 @@ export const UserMenuDropdown: React.FC<UserMenuDropdownProps> = ({
                   onClose();
                   if (onNavigateTab) onNavigateTab('Portfolio');
                 }}
-                className="text-blue-400 hover:text-blue-300 transition font-black flex items-center gap-0.5 cursor-pointer"
+                className="text-[#64748B] hover:text-blue-300 transition font-black flex items-center gap-0.5 cursor-pointer"
               >
                 View <ArrowUpRight className="w-3 h-3" />
               </button>
@@ -105,7 +105,7 @@ export const UserMenuDropdown: React.FC<UserMenuDropdownProps> = ({
           {/* 2. ADD FUNDS BUTTON */}
           <button
             onClick={handleAddFunds}
-            className="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white rounded-xl font-black text-xs transition-colors flex items-center justify-center gap-2 shadow-sm cursor-pointer"
+            className="w-full py-2.5 px-4 bg-primary hover:bg-primary-dark active:bg-primary-dark text-white rounded-xl font-black text-xs transition-colors flex items-center justify-center gap-2 shadow-sm cursor-pointer"
           >
             <Plus className="w-4 h-4 stroke-[3]" />
             <span>Add Funds</span>
@@ -119,10 +119,10 @@ export const UserMenuDropdown: React.FC<UserMenuDropdownProps> = ({
                 onClose();
                 navigate('/personalization');
               }}
-              className="w-full px-3 py-2 rounded-xl hover:bg-blue-50 text-[#0F172A] font-bold text-xs transition flex items-center justify-between cursor-pointer"
+              className="w-full px-3 py-2 rounded-xl hover:bg-primary-light text-[#172033] font-bold text-xs transition flex items-center justify-between cursor-pointer"
             >
               <div className="flex items-center gap-2.5">
-                <Plus className="w-4 h-4 text-blue-600 rotate-45" />
+                <Plus className="w-4 h-4 text-primary rotate-45" />
                 <span>AI Investor Personalization</span>
               </div>
             </button>
@@ -135,10 +135,10 @@ export const UserMenuDropdown: React.FC<UserMenuDropdownProps> = ({
                     onClose();
                     navigate('/login');
                   }}
-                  className="w-full px-3 py-2 rounded-xl hover:bg-blue-50 text-blue-600 font-bold text-xs transition flex items-center justify-between cursor-pointer"
+                  className="w-full px-3 py-2 rounded-xl hover:bg-primary-light text-primary font-bold text-xs transition flex items-center justify-between cursor-pointer"
                 >
                   <div className="flex items-center gap-2.5">
-                    <KeyRound className="w-4 h-4 text-blue-500" />
+                    <KeyRound className="w-4 h-4 text-primary" />
                     <span>Sign In / Login</span>
                   </div>
                 </button>
@@ -162,7 +162,7 @@ export const UserMenuDropdown: React.FC<UserMenuDropdownProps> = ({
                 {/* Switch Accounts */}
                 <button
                   onClick={handleSwitchAccount}
-                  className="w-full px-3 py-2.5 rounded-xl hover:bg-slate-100 text-[#0F172A] font-bold text-xs transition flex items-center justify-between cursor-pointer"
+                  className="w-full px-3 py-2.5 rounded-xl hover:bg-slate-100 text-[#172033] font-bold text-xs transition flex items-center justify-between cursor-pointer"
                 >
                   <div className="flex items-center gap-2.5">
                     <RefreshCcw className="w-4 h-4 text-slate-500" />
@@ -173,7 +173,7 @@ export const UserMenuDropdown: React.FC<UserMenuDropdownProps> = ({
                 {/* Logout */}
                 <button
                   onClick={handleLogout}
-                  className="w-full px-3 py-2.5 rounded-xl hover:bg-rose-50 text-rose-600 font-black text-xs transition flex items-center gap-2.5 cursor-pointer"
+                  className="w-full px-3 py-2.5 rounded-xl hover:bg-rose-50 text-danger font-black text-xs transition flex items-center gap-2.5 cursor-pointer"
                 >
                   <LogOut className="w-4 h-4" />
                   <span>Logout</span>

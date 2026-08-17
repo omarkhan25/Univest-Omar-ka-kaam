@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { motion } from 'framer-motion';
 import { Shield, Award, Users, TrendingUp, Zap, Heart, CheckCircle2 } from 'lucide-react';
 
@@ -47,7 +47,7 @@ export const AboutSection: React.FC = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <span className="inline-block px-4 py-1.5 bg-blue-600/10 border border-blue-600/20 rounded-full text-blue-400 text-xs font-black uppercase tracking-wider mb-4">
+            <span className="inline-block px-4 py-1.5 bg-primary/10 border border-primary/20 rounded-full text-[#64748B] text-xs font-black uppercase tracking-wider mb-4">
               About Univest
             </span>
 
@@ -68,7 +68,7 @@ export const AboutSection: React.FC = () => {
             </p>
 
             {/* Regulatory Badge */}
-            <div className="mt-8 bg-[#0F172A] rounded-2xl p-6 border border-slate-700 space-y-3">
+            <div className="mt-8 bg-[#172033] rounded-2xl p-6 border border-slate-700 space-y-3">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
                   <Shield className="w-5 h-5" />
@@ -95,9 +95,9 @@ export const AboutSection: React.FC = () => {
             {values.map((v, i) => (
               <div
                 key={i}
-                className="bg-[#0F172A] rounded-2xl p-5 border border-slate-800 hover:border-slate-700 transition"
+                className="bg-[#172033] rounded-2xl p-5 border border-slate-800 hover:border-slate-700 transition"
               >
-                <div className="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center mb-3">
+                <div className="w-10 h-10 rounded-xl bg-primary/20 text-[#64748B] flex items-center justify-center mb-3">
                   <v.icon className="w-5 h-5" />
                 </div>
                 <h4 className="font-black text-sm text-white mb-1">{v.title}</h4>
