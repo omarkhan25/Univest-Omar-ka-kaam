@@ -29,6 +29,7 @@ export interface StockQuote {
   peRatio?: number;
   fiftyTwoWeekHigh?: number;
   fiftyTwoWeekLow?: number;
+  error?: string;
 }
 
 export interface ResearchCallData {

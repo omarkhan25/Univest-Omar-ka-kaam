@@ -1,4 +1,4 @@
-﻿import api from '../../services/api';
+import api from '../../services/api';
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -131,7 +131,7 @@ export const InvestHub: React.FC<InvestHubProps> = ({
   const goalRequiredMonthly = Math.round((inflationAdjustedTarget * goalMonthlyRate) / ((Math.pow(1 + goalMonthlyRate, goalMonths) - 1) * (1 + goalMonthlyRate)));
 
   // Tax Estimator Math (India Old vs New Tax Regime)
-  const calculateOldTax = (income, deductions80C, otherDeductions) => {
+  const calculateOldTax = (income: number, deductions80C: number, otherDeductions: number) => {
     const taxable = Math.max(0, income - 50000 - Math.min(deductions80C, 150000) - otherDeductions);
     if (taxable <= 500000) return 0;
 

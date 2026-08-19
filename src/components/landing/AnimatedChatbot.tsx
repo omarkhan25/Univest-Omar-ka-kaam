@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bot, Sparkles, TrendingUp, Landmark, Send, Activity, PieChart, ShieldCheck, Briefcase, Rocket, Award } from 'lucide-react';
 
@@ -122,7 +122,7 @@ export const AnimatedChatbot: React.FC = () => {
   }, [visibleMessages, isTyping]);
 
   useEffect(() => {
-    let timeouts: NodeJS.Timeout[] = [];
+    let timeouts: ReturnType<typeof setTimeout>[] = [];
     
     // Clear messages for the new loop iteration
     setVisibleMessages([]);

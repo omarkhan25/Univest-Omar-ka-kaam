@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, Mail, Phone, Check, ArrowRight, RefreshCw, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -15,6 +15,7 @@ export const SignUp: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    mobile: '',
     acceptTerms: true
   });
   const [errors, setErrors] = useState<Record<string, string>>({});

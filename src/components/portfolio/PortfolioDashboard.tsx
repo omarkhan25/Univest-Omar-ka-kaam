@@ -245,6 +245,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onTrade,
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const [showExportModal, setShowExportModal] = useState(false);
   const [showAnalysisModal, setShowAnalysisModal] = useState(false);
+  const [showRebalanceModal, setShowRebalanceModal] = useState(false);
   const [depositAmount, setDepositAmount] = useState('10000');
   const [withdrawAmount, setWithdrawAmount] = useState('10000');
 

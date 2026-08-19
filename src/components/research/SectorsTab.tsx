@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import marketService from '../../services/market.service';
 import { 
   Building2, ArrowUpRight, ArrowDownRight, ChevronRight, TrendingUp,
@@ -27,6 +27,7 @@ export interface SectorConfig {
 
 export const SectorsTab: React.FC = () => {
   const [sectors, setSectors] = useState<SectorConfig[]>([]);
+  const [selectedSector, setSelectedSector] = useState<SectorConfig | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   const fetchSectors = async () => {
@@ -35,8 +36,8 @@ export const SectorsTab: React.FC = () => {
       const data = await marketService.getSectors();
       if (data && data.length > 0) {
         setSectors(data.map((d) => ({
-          id: (d.name || d.companyName || d.symbol || '').toLowerCase().replace(/\s+/g, '-'),
-          name: d.name || d.companyName || d.symbol || 'Unknown',
+          id: (d.name || (d as any).companyName || (d as any).symbol || '').toLowerCase().replace(/\s+/g, '-'),
+          name: d.name || (d as any).companyName || (d as any).symbol || 'Unknown',
           performance: `${d.changePercent >= 0 ? '+' : ''}${d.changePercent.toFixed(2)}%`,
           positive: d.changePercent >= 0,
           marketCap: d.marketCap || '--',
