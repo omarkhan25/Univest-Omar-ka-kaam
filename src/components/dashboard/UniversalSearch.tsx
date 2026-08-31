@@ -147,20 +147,24 @@ export const UniversalSearch: React.FC<UniversalSearchProps> = ({
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[100] flex items-start justify-center pt-16 sm:pt-24 px-4 bg-slate-900/60 backdrop-blur-md">
+      <div 
+        onClick={onClose}
+        className="fixed inset-0 z-[100] flex items-start justify-center pt-16 sm:pt-24 px-4 bg-slate-900/60 backdrop-blur-md"
+      >
         <motion.div
+          onClick={(e) => e.stopPropagation()}
           initial={{ opacity: 0, scale: 0.96, y: -10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.96, y: -10 }}
           transition={{ duration: 0.15 }}
-          className="w-full max-w-3xl bg-white rounded-[28px] border border-[#E2E8F0] shadow-2xl overflow-hidden flex flex-col max-h-[80vh]"
+          className="w-full max-w-3xl bg-white rounded-[28px] border border-[#E2E8F0] shadow-2xl overflow-hidden flex flex-col max-h-[80vh] relative"
         >
           {/* SEARCH INPUT BAR */}
           <div className="p-4 border-b border-[#E2E8F0] flex items-center gap-3 bg-[#F8FAFC]">
             {isSearching ? (
-              <Loader2 className="w-5 h-5 text-primary animate-spin shrink-0" />
+              <Loader2 className="w-5 h-5 text-[#15519D] animate-spin shrink-0" />
             ) : (
-              <Search className="w-5 h-5 text-primary shrink-0" />
+              <Search className="w-5 h-5 text-[#15519D] shrink-0" />
             )}
 
             <input
@@ -177,6 +181,7 @@ export const UniversalSearch: React.FC<UniversalSearchProps> = ({
               <button
                 onClick={() => setQuery('')}
                 className="p-1 rounded-full text-slate-400 hover:bg-slate-200 transition"
+                title="Clear input"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -185,6 +190,15 @@ export const UniversalSearch: React.FC<UniversalSearchProps> = ({
             <kbd className="hidden sm:inline-block px-2 py-1 bg-white border border-slate-200 rounded-lg text-[10px] font-black text-slate-400 shadow-xs">
               ESC
             </kbd>
+
+            {/* Explicit Close Modal Cross Button */}
+            <button
+              onClick={onClose}
+              className="p-2 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-200/80 transition-colors cursor-pointer border border-slate-200/60 bg-white shadow-2xs shrink-0"
+              title="Close Search Modal"
+            >
+              <X className="w-4 h-4" />
+            </button>
           </div>
 
           {/* RECENT SEARCHES CHIPS (if no query) */}

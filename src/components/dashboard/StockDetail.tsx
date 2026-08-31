@@ -1,692 +1,416 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowLeft, TrendingUp, Clock, Activity, Briefcase, 
-  BarChart3, Bookmark, Share2, Sparkles,
-  Star, MessageSquare, Sliders, AlertCircle, Building2, UserCheck, 
-  ChevronRight, Calendar, Compass, Info, Award, ChevronUp, ChevronDown
+  BarChart3, Bookmark, Share2, Sparkles, AlertCircle, 
+  ChevronRight, Calendar, Info, Award, ShieldCheck, ArrowUpRight, ArrowDownRight, Bell, ExternalLink, X
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 interface StockDetailProps {
   isOpen: boolean;
   onClose: () => void;
-  companyName?: string;
-  symbol?: string;
-  logo?: string;
-  isTrading?: boolean;
-  action?: 'BUY' | 'SELL';
-  onTrade?: (tradeData: any) => void;
+  stock?: any;
+  onInvestViaBroker?: (stock: any) => void;
+  onSetAlert?: (stock: any) => void;
 }
 
 export const StockDetail: React.FC<StockDetailProps> = ({
   isOpen,
   onClose,
-  companyName = 'Reliance Industries Ltd',
-  symbol = 'RELIANCE',
-  logo = 'RL',
-  isTrading,
-  action,
-  onTrade
+  stock,
+  onInvestViaBroker,
+  onSetAlert
 }) => {
-  // Navigation & View Toggles
-  const [chartInterval, setChartInterval] = useState<'1D' | '5D' | '1M' | '3M' | '6M' | '1Y' | '5Y' | 'MAX'>('1M');
-  const [chartType, setChartType] = useState<'Candlestick' | 'Line' | 'Area' | 'Heikin Ashi'>('Candlestick');
-  const [activeIndicators, setActiveIndicators] = useState<string[]>(['RSI', 'Volume']);
-  const [financialPeriod, setFinancialPeriod] = useState<'quarterly' | 'yearly'>('quarterly');
-  const [isBookmarked, setIsBookmarked] = useState(false);
-  const [commentText, setCommentText] = useState('');
-  
-  // Discussion Feed state
-  const [commentsList, setCommentsList] = useState([
-    { id: '1', user: 'Vikram S.', time: '10 min ago', text: 'Strong support holding at ₹2,980. Hydrogen plant commissioning is going to trigger massive upside.', sentiment: 'Bullish' },
-    { id: '2', user: 'Ananya R.', time: '45 min ago', text: 'Q2 earnings beat expected across retail and telecom divisions.', sentiment: 'Bullish' }
-  ]);
-
-  // Base stock price (hardcoded for MVP demo)
-  const basePrice = 3024.50;
-
-  // Sync scroll-to-top on open
-  React.useEffect(() => {
-    if (isOpen) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  }, [isOpen]);
+  const [chartInterval, setChartInterval] = useState<'1D' | '1W' | '1M' | '3M' | '1Y' | '5Y'>('1M');
+  const [isWatchlisted, setIsWatchlisted] = useState(false);
 
   if (!isOpen) return null;
 
-  // Working interactive price chart calculations based on timeframe
-  const chartPointsMap = {
-    '1D': [2980, 2995, 3010, 3005, 3024.5],
-    '5D': [2910, 2940, 2925, 2990, 3024.5],
-    '1M': [2820, 2870, 2850, 2960, 3024.5],
-    '3M': [2700, 2780, 2750, 2900, 3024.5],
-    '6M': [2550, 2650, 2600, 2850, 3024.5],
-    '1Y': [2400, 2550, 2500, 2800, 3024.5],
-    '5Y': [1500, 1850, 2100, 2600, 3024.5],
-    'MAX': [800, 1200, 1900, 2500, 3024.5],
+  const symbol = stock?.symbol || 'RELIANCE';
+  const companyName = stock?.companyName || stock?.name || 'Reliance Industries Ltd';
+  const price = stock?.price || '2,934.50';
+  const changePercent = stock?.changePercent ?? 1.25;
+  const isPositive = changePercent >= 0;
+
+  // Chart data calculation points based on timeframe
+  const chartPointsMap: Record<string, number[]> = {
+    '1D': [2910, 2920, 2915, 2928, 2934.5],
+    '1W': [2890, 2905, 2900, 2925, 2934.5],
+    '1M': [2820, 2870, 2850, 2910, 2934.5],
+    '3M': [2750, 2810, 2790, 2890, 2934.5],
+    '1Y': [2450, 2600, 2550, 2800, 2934.5],
+    '5Y': [1400, 1750, 2100, 2650, 2934.5],
   };
-  const points = chartPointsMap[chartInterval];
+
+  const points = chartPointsMap[chartInterval] || chartPointsMap['1M'];
   const minPt = Math.min(...points) * 0.98;
   const maxPt = Math.max(...points) * 1.02;
 
-  // Financial Period Data
-  const financialData = {
-    quarterly: [
-      { term: 'Q1 FY26', revenue: 258400, profit: 19640, ebitda: 42150, cashFlow: 38900 },
-      { term: 'Q2 FY26', revenue: 264200, profit: 20150, ebitda: 44200, cashFlow: 39500 },
-      { term: 'Q3 FY26', revenue: 271500, profit: 21300, ebitda: 45800, cashFlow: 41200 },
-      { term: 'Q4 FY26', revenue: 279800, profit: 22400, ebitda: 47900, cashFlow: 42800 },
-    ],
-    yearly: [
-      { term: 'FY23', revenue: 879400, profit: 66700, ebitda: 142800, cashFlow: 125400 },
-      { term: 'FY24', revenue: 954800, profit: 73500, ebitda: 154200, cashFlow: 138900 },
-      { term: 'FY25', revenue: 1024600, profit: 79200, ebitda: 168400, cashFlow: 149600 },
-      { term: 'FY26 (Est)', revenue: 1073900, profit: 83500, ebitda: 179050, cashFlow: 162400 },
-    ]
+  // SVG Chart Polyline Points
+  const chartSvgPoints = points.map((val, idx) => {
+    const x = (idx / (points.length - 1)) * 500;
+    const y = 180 - ((val - minPt) / (maxPt - minPt)) * 160;
+    return `${x},${y}`;
+  }).join(' ');
+
+  const handleShare = () => {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(window.location.href);
+      toast.success('Stock intelligence link copied to clipboard!');
+    }
   };
-
-  const currentFinList = financialData[financialPeriod];
-
-  const toggleIndicator = (ind: string) => {
-    setActiveIndicators(prev => 
-      prev.includes(ind) ? prev.filter(i => i !== ind) : [...prev, ind]
-    );
-  };
-
-  const handleAddComment = () => {
-    if (!commentText.trim()) return;
-    setCommentsList([
-      { id: Date.now().toString(), user: 'You (Omar Khan)', time: 'Just now', text: commentText, sentiment: 'Bullish' },
-      ...commentsList
-    ]);
-    setCommentText('');
-    toast.success('Comment posted to Community Stream');
-  };
-
-
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 8 }}
-      transition={{ duration: 0.2 }}
-      className="fixed inset-0 z-[100] bg-[#F8FAFC] overflow-y-auto flex flex-col justify-between"
-    >
-        {/* TOP BRANDED FULL-PAGE HEADER BAR */}
-        <header className="sticky top-0 bg-white border-b border-[#E2E8F0] px-6 py-4 flex flex-wrap items-center justify-between z-30 shadow-xs gap-4">
-          
-          <div className="flex items-center gap-4">
-            <button
-              onClick={onClose}
-              className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs transition"
-            >
-              <ArrowLeft className="w-4 h-4" /> Back to Dashboard
-            </button>
+    <AnimatePresence>
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/60 backdrop-blur-md overflow-hidden">
+        {/* Backdrop click listener */}
+        <div className="absolute inset-0" onClick={onClose} />
 
-            <div className="h-6 w-px bg-slate-200 hidden sm:block" />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.96, y: 20 }}
+          className="relative bg-[#F8FAFC] rounded-3xl shadow-2xl border border-slate-200 w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden my-auto z-10"
+        >
+          {/* HEADER */}
+          <div className="p-5 md:p-6 bg-white border-b border-slate-200 shrink-0 flex flex-col md:flex-row md:items-center justify-between gap-4 z-20">
+            <div className="flex items-center gap-4">
+              <button
+                onClick={onClose}
+                className="p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl transition-colors"
+                title="Close"
+              >
+                <ArrowLeft className="w-5 h-5" />
+              </button>
 
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-[#172033] text-white flex items-center justify-center font-black text-xs shrink-0 shadow-sm">
-                {logo || symbol.substring(0, 2)}
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-[#15519D] text-white font-black text-lg flex items-center justify-center shadow-md">
+                  {symbol.substring(0, 2)}
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h1 className="text-xl font-extrabold text-slate-900">{companyName}</h1>
+                    <span className="px-2.5 py-0.5 bg-slate-100 text-slate-600 font-mono font-bold text-xs rounded-lg">
+                      {symbol}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 mt-0.5">
+                    <span>NSE India</span> • <span className="text-[#16A34A] font-bold">● Market Open</span>
+                  </div>
+                </div>
               </div>
+            </div>
+
+            {/* Price & Primary Actions */}
+            <div className="flex items-center justify-between md:justify-end gap-4 sm:gap-6 flex-wrap md:flex-nowrap">
               <div>
+                <div className="text-2xl font-black text-slate-900">₹{price}</div>
+                <div className={`text-xs font-extrabold flex items-center justify-end gap-0.5 ${isPositive ? 'text-[#16A34A]' : 'text-[#DC2626]'}`}>
+                  {isPositive ? <ArrowUpRight className="w-3.5 h-3.5" /> : <ArrowDownRight className="w-3.5 h-3.5" />}
+                  <span>{isPositive ? `+${changePercent}%` : `${changePercent}%`} Today</span>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
+                <button
+                  onClick={() => {
+                    setIsWatchlisted(!isWatchlisted);
+                    toast.success(isWatchlisted ? 'Removed from Watchlist' : 'Added to Watchlist');
+                  }}
+                  className={`p-2.5 sm:p-3 rounded-2xl border transition-all ${
+                    isWatchlisted ? 'bg-blue-50 border-blue-200 text-[#15519D]' : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                  }`}
+                  title="Add to Watchlist"
+                >
+                  <Bookmark className={`w-5 h-5 ${isWatchlisted ? 'fill-current' : ''}`} />
+                </button>
+
+                <button
+                  onClick={() => onSetAlert && onSetAlert(stock)}
+                  className="p-2.5 sm:p-3 bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 rounded-2xl transition-all"
+                  title="Set Alert"
+                >
+                  <Bell className="w-5 h-5" />
+                </button>
+
+                <button
+                  onClick={handleShare}
+                  className="p-2.5 sm:p-3 bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 rounded-2xl transition-all"
+                  title="Share Stock Intelligence"
+                >
+                  <Share2 className="w-5 h-5" />
+                </button>
+
+                <button
+                  onClick={() => {
+                    toast.success(`Allocated ₹10,000 virtual capital to ${symbol} in your Investment Lab!`);
+                  }}
+                  className="px-5 py-3 bg-[#15519D] hover:bg-[#123B63] text-white font-extrabold text-xs rounded-2xl shadow-lg shadow-blue-500/20 transition-all flex items-center gap-2"
+                >
+                  <Briefcase className="w-4 h-4" />
+                  <span>Add to Investment Lab</span>
+                </button>
+
+                <button
+                  onClick={onClose}
+                  className="p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 rounded-2xl transition-colors"
+                  title="Close Modal"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* BODY CONTENT */}
+          <div className="p-6 md:p-8 space-y-8 overflow-y-auto flex-1 scrollbar-thin">
+            {/* PRICE PERFORMANCE CHART SECTION */}
+            <div className="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-2">
-                  <h1 className="font-black text-lg text-[#172033] leading-tight">{companyName}</h1>
-                  <span className="text-[10px] font-black bg-slate-100 text-slate-700 px-2 py-0.5 rounded border border-slate-200 uppercase">
-                    NSE : {symbol}
-                  </span>
-                  <span className="text-[9px] font-black bg-emerald-50 text-emerald-800 px-2 py-0.5 rounded border border-emerald-100 flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" /> LIVE
-                  </span>
+                  <BarChart3 className="w-5 h-5 text-[#15519D]" />
+                  <h3 className="font-extrabold text-slate-900 text-base">Price Performance Trend</h3>
                 </div>
-                <div className="flex items-center gap-2 text-xs font-bold text-slate-400">
-                  <span className="flex items-center gap-1 text-amber-500">
-                    <Star className="w-3.5 h-3.5 fill-amber-400" /> 4.9 Stars
-                  </span>
-                  <span>·</span>
-                  <span className="text-emerald-600 bg-emerald-50 px-2 py-0.2 rounded font-black">
-                    88% BUY CONSENSUS
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <div className="flex items-center gap-3">
-            <div className="text-right mr-2">
-              <span className="text-xl font-black text-[#172033]">₹3,024.50</span>
-              <span className="block text-xs font-extrabold text-emerald-600">▲ +₹37.10 (+1.24%)</span>
-            </div>
-
-            <button
-              onClick={() => {
-                setIsBookmarked(!isBookmarked);
-                toast.success(isBookmarked ? 'Removed from Watchlist' : 'Saved to Watchlist');
-              }}
-              className={`w-10 h-10 rounded-xl border border-[#E2E8F0] flex items-center justify-center transition ${
-                isBookmarked ? 'bg-primary-light text-primary border-primary-light' : 'text-slate-400 hover:bg-slate-50'
-              }`}
-            >
-              <Bookmark className="w-4.5 h-4.5" fill={isBookmarked ? '#15519D' : 'none'} />
-            </button>
-
-            <button
-              onClick={() => toast.success('Workspace link copied')}
-              className="w-10 h-10 rounded-xl border border-[#E2E8F0] flex items-center justify-center text-slate-400 hover:bg-slate-50 transition"
-            >
-              <Share2 className="w-4.5 h-4.5" />
-            </button>
-
-            <button
-              onClick={() => {
-                if (onTrade) onTrade({ symbol, action: 'BUY', company: companyName });
-                
-              }}
-              className="px-5 py-2.5 rounded-xl bg-primary text-white font-black text-xs hover:bg-primary transition shadow-sm cursor-pointer"
-            >
-              Trade Asset
-            </button>
-          </div>
-        </header>
-
-        {/* MAIN SCROLLABLE CONTENT DESK */}
-        <main className="w-full px-6 sm:px-8 py-6 sm:py-8 flex flex-col gap-8 flex-1">
-          
-          {/* 1. HERO TRADINGVIEW INTERACTIVE CHART WORKSPACE */}
-          <section className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col gap-4">
-            <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
-              <div className="flex items-center gap-2">
-                <BarChart3 className="w-5 h-5 text-primary" />
-                <h3 className="font-black text-lg text-[#172033]">Interactive Chart Feed</h3>
-              </div>
-
-              {/* Timeframes */}
-              <div className="flex items-center gap-1 bg-[#F8FAFC] p-1 rounded-xl border border-[#E2E8F0] text-xs">
-                {(['1D', '5D', '1M', '3M', '6M', '1Y', '5Y', 'MAX'] as const).map((tf) => (
-                  <button
-                    key={tf}
-                    onClick={() => setChartInterval(tf)}
-                    className={`px-3 py-1.5 rounded-lg font-black transition ${
-                      chartInterval === tf
-                        ? 'bg-[#172033] text-white shadow-sm'
-                        : 'text-slate-500 hover:text-[#172033]'
-                    }`}
-                  >
-                    {tf}
-                  </button>
-                ))}
-              </div>
-
-              {/* Chart Types */}
-              <div className="flex items-center gap-1 bg-[#F8FAFC] p-1 rounded-xl border border-[#E2E8F0] text-xs">
-                {(['Candlestick', 'Line', 'Area', 'Heikin Ashi'] as const).map((type) => (
-                  <button
-                    key={type}
-                    onClick={() => setChartType(type)}
-                    className={`px-3 py-1.5 rounded-lg font-bold transition ${
-                      chartType === type ? 'bg-primary text-white shadow-xs' : 'text-slate-500'
-                    }`}
-                  >
-                    {type}
-                  </button>
-                ))}
-              </div>
-
-              {/* Indicators */}
-              <div className="flex items-center gap-1.5 text-xs">
-                <span className="text-[10px] font-bold text-slate-400 uppercase">Indicators:</span>
-                {['RSI', 'MACD', 'EMA', 'SMA', 'Bollinger', 'Volume'].map((ind) => {
-                  const isActive = activeIndicators.includes(ind);
-                  return (
+                {/* Timeframe selector */}
+                <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl">
+                  {['1D', '1W', '1M', '3M', '1Y', '5Y'].map((tf) => (
                     <button
-                      key={ind}
-                      onClick={() => toggleIndicator(ind)}
-                      className={`px-2.5 py-0.5 rounded-md text-[10px] font-black border transition ${
-                        isActive ? 'bg-primary-light text-primary border-primary-light' : 'bg-slate-50 text-slate-400 border-slate-200'
+                      key={tf}
+                      onClick={() => setChartInterval(tf as any)}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                        chartInterval === tf
+                          ? 'bg-[#15519D] text-white shadow-sm'
+                          : 'text-slate-600 hover:text-slate-900'
                       }`}
                     >
-                      {ind}
+                      {tf}
                     </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* TradingView Simulated Canvas */}
-            <div className="relative h-80 w-full bg-[#172033] rounded-2xl p-5 overflow-hidden flex flex-col justify-between shadow-inner">
-              <div className="absolute inset-0 flex flex-col justify-between p-5 pointer-events-none opacity-20">
-                <div className="border-b border-dashed border-slate-400 w-full" />
-                <div className="border-b border-dashed border-slate-400 w-full" />
-                <div className="border-b border-dashed border-slate-400 w-full" />
-              </div>
-
-              <div className="absolute top-4 left-5 right-5 flex justify-between items-center text-xs font-black text-slate-300 z-10">
-                <span className="flex items-center gap-2">
-                  <Activity className="w-4 h-4 text-primary" /> TradingView Engine Feed
-                </span>
-                <div className="flex gap-4 text-[10px] font-extrabold">
-                  <span>O: ₹2,985.00</span>
-                  <span>H: ₹3,040.00</span>
-                  <span>L: ₹2,975.00</span>
-                  <span className="text-emerald-400">C: ₹3,024.50</span>
+                  ))}
                 </div>
               </div>
 
-              <svg className="w-full h-full relative z-0 mt-4" viewBox="0 0 500 200" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="fullStockChartGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#15519D" stopOpacity="0.4" />
-                    <stop offset="100%" stopColor="#15519D" stopOpacity="0.0" />
-                  </linearGradient>
-                </defs>
-                
-                {chartType === 'Area' && (
-                  <path
-                    d={`M 0,200 ${points.map((pt, i) => {
-                      const x = (i / (points.length - 1)) * 500;
-                      const y = 170 - ((pt - minPt) / (maxPt - minPt)) * 130;
-                      return `L ${x},${y}`;
-                    }).join(' ')} L 500,200 Z`}
-                    fill="url(#fullStockChartGrad)"
+              {/* SVG Chart Graphic */}
+              <div className="relative w-full h-48 pt-4">
+                <svg className="w-full h-full overflow-visible" viewBox="0 0 500 180" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="stockChartGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#15519D" stopOpacity="0.25" />
+                      <stop offset="100%" stopColor="#15519D" stopOpacity="0.0" />
+                    </linearGradient>
+                  </defs>
+                  <polygon
+                    points={`0,180 ${chartSvgPoints} 500,180`}
+                    fill="url(#stockChartGrad)"
                   />
-                )}
-
-                <path
-                  d={points.map((pt, i) => {
-                    const x = (i / (points.length - 1)) * 500;
-                    const y = 170 - ((pt - minPt) / (maxPt - minPt)) * 130;
-                    return `${i === 0 ? 'M' : 'L'} ${x},${y}`;
-                  }).join(' ')}
-                  fill="none"
-                  stroke="#15519D"
-                  strokeWidth="3.5"
-                  strokeLinecap="round"
-                />
-              </svg>
-
-              <div className="flex justify-between items-center text-[10px] text-slate-400 font-bold z-10 pt-2 border-t border-white/10">
-                <span>RSI (14): <strong className="text-emerald-400">64.5 (Bullish)</strong></span>
-                <span>MACD: <strong className="text-[#64748B]">Positive Crossover</strong></span>
-                <span>Volume: <strong className="text-white">4.2M Shares</strong></span>
-              </div>
-            </div>
-          </section>
-
-          {/* 2. COMPANY OVERVIEW GRID */}
-          <section className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 shadow-sm">
-            <h3 className="text-lg font-black text-[#172033] mb-4">Company Overview</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {[
-                { label: 'Market Cap', val: '₹19,84,200 Cr' },
-                { label: 'P/E Ratio', val: '26.4x' },
-                { label: 'P/B Ratio', val: '2.8x' },
-                { label: 'EPS (TTM)', val: '₹114.50' },
-                { label: 'ROE %', val: '18.5%' },
-                { label: 'Dividend Yield', val: '0.45%' },
-                { label: 'Sector', val: 'Energy & Petrochem' },
-                { label: 'Industry', val: 'Conglomerates' },
-                { label: 'Managing Director / CEO', val: 'Mukesh D. Ambani' },
-                { label: 'Total Employees', val: '3,89,000+' },
-                { label: 'Founded', val: '1973 (53 Yrs)' },
-                { label: 'Official Website', val: 'ril.com' }
-              ].map((item) => (
-                <div key={item.label} className="bg-[#F8FAFC] p-3.5 rounded-2xl border border-[#E2E8F0]">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase block mb-1">{item.label}</span>
-                  <span className="font-black text-xs text-[#172033] truncate block">{item.val}</span>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* 3. AI SUMMARY CARD */}
-          <section className="bg-[#172033] text-white rounded-[28px] p-6 shadow-xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-72 h-72 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
-            
-            <div className="relative z-10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
-              <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <Sparkles className="w-4 h-4 text-[#64748B]" />
-                  <span className="text-xs font-black text-[#64748B] uppercase tracking-wider">UNIVEST AI INVESTMENT THESIS</span>
-                </div>
-                <h3 className="text-xl font-black mb-3">Strong Fundamental Base & Hydrogen Growth Re-Rating</h3>
-                <p className="text-xs text-slate-300 font-medium leading-relaxed max-w-xl">
-                  Reliance remains fundamentally strong with improving refining margins and stable retail cash flows. Institutional accumulation signals multi-quarter breakout potential.
-                </p>
-              </div>
-
-              <div className="bg-white/10 border border-white/20 p-5 rounded-2xl text-center shrink-0 min-w-[160px]">
-                <span className="text-[10px] font-bold text-slate-400 uppercase block mb-1">AI Confidence Score</span>
-                <span className="text-3xl font-black text-[#64748B]">94%</span>
-                <span className="text-[10px] text-emerald-400 font-extrabold block mt-1">HIGH CONVICTION</span>
-              </div>
-            </div>
-          </section>
-
-          {/* 4. FINANCIAL PERFORMANCE WITH WORKING HISTORICAL BAR CHARTS */}
-          <section className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col gap-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-lg font-black text-[#172033]">Financial Performance</h3>
-                <p className="text-xs text-slate-500 font-medium">Visual quarterly & yearly metrics breakdown.</p>
-              </div>
-              <div className="flex items-center gap-1 bg-[#F8FAFC] p-1 rounded-xl border border-[#E2E8F0] text-xs">
-                <button
-                  onClick={() => setFinancialPeriod('quarterly')}
-                  className={`px-3 py-1 rounded-lg font-bold transition ${
-                    financialPeriod === 'quarterly' ? 'bg-[#172033] text-white shadow-xs' : 'text-slate-500'
-                  }`}
-                >
-                  Quarterly
-                </button>
-                <button
-                  onClick={() => setFinancialPeriod('yearly')}
-                  className={`px-3 py-1 rounded-lg font-bold transition ${
-                    financialPeriod === 'yearly' ? 'bg-[#172033] text-white shadow-xs' : 'text-slate-500'
-                  }`}
-                >
-                  Yearly
-                </button>
+                  <polyline
+                    fill="none"
+                    stroke="#15519D"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    points={chartSvgPoints}
+                  />
+                </svg>
               </div>
             </div>
 
-            {/* Financial Columns Graph */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              {currentFinList.map((data, index) => (
-                <div key={index} className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-2xl p-5 flex flex-col justify-between gap-4 shadow-2xs">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-black text-slate-400 uppercase">{data.term}</span>
-                    <span className="text-[10px] font-extrabold text-emerald-600">▲ +12% Growth</span>
-                  </div>
-
-                  {/* Vertical bar visual graphs */}
-                  <div className="flex items-end gap-2 h-20 pt-4">
-                    <div className="flex-1 flex flex-col items-center">
-                      <div 
-                        className="w-full bg-primary rounded-t-sm transition-all duration-300"
-                        style={{ height: `${Math.min(100, (data.revenue / (financialPeriod === 'quarterly' ? 280000 : 1100000)) * 60)}px` }}
-                      />
-                      <span className="text-[8px] font-bold text-slate-400 mt-1">Rev</span>
-                    </div>
-                    <div className="flex-1 flex flex-col items-center">
-                      <div 
-                        className="w-full bg-emerald-600 rounded-t-sm transition-all duration-300"
-                        style={{ height: `${Math.min(100, (data.profit / (financialPeriod === 'quarterly' ? 28000 : 110000)) * 60)}px` }}
-                      />
-                      <span className="text-[8px] font-bold text-slate-400 mt-1">Net</span>
-                    </div>
-                    <div className="flex-1 flex flex-col items-center">
-                      <div 
-                        className="w-full bg-primary rounded-t-sm transition-all duration-300"
-                        style={{ height: `${Math.min(100, (data.ebitda / (financialPeriod === 'quarterly' ? 50000 : 200000)) * 60)}px` }}
-                      />
-                      <span className="text-[8px] font-bold text-slate-400 mt-1">EBIT</span>
-                    </div>
-                  </div>
-
-                  <div className="border-t border-slate-100 pt-3 text-xs flex justify-between">
-                    <div>
-                      <span className="text-[9px] text-slate-400 font-bold block">Revenue</span>
-                      <strong className="text-[#172033]">₹{(data.revenue/1000).toFixed(1)}k Cr</strong>
-                    </div>
-                    <div className="text-right">
-                      <span className="text-[9px] text-slate-400 font-bold block">Net Profit</span>
-                      <strong className="text-emerald-600">₹{(data.profit/1000).toFixed(1)}k Cr</strong>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* 5. FUNDAMENTAL & TECHNICAL BREAKDOWN WITH WORKING GAUGES */}
-          <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            
-            {/* Fundamental Ratios */}
-            <div className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col gap-4">
-              <h4 className="font-black text-base text-[#172033]">Fundamental Metrics</h4>
-              <div className="flex flex-col gap-3.5 text-xs">
-                <div className="flex justify-between py-2 border-b border-slate-100">
-                  <span className="font-bold text-slate-500">Return on Equity (ROE)</span>
-                  <span className="font-black text-emerald-600">18.5%</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-slate-100">
-                  <span className="font-bold text-slate-500">Return on Capital (ROCE)</span>
-                  <span className="font-black text-[#172033]">16.2%</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-slate-100">
-                  <span className="font-bold text-slate-500">Debt to Equity</span>
-                  <span className="font-black text-[#172033]">0.38 (Low Risk)</span>
-                </div>
-                <div className="flex justify-between py-2">
-                  <span className="font-bold text-slate-500">Promoter Pledge %</span>
-                  <span className="font-black text-emerald-600">0.00% (Zero Pledge)</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Technical Indicators with interactive visual gauge */}
-            <div className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col gap-4">
-              <h4 className="font-black text-base text-[#172033]">Technical Indicators</h4>
-              
-              {/* RSI gauge slider */}
-              <div className="bg-[#F8FAFC] border border-[#E2E8F0] p-4 rounded-xl flex flex-col gap-2">
-                <div className="flex justify-between items-center text-xs font-bold">
-                  <span className="text-slate-500">RSI Gauge (14)</span>
-                  <span className="text-emerald-600 font-black">64.5 - Bullish</span>
-                </div>
-                <div className="h-2 w-full bg-slate-200 rounded-full relative mt-1">
-                  <div className="absolute top-0 bottom-0 left-[64.5%] w-3 h-3 rounded-full bg-emerald-500 -translate-y-0.5 shadow-sm" />
-                </div>
-                <div className="flex justify-between text-[8px] font-bold text-slate-400 uppercase">
-                  <span>Oversold</span>
-                  <span>Neutral</span>
-                  <span>Overbought</span>
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-3.5 text-xs">
-                <div className="flex justify-between py-2 border-b border-slate-100">
-                  <span className="font-bold text-slate-500">Support / Resistance</span>
-                  <span className="font-black text-[#172033]">S: ₹2,960 · R: ₹3,375</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-slate-100">
-                  <span className="font-bold text-slate-500">Moving Average crossover</span>
-                  <span className="font-black text-emerald-600">Above 50 & 200 DMA</span>
-                </div>
-                <div className="flex justify-between py-2">
-                  <span className="font-bold text-slate-500">ADX Momentum</span>
-                  <span className="font-black text-primary">32.4 (Strong Trend)</span>
-                </div>
-              </div>
-            </div>
-
-          </section>
-
-          {/* 6. PEER COMPARISON TABLE */}
-          <section className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 shadow-sm">
-            <h3 className="text-lg font-black text-[#172033] mb-4">Peer Comparison</h3>
-            <div className="overflow-x-auto">
-              <table className="w-full text-xs text-left">
-                <thead>
-                  <tr className="border-b border-slate-200 text-slate-400 font-bold uppercase text-[10px]">
-                    <th className="py-3 px-2">Company</th>
-                    <th className="py-3 px-2">Price</th>
-                    <th className="py-3 px-2">Market Cap</th>
-                    <th className="py-3 px-2">P/E</th>
-                    <th className="py-3 px-2">ROE</th>
-                    <th className="py-3 px-2">1Y Return</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100">
-                  <tr className="font-black bg-primary-light/50 text-[#172033]">
-                    <td className="py-3 px-2 flex items-center gap-2">
-                      <span className="w-6 h-6 rounded bg-[#172033] text-white flex items-center justify-center text-[10px]">RL</span>
-                      Reliance Industries
-                    </td>
-                    <td className="py-3 px-2">₹3,024.50</td>
-                    <td className="py-3 px-2">₹19.8L Cr</td>
-                    <td className="py-3 px-2">26.4x</td>
-                    <td className="py-3 px-2 text-emerald-600">18.5%</td>
-                    <td className="py-3 px-2 text-emerald-600">+24.2%</td>
-                  </tr>
-                  <tr className="font-bold text-slate-600 hover:bg-slate-50">
-                    <td className="py-3 px-2 flex items-center gap-2">
-                      <span className="w-6 h-6 rounded bg-slate-200 text-slate-700 flex items-center justify-center text-[10px]">TC</span>
-                      TCS
-                    </td>
-                    <td className="py-3 px-2">₹4,185.10</td>
-                    <td className="py-3 px-2">₹15.2L Cr</td>
-                    <td className="py-3 px-2">31.2x</td>
-                    <td className="py-3 px-2">42.1%</td>
-                    <td className="py-3 px-2 text-emerald-600">+16.8%</td>
-                  </tr>
-                  <tr className="font-bold text-slate-600 hover:bg-slate-50">
-                    <td className="py-3 px-2 flex items-center gap-2">
-                      <span className="w-6 h-6 rounded bg-slate-200 text-slate-700 flex items-center justify-center text-[10px]">HD</span>
-                      HDFC Bank
-                    </td>
-                    <td className="py-3 px-2">₹1,682.40</td>
-                    <td className="py-3 px-2">₹12.8L Cr</td>
-                    <td className="py-3 px-2">19.4x</td>
-                    <td className="py-3 px-2">17.2%</td>
-                    <td className="py-3 px-2 text-emerald-600">+12.5%</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          {/* 7. SHAREHOLDING PATTERN WITH WORKING SEGMENTED PROGRESS BAR */}
-          <section className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col gap-6">
-            <h3 className="text-lg font-black text-[#172033]">Shareholding Distribution</h3>
-            
-            {/* Visual segmented bar */}
-            <div className="flex h-4 rounded-full overflow-hidden w-full bg-slate-200">
-              <div className="bg-primary" style={{ width: '50.3%' }} title="Promoter: 50.3%" />
-              <div className="bg-primary-light0" style={{ width: '22.15%' }} title="FII: 22.15%" />
-              <div className="bg-purple-500" style={{ width: '16.45%' }} title="DII: 16.45%" />
-              <div className="bg-slate-400" style={{ width: '11.1%' }} title="Public: 11.1%" />
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div className="bg-[#F8FAFC] p-4 rounded-2xl border border-[#E2E8F0]">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="w-2.5 h-2.5 rounded-full bg-primary" />
-                  <span className="text-[10px] font-bold text-slate-400 uppercase">Promoters</span>
-                </div>
-                <span className="text-xl font-black text-[#172033]">50.30%</span>
-                <span className="text-[10px] text-emerald-600 block font-bold mt-1">Zero Pledge</span>
-              </div>
-              <div className="bg-[#F8FAFC] p-4 rounded-2xl border border-[#E2E8F0]">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="w-2.5 h-2.5 rounded-full bg-primary-light0" />
-                  <span className="text-[10px] font-bold text-slate-400 uppercase">Foreign FIIs</span>
-                </div>
-                <span className="text-xl font-black text-primary">22.15%</span>
-                <span className="text-[10px] text-emerald-600 block font-bold mt-1">▲ +0.4% QoQ</span>
-              </div>
-              <div className="bg-[#F8FAFC] p-4 rounded-2xl border border-[#E2E8F0]">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="w-2.5 h-2.5 rounded-full bg-purple-500" />
-                  <span className="text-[10px] font-bold text-slate-400 uppercase">Domestic DIIs</span>
-                </div>
-                <span className="text-xl font-black text-primary">16.45%</span>
-                <span className="text-[10px] text-emerald-600 block font-bold mt-1">▲ +0.8% QoQ</span>
-              </div>
-              <div className="bg-[#F8FAFC] p-4 rounded-2xl border border-[#E2E8F0]">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="w-2.5 h-2.5 rounded-full bg-slate-400" />
-                  <span className="text-[10px] font-bold text-slate-400 uppercase">Public & Others</span>
-                </div>
-                <span className="text-xl font-black text-slate-600">11.10%</span>
-              </div>
-            </div>
-          </section>
-
-          {/* 8. COMMUNITY COMMENTS & DISCUSSION STREAM */}
-          <section className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col gap-6">
-            <div className="flex items-center justify-between">
+            {/* WHY IS THIS STOCK MOVING? */}
+            <div className="p-6 bg-gradient-to-r from-blue-50/80 via-white to-blue-50/50 rounded-3xl border border-blue-100 shadow-sm space-y-3">
               <div className="flex items-center gap-2">
-                <MessageSquare className="w-5 h-5 text-primary" />
-                <h3 className="text-lg font-black text-[#172033]">Investor Community Stream</h3>
+                <span className="p-2 bg-[#15519D] text-white rounded-xl shadow-md">
+                  <Sparkles className="w-4 h-4" />
+                </span>
+                <h3 className="font-extrabold text-[#15519D] text-base">Why Is This Stock Moving Today?</h3>
               </div>
-              <span className="text-xs font-bold text-slate-400">{commentsList.length} Discussions</span>
-            </div>
 
-            {/* Add Comment Input */}
-            <div className="flex gap-2">
-              <input
-                type="text"
-                placeholder="Share your technical or fundamental perspective on Reliance..."
-                value={commentText}
-                onChange={(e) => setCommentText(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleAddComment()}
-                className="flex-1 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-2.5 text-xs text-[#172033] outline-none focus:border-primary"
-              />
-              <button
-                onClick={handleAddComment}
-                className="px-5 py-2.5 rounded-xl bg-primary text-white font-black text-xs hover:bg-primary transition"
-              >
-                Post
-              </button>
-            </div>
+              <p className="text-sm text-slate-800 font-semibold leading-relaxed">
+                "{companyName} is trading higher today driven by positive sector rotation in banking and heavyweights, expanding refining margins, and sustained institutional buying interest."
+              </p>
 
-            {/* Comments Feed */}
-            <div className="flex flex-col gap-3">
-              {commentsList.map((c) => (
-                <div key={c.id} className="p-4 bg-[#F8FAFC] rounded-2xl border border-slate-100 flex flex-col gap-1.5 text-xs">
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center gap-2">
-                      <span className="font-black text-[#172033]">{c.user}</span>
-                      <span className="px-2 py-0.2 rounded bg-emerald-100 text-emerald-700 text-[9px] font-black">{c.sentiment}</span>
-                    </div>
-                    <span className="text-[10px] text-slate-400 font-bold">{c.time}</span>
-                  </div>
-                  <p className="text-slate-600 font-medium leading-relaxed">{c.text}</p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2">
+                <div className="p-3 bg-white rounded-2xl border border-slate-200/80 text-xs">
+                  <span className="font-bold text-slate-400 uppercase text-[10px]">Factor 1</span>
+                  <div className="font-extrabold text-slate-900 mt-0.5">Refining Margin Expansion</div>
                 </div>
-              ))}
+                <div className="p-3 bg-white rounded-2xl border border-slate-200/80 text-xs">
+                  <span className="font-bold text-slate-400 uppercase text-[10px]">Factor 2</span>
+                  <div className="font-extrabold text-slate-900 mt-0.5">Strong FII Inflows (+₹420 Cr)</div>
+                </div>
+                <div className="p-3 bg-white rounded-2xl border border-slate-200/80 text-xs">
+                  <span className="font-bold text-slate-400 uppercase text-[10px]">Factor 3</span>
+                  <div className="font-extrabold text-slate-900 mt-0.5">Green Energy Commissioning</div>
+                </div>
+              </div>
             </div>
-          </section>
-                   </main>
 
-        {/* STICKY BOTTOM ACTION CTA BAR */}
-        <footer className="sticky bottom-0 bg-white border-t border-[#E2E8F0] py-3.5 px-6 z-20 flex items-center justify-between gap-4 shadow-lg">
-          <div className="hidden sm:flex flex-col">
-            <span className="text-[10px] font-bold text-slate-400 uppercase">Target Upside</span>
-            <span className="text-sm font-black text-emerald-600">₹3,375 (+11%)</span>
+            {/* STOCK SNAPSHOT METRICS */}
+            <div>
+              <h3 className="font-extrabold text-slate-900 text-lg mb-3">Stock Valuation & Fundamental Snapshot</h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                <div className="p-4 bg-white rounded-2xl border border-slate-200">
+                  <span className="text-[10px] font-extrabold text-slate-400 uppercase">Market Cap</span>
+                  <div className="text-base font-black text-slate-900 mt-0.5">₹19,85,400 Cr</div>
+                </div>
+                <div className="p-4 bg-white rounded-2xl border border-slate-200">
+                  <span className="text-[10px] font-extrabold text-slate-400 uppercase">P/E Ratio</span>
+                  <div className="text-base font-black text-slate-900 mt-0.5">28.4x</div>
+                </div>
+                <div className="p-4 bg-white rounded-2xl border border-slate-200">
+                  <span className="text-[10px] font-extrabold text-slate-400 uppercase">EPS (TTM)</span>
+                  <div className="text-base font-black text-slate-900 mt-0.5">₹103.20</div>
+                </div>
+                <div className="p-4 bg-white rounded-2xl border border-slate-200">
+                  <span className="text-[10px] font-extrabold text-slate-400 uppercase">52W High</span>
+                  <div className="text-base font-black text-slate-900 mt-0.5">₹3,024.90</div>
+                </div>
+                <div className="p-4 bg-white rounded-2xl border border-slate-200">
+                  <span className="text-[10px] font-extrabold text-slate-400 uppercase">52W Low</span>
+                  <div className="text-base font-black text-slate-900 mt-0.5">₹2,220.30</div>
+                </div>
+                <div className="p-4 bg-white rounded-2xl border border-slate-200">
+                  <span className="text-[10px] font-extrabold text-slate-400 uppercase">Dividend Yield</span>
+                  <div className="text-base font-black text-slate-900 mt-0.5">0.35%</div>
+                </div>
+              </div>
+            </div>
+
+            {/* UNIVEST AI VIEW SCORE CARD */}
+            <div className="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="px-3 py-1 bg-emerald-50 text-[#16A34A] font-black text-xs rounded-full">
+                      POSITIVE OUTLOOK
+                    </span>
+                    <span className="text-xs font-bold text-slate-400">Univest AI Intelligence View</span>
+                  </div>
+                  <h3 className="text-xl font-black text-slate-900 mt-1">Univest Conviction Score: 78 / 100</h3>
+                </div>
+
+                <div className="text-right">
+                  <div className="text-3xl font-black text-[#15519D]">78</div>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase">Score / 100</span>
+                </div>
+              </div>
+
+              {/* 6 Components Score Breakdown */}
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 pt-2">
+                <div className="p-3 bg-slate-50 rounded-2xl border border-slate-100 space-y-0.5">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase">Business</span>
+                  <div className="font-extrabold text-emerald-600 text-xs">Strong (90/100)</div>
+                  <p className="text-[10px] text-slate-500 font-medium leading-tight">Monopoly market share & cash flow</p>
+                </div>
+                <div className="p-3 bg-slate-50 rounded-2xl border border-slate-100 space-y-0.5">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase">Growth</span>
+                  <div className="font-extrabold text-emerald-600 text-xs">High (82/100)</div>
+                  <p className="text-[10px] text-slate-500 font-medium leading-tight">18% 3-Yr order pipeline CAGR</p>
+                </div>
+                <div className="p-3 bg-slate-50 rounded-2xl border border-slate-100 space-y-0.5">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase">Valuation</span>
+                  <div className="font-extrabold text-amber-600 text-xs">Fair (72/100)</div>
+                  <p className="text-[10px] text-slate-500 font-medium leading-tight">Trades at 28x TTM earnings</p>
+                </div>
+                <div className="p-3 bg-slate-50 rounded-2xl border border-slate-100 space-y-0.5">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase">Momentum</span>
+                  <div className="font-extrabold text-emerald-600 text-xs">Bullish (85/100)</div>
+                  <p className="text-[10px] text-slate-500 font-medium leading-tight">Above 20D & 50D Moving Avg</p>
+                </div>
+                <div className="p-3 bg-slate-50 rounded-2xl border border-slate-100 space-y-0.5">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase">Financial Health</span>
+                  <div className="font-extrabold text-emerald-600 text-xs">Excellent (94/100)</div>
+                  <p className="text-[10px] text-slate-500 font-medium leading-tight">Zero net debt & AAA balance sheet</p>
+                </div>
+                <div className="p-3 bg-slate-50 rounded-2xl border border-slate-100 space-y-0.5">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase">Risk</span>
+                  <div className="font-extrabold text-blue-600 text-xs">Low Risk (22/100)</div>
+                  <p className="text-[10px] text-slate-500 font-medium leading-tight">High moat & defensive model</p>
+                </div>
+              </div>
+
+              {/* WHAT CHANGED (LAST 30 DAYS DEVELOPMENTS) */}
+              <div className="pt-4 border-t border-slate-100 space-y-3">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs font-black text-slate-900 uppercase tracking-wider">What Changed (Last 30 Days)</h4>
+                  <span className="text-[10px] font-bold text-emerald-600 uppercase bg-emerald-50 px-2 py-0.5 rounded-full">Live Disclosures</span>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-start justify-between gap-3 text-xs">
+                    <div>
+                      <span className="font-extrabold text-slate-900 block">Q1 Earnings Beat Expectations (+14% YoY Net Profit)</span>
+                      <span className="text-[10px] text-slate-400 font-medium">12 Days Ago • Financial Disclosure</span>
+                    </div>
+                    <span className="text-emerald-600 font-black text-[11px] shrink-0">+3.4% Impact</span>
+                  </div>
+
+                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-start justify-between gap-3 text-xs">
+                    <div>
+                      <span className="font-extrabold text-slate-900 block">Green Hydrogen Electrolyzer Factory Commissioned</span>
+                      <span className="text-[10px] text-slate-400 font-medium">18 Days Ago • Strategic Expansion</span>
+                    </div>
+                    <span className="text-emerald-600 font-black text-[11px] shrink-0">+1.8% Impact</span>
+                  </div>
+
+                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-start justify-between gap-3 text-xs">
+                    <div>
+                      <span className="font-extrabold text-slate-900 block">FII Institutional Shareholding Increased by +0.45%</span>
+                      <span className="text-[10px] text-slate-400 font-medium">24 Days Ago • Shareholding Disclosure</span>
+                    </div>
+                    <span className="text-blue-600 font-black text-[11px] shrink-0">Institutional Flow</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* WHY THIS / WHY NOW SIGNATURE SECTION */}
+            <div className="p-6 bg-slate-900 text-white rounded-3xl shadow-xl space-y-6">
+              <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-amber-400">
+                <ShieldCheck className="w-4 h-4" />
+                <span>Univest Signature Investment Thesis</span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <h4 className="text-sm font-extrabold uppercase text-blue-300">Why This Company?</h4>
+                  <p className="text-xs text-slate-300 leading-relaxed font-medium">
+                    Unrivalled market leader across consumer telecom (Jio), retail distribution, and oil-to-chemicals. Generates massive cash flows funding transition to renewable green hydrogen.
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <h4 className="text-sm font-extrabold uppercase text-amber-300">Why Now?</h4>
+                  <p className="text-xs text-slate-300 leading-relaxed font-medium">
+                    Recent telecom tariff hikes directly translate into high-margin ARPU growth while giga-factory commissioning schedule unlocks retail IPO listing catalysts over next 12 months.
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-800">
+                <div>
+                  <h5 className="text-xs font-extrabold uppercase text-emerald-400 mb-1">Key Catalysts</h5>
+                  <ul className="text-xs text-slate-300 space-y-1 list-disc list-inside font-medium">
+                    <li>Reliance Retail IPO demerger timeline announcement</li>
+                    <li>Consolidated ARPU crossing ₹200 threshold</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h5 className="text-xs font-extrabold uppercase text-rose-400 mb-1">Key Thesis Risks</h5>
+                  <ul className="text-xs text-slate-300 space-y-1 list-disc list-inside font-medium">
+                    <li>Global crude oil refining margin volatility</li>
+                    <li>Slower capex monetization in new energy division</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
-
-          <div className="flex items-center gap-3 w-full sm:w-auto flex-1 sm:flex-none justify-end">
-            <button
-              onClick={() => {
-                if (onTrade) {
-                  onTrade({ symbol, company: companyName, logo, rec: 'SELL', price: basePrice });
-                } else {
-                  toast('Trading is not available in this context. Please navigate to the main dashboard.', { icon: '⚠️' });
-                }
-              }}
-              className="flex-1 sm:px-8 py-2.5 rounded-xl bg-loss hover:bg-rose-700 text-white font-black text-xs transition shadow-sm cursor-pointer"
-            >
-              SELL
-            </button>
-
-            <button
-              onClick={() => {
-                if (onTrade) {
-                  onTrade({ symbol, company: companyName, logo, rec: 'BUY', price: basePrice });
-                } else {
-                  toast('Trading is not available in this context. Please navigate to the main dashboard.', { icon: '⚠️' });
-                }
-              }}
-              className="flex-1 sm:px-10 py-2.5 rounded-xl bg-[#16A34A] hover:bg-emerald-700 text-white font-black text-xs transition shadow-sm cursor-pointer"
-            >
-              BUY
-            </button>
-          </div>
-        </footer>
-
-      </motion.div>
+        </motion.div>
+      </div>
+    </AnimatePresence>
   );
 };
+
+export default StockDetail;

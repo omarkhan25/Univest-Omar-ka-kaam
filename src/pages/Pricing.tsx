@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Check, ShieldCheck, Zap } from 'lucide-react';
 import { Button } from '../components/atoms/Button';
@@ -63,7 +63,7 @@ export const Pricing = () => {
             Invest Smarter. Earn More.
           </h1>
           <p className="text-lg text-slate-500 max-w-2xl mx-auto">
-            Get access to SEBI-registered advisory calls, AI-powered insights, and live broker execution with our premium plans.
+            Access high-conviction stock theses, transparent research update timelines, Opportunity Radar signals, and AI intelligence.
           </p>
         </div>
 
@@ -77,7 +77,7 @@ export const Pricing = () => {
               <motion.div 
                 key={plan.id}
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                animate={{ opacity: 1, boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}
                 transition={{ delay: i * 0.1 }}
                 className={`bg-white rounded-3xl p-8 border ${
                   plan.plan_type === 'PREMIUM' 
@@ -100,7 +100,7 @@ export const Pricing = () => {
                 <p className="text-sm text-slate-600 mb-8 h-10">{plan.description}</p>
                 
                 <ul className="space-y-4 mb-8">
-                  {['Live Buy/Sell Calls', 'Technical Notes', 'Portfolio Health Check'].map((feature, idx) => (
+                  {['High-Conviction Research Thesis', 'Timestamped Thesis Updates', 'Personalized AI Copilot'].map((feature, idx) => (
                     <li key={idx} className="flex items-center text-sm font-medium text-slate-700">
                       <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center mr-3 shrink-0">
                         <Check className="w-3 h-3 text-emerald-600" />
@@ -113,7 +113,7 @@ export const Pricing = () => {
                       <div className="w-5 h-5 rounded-full bg-primary-light flex items-center justify-center mr-3 shrink-0">
                         <ShieldCheck className="w-3 h-3 text-primary" />
                       </div>
-                      AI Advisors & Options Calls
+                      Opportunity Radar & Prime Collections
                     </li>
                   )}
                 </ul>

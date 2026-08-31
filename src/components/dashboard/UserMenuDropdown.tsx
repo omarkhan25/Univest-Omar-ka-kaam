@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   Wallet, RefreshCcw, LogOut, ArrowUpRight, Plus, ShieldCheck, UserCheck, KeyRound
@@ -89,7 +89,7 @@ export const UserMenuDropdown: React.FC<UserMenuDropdownProps> = ({
             </div>
             <span className="text-2xl font-black tracking-tight">₹8,42,150.00</span>
             <div className="flex items-center justify-between text-[10px] text-slate-300 font-bold pt-2 border-t border-white/10 mt-1">
-              <span>Demat: IN303028130</span>
+              <span>Tracked Net Wealth</span>
               <button
                 onClick={() => {
                   onClose();
@@ -102,13 +102,13 @@ export const UserMenuDropdown: React.FC<UserMenuDropdownProps> = ({
             </div>
           </div>
 
-          {/* 2. ADD FUNDS BUTTON */}
+          {/* 2. UPGRADE TO UNIVEST PRIME BUTTON */}
           <button
             onClick={handleAddFunds}
-            className="w-full py-2.5 px-4 bg-primary hover:bg-primary-dark active:bg-primary-dark text-white rounded-xl font-black text-xs transition-colors flex items-center justify-center gap-2 shadow-sm cursor-pointer"
+            className="w-full py-2.5 px-4 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 rounded-xl font-black text-xs transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer"
           >
-            <Plus className="w-4 h-4 stroke-[3]" />
-            <span>Add Funds</span>
+            <ShieldCheck className="w-4 h-4" />
+            <span>Univest Prime Membership</span>
           </button>
 
           {/* MENU ACTIONS */}

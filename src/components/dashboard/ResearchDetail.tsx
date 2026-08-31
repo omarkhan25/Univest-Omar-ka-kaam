@@ -1,219 +1,201 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  ArrowLeft, ShieldCheck, Sparkles, AlertTriangle, 
-  TrendingUp, Calendar, Heart, Share2, DollarSign, 
-  Percent, PieChart, Star
+  ArrowLeft, ShieldCheck, Sparkles, Clock, Calendar, 
+  TrendingUp, ArrowUpRight, ArrowDownRight, FileText, CheckCircle2, Bookmark, Share2, ExternalLink
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 interface ResearchDetailProps {
   isOpen: boolean;
   onClose: () => void;
-  research?: any;
-  onTrade?: (researchData: any) => void;
+  researchItem?: any;
+  onSelectStock?: (stock: any) => void;
+  onInvestViaBroker?: (stock: any) => void;
 }
 
 export const ResearchDetail: React.FC<ResearchDetailProps> = ({
   isOpen,
   onClose,
-  research,
-  onTrade
+  researchItem,
+  onSelectStock,
+  onInvestViaBroker
 }) => {
-  const [isSaved, setIsSaved] = useState(false);
+  if (!isOpen) return null;
 
-  if (!isOpen || !research) return null;
+  const symbol = researchItem?.symbol || 'RELIANCE';
+  const companyName = researchItem?.company || researchItem?.companyName || 'Reliance Industries Ltd';
+  const category = researchItem?.category || 'High Conviction';
+  const pubDate = researchItem?.datePublished || '01 Mar 2025';
+  const returnPercent = researchItem?.returnPercent ?? 21.75;
+  const risk = researchItem?.risk || 'Low Risk';
+  const horizon = researchItem?.horizon || '6 - 12 Months';
+  const convictionScore = researchItem?.convictionScore ?? 92;
 
-  // Normalize data fields
-  const companyName = research.company || research.companyName || 'Reliance Industries Ltd';
-  const symbol = research.symbol || 'RELIANCE';
-  const recommendation = research.rating || research.rec || 'BUY';
-  const targetPrice = research.target || '₹3,375';
-  const stopLoss = research.stop || research.stopLoss || '₹2,838';
-  const upside = research.upside || '+14%';
-  const confidence = research.confidence || '94%';
-  const risk = research.risk || 'Low';
-  const summary = research.summary || 'Reliance Industries is poised for expansion across digital services and green energy setups. Reliances strong balance sheet and robust retail margins support a structural valuation breakout.';
-
-  const handleSave = () => {
-    setIsSaved(!isSaved);
-    toast.success(isSaved ? 'Removed from saved research' : 'Saved research to Saved tab');
-  };
+  const timelineEvents = researchItem?.timeline || [
+    { date: '01 Mar 2025', event: 'Research Thesis Published', change: 'Initiated High-Conviction stance at ₹2,410 ref price.', thesisStatus: 'Maintained' },
+    { date: '15 Apr 2025', event: 'Q4 Financial Results Review', change: 'EBITDA beat consensus by 4.2% driven by retail division.', thesisStatus: 'Upgraded Targets' },
+    { date: '10 Jun 2025', event: 'New Energy Giga-Factory Update', change: 'Commissioning timeline confirmed for Q3. Capex on track.', thesisStatus: 'Conviction Re-affirmed' },
+    { date: '01 Aug 2025', event: 'Telecom Tariff Hike Implemented', change: 'ARPU uplift expected to boost annual cashflow by ₹8,500 Cr.', thesisStatus: 'Maintained' }
+  ];
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[100] bg-[#F8FAFC] overflow-y-auto flex flex-col"
-    >
-      {/* Sticky Premium Header */}
-      <header className="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between z-30 shadow-xs">
-        <button
-          onClick={onClose}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-extrabold text-xs transition cursor-pointer"
+    <AnimatePresence>
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/60 backdrop-blur-md overflow-hidden">
+        {/* Backdrop click listener */}
+        <div className="absolute inset-0" onClick={onClose} />
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.96, y: 20 }}
+          className="relative bg-[#F8FAFC] rounded-3xl shadow-2xl border border-slate-200 w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden my-auto z-10"
         >
-          <ArrowLeft className="w-4 h-4" /> Back to Research
-        </button>
-
-        <div className="flex items-center gap-2">
-          <button 
-            onClick={handleSave}
-            className="p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition cursor-pointer text-slate-500 hover:text-slate-900"
-            title="Save Research"
-          >
-            <Star className={`w-4 h-4 ${isSaved ? 'fill-yellow-400 text-yellow-500' : ''}`} />
-          </button>
-          <button 
-            onClick={() => {
-              onTrade?.(research);
-            }}
-            className="px-6 py-2.5 bg-primary hover:bg-primary-dark text-white font-black text-xs rounded-xl shadow-xs cursor-pointer transition"
-          >
-            Trade Now
-          </button>
-        </div>
-      </header>
-
-      {/* Editorial Content Container */}
-      <div className="flex-1 max-w-7xl w-full mx-auto px-6 sm:px-10 py-6 sm:py-8 flex flex-col gap-8">
-        
-        {/* 1. HERO HEADER */}
-        <div className="flex flex-col gap-4">
-          <div className="flex items-center gap-3">
-            <span className={`text-[10px] font-black px-3 py-1 rounded-lg uppercase ${
-              recommendation === 'BUY' ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : 'bg-amber-50 text-amber-700 border border-amber-100'
-            }`}>
-              {recommendation} Recommendation
-            </span>
-            <span className="text-[10px] font-bold text-slate-400">PUBLISHED TODAY</span>
-          </div>
-
-          <h1 className="text-3xl md:text-5xl font-black text-[#172033] tracking-tight leading-tight">
-            {companyName} ({symbol})
-          </h1>
-
-          <div className="flex flex-wrap items-center gap-6 text-xs text-slate-500 font-bold border-y border-slate-200/80 py-4 mt-2">
-            <div>Target: <strong className="text-slate-900 font-black">{targetPrice}</strong> <span className="text-emerald-600">({upside} Upside)</span></div>
-            <div className="h-4 w-px bg-slate-200" />
-            <div>Stop Loss: <strong className="text-danger font-black">{stopLoss}</strong></div>
-            <div className="h-4 w-px bg-slate-200" />
-            <div>Risk Profile: <strong className="text-slate-900 font-black">{risk}</strong></div>
-            <div className="h-4 w-px bg-slate-200" />
-            <div>AI Confidence: <strong className="text-primary font-black">{confidence}</strong></div>
-          </div>
-        </div>
-
-        {/* 2. AI EXECUTIVE SUMMARY */}
-        <div className="p-6 md:p-8 bg-primary-light/50 border border-[#E2E8F0] rounded-[28px] flex flex-col gap-4">
-          <h3 className="font-black text-sm text-[#172033] flex items-center gap-2">
-            <Sparkles className="w-4.5 h-4.5 text-primary" /> AI Executive Summary
-          </h3>
-          <p className="text-xs md:text-sm text-slate-700 leading-relaxed font-medium">
-            {summary}
-          </p>
-        </div>
-
-        {/* 3. INVESTMENT THESIS */}
-        <div className="flex flex-col gap-3">
-          <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest">Investment Thesis</h3>
-          <p className="text-sm text-slate-600 leading-relaxed font-medium">
-            Our recommendation is anchored on structural expansion across retail operations and early monetization of clean energy assets. Consistent demand in domestic margins makes the company an attractive defensive-core holding for long-duration wealth portfolios.
-          </p>
-        </div>
-
-        {/* 4. GROWTH DRIVERS & CONTEXT */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border-t border-slate-200/80 pt-8">
-          <div className="flex flex-col gap-3">
-            <h4 className="font-black text-sm text-[#172033] flex items-center gap-2">
-              <TrendingUp className="w-4.5 h-4.5 text-emerald-600" /> Growth Drivers
-            </h4>
-            <ul className="space-y-2.5 text-xs text-slate-600 font-medium">
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
-                Expanding market leadership inside domestic retail consumption patterns.
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
-                Capital expenditure commissioning of clean solar/hydrogen production facilities.
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
-                Deleveraging balance sheet dynamics expected to result in return ratio upgrades.
-              </li>
-            </ul>
-          </div>
-
-          <div className="flex flex-col gap-3">
-            <h4 className="font-black text-sm text-[#172033] flex items-center gap-2">
-              <AlertTriangle className="w-4.5 h-4.5 text-danger" /> Key Risks
-            </h4>
-            <ul className="space-y-2.5 text-xs text-slate-600 font-medium">
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-danger mt-1.5 shrink-0" />
-                Fluctuations in global energy crude demand and export margin policy caps.
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-danger mt-1.5 shrink-0" />
-                Rising pricing competition across localized telecom service providers.
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* 5. FINANCIAL HIGHLIGHTS & VALUATION */}
-        <div className="border-t border-slate-200/80 pt-8 flex flex-col gap-4">
-          <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest">Financial Highlights & Valuation</h3>
-          
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {[
-              { label: 'P/E Ratio', value: '24.2x', desc: 'Sector Avg: 28.5x' },
-              { label: 'EV/EBITDA', value: '14.8x', desc: 'Historically attractive' },
-              { label: 'ROE', value: '16.4%', desc: 'Strong equity return' },
-              { label: 'Debt/Equity', value: '0.34x', desc: 'Conservative profile' }
-            ].map((stat, i) => (
-              <div key={i} className="bg-white border border-slate-200 p-4 rounded-2xl shadow-xs">
-                <span className="text-[10px] font-bold text-slate-400 block">{stat.label}</span>
-                <span className="text-base font-black text-slate-900 mt-0.5 block">{stat.value}</span>
-                <span className="text-[9px] text-slate-400 block font-semibold mt-0.5">{stat.desc}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* 6. UPCOMING EVENTS */}
-        <div className="border-t border-slate-200/80 pt-8 flex flex-col gap-4">
-          <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest">Upcoming Corporate Events</h3>
-          
-          <div className="flex justify-between items-center bg-white border border-slate-200 p-4 rounded-2xl shadow-xs">
+          {/* HEADER */}
+          <div className="p-5 md:p-6 bg-white border-b border-slate-200 shrink-0 flex items-center justify-between gap-4 z-20">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 bg-primary-light text-primary rounded-xl border border-[#E2E8F0]">
-                <Calendar className="w-4 h-4" />
-              </div>
+              <button
+                onClick={onClose}
+                className="p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl transition-colors"
+                title="Close"
+              >
+                <ArrowLeft className="w-5 h-5" />
+              </button>
               <div>
-                <h4 className="text-xs font-black text-slate-900">Q1 Earnings Conference Call</h4>
-                <span className="text-[10px] text-slate-400 font-bold">Upcoming earnings call presentation</span>
+                <div className="flex items-center gap-2">
+                  <span className="px-2.5 py-0.5 bg-blue-100 text-[#15519D] font-extrabold text-xs rounded-full">
+                    {category}
+                  </span>
+                  <span className="text-xs text-slate-400 font-medium">Published: {pubDate}</span>
+                </div>
+                <h1 className="text-xl md:text-2xl font-black text-slate-900 mt-0.5">{companyName} ({symbol})</h1>
               </div>
             </div>
-            <span className="text-xs font-black text-slate-900 bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg">August 14, 2026</span>
-          </div>
-        </div>
 
-        {/* 7. TRADE CALL TO ACTION */}
-        <div className="border-t border-slate-200/80 pt-8 flex items-center justify-between gap-4 mt-4">
-          <div className="text-xs text-slate-500 font-bold">
-            SEBI Advisory Compliant Research Document • INH000009821
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => {
+                  onClose();
+                  if (onInvestViaBroker) onInvestViaBroker({ symbol, companyName });
+                }}
+                className="px-4 sm:px-5 py-2.5 bg-[#15519D] hover:bg-[#123B63] text-white font-extrabold text-xs rounded-2xl shadow-lg shadow-blue-500/20 transition-all flex items-center gap-1.5"
+              >
+                <span>Invest via Broker</span>
+                <ExternalLink className="w-4 h-4" />
+              </button>
+            </div>
           </div>
-          <button
-            onClick={() => onTrade?.(research)}
-            className="px-8 py-3 bg-primary hover:bg-primary-dark text-white font-black text-sm rounded-2xl shadow-md shadow-[rgba(21,81,157,0.3)]/10 cursor-pointer transition"
-          >
-            Execute Trade
-          </button>
-        </div>
 
+          {/* SCROLLABLE BODY */}
+          <div className="p-6 md:p-8 space-y-8 overflow-y-auto flex-1 scrollbar-thin">
+            {/* Top Key Metrics Banner */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-5 bg-white rounded-3xl border border-slate-200 shadow-sm">
+              <div>
+                <span className="text-xs font-bold text-slate-400 uppercase">Performance Since Pub</span>
+                <div className="text-xl font-black text-[#16A34A] flex items-center gap-0.5 mt-0.5">
+                  <ArrowUpRight className="w-4 h-4" />
+                  <span>+{returnPercent}%</span>
+                </div>
+              </div>
+
+              <div>
+                <span className="text-xs font-bold text-slate-400 uppercase">Conviction Score</span>
+                <div className="text-xl font-black text-slate-900 mt-0.5">{convictionScore} / 100</div>
+              </div>
+
+              <div>
+                <span className="text-xs font-bold text-slate-400 uppercase">Risk Level</span>
+                <div className="text-xl font-black text-slate-900 mt-0.5">{risk}</div>
+              </div>
+
+              <div>
+                <span className="text-xs font-bold text-slate-400 uppercase">Target Horizon</span>
+                <div className="text-xl font-black text-slate-900 mt-0.5">{horizon}</div>
+              </div>
+            </div>
+
+            {/* Research Summary Card */}
+            <div className="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-3">
+              <h3 className="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                <FileText className="w-5 h-5 text-[#15519D]" />
+                Investment Thesis Executive Summary
+              </h3>
+              <p className="text-sm text-slate-700 leading-relaxed font-medium">
+                "{companyName} is positioned for multi-year earnings compounding driven by domestic market leadership, cash flow diversification into clean energy, and significant pricing power across retail and digital services."
+              </p>
+            </div>
+
+            {/* WHY THIS & WHY NOW */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="p-6 bg-blue-50/70 rounded-3xl border border-blue-100 space-y-2">
+                <h4 className="font-extrabold text-[#15519D] text-sm uppercase tracking-wider">Why This Company?</h4>
+                <p className="text-xs text-slate-700 leading-relaxed font-medium">
+                  Dominant market share across high-entry-barrier industries. High Return on Invested Capital (ROIC) coupled with strong institutional sponsorship.
+                </p>
+              </div>
+
+              <div className="p-6 bg-slate-900 text-white rounded-3xl shadow-lg space-y-2">
+                <h4 className="font-extrabold text-amber-300 text-sm uppercase tracking-wider">Why Now?</h4>
+                <p className="text-xs text-slate-200 leading-relaxed font-medium">
+                  Valuation multiple compression over recent quarters presents an asymmetric risk-reward entry before major operational catalyst triggers occur.
+                </p>
+              </div>
+            </div>
+
+            {/* KEY CATALYSTS & RISKS */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-3">
+                <h4 className="font-extrabold text-[#16A34A] text-sm uppercase tracking-wider flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4" /> Key Positive Catalysts
+                </h4>
+                <ul className="text-xs text-slate-700 space-y-2 list-disc list-inside font-medium">
+                  <li>Listing demerger of core retail subsidiary</li>
+                  <li>Tariff monetization boosting ARPU to ₹220+</li>
+                  <li>Free cashflow turning positive in green energy unit</li>
+                </ul>
+              </div>
+
+              <div className="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-3">
+                <h4 className="font-extrabold text-[#DC2626] text-sm uppercase tracking-wider flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4" /> Key Investment Risks
+                </h4>
+                <ul className="text-xs text-slate-700 space-y-2 list-disc list-inside font-medium">
+                  <li>Global macroeconomic slowdown affecting export refining</li>
+                  <li>Capex inflation in international technology procurement</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* RESEARCH JOURNEY TIMELINE */}
+            <div className="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                  <Clock className="w-5 h-5 text-[#15519D]" />
+                  Transparent Research Journey Timeline
+                </h3>
+                <span className="text-xs text-slate-400 font-mono">Verifiable Records</span>
+              </div>
+
+              <div className="space-y-4 relative before:absolute before:left-3 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-200">
+                {timelineEvents.map((ev: any, idx: number) => (
+                  <div key={idx} className="relative pl-8 space-y-1">
+                    <div className="absolute left-1.5 top-1.5 w-3 h-3 rounded-full bg-[#15519D] ring-4 ring-blue-50" />
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-extrabold text-slate-900">{ev.event}</span>
+                      <span className="font-mono text-slate-400">{ev.date}</span>
+                    </div>
+                    <p className="text-xs text-slate-600 font-medium">{ev.change}</p>
+                    <div className="text-[10px] font-bold text-[#15519D] inline-block px-2 py-0.5 bg-blue-50 rounded">
+                      Status: {ev.thesisStatus}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </div>
-    </motion.div>
+    </AnimatePresence>
   );
 };
 

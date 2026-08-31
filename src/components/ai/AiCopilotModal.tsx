@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Sparkles, X, Maximize2, Minimize2, Send, Mic, Volume2, Bookmark, Share2, 
@@ -58,12 +58,12 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
   if (!isOpen) return null;
 
   const quickPrompts = [
-    'Should I buy Reliance?',
+    'Why is Reliance rising today?',
     'Compare TCS vs Infosys',
-    'Summarize today\'s market',
-    'Review my portfolio',
-    'Find dividend stocks',
-    'Explain RSI'
+    'What changed in HDFC Bank?',
+    'What are the biggest risks in IT sector?',
+    'Explain Q1 financial result for Tata Motors',
+    'Why is HAL a premium pick?'
   ];
 
   const handleSend = async (textToSend?: string) => {
@@ -318,11 +318,11 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
                           <div className="flex items-center gap-2 pt-1">
                             <button
                               onClick={() => {
-                                if (onTrade) onTrade({ symbol: msg.relatedStocks?.[0] || 'RELIANCE', rec: 'BUY' });
+                                if (onSelectStock) onSelectStock({ symbol: msg.relatedStocks?.[0] || 'RELIANCE', companyName: msg.relatedStocks?.[0] || 'RELIANCE' });
                               }}
                               className="px-3 py-1 rounded-lg bg-primary hover:bg-primary-dark text-white font-black transition"
                             >
-                              Trade {msg.relatedStocks?.[0] || 'Asset'}
+                              Examine {msg.relatedStocks?.[0] || 'Stock'} Thesis
                             </button>
                             <button
                               onClick={() => toast.success('Saved to AI Queue')}
