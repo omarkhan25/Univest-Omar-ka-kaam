@@ -354,20 +354,20 @@ export const MarketsCenter: React.FC<MarketsCenterProps> = ({
 
       {/* INDICES SUB TAB */}
       {subTab === 'indices' && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
           {INDICES_DATA.map((idx, i) => (
-            <div key={i} className="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-4">
+            <div key={i} className="p-4 bg-white rounded-2xl border border-slate-200/90 shadow-2xs space-y-3 hover:border-blue-200 transition-all">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Benchmark Index</span>
-                <span className={`text-xs font-black px-2.5 py-1 rounded-lg ${idx.isPositive ? 'bg-emerald-50 text-[#16A34A]' : 'bg-rose-50 text-[#DC2626]'}`}>
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Benchmark Index</span>
+                <span className={`text-[11px] font-black px-2 py-0.5 rounded-md ${idx.isPositive ? 'bg-emerald-50 text-[#16A34A] border border-emerald-200/60' : 'bg-rose-50 text-[#DC2626] border border-rose-200/60'}`}>
                   {idx.percent}
                 </span>
               </div>
               <div>
-                <h3 className="text-2xl font-black text-slate-900">{idx.name}</h3>
-                <div className="text-3xl font-extrabold text-[#15519D] mt-1">₹{idx.value}</div>
+                <h3 className="text-sm sm:text-base font-extrabold text-slate-900">{idx.name}</h3>
+                <div className="text-lg sm:text-xl font-black text-[#15519D] mt-0.5">₹{idx.value}</div>
               </div>
-              <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-medium">
+              <div className="pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-medium">
                 <span>Net Daily Change:</span>
                 <span className={`font-bold ${idx.isPositive ? 'text-[#16A34A]' : 'text-[#DC2626]'}`}>{idx.change}</span>
               </div>
@@ -378,19 +378,19 @@ export const MarketsCenter: React.FC<MarketsCenterProps> = ({
 
       {/* SECTORS SUB TAB */}
       {subTab === 'sectors' && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {SECTORS_PERFORMANCE.map((sec, i) => (
-            <div key={i} className="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-4">
+            <div key={i} className="p-4 sm:p-5 bg-white rounded-2xl border border-slate-200/90 shadow-2xs space-y-3">
               <div className="flex items-center justify-between">
-                <h3 className="font-extrabold text-slate-900 text-lg">{sec.name}</h3>
-                <span className="px-3 py-1 rounded-full text-xs font-black bg-slate-100 text-slate-700">
+                <h3 className="font-extrabold text-slate-900 text-sm sm:text-base">{sec.name}</h3>
+                <span className="px-2.5 py-0.5 rounded-md text-[11px] font-black bg-slate-100 text-slate-700">
                   {sec.status}
                 </span>
               </div>
-              <div className="text-3xl font-black" style={{ color: sec.color }}>
+              <div className="text-xl font-black" style={{ color: sec.color }}>
                 {sec.change}
               </div>
-              <div className="p-3 bg-slate-50 rounded-xl text-xs text-slate-600 flex items-center justify-between">
+              <div className="p-2.5 bg-slate-50 rounded-xl text-xs text-slate-600 flex items-center justify-between">
                 <span>Leading Constituent:</span>
                 <span className="font-bold text-slate-900">{sec.leadStock}</span>
               </div>
