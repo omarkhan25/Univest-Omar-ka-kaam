@@ -413,21 +413,22 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
         </div>
       </div>
 
-      {/* FLOATING AI COPILOT ACTION BUTTON (FIXED BOTTOM-RIGHT) */}
-      <button
-        onClick={() => setIsAiOpen(true)}
-        className="fixed bottom-6 right-6 z-40 bg-gradient-to-r from-[#123B63] to-[#15519D] hover:from-[#0E2F50] hover:to-[#123B63] text-white px-4 py-3 rounded-2xl shadow-2xl hover:shadow-blue-900/30 transition-all duration-200 cursor-pointer flex items-center gap-3 border border-white/20 group hover:scale-105"
-        title="Open ArthSetu AI Copilot"
-      >
-        <div className="relative flex items-center justify-center">
-          <Sparkles className="w-5 h-5 text-amber-300 group-hover:rotate-12 transition-transform" />
-          <span className="absolute -top-1 -right-1 w-2 h-2 bg-emerald-400 rounded-full animate-ping" />
-        </div>
-        <div className="flex flex-col items-start text-left">
-          <span className="text-xs font-black tracking-tight leading-none text-white">AI Copilot</span>
-          <span className="text-[9px] font-extrabold text-amber-300 tracking-wider uppercase mt-0.5">RESEARCH ASSISTANT</span>
-        </div>
-      </button>
+      {/* FLOATING AI COPILOT ROUND ACTION BUTTON (FIXED BOTTOM-RIGHT) */}
+      <div className="fixed bottom-6 right-6 z-40 flex items-center gap-2 group">
+        {/* Tooltip Pill on Hover */}
+        <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-slate-900 text-white text-xs font-black px-3 py-1.5 rounded-xl shadow-lg border border-slate-700 whitespace-nowrap pointer-events-none">
+          ArthSetu AI Copilot
+        </span>
+
+        <button
+          onClick={() => setIsAiOpen(true)}
+          className="w-14 h-14 rounded-full bg-gradient-to-br from-[#123B63] via-[#15519D] to-[#0E2F50] hover:from-[#0E2F50] hover:to-[#15519D] text-white shadow-2xl hover:shadow-blue-900/40 border border-white/20 transition-all duration-200 cursor-pointer flex items-center justify-center relative hover:scale-110"
+          title="Open ArthSetu AI Copilot"
+        >
+          <Sparkles className="w-6 h-6 text-amber-300 group-hover:rotate-12 transition-transform" />
+          <span className="absolute top-1 right-1 w-3 h-3 bg-emerald-400 rounded-full border-2 border-[#123B63] animate-pulse" />
+        </button>
+      </div>
 
       {/* MODALS */}
       <UniversalSearch
