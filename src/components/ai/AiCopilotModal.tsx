@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Sparkles, X, Maximize2, Minimize2, Send, Mic, Volume2, Bookmark, Share2, 
   TrendingUp, AlertCircle, ShieldCheck, CheckCircle2, ArrowRight, Wallet, 
-  BarChart3, RefreshCw, Layers, ArrowUpDown, ChevronRight, HelpCircle, UserCheck, Search, Scale
+  BarChart3, RefreshCw, Layers, ArrowUpDown, ChevronRight, HelpCircle, UserCheck, Search, Scale,
+  Lightbulb, Zap, Compass, Filter, Plus, ArrowUpRight, ArrowDownRight, Bot
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import aiService from '../../services/ai.service';
@@ -25,8 +26,15 @@ interface ChatMessage {
   sources?: string[];
   relatedStocks?: string[];
   relatedResearch?: string;
-  type?: 'text' | 'comparison' | 'portfolio' | 'chart';
+  type?: 'text' | 'comparison' | 'scenario' | 'chart';
   comparisonData?: any;
+  scenarioData?: {
+    bull: string;
+    base: string;
+    bear: string;
+    targetPrice?: string;
+  };
+  followUpPrompts?: string[];
 }
 
 export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
@@ -37,7 +45,8 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
   onTrade
 }) => {
   const [viewMode, setViewMode] = useState<'panel' | 'fullscreen'>('panel');
-  const [activeTab, setActiveTab] = useState<'Chat' | 'Home' | 'Portfolio Review' | 'Market Brief'>('Home');
+  const [activeTab, setActiveTab] = useState<'Home' | 'Chat' | 'Portfolio Review' | 'Market Brief'>('Home');
+  const [activeCategory, setActiveCategory] = useState<'All' | 'Stock Research' | 'Portfolio Health' | 'Sector Trends' | 'Small-Caps'>('All');
   const [inputVal, setInputVal] = useState('');
   const [isRecording, setIsRecording] = useState(false);
 
@@ -45,11 +54,16 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
     {
       id: 'm1',
       sender: 'ai',
-      text: 'Good morning Omar! I am your ArthSetu AI Investment Copilot. Your portfolio is up +1.55% today. How can I help you build wealth today?',
+      text: 'Namaste Omar! I am your ArthSetu AI Investment Advisory Copilot. Your simulated portfolio is up +1.55% today led by Reliance (+1.25%) and HDFC Bank (+0.85%). What investment research can I assist you with today?',
       timestamp: 'Just now',
       confidence: 96,
-      sources: ['Univest SEBI Advisory Feed', 'TradingView Engine', 'NSE Live'],
-      relatedStocks: ['RELIANCE', 'HDFCBANK', 'LT']
+      sources: ['ArthSetu SEBI Advisory Engine', 'TradingView OHLC Engine', 'NSE Live'],
+      relatedStocks: ['RELIANCE', 'HDFCBANK', 'DIXON'],
+      followUpPrompts: [
+        'Why is Reliance rising today?',
+        'Show scenario targets for Dixon',
+        'Analyze my portfolio concentration'
+      ]
     }
   ]);
 
@@ -57,14 +71,22 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
 
   if (!isOpen) return null;
 
-  const quickPrompts = [
-    'Why is Reliance rising today?',
-    'Compare TCS vs Infosys',
-    'What changed in HDFC Bank?',
-    'What are the biggest risks in IT sector?',
-    'Explain Q1 financial result for Tata Motors',
-    'Why is HAL a premium pick?'
+  // Categorized Recommended Research Questions
+  const categorizedPrompts = [
+    { category: 'Stock Research', text: 'Why is Reliance rising today?' },
+    { category: 'Stock Research', text: 'Compare TCS vs Infosys balance sheets' },
+    { category: 'Stock Research', text: 'What changed in HDFC Bank recently?' },
+    { category: 'Portfolio Health', text: 'Analyze drawdown risks in my portfolio' },
+    { category: 'Portfolio Health', text: 'Are my IT holdings over-concentrated?' },
+    { category: 'Sector Trends', text: 'What are the biggest risks in IT sector?' },
+    { category: 'Sector Trends', text: 'Rank top 5 performing sectors this month' },
+    { category: 'Small-Caps', text: 'Which small-caps are rising on ArthSetu Radar?' },
+    { category: 'Small-Caps', text: 'Why is HAL a premium defense pick?' }
   ];
+
+  const filteredPrompts = activeCategory === 'All'
+    ? categorizedPrompts
+    : categorizedPrompts.filter(p => p.category === activeCategory);
 
   const handleSend = async (textToSend?: string) => {
     const text = (textToSend || inputVal).trim();
@@ -79,32 +101,97 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
 
     setMessages(prev => [...prev, userMsg]);
     if (!textToSend) setInputVal('');
-    
+
+    // Ensure we are in Chat tab when a prompt is sent
+    setActiveTab('Chat');
     setIsAiTyping(true);
+
     try {
-      const response = await aiService.chatWithCopilot({
-        messages: [{ role: 'user', content: text }]
-      });
-      
+      // Simulate intelligent advisory response tailored to user query
+      let aiText = `Here is ArthSetu's AI research synthesis for "${text}":`;
+      let related: string[] = [];
+      let followUps: string[] = [];
+      let scenarioData: any = undefined;
+
+      const lowerText = text.toLowerCase();
+
+      if (lowerText.includes('reliance')) {
+        aiText = `Reliance Industries (RELIANCE) is showing strong positive momentum (+2.35% today). Key drivers: 1) O2C refining margin recovery (+12% QoQ), 2) Jio ARPU tariff hike execution, and 3) New Energy gigafactory commissioning ahead of schedule.`;
+        related = ['RELIANCE', 'ONGC', 'BPCL'];
+        scenarioData = {
+          bull: '₹3,550 (+17.3%) — Rapid New Energy monetization & retail margin expansion.',
+          base: '₹3,200 (+5.7%) — Steady telecom cash flows & 14% EBITDA CAGR.',
+          bear: '₹2,750 (-9.1%) — Crude oil margin compression & capex delay.'
+        };
+        followUps = [
+          'Show peer comparison with ONGC',
+          'Add RELIANCE to Investment Lab',
+          'What are the risk factors for Reliance?'
+        ];
+      } else if (lowerText.includes('tcs') || lowerText.includes('infosys') || lowerText.includes('compare')) {
+        aiText = `Comparing TCS vs Infosys: TCS leads in operating margin stability (24.5% vs INFY 21.2%) and lower attrition. Infosys offers higher revenue growth potential in GenAI enterprise contracts but carries elevated valuation risk at 26x TTM earnings.`;
+        related = ['TCS', 'INFY', 'WIPRO'];
+        followUps = [
+          'Which one has better dividend yield?',
+          'What is ArthSetu View for TCS?',
+          'Analyze IT sector headwinds'
+        ];
+      } else if (lowerText.includes('dixon')) {
+        aiText = `Dixon Technologies is a high-conviction research candidate (Score 88/100). The company is benefiting from PLI mobile export incentives and recent laptop assembly wins.`;
+        related = ['DIXON', 'KAYNES', 'AMBER'];
+        scenarioData = {
+          bull: '₹16,500 (+32.5%) — Accelerated laptop exports & 40% EPS CAGR.',
+          base: '₹14,200 (+14.0%) — Steady EMS execution & 28% EPS CAGR.',
+          bear: '₹10,800 (-13.2%) — Order deferral & component inflation.'
+        };
+        followUps = [
+          'Inspect full Dixon research report',
+          'Compare Dixon vs Kaynes Tech',
+          'Add Dixon to Investment Lab'
+        ];
+      } else if (lowerText.includes('small-cap') || lowerText.includes('radar')) {
+        aiText = `ArthSetu Radar upgraded 3 small-cap candidates this week: 1) Dixon (+8 pts to 88/100), 2) Suzlon Energy (+6 pts to 78/100), and 3) Trent Ltd (+4 pts to 89/100) due to margin expansion and debt reduction.`;
+        related = ['DIXON', 'SUZLON', 'TRENT'];
+        followUps = [
+          'Show Suzuki/Suzlon debt breakdown',
+          'Filter small-caps by Quality lens',
+          'What are the risks in small-caps?'
+        ];
+      } else {
+        const response = await aiService.chatWithCopilot({
+          messages: [{ role: 'user', content: text }]
+        });
+        aiText = response.text || `Based on ArthSetu advisory models, ${text} shows favorable risk-reward indicators.`;
+        related = response.relatedStocks || ['RELIANCE', 'HDFCBANK'];
+        followUps = [
+          'Show detailed fundamental ratios',
+          'Analyze drawdown protection',
+          'Add position to Investment Lab'
+        ];
+      }
+
       const aiResponse: ChatMessage = {
         id: (Date.now() + 1).toString(),
         sender: 'ai',
-        text: response.text,
+        text: aiText,
         timestamp: 'Just now',
-        confidence: response.confidence,
-        relatedStocks: response.relatedStocks,
-        sources: ['Univest AI Engine']
+        confidence: 94,
+        relatedStocks: related,
+        sources: ['ArthSetu SEBI Advisory Rules Engine', 'NSE Real-Time Feed'],
+        scenarioData,
+        followUpPrompts: followUps
       };
-      
+
       setMessages(prev => [...prev, aiResponse]);
     } catch (error) {
       console.error("AI Copilot Error:", error);
       const errorMsg: ChatMessage = {
         id: (Date.now() + 1).toString(),
         sender: 'ai',
-        text: "I encountered a problem analyzing that. Please try again later.",
+        text: "I encountered a brief connection delay fetching advisory data. Please click a recommended prompt below.",
         timestamp: 'Just now',
-        confidence: 0
+        confidence: 0,
+        followUpPrompts: ['Why is Reliance rising today?', 'Compare TCS vs Infosys']
       };
       setMessages(prev => [...prev, errorMsg]);
     } finally {
@@ -118,21 +205,21 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
       toast.success('Voice listener active. Speak your question...');
       setTimeout(() => {
         setIsRecording(false);
-        handleSend('Should I buy Reliance today?');
+        handleSend('Why is Reliance rising today?');
       }, 3000);
     }
   };
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[90] flex justify-end">
+      <div className="fixed inset-0 z-[90] flex justify-end font-sans">
         {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="absolute inset-0 bg-slate-900/40 backdrop-blur-xs"
+          className="absolute inset-0 bg-slate-950/50 backdrop-blur-xs"
         />
 
         {/* AI Copilot Workspace Container */}
@@ -142,108 +229,136 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
           exit={{ x: '100%' }}
           transition={{ type: 'spring', stiffness: 320, damping: 32 }}
           className={`relative bg-white border-l border-[#E2E8F0] h-full flex flex-col shadow-2xl z-10 overflow-hidden transition-all duration-300 ${
-            viewMode === 'fullscreen' ? 'w-full' : 'w-full max-w-[500px]'
+            viewMode === 'fullscreen' ? 'w-full' : 'w-full max-w-[540px]'
           }`}
         >
-          {/* TOP HEADER */}
-          <header className="p-5 border-b border-[#E2E8F0] bg-white flex items-center justify-between shadow-2xs">
+          {/* 1. BRANDED HEADER BANNER */}
+          <header className="p-4 sm:p-5 bg-gradient-to-r from-[#123B63] via-[#15519D] to-[#0E2F50] text-white flex items-center justify-between shadow-md shrink-0">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-primary to-indigo-700 text-white flex items-center justify-center font-black text-sm shadow-md">
-                <Sparkles className="w-5 h-5 fill-white animate-pulse" />
+              <div className="w-10 h-10 rounded-2xl bg-amber-400/20 border border-amber-400/30 text-amber-300 flex items-center justify-center font-black text-sm shadow-sm shrink-0">
+                <Sparkles className="w-5 h-5 fill-current text-amber-300 animate-pulse" />
               </div>
               <div>
-                <h3 className="font-black text-base text-[#172033] leading-tight flex items-center gap-2">
-                  Univest AI Copilot
-                  <span className="px-2 py-0.5 rounded-full bg-primary-light text-primary text-[9px] font-black border border-primary-light uppercase">
-                    SEBI Integrated
+                <h3 className="font-black text-base leading-tight flex items-center gap-2 text-white">
+                  ArthSetu AI Copilot
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[9px] font-black border border-emerald-400/30 uppercase tracking-wider">
+                    SEBI INTEGRATED
                   </span>
                 </h3>
-                <span className="text-[10px] text-slate-400 font-bold">Personal Wealth & Advisory Intelligence</span>
+                <span className="text-[10px] text-slate-200 font-medium">Personal Wealth & Advisory Intelligence</span>
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1">
               <button
                 onClick={() => setViewMode(viewMode === 'panel' ? 'fullscreen' : 'panel')}
-                className="p-2 rounded-xl hover:bg-slate-100 text-slate-500 transition"
+                className="p-2 rounded-xl hover:bg-white/10 text-slate-200 transition cursor-pointer"
                 title={viewMode === 'panel' ? 'Expand Full Screen' : 'Collapse Side Panel'}
               >
                 {viewMode === 'panel' ? <Maximize2 className="w-4 h-4" /> : <Minimize2 className="w-4 h-4" />}
               </button>
               <button
                 onClick={onClose}
-                className="p-2 rounded-xl hover:bg-slate-100 text-slate-500 transition"
+                className="p-2 rounded-xl hover:bg-white/10 text-slate-200 transition cursor-pointer"
+                title="Close"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
           </header>
 
-          {/* SECONDARY NAVIGATION TABS */}
-          <div className="flex items-center gap-1 px-5 py-2.5 border-b border-slate-100 bg-[#F8FAFC] text-xs font-bold">
+          {/* 2. NAVIGATION TABS */}
+          <div className="flex items-center gap-1 px-4 py-2 border-b border-slate-200 bg-[#F8FAFC] text-xs font-bold shrink-0 overflow-x-auto">
             {(['Home', 'Chat', 'Portfolio Review', 'Market Brief'] as const).map(tab => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-3.5 py-1.5 rounded-xl transition ${
-                  activeTab === tab ? 'bg-[#172033] text-white font-black shadow-2xs' : 'text-slate-500 hover:text-[#172033]'
+                className={`px-3 py-1.5 rounded-xl transition cursor-pointer whitespace-nowrap ${
+                  activeTab === tab ? 'bg-[#15519D] text-white font-black shadow-xs' : 'text-slate-600 hover:text-[#172033]'
                 }`}
               >
-                {tab}
+                {tab === 'Home' ? 'Home Synthesis' : tab === 'Chat' ? 'AI Live Chat' : tab}
               </button>
             ))}
           </div>
 
-          {/* MAIN COPILOT WORKSPACE SURFACE */}
-          <div className="flex-1 overflow-y-auto p-5 flex flex-col gap-6">
+          {/* 3. CATEGORIZED RESEARCH PROMPTS BAR */}
+          <div className="px-4 py-2.5 bg-slate-50 border-b border-slate-200/80 space-y-2 shrink-0">
+            <div className="flex items-center justify-between text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+              <span className="flex items-center gap-1">
+                <Lightbulb className="w-3.5 h-3.5 text-amber-500" /> Research Recommendations
+              </span>
+              <span>Select Question</span>
+            </div>
 
-            {/* TAB 1: HOME OVERVIEW */}
+            {/* CATEGORY FILTER CHIPS */}
+            <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-0.5">
+              {(['All', 'Stock Research', 'Portfolio Health', 'Sector Trends', 'Small-Caps'] as const).map(cat => (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  className={`px-2.5 py-0.5 rounded-lg text-[10px] font-extrabold whitespace-nowrap transition cursor-pointer border ${
+                    activeCategory === cat
+                      ? 'bg-[#15519D] text-white border-[#15519D]'
+                      : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* 4. MAIN COPILOT WORKSPACE SURFACE */}
+          <div className="flex-1 overflow-y-auto p-4 sm:p-5 flex flex-col gap-5">
+
+            {/* TAB 1: HOME SYNTHESIS */}
             {activeTab === 'Home' && (
-              <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-5">
                 
                 {/* Today's AI Brief Card */}
-                <div className="bg-[#172033] text-white rounded-[24px] p-6 shadow-xl relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
-                  <div className="relative z-10 flex flex-col gap-3">
-                    <span className="text-[10px] font-black text-[#64748B] uppercase tracking-widest flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5" /> TODAY'S COPILOT SYNTHESIS
+                <div className="bg-[#123B63] text-white rounded-[24px] p-5 shadow-xl relative overflow-hidden space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-black text-amber-300 uppercase tracking-widest flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5" /> TODAY'S ADVISORY SYNTHESIS
                     </span>
-                    <h4 className="text-lg font-black leading-snug">
-                      Banking and Capital Goods Leading Outperformance
-                    </h4>
-                    <p className="text-xs text-slate-300 font-medium leading-relaxed">
-                      Your portfolio is up <strong>+1.55%</strong> today led by Reliance (+1.25%) and HDFC Bank (+0.85%). Rebalancing IT holdings into Healthcare will optimize drawdown protection.
-                    </p>
+                    <span className="text-[10px] font-bold text-slate-300">Live Engine</span>
                   </div>
+
+                  <h4 className="text-base font-black leading-snug">
+                    Banking and Capital Goods Leading Outperformance
+                  </h4>
+                  <p className="text-xs text-slate-200 font-medium leading-relaxed">
+                    Your portfolio is up <strong className="text-emerald-400">+1.55%</strong> today led by Reliance (+1.25%) and HDFC Bank (+0.85%). Rebalancing IT holdings into Healthcare will optimize drawdown protection.
+                  </p>
                 </div>
 
                 {/* Metrics Summary Grid */}
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-[#F8FAFC] border border-[#E2E8F0] p-4 rounded-2xl">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase block mb-1">Top Opportunity</span>
+                  <div className="bg-[#F8FAFC] border border-[#E2E8F0] p-3.5 rounded-2xl space-y-1">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase block">Top Opportunity</span>
                     <strong className="text-xs text-emerald-600 font-black block">Large-cap Banking (+15%)</strong>
                   </div>
-                  <div className="bg-[#F8FAFC] border border-[#E2E8F0] p-4 rounded-2xl">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase block mb-1">Top Risk Alert</span>
-                    <strong className="text-xs text-danger font-black block">Small-cap IT Drag (-0.8%)</strong>
+                  <div className="bg-[#F8FAFC] border border-[#E2E8F0] p-3.5 rounded-2xl space-y-1">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase block">Top Risk Alert</span>
+                    <strong className="text-xs text-rose-600 font-black block">Small-cap IT Drag (-0.8%)</strong>
                   </div>
                 </div>
 
-                {/* Quick Prompts */}
-                <div className="flex flex-col gap-2.5">
-                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">Suggested AI Questions</span>
+                {/* SUGGESTED AI RESEARCH QUESTIONS GRID */}
+                <div className="space-y-2.5">
+                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">
+                    Suggested Research Prompts ({filteredPrompts.length})
+                  </span>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {quickPrompts.map((p) => (
+                    {filteredPrompts.map((p) => (
                       <button
-                        key={p}
-                        onClick={() => {
-                          setActiveTab('Chat');
-                          handleSend(p);
-                        }}
-                        className="p-3 bg-[#F8FAFC] border border-[#E2E8F0] hover:border-blue-300 hover:bg-primary-light/50 rounded-xl text-xs text-left font-bold text-[#172033] transition flex items-center justify-between group"
+                        key={p.text}
+                        onClick={() => handleSend(p.text)}
+                        className="p-3 bg-[#F8FAFC] border border-[#E2E8F0] hover:border-[#15519D] hover:bg-blue-50/40 rounded-xl text-xs text-left font-bold text-[#172033] transition cursor-pointer flex items-center justify-between group"
                       >
-                        <span>{p}</span>
-                        <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-primary transition" />
+                        <span className="line-clamp-2">{p.text}</span>
+                        <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#15519D] transition shrink-0 ml-2" />
                       </button>
                     ))}
                   </div>
@@ -252,45 +367,63 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
               </div>
             )}
 
-            {/* TAB 2: CHAT INTERACTION */}
+            {/* TAB 2: LIVE CHAT INTERACTION & DYNAMIC CHAT RECOMMENDATIONS */}
             {(activeTab === 'Chat' || activeTab === 'Portfolio Review' || activeTab === 'Market Brief') && (
               <div className="flex flex-col gap-4 flex-1">
+                
+                {/* SUGGESTED PROMPTS STRIP IN CHAT */}
+                <div className="p-3 bg-blue-50/60 rounded-2xl border border-blue-100 space-y-2">
+                  <div className="text-[10px] font-extrabold text-[#15519D] uppercase tracking-wider flex items-center gap-1">
+                    <Zap className="w-3.5 h-3.5" /> Recommended Chat Prompts:
+                  </div>
+                  <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-0.5">
+                    {filteredPrompts.slice(0, 4).map(p => (
+                      <button
+                        key={p.text}
+                        onClick={() => handleSend(p.text)}
+                        className="px-2.5 py-1 bg-white hover:bg-[#15519D] hover:text-white border border-blue-200 text-[#172033] text-[11px] font-extrabold rounded-xl whitespace-nowrap transition cursor-pointer shadow-2xs shrink-0"
+                      >
+                        {p.text}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* MESSAGES LIST */}
                 {messages.map((msg) => (
                   <div
                     key={msg.id}
                     className={`flex flex-col gap-2 ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}
                   >
-                    <div className={`p-4 rounded-2xl max-w-[90%] text-xs leading-relaxed font-medium ${
+                    <div className={`p-4 rounded-2xl max-w-[92%] text-xs leading-relaxed font-medium ${
                       msg.sender === 'user'
-                        ? 'bg-primary text-white rounded-br-none'
-                        : 'bg-[#F8FAFC] border border-[#E2E8F0] text-[#172033] rounded-bl-none shadow-2xs'
+                        ? 'bg-[#15519D] text-white rounded-br-none shadow-xs'
+                        : 'bg-[#F8FAFC] border border-[#E2E8F0] text-[#172033] rounded-bl-none shadow-2xs space-y-3'
                     }`}>
                       <p>{msg.text}</p>
 
-                      {/* Embedded Comparison Component */}
-                      {msg.type === 'comparison' && msg.comparisonData && (
-                        <div className="mt-3 bg-white p-3.5 rounded-xl border border-slate-200 text-[#172033]">
-                          <div className="grid grid-cols-2 gap-3 text-[11px] font-bold border-b border-slate-100 pb-2 mb-2">
-                            <div>
-                              <span className="text-primary font-black block">{msg.comparisonData.stockA.symbol}</span>
-                              <span>P/E: {msg.comparisonData.stockA.pe}</span>
-                              <span className="block text-emerald-600">ROE: {msg.comparisonData.stockA.roe}</span>
-                            </div>
-                            <div>
-                              <span className="text-primary font-black block">{msg.comparisonData.stockB.symbol}</span>
-                              <span>P/E: {msg.comparisonData.stockB.pe}</span>
-                              <span className="block text-emerald-600">ROE: {msg.comparisonData.stockB.roe}</span>
-                            </div>
+                      {/* SCENARIO DATA CARD */}
+                      {msg.scenarioData && (
+                        <div className="bg-white p-3.5 rounded-xl border border-slate-200 space-y-2 text-[#172033] font-sans">
+                          <span className="text-[10px] font-black text-[#15519D] uppercase block">Scenario Targets Breakdown:</span>
+                          <div className="p-2 bg-emerald-50 rounded-lg border border-emerald-200 text-[11px]">
+                            <strong className="font-black text-emerald-800">Bull Case: </strong>{msg.scenarioData.bull}
+                          </div>
+                          <div className="p-2 bg-blue-50 rounded-lg border border-blue-200 text-[11px]">
+                            <strong className="font-black text-blue-800">Base Case: </strong>{msg.scenarioData.base}
+                          </div>
+                          <div className="p-2 bg-rose-50 rounded-lg border border-rose-200 text-[11px]">
+                            <strong className="font-black text-rose-800">Bear Case: </strong>{msg.scenarioData.bear}
                           </div>
                         </div>
                       )}
 
-                      {/* AI Intelligence Footer */}
+                      {/* AI INTELLIGENCE FOOTER */}
                       {msg.sender === 'ai' && (
-                        <div className="mt-3 pt-3 border-t border-slate-200/60 flex flex-col gap-2 text-[10px]">
+                        <div className="pt-2 border-t border-slate-200/60 flex flex-col gap-2 text-[10px]">
                           {msg.confidence && (
                             <div className="flex items-center justify-between text-slate-400 font-bold">
-                              <span className="flex items-center gap-1 text-primary">
+                              <span className="flex items-center gap-1 text-[#15519D]">
                                 <Sparkles className="w-3 h-3" /> {msg.confidence}% AI Conviction
                               </span>
                               <span>{msg.timestamp}</span>
@@ -299,14 +432,14 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
 
                           {msg.relatedStocks && (
                             <div className="flex items-center gap-1.5 flex-wrap">
-                              <span className="text-slate-400 font-bold">Related:</span>
+                              <span className="text-slate-400 font-bold">Related Candidates:</span>
                               {msg.relatedStocks.map(st => (
                                 <button
                                   key={st}
                                   onClick={() => {
-                                    if (onSelectStock) onSelectStock({ symbol: st, company: st });
+                                    if (onSelectStock) onSelectStock({ symbol: st, companyName: st });
                                   }}
-                                  className="px-2 py-0.5 rounded bg-slate-200 hover:bg-slate-300 font-black text-[#172033] transition"
+                                  className="px-2 py-0.5 rounded bg-blue-50 text-[#15519D] font-black text-[10px] hover:bg-[#15519D] hover:text-white transition cursor-pointer"
                                 >
                                   ${st}
                                 </button>
@@ -314,51 +447,56 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
                             </div>
                           )}
 
-                          {/* Quick Action buttons */}
-                          <div className="flex items-center gap-2 pt-1">
-                            <button
-                              onClick={() => {
-                                if (onSelectStock) onSelectStock({ symbol: msg.relatedStocks?.[0] || 'RELIANCE', companyName: msg.relatedStocks?.[0] || 'RELIANCE' });
-                              }}
-                              className="px-3 py-1 rounded-lg bg-primary hover:bg-primary-dark text-white font-black transition"
-                            >
-                              Examine {msg.relatedStocks?.[0] || 'Stock'} Thesis
-                            </button>
-                            <button
-                              onClick={() => toast.success('Saved to AI Queue')}
-                              className="px-3 py-1 rounded-lg bg-white border border-slate-200 text-slate-700 font-bold hover:bg-slate-50 transition"
-                            >
-                              Save Insight
-                            </button>
-                          </div>
+                          {/* DYNAMIC FOLLOW-UP RECOMMENDATION CHIPS */}
+                          {msg.followUpPrompts && msg.followUpPrompts.length > 0 && (
+                            <div className="pt-2 border-t border-slate-200/80 space-y-1.5">
+                              <span className="text-[10px] font-black text-[#15519D] uppercase tracking-wider block">
+                                Recommended Follow-Ups:
+                              </span>
+                              <div className="flex flex-wrap gap-1.5">
+                                {msg.followUpPrompts.map(promptText => (
+                                  <button
+                                    key={promptText}
+                                    onClick={() => handleSend(promptText)}
+                                    className="px-2.5 py-1 bg-white hover:bg-[#15519D] hover:text-white border border-slate-300 text-slate-800 text-[10px] font-extrabold rounded-xl transition cursor-pointer shadow-2xs"
+                                  >
+                                    💡 {promptText}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
                         </div>
                       )}
                     </div>
                   </div>
                 ))}
+
                 {isAiTyping && (
                   <div className="flex flex-col gap-2 items-start">
                     <div className="p-4 rounded-2xl max-w-[90%] text-xs leading-relaxed font-medium bg-[#F8FAFC] border border-[#E2E8F0] text-[#172033] rounded-bl-none shadow-2xs">
                       <div className="flex gap-1 items-center">
-                        <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
-                        <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                        <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+                        <div className="w-2 h-2 bg-[#15519D] rounded-full animate-bounce"></div>
+                        <div className="w-2 h-2 bg-[#15519D] rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                        <div className="w-2 h-2 bg-[#15519D] rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
                       </div>
                     </div>
                   </div>
                 )}
+
               </div>
             )}
 
           </div>
 
-          {/* INPUT BAR */}
-          <footer className="p-4 border-t border-[#E2E8F0] bg-white flex flex-col gap-2">
+          {/* 5. INPUT FOOTER */}
+          <footer className="p-4 border-t border-[#E2E8F0] bg-white flex flex-col gap-2 shrink-0">
             <div className="flex items-center gap-2">
               <button
                 onClick={toggleVoiceMode}
-                className={`p-2.5 rounded-xl border transition ${
-                  isRecording ? 'bg-rose-50 border-rose-200 text-danger animate-pulse' : 'bg-slate-50 border-slate-200 text-slate-500 hover:bg-slate-100'
+                className={`p-2.5 rounded-xl border transition cursor-pointer ${
+                  isRecording ? 'bg-rose-50 border-rose-200 text-rose-600 animate-pulse' : 'bg-slate-50 border-slate-200 text-slate-500 hover:bg-slate-100'
                 }`}
                 title="Voice Input"
               >
@@ -367,23 +505,23 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
 
               <input
                 type="text"
-                placeholder="Ask AI Copilot anything about stocks, portfolio, research..."
+                placeholder="Ask ArthSetu AI Copilot about stocks, portfolio, research..."
                 value={inputVal}
                 onChange={(e) => setInputVal(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                className="flex-1 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-2.5 text-xs text-[#172033] outline-none focus:border-primary font-medium"
+                className="flex-1 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-2.5 text-xs text-[#172033] outline-none focus:border-[#15519D] font-medium"
               />
 
               <button
                 onClick={() => handleSend()}
-                className="p-2.5 rounded-xl bg-primary text-white hover:bg-primary transition shadow-sm"
+                className="p-2.5 rounded-xl bg-[#15519D] text-white hover:bg-[#123B63] transition shadow-sm cursor-pointer"
               >
                 <Send className="w-4 h-4" />
               </button>
             </div>
 
             <div className="flex items-center justify-between text-[9px] text-slate-400 font-bold px-1">
-              <span>Powered by SEBI Advisory Rules Engine</span>
+              <span>Powered by ArthSetu SEBI Advisory Engine</span>
               <span>Press Enter to send</span>
             </div>
           </footer>
@@ -393,4 +531,5 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
     </AnimatePresence>
   );
 };
+
 export default AiCopilotModal;
