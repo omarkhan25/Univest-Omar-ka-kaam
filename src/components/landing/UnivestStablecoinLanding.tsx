@@ -120,7 +120,7 @@ export const UnivestStablecoinLanding: React.FC = () => {
                 className="text-black/70 text-lg md:text-xl max-w-2xl mb-10 leading-relaxed"
                 style={{ fontFamily: "'Inter', ui-sans-serif, system-ui, sans-serif" }}
               >
-                Univest combines AI research, market intelligence, portfolio management, and investing into one seamless platform helping you invest with clarity and  confidence.
+                ArthSetu combines AI research, market intelligence, portfolio management, and investing into one seamless platform helping you invest with clarity and confidence.
               </p>
 
               {/* Email Form */}
@@ -279,7 +279,7 @@ export const UnivestStablecoinLanding: React.FC = () => {
             Built for Secure Investing.
           </h2>
           <p className="text-black/70 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed" style={{ fontFamily: "'Inter', ui-sans-serif, system-ui, sans-serif" }}>
-            Every investment on Univest is backed by enterprise-grade security, intelligent infrastructure and a privacy-first architecture designed for modern investors.
+            Every investment on ArthSetu is backed by enterprise-grade security, intelligent infrastructure and a privacy-first architecture designed for modern investors.
           </p>
         </div>
         

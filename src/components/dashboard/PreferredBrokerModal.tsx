@@ -81,7 +81,7 @@ export const PreferredBrokerModal: React.FC<PreferredBrokerModalProps> = ({
                 <div>
                   <h3 className="font-bold text-slate-900 text-lg">Invest via Preferred Broker</h3>
                   <p className="text-xs text-slate-500">
-                    Univest provides intelligence. Execute trades on your broker.
+                    ArthSetu provides intelligence. Execute trades on your broker.
                   </p>
                 </div>
               </div>
@@ -112,7 +112,7 @@ export const PreferredBrokerModal: React.FC<PreferredBrokerModalProps> = ({
           <div className="mx-6 mt-3 p-3 bg-slate-100/80 rounded-xl flex items-start gap-2 text-slate-600 text-xs">
             <Info className="w-4 h-4 text-[#15519D] flex-shrink-0 mt-0.5" />
             <p>
-              <strong>Direct Broker Redirect:</strong> Univest does not handle order execution or funds custody. Select your broker below to open their platform. Direct 1-click broker syncing will be enabled in Phase 2.
+              <strong>Direct Broker Redirect:</strong> ArthSetu does not handle order execution or funds custody. Select your broker below to open their platform. Direct 1-click broker syncing will be enabled in Phase 2.
             </p>
           </div>
 
@@ -152,7 +152,7 @@ export const PreferredBrokerModal: React.FC<PreferredBrokerModalProps> = ({
 
           {/* Footer */}
           <div className="p-4 bg-slate-50 border-t border-slate-100 text-center text-xs text-slate-400">
-            🔒 Univest does not access or store broker login credentials.
+            🔒 ArthSetu does not access or store broker login credentials.
           </div>
         </motion.div>
       </div>

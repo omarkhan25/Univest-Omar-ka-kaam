@@ -556,7 +556,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
       {/* 6. BOTTOM PROMOTIONAL SECTION (DUAL CARDS) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         
-        {/* UNIVEST SCREENER CARD */}
+        {/* ARTHSETU SCREENER CARD */}
         <div 
           onClick={() => onNavigateTab && onNavigateTab('Markets')}
           className="p-7 bg-gradient-to-br from-[#1E293B] via-[#1E1B4B] to-[#312E81] text-white rounded-[24px] border border-indigo-900/50 shadow-xl flex flex-col justify-between space-y-6 relative overflow-hidden group cursor-pointer"
@@ -564,7 +564,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
           <div className="space-y-3 z-10">
             <div className="flex items-center gap-2">
               <Filter className="w-5 h-5 text-indigo-400" />
-              <span className="font-extrabold text-base tracking-tight text-white">Univest Screener</span>
+              <span className="font-extrabold text-base tracking-tight text-white">ArthSetu Screener</span>
             </div>
 
             <h3 className="text-2xl font-black text-white leading-tight">

@@ -82,7 +82,7 @@ export const Footer = () => {
           <div className="w-full xl:max-w-[22rem] shrink-0">
             <div className="flex items-center gap-3 mb-6">
               <LogoIcon />
-              <span className="text-2xl font-bold tracking-tight text-black">Univest</span>
+              <span className="text-2xl font-extrabold tracking-tight text-black">ArthSetu</span>
             </div>
             
             <h4 className="text-xl font-medium text-black mb-4 tracking-tight">
@@ -178,7 +178,7 @@ export const Footer = () => {
         </div>
         
         <div className="text-[13px] text-black/40 font-medium text-left xl:text-right mt-16 xl:mt-24">
-          © 2026 Univest Technologies Pvt. Ltd. All Rights Reserved.
+          © 2026 ArthSetu Technologies Pvt. Ltd. All Rights Reserved.
         </div>
       </div>
 

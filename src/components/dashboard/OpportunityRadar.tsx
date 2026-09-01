@@ -125,7 +125,7 @@ export const OpportunityRadar: React.FC<OpportunityRadarProps> = ({ onSelectStoc
         <div className="relative z-10 max-w-2xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 backdrop-blur-md rounded-full text-xs font-extrabold uppercase tracking-wider text-blue-200 mb-3">
             <Radio className="w-3.5 h-3.5 animate-pulse text-emerald-400" />
-            <span>Univest Opportunity Radar</span>
+            <span>ArthSetu Opportunity Radar</span>
           </div>
           <h1 className="text-3xl font-black tracking-tight text-white">
             Market Signals Requiring Attention Right Now

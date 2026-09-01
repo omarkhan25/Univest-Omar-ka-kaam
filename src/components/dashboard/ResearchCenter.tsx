@@ -107,7 +107,7 @@ export const ResearchCenter: React.FC<ResearchCenterProps> = ({
           <span>High-Conviction Investment Intelligence</span>
         </div>
         <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
-          Univest Premium Research Picks
+          ArthSetu Premium Research Picks
         </h1>
         <p className="text-sm text-slate-500 mt-1">
           In-depth fundamental research theses backed by transparent performance timelines and catalyst tracking.

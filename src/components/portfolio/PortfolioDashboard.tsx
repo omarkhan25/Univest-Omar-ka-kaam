@@ -1,27 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  FlaskConical, Sparkles, TrendingUp, TrendingDown, ArrowUpRight, ArrowDownRight,
-  ShieldCheck, AlertTriangle, Plus, RotateCcw, ChevronRight, CheckCircle2,
+  Coins, Sparkles, TrendingUp, TrendingDown, ArrowUpRight, ArrowDownRight,
+  ShieldCheck, Plus, ChevronRight, CheckCircle2, FlaskConical,
   PieChart, Activity, BookOpen, Trophy, Info, Search, X, Check, ArrowRight,
   HelpCircle, Shield, Award, Calendar, Clock, Lock, RefreshCw, BarChart2, Layers,
-  Coins, Zap, CheckCircle, Eye, Lightbulb, UserCheck, LayoutDashboard, Filter, MessageSquare, ArrowLeft,
-  DollarSign, ArrowUp, ArrowDown, ShoppingCart, Minus
+  Zap, Eye, Lightbulb, UserCheck, LayoutDashboard, Filter, MessageSquare, ArrowLeft,
+  DollarSign, ArrowUp, ArrowDown, ShoppingCart, Minus, Sliders, AlertTriangle, Scale
 } from 'lucide-react';
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
 import toast from 'react-hot-toast';
 
+import LabCapitalSetupModal from './LabCapitalSetupModal';
+import LabInvestTransactionModal from './LabInvestTransactionModal';
+import HoldingDetailModal from './HoldingDetailModal';
+
 interface PortfolioDashboardProps {
   onSelectStock?: (stock: any) => void;
   onOpenPricingModal?: () => void;
 }
 
-// ----------------------------------------------------
-// TOKEN HOLDINGS DATASET
-// ----------------------------------------------------
-const INITIAL_TOKEN_HOLDINGS = [
+export interface LabHolding {
+  symbol: string;
+  name: string;
+  investedTokens: number;
+  currentValueTokens: number;
+  returnTokens: number;
+  returnPercent: number;
+  isPositive: boolean;
+  weight: number;
+  avgPrice: number;
+  currentPrice: number;
+  holdingDays: number;
+  status: 'Performing Well' | 'Thesis On Track' | 'Underperforming';
+  statusDesc: string;
+  thesisReason: string;
+  thesisText: string;
+  buyDate: string;
+  decisionScore: number;
+  thesisState: '🟢 Still Playing Out' | '🟡 Thesis Weakened' | '🔴 Thesis Invalidated';
+}
+
+const INITIAL_LAB_HOLDINGS: LabHolding[] = [
   {
     symbol: 'RELIANCE',
     name: 'Reliance Industries Ltd.',
@@ -30,754 +52,432 @@ const INITIAL_TOKEN_HOLDINGS = [
     returnTokens: 3550,
     returnPercent: 14.20,
     isPositive: true,
-    weight: 26.3,
+    weight: 23.7,
     avgPrice: 2650.00,
     currentPrice: 3026.00,
-    badgeBg: 'bg-emerald-100 text-emerald-800',
-    initials: 'RE',
-    sparkline: [2650, 2720, 2800, 2890, 3026],
+    holdingDays: 84,
+    status: 'Performing Well',
+    statusDesc: 'Generated positive return and is outperforming NIFTY 50 over your holding period.',
     thesisReason: 'Long-Term Growth',
-    thesisText: 'Strong earnings visibility, digital expansion via Jio, and refining margin leadership.',
-    buyDate: '24 MAY 2026'
+    thesisText: 'Strong earnings growth and long-term digital/energy business expansion.',
+    buyDate: '24 May 2026',
+    decisionScore: 82,
+    thesisState: '🟢 Still Playing Out'
+  },
+  {
+    symbol: 'HDFCBANK',
+    name: 'HDFC Bank Ltd.',
+    investedTokens: 20000,
+    currentValueTokens: 22840,
+    returnTokens: 2840,
+    returnPercent: 14.20,
+    isPositive: true,
+    weight: 19.0,
+    avgPrice: 1556.00,
+    currentPrice: 1777.00,
+    holdingDays: 62,
+    status: 'Performing Well',
+    statusDesc: 'Credit growth recovery and NIM expansion supporting return trajectory.',
+    thesisReason: 'Value Opportunity',
+    thesisText: 'Post-merger valuation discount creates margin of safety.',
+    buyDate: '10 June 2026',
+    decisionScore: 79,
+    thesisState: '🟢 Still Playing Out'
   },
   {
     symbol: 'TCS',
     name: 'Tata Consultancy Services',
     investedTokens: 20000,
-    currentValueTokens: 21640,
-    returnTokens: 1640,
-    returnPercent: 8.20,
+    currentValueTokens: 21950,
+    returnTokens: 1950,
+    returnPercent: 9.75,
     isPositive: true,
-    weight: 19.9,
+    weight: 18.2,
     avgPrice: 3865.00,
-    currentPrice: 4182.75,
-    badgeBg: 'bg-purple-100 text-purple-800',
-    initials: 'TC',
-    sparkline: [3865, 3950, 4010, 4120, 4182.75],
-    thesisReason: 'Strong Fundamentals',
-    thesisText: 'Robust deal wins in cloud transformation and high dividend yields.',
-    buyDate: '15 MAY 2026'
-  },
-  {
-    symbol: 'HDFCBANK',
-    name: 'HDFC Bank Ltd.',
-    investedTokens: 15000,
-    currentValueTokens: 16180,
-    returnTokens: 1180,
-    returnPercent: 7.87,
-    isPositive: true,
-    weight: 14.9,
-    avgPrice: 1556.00,
-    currentPrice: 1678.40,
-    badgeBg: 'bg-sky-100 text-sky-800',
-    initials: 'HD',
-    sparkline: [1556, 1590, 1620, 1650, 1678.4],
-    thesisReason: 'Undervalued',
-    thesisText: 'Post-merger credit growth stabilization and net interest margin recovery.',
-    buyDate: '10 MAY 2026'
+    currentPrice: 4241.00,
+    holdingDays: 45,
+    status: 'Thesis On Track',
+    statusDesc: 'Steady deal wins in cloud transformation yielding solid compounding.',
+    thesisReason: 'Dividend & Stability',
+    thesisText: 'Strong balance sheet and consistent shareholder cash returns.',
+    buyDate: '17 July 2026',
+    decisionScore: 85,
+    thesisState: '🟢 Still Playing Out'
   },
   {
     symbol: 'INFY',
     name: 'Infosys Ltd.',
-    investedTokens: 12000,
-    currentValueTokens: 12480,
-    returnTokens: 480,
-    returnPercent: 4.00,
-    isPositive: true,
-    weight: 11.5,
-    avgPrice: 1571.00,
-    currentPrice: 1634.20,
-    badgeBg: 'bg-pink-100 text-pink-800',
-    initials: 'IN',
-    sparkline: [1571, 1590, 1610, 1634.2],
-    thesisReason: 'Sector Opportunity',
-    thesisText: 'US IT spending rebound and generative AI enterprise integrations.',
-    buyDate: '05 MAY 2026'
-  },
-  {
-    symbol: 'XYZCORP',
-    name: 'XYZ Emerging Tech Ltd.',
-    investedTokens: 10000,
-    currentValueTokens: 9160,
+    investedTokens: 15000,
+    currentValueTokens: 14160,
     returnTokens: -840,
-    returnPercent: -8.40,
+    returnPercent: -5.60,
     isPositive: false,
-    weight: 8.4,
-    avgPrice: 420.00,
-    currentPrice: 384.72,
-    badgeBg: 'bg-rose-100 text-rose-800',
-    initials: 'XY',
-    sparkline: [420, 410, 395, 384.72],
-    thesisReason: 'Momentum',
-    thesisText: 'Testing smallcap momentum breakout thesis.',
-    buyDate: '02 MAY 2026'
+    weight: 11.8,
+    avgPrice: 1680.00,
+    currentPrice: 1585.92,
+    holdingDays: 30,
+    status: 'Underperforming',
+    statusDesc: 'Slower discretionary tech spending causing short-term revenue drag.',
+    thesisReason: 'Growth Company',
+    thesisText: 'GenAI enterprise implementation momentum.',
+    buyDate: '01 Aug 2026',
+    decisionScore: 61,
+    thesisState: '🟡 Thesis Weakened'
   }
 ];
 
-// INITIAL CLOSED POSITIONS HISTORY
-const INITIAL_CLOSED_POSITIONS = [
-  {
-    symbol: 'ICICIBANK',
-    name: 'ICICI Bank Ltd.',
-    investedTokens: 15000,
-    exitValueTokens: 17250,
-    realizedReturnTokens: 2250,
-    realizedReturnPercent: 15.00,
-    isPositive: true,
-    initials: 'IC',
-    badgeBg: 'bg-blue-100 text-blue-800',
-    buyDate: '12 APR 2026',
-    exitDate: '18 MAY 2026',
-    holdingDays: 36,
-    thesisReason: 'Strong Fundamentals',
-    sellReason: 'Target Reached',
-    userSellNote: 'Reached expected target after strong Q4 earnings release.'
-  }
+const SEARCHABLE_STOCKS = [
+  { symbol: 'RELIANCE', name: 'Reliance Industries Ltd.', price: 3026.00, change: '+2.35%', score: '78/100' },
+  { symbol: 'TCS', name: 'Tata Consultancy Services', price: 4241.00, change: '+0.85%', score: '84/100' },
+  { symbol: 'HDFCBANK', name: 'HDFC Bank Ltd.', price: 1777.00, change: '+1.45%', score: '82/100' },
+  { symbol: 'INFY', name: 'Infosys Ltd.', price: 1585.92, change: '-0.92%', score: '71/100' },
+  { symbol: 'TATAMOTORS', name: 'Tata Motors Ltd.', price: 985.40, change: '+3.12%', score: '88/100' },
+  { symbol: 'LT', name: 'Larsen & Toubro Ltd.', price: 3620.45, change: '+1.92%', score: '86/100' },
+  { symbol: 'SBIN', name: 'State Bank of India', price: 857.10, change: '+1.68%', score: '80/100' },
+  { symbol: 'SUNPHARMA', name: 'Sun Pharma Ltd.', price: 1782.55, change: '+0.55%', score: '79/100' },
 ];
 
-// RECOMMENDED STOCKS FOR TOKEN INVESTMENTS
-const RECOMMENDED_INVESTMENT_STOCKS = [
-  {
-    symbol: 'RELIANCE',
-    name: 'Reliance Industries Ltd.',
-    price: '2,975.80',
-    change: '+2.35%',
-    isPositive: true,
-    initials: 'RE',
-    badgeBg: 'bg-emerald-100 text-emerald-800',
-    score: '78/100',
-    sparkline: [2910, 2930, 2950, 2975.8]
-  },
-  {
-    symbol: 'TCS',
-    name: 'Tata Consultancy Services',
-    price: '4,120.50',
-    change: '+1.12%',
-    isPositive: true,
-    initials: 'TC',
-    badgeBg: 'bg-purple-100 text-purple-800',
-    score: '84/100',
-    sparkline: [4080, 4100, 4110, 4120.5]
-  },
-  {
-    symbol: 'INFY',
-    name: 'Infosys Ltd.',
-    price: '1,680.40',
-    change: '-0.48%',
-    isPositive: false,
-    initials: 'IN',
-    badgeBg: 'bg-pink-100 text-pink-800',
-    score: '72/100',
-    sparkline: [1695, 1690, 1685, 1680.4]
-  },
-  {
-    symbol: 'HDFCBANK',
-    name: 'HDFC Bank Ltd.',
-    price: '1,845.60',
-    change: '+0.76%',
-    isPositive: true,
-    initials: 'HD',
-    badgeBg: 'bg-sky-100 text-sky-800',
-    score: '80/100',
-    sparkline: [1830, 1838, 1842, 1845.6]
-  },
-  {
-    symbol: 'TATAMOTORS',
-    name: 'Tata Motors Passenger Vehicles',
-    price: '985.40',
-    change: '+3.14%',
-    isPositive: true,
-    initials: 'TM',
-    badgeBg: 'bg-amber-100 text-amber-800',
-    score: '86/100',
-    sparkline: [950, 965, 978, 985.4]
-  },
-  {
-    symbol: 'ICICIBANK',
-    name: 'ICICI Bank Ltd.',
-    price: '1,240.20',
-    change: '+1.85%',
-    isPositive: true,
-    initials: 'IC',
-    badgeBg: 'bg-blue-100 text-blue-800',
-    score: '82/100',
-    sparkline: [1215, 1225, 1232, 1240.2]
-  }
-];
+export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ onSelectStock }) => {
+  const [startingCapital, setStartingCapital] = useState<number>(150000);
+  const [holdings, setHoldings] = useState<LabHolding[]>(INITIAL_LAB_HOLDINGS);
+  const [availableTokens, setAvailableTokens] = useState<number>(30000);
 
-// PERFORMANCE CHART DATASET
-const LAB_PERFORMANCE_TIMEFRAMES: Record<string, Array<{ date: string; labTokens: number; nifty: number }>> = {
-  '1W': [
-    { date: 'Mon', labTokens: 105200, nifty: 103100 },
-    { date: 'Tue', labTokens: 106100, nifty: 103800 },
-    { date: 'Wed', labTokens: 107000, nifty: 104200 },
-    { date: 'Thu', labTokens: 107800, nifty: 104800 },
-    { date: 'Fri', labTokens: 108450, nifty: 105120 }
-  ],
-  '1M': [
-    { date: 'Week 1', labTokens: 101200, nifty: 101000 },
-    { date: 'Week 2', labTokens: 103400, nifty: 102100 },
-    { date: 'Week 3', labTokens: 105800, nifty: 103500 },
-    { date: 'Week 4', labTokens: 108450, nifty: 105120 }
-  ],
-  '3M': [
-    { date: 'Mar', labTokens: 100000, nifty: 100000 },
-    { date: 'Apr', labTokens: 102500, nifty: 101500 },
-    { date: 'May', labTokens: 108450, nifty: 105120 }
-  ],
-  '6M': [
-    { date: 'Dec', labTokens: 98000, nifty: 99000 },
-    { date: 'Feb', labTokens: 102000, nifty: 101000 },
-    { date: 'May', labTokens: 108450, nifty: 105120 }
-  ],
-  '1Y': [
-    { date: 'May 24', labTokens: 100000, nifty: 100000 },
-    { date: 'Nov 24', labTokens: 104000, nifty: 102500 },
-    { date: 'May 25', labTokens: 108450, nifty: 105120 }
-  ],
-  'All': [
-    { date: 'Jan', labTokens: 100000, nifty: 100000 },
-    { date: 'Feb', labTokens: 101500, nifty: 101200 },
-    { date: 'Mar', labTokens: 103200, nifty: 102400 },
-    { date: 'Apr', labTokens: 105900, nifty: 103800 },
-    { date: 'May', labTokens: 108450, nifty: 105120 }
-  ]
-};
+  const [activeTab, setActiveTab] = useState<'overview' | 'holdings' | 'performance' | 'insights' | 'journal'>('overview');
 
-export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({
-  onSelectStock,
-  onOpenPricingModal
-}) => {
-  // Demo Mode Switcher (Active Premium vs Free Locked Preview)
-  const [isPremiumUser, setIsPremiumUser] = useState<boolean>(true);
-  const [showFirstTimeWelcome, setShowFirstTimeWelcome] = useState<boolean>(false);
+  const [isCapitalModalOpen, setIsCapitalModalOpen] = useState<boolean>(false);
+  const [isInvestModalOpen, setIsInvestModalOpen] = useState<boolean>(false);
+  const [selectedStockForBuy, setSelectedStockForBuy] = useState<any>(SEARCHABLE_STOCKS[0]);
+  const [buyShareQty, setBuyShareQty] = useState<number>(10);
+  const [userThesisText, setUserThesisText] = useState<string>('Strong business fundamentals and long-term sector growth potential.');
 
-  // EXACT 5 TAB NAVIGATION: Overview, Holdings, Performance, Insights, Decision Journal
-  const [activeTab, setActiveTab] = useState<'Overview' | 'Holdings' | 'Performance' | 'Insights' | 'Journal'>('Overview');
-  const [chartTimeframe, setChartTimeframe] = useState<string>('1M');
-  const [holdingsFilter, setHoldingsFilter] = useState<string>('All Holdings');
+  const [selectedHoldingForAttribution, setSelectedHoldingForAttribution] = useState<LabHolding | null>(null);
+  const [selectedHoldingForSell, setSelectedHoldingForSell] = useState<LabHolding | null>(null);
+  const [selectedHoldingForDetail, setSelectedHoldingForDetail] = useState<LabHolding | null>(null);
 
-  // Active Holdings & Closed Positions Datasets
-  const [holdings, setHoldings] = useState(INITIAL_TOKEN_HOLDINGS);
-  const [closedPositions, setClosedPositions] = useState(INITIAL_CLOSED_POSITIONS);
-  const [availableTokens, setAvailableTokens] = useState<number>(28000);
-
-  // Modals
-  const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
-  const [isSellModalOpen, setIsSellModalOpen] = useState<boolean>(false);
-  const [showLowBalanceWarning, setShowLowBalanceWarning] = useState<boolean>(false);
-
-  // REDESIGNED BUY STOCK BY QUANTITY STATE
-  const [modalSearchQuery, setModalSearchQuery] = useState<string>('');
-  const [selectedStockForAdd, setSelectedStockForAdd] = useState<any>(null);
-  const [sharesToBuy, setSharesToBuy] = useState<number>(10);
-  const [selectedThesisReason, setSelectedThesisReason] = useState<string>('Long-Term Growth');
-  const [thesisText, setThesisText] = useState<string>('');
-  const [showFinalBuyConfirmation, setShowFinalBuyConfirmation] = useState<boolean>(false);
-
-  // Stock Sale Wizard State
-  const [selectedHoldingForSell, setSelectedHoldingForSell] = useState<any>(null);
-  const [sellSharePercent, setSellSharePercent] = useState<number>(100);
-  const [selectedSellReason, setSelectedSellReason] = useState<string>('Target Reached');
-  const [userSellNote, setUserSellNote] = useState<string>('');
-
-  // Token Metrics Calculations
-  const totalInvestedTokens = holdings.reduce((acc, h) => acc + h.investedTokens, 0);
-  const totalCurrentTokensValue = holdings.reduce((acc, h) => acc + h.currentValueTokens, 0);
-  const totalLabTokens = totalCurrentTokensValue + availableTokens;
-  const overallReturnTokens = totalCurrentTokensValue - totalInvestedTokens;
-  const overallReturnPercent = totalInvestedTokens > 0 ? (overallReturnTokens / totalInvestedTokens) * 100 : 0;
-
-  // Selected Stock Price & Affordable Shares Calculation
-  const selectedPriceNumeric = parseFloat(selectedStockForAdd?.price?.replace(/,/g, '') || '2975.80');
-  const totalRequiredTokens = Math.round(sharesToBuy * selectedPriceNumeric);
-  const maxAffordableShares = Math.floor(availableTokens / selectedPriceNumeric);
-  const isInsufficientTokens = totalRequiredTokens > availableTokens;
-
-  // Filtered stocks in Modal Search
-  const filteredModalStocks = RECOMMENDED_INVESTMENT_STOCKS.filter(st =>
-    st.symbol.toLowerCase().includes(modalSearchQuery.toLowerCase()) ||
-    st.name.toLowerCase().includes(modalSearchQuery.toLowerCase())
-  );
-
-  // Holdings Filter Handler
-  const filteredHoldings = holdings.filter(h => {
-    if (holdingsFilter === 'Gainers') return h.isPositive;
-    if (holdingsFilter === 'Decliners') return !h.isPositive;
-    return true;
-  });
-
-  // Open Buy Investment Modal
-  const handleOpenInvestModal = (stock?: any) => {
-    if (availableTokens < 1000 && !stock) {
-      setShowLowBalanceWarning(true);
-      return;
-    }
-
-    if (stock) {
-      setSelectedStockForAdd(stock);
-      const price = parseFloat(stock.price?.replace(/,/g, '') || '2975.80');
-      const maxAff = Math.floor(availableTokens / price);
-      setSharesToBuy(Math.max(1, Math.min(10, maxAff)));
-    } else {
-      setSelectedStockForAdd(null);
-      setSharesToBuy(10);
-    }
-    setModalSearchQuery('');
-    setShowFinalBuyConfirmation(false);
-    setIsAddModalOpen(true);
+  const handleUpdateThesis = (symbol: string, newThesisText: string) => {
+    setHoldings(prev => prev.map(h => {
+      if (h.symbol === symbol) {
+        return { ...h, thesisText: newThesisText };
+      }
+      return h;
+    }));
   };
 
-  // When stock is selected from search/recommended
-  const handleSelectStockFromList = (st: any) => {
-    setSelectedStockForAdd(st);
-    const price = parseFloat(st.price?.replace(/,/g, '') || '2975.80');
-    const maxAff = Math.floor(availableTokens / price);
-    setSharesToBuy(Math.max(1, Math.min(10, maxAff)));
+  // Compute Lab Values
+  const currentHoldingsValue = holdings.reduce((sum, h) => sum + h.currentValueTokens, 0);
+  const totalInvestedValue = holdings.reduce((sum, h) => sum + h.investedTokens, 0);
+  const totalLabValue = currentHoldingsValue + availableTokens;
+  const totalReturnTokens = totalLabValue - startingCapital;
+  const totalReturnPercent = (totalReturnTokens / startingCapital) * 100;
+  const isOverallPositive = totalReturnTokens >= 0;
+
+  const handleUpdateCapital = (newCap: number) => {
+    setStartingCapital(newCap);
+    const diff = newCap - totalLabValue;
+    setAvailableTokens(prev => Math.max(0, prev + diff));
+    localStorage.setItem('arthsetu_lab_capital', newCap.toString());
   };
 
-  // Confirm Virtual Stock Purchase
-  const handleConfirmVirtualInvestment = () => {
-    if (sharesToBuy <= 0) {
-      toast.error('Please enter at least 1 share.');
-      return;
-    }
+  const handleModalConfirmBuy = (stock: any, shares: number, thesisText: string) => {
+    const requiredTokens = Math.round(stock.price * shares);
+    if (requiredTokens > availableTokens) return;
 
-    if (isInsufficientTokens) {
-      toast.error('Insufficient UNIVEST Tokens for this share quantity.');
-      return;
-    }
-
-    const newHolding = {
-      symbol: selectedStockForAdd.symbol,
-      name: selectedStockForAdd.name,
-      investedTokens: totalRequiredTokens,
-      currentValueTokens: totalRequiredTokens,
-      returnTokens: 0,
-      returnPercent: 0,
-      isPositive: true,
-      weight: parseFloat(((totalRequiredTokens / (totalCurrentTokensValue + totalRequiredTokens)) * 100).toFixed(1)),
-      avgPrice: selectedPriceNumeric,
-      currentPrice: selectedPriceNumeric,
-      badgeBg: selectedStockForAdd.badgeBg || 'bg-emerald-100 text-emerald-800',
-      initials: selectedStockForAdd.initials || selectedStockForAdd.symbol.slice(0, 2),
-      sparkline: selectedStockForAdd.sparkline || [selectedPriceNumeric, selectedPriceNumeric],
-      thesisReason: selectedThesisReason,
-      thesisText: thesisText || 'Virtual share investment experiment.',
-      buyDate: '26 AUG 2026'
-    };
-
-    setHoldings(prev => [newHolding, ...prev]);
-    setAvailableTokens(prev => prev - totalRequiredTokens);
-    setIsAddModalOpen(false);
-    setSelectedStockForAdd(null);
-    setShowFinalBuyConfirmation(false);
-    setModalSearchQuery('');
-    setThesisText('');
-    toast.success(`Successfully bought ${sharesToBuy} shares of ${selectedStockForAdd.symbol} for ${totalRequiredTokens.toLocaleString('en-IN')} Tokens!`);
-  };
-
-  // Open Sell Modal
-  const handleOpenSellModal = (holding: any) => {
-    setSelectedHoldingForSell(holding);
-    setSellSharePercent(100);
-    setSelectedSellReason('Target Reached');
-    setUserSellNote('');
-    setIsSellModalOpen(true);
-  };
-
-  // Confirm Sale of Holding
-  const handleConfirmSale = () => {
-    if (!selectedHoldingForSell) return;
-
-    const holding = selectedHoldingForSell;
-    const saleFraction = sellSharePercent / 100;
-
-    const saleValueTokens = Math.round(holding.currentValueTokens * saleFraction);
-    const investedTokensSold = Math.round(holding.investedTokens * saleFraction);
-    const realizedReturnTokens = saleValueTokens - investedTokensSold;
-    const realizedReturnPercent = investedTokensSold > 0 ? (realizedReturnTokens / investedTokensSold) * 100 : 0;
-
-    if (sellSharePercent === 100) {
-      // FULL SALE (100% MAX)
-      setHoldings(prev => prev.filter(h => h.symbol !== holding.symbol));
-      
-      const closedEntry = {
-        symbol: holding.symbol,
-        name: holding.name,
-        investedTokens: holding.investedTokens,
-        exitValueTokens: saleValueTokens,
-        realizedReturnTokens: realizedReturnTokens,
-        realizedReturnPercent: parseFloat(realizedReturnPercent.toFixed(2)),
-        isPositive: realizedReturnTokens >= 0,
-        initials: holding.initials,
-        badgeBg: holding.badgeBg,
-        buyDate: holding.buyDate || '24 MAY 2026',
-        exitDate: '26 AUG 2026',
-        holdingDays: 25,
-        thesisReason: holding.thesisReason,
-        sellReason: selectedSellReason,
-        userSellNote: userSellNote || 'Position closed following target approach.'
-      };
-
-      setClosedPositions(prev => [closedEntry, ...prev]);
-    } else {
-      // PARTIAL SALE (< 100%)
+    const existingHoldingIndex = holdings.findIndex(h => h.symbol === stock.symbol);
+    if (existingHoldingIndex >= 0) {
       setHoldings(prev => prev.map(h => {
-        if (h.symbol === holding.symbol) {
-          const remainingInvested = h.investedTokens - investedTokensSold;
-          const remainingCurrent = h.currentValueTokens - saleValueTokens;
-          const remainingReturn = remainingCurrent - remainingInvested;
-          const remainingReturnPct = remainingInvested > 0 ? (remainingReturn / remainingInvested) * 100 : 0;
-
+        if (h.symbol === stock.symbol) {
+          const newInvested = h.investedTokens + requiredTokens;
+          const newCurrent = h.currentValueTokens + requiredTokens;
           return {
             ...h,
-            investedTokens: remainingInvested,
-            currentValueTokens: remainingCurrent,
-            returnTokens: remainingReturn,
-            returnPercent: parseFloat(remainingReturnPct.toFixed(2)),
-            isPositive: remainingReturn >= 0
+            investedTokens: newInvested,
+            currentValueTokens: newCurrent,
+            thesisText: thesisText || h.thesisText
+          };
+        }
+        return h;
+      }));
+    } else {
+      const newHolding: LabHolding = {
+        symbol: stock.symbol,
+        name: stock.name,
+        investedTokens: requiredTokens,
+        currentValueTokens: requiredTokens,
+        returnTokens: 0,
+        returnPercent: 0,
+        isPositive: true,
+        weight: 10,
+        avgPrice: stock.price,
+        currentPrice: stock.price,
+        holdingDays: 1,
+        status: 'Thesis On Track',
+        statusDesc: 'New investment entered with fresh thesis.',
+        thesisReason: 'Long-Term Growth',
+        thesisText: thesisText || 'Research-backed entry strategy.',
+        buyDate: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
+        decisionScore: 80,
+        thesisState: '🟢 Still Playing Out'
+      };
+      setHoldings(prev => [newHolding, ...prev]);
+    }
+
+    setAvailableTokens(prev => Math.max(0, prev - requiredTokens));
+    toast.success(`Invested ₹${requiredTokens.toLocaleString('en-IN')} Tokens into ${stock.symbol}!`);
+  };
+
+  const handleModalConfirmSell = (symbol: string, sharesToSell: number) => {
+    const targetHolding = holdings.find(h => h.symbol === symbol);
+    if (!targetHolding) return;
+
+    const ownedShares = Math.round(targetHolding.currentValueTokens / targetHolding.currentPrice) || 10;
+    const saleRatio = Math.min(1, sharesToSell / ownedShares);
+    const saleTokens = Math.round(targetHolding.currentValueTokens * saleRatio);
+
+    if (sharesToSell >= ownedShares) {
+      setHoldings(prev => prev.filter(h => h.symbol !== symbol));
+    } else {
+      setHoldings(prev => prev.map(h => {
+        if (h.symbol === symbol) {
+          return {
+            ...h,
+            investedTokens: Math.round(h.investedTokens * (1 - saleRatio)),
+            currentValueTokens: Math.round(h.currentValueTokens * (1 - saleRatio)),
           };
         }
         return h;
       }));
     }
 
-    setAvailableTokens(prev => prev + saleValueTokens);
-    setIsSellModalOpen(false);
+    setAvailableTokens(prev => prev + saleTokens);
+    toast.success(`Sold ${sharesToSell} shares of ${symbol}. ₹${saleTokens.toLocaleString('en-IN')} Tokens returned.`);
     setSelectedHoldingForSell(null);
-
-    toast.success(`Sold ${sellSharePercent}% of ${holding.symbol}! ${saleValueTokens.toLocaleString('en-IN')} UNIVEST Tokens returned to available balance.`);
   };
 
-  // ====================================================
-  // LOCKED PREVIEW STATE FOR NON-PREMIUM USERS
-  // ====================================================
-  if (!isPremiumUser) {
-    return (
-      <div className="space-y-6 pb-16 font-sans text-[#172033]">
-        
-        {/* Demo Mode Banner */}
-        <div className="bg-amber-50 border border-amber-200 p-3.5 rounded-2xl flex items-center justify-between text-xs text-amber-900 font-bold">
-          <div className="flex items-center gap-2">
-            <Lock className="w-4 h-4 text-amber-600" />
-            <span>Demonstrating Locked State for Free Users</span>
-          </div>
-          <button
-            onClick={() => { setIsPremiumUser(true); setShowFirstTimeWelcome(true); }}
-            className="px-3 py-1 bg-[#15519D] text-white rounded-xl text-xs font-black hover:bg-[#123B63] transition cursor-pointer"
-          >
-            Switch to Premium Mode →
-          </button>
-        </div>
-
-        {/* Locked Hero Banner */}
-        <div className="bg-gradient-to-br from-[#123B63] via-[#15519D] to-[#0E2A47] rounded-[28px] p-8 md:p-12 text-white shadow-xl relative overflow-hidden text-center space-y-6">
-          <div className="flex items-center justify-center gap-2 bg-amber-400/20 text-amber-300 px-4 py-1.5 rounded-full text-xs font-extrabold w-fit mx-auto border border-amber-400/30">
-            <Coins className="w-4 h-4 fill-current" />
-            <span>UNIVEST PRO FEATURE</span>
-          </div>
-
-          <div className="space-y-2 max-w-2xl mx-auto">
-            <h1 className="text-3xl md:text-4xl font-black tracking-tight">
-              INVESTMENT LAB
-            </h1>
-            <p className="text-xl font-black text-amber-300">
-              Learn investing by doing it.
-            </p>
-            <p className="text-sm text-blue-100 font-medium leading-relaxed max-w-xl mx-auto">
-              Test your investment ideas using <strong className="text-white font-black">1,00,000 virtual UNIVEST Tokens</strong>. Research, invest with tokens, track decisions, receive AI feedback, and become a better investor.
-            </p>
-          </div>
-
-          <div className="pt-2">
-            <button
-              onClick={onOpenPricingModal}
-              className="px-8 py-4 bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-sm rounded-2xl shadow-xl transition-all cursor-pointer hover:scale-105 active:scale-95 flex items-center gap-2 mx-auto"
-            >
-              <Sparkles className="w-5 h-5 fill-current" />
-              <span>Unlock Investment Lab</span>
-            </button>
-            <p className="text-xs text-blue-200 font-medium mt-3">
-              Get 1,00,000 virtual UNIVEST Tokens and start testing your investment ideas.
-            </p>
-          </div>
-        </div>
-
-      </div>
-    );
-  }
-
-  // ====================================================
-  // ACTIVE PREMIUM USER EXPERIENCE
-  // ====================================================
   return (
-    <div className="space-y-6 pb-16 font-sans text-[#172033]">
+    <div className="flex flex-col gap-8 w-full font-sans text-[#172033] pb-16">
       
-      {/* Demo State Switcher Bar */}
-      <div className="bg-blue-50/80 border border-blue-200/80 p-3 rounded-2xl flex items-center justify-between text-xs text-blue-900 font-extrabold">
-        <div className="flex items-center gap-2">
-          <Sparkles className="w-4 h-4 text-[#15519D]" />
-          <span>Active Premium Mode — Tokenized Investment Lab</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => setShowFirstTimeWelcome(true)}
-            className="px-3 py-1 bg-white hover:bg-slate-50 text-[#15519D] border border-blue-200 rounded-xl text-[11px] font-black transition cursor-pointer"
-          >
-            Re-open Welcome Onboarding →
-          </button>
-          <button
-            onClick={() => setIsPremiumUser(false)}
-            className="px-3 py-1 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl text-[11px] font-extrabold transition cursor-pointer"
-          >
-            Preview Locked State
-          </button>
-        </div>
-      </div>
+      {/* 1. PREMIUM INVESTMENT LAB HERO HEADER */}
+      <section className="bg-gradient-to-br from-[#123B63] to-[#15519D] text-white rounded-[28px] p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-80 h-80 rounded-full bg-white/10 blur-3xl pointer-events-none" />
+        
+        <div className="relative z-10 flex flex-col xl:flex-row xl:items-center justify-between gap-6">
+          {/* LEFT: TITLE & DESCRIPTION */}
+          <div className="space-y-2 max-w-xl">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-amber-300 text-[11px] font-black uppercase tracking-wider flex items-center gap-1.5 border border-white/20">
+                <FlaskConical className="w-3.5 h-3.5 fill-current" /> Premium Simulation & Decision Intelligence
+              </span>
+              <button
+                onClick={() => setIsCapitalModalOpen(true)}
+                className="text-[11px] font-bold text-blue-200 hover:text-white underline cursor-pointer transition"
+              >
+                Change Starting Capital
+              </button>
+            </div>
 
-      {/* ==================================================== */}
-      {/* 2. EXACT 5 TAB SEGMENTED NAVIGATION CONTAINER */}
-      {/* ==================================================== */}
-      <div className="bg-white p-2 rounded-[24px] border border-[#E2E8F0] shadow-2xs flex items-center gap-2 overflow-x-auto scrollbar-none">
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+              ArthSetu Investment Lab
+            </h1>
+            <p className="text-xs sm:text-sm text-blue-100/90 font-medium leading-relaxed">
+              Test investment ideas with virtual capital, evaluate thesis progression, understand stock performance drivers, and improve your investment quality.
+            </p>
+          </div>
+
+          {/* RIGHT: MAIN LAB METRICS BAR */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 bg-white/10 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/20 shrink-0">
+            {/* TOTAL LAB VALUE */}
+            <div className="space-y-1 min-w-[120px]">
+              <span className="text-[10px] font-extrabold text-blue-200 uppercase tracking-wider block">Total Lab Value</span>
+              <div className="text-base sm:text-lg font-black text-white leading-none">₹{totalLabValue.toLocaleString('en-IN')}</div>
+              <div className={`text-[10px] font-extrabold flex items-center gap-0.5 ${isOverallPositive ? 'text-emerald-300' : 'text-rose-300'}`}>
+                {isOverallPositive ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
+                <span>{isOverallPositive ? '+' : ''}{totalReturnPercent.toFixed(2)}% (₹{totalReturnTokens.toLocaleString('en-IN')})</span>
+              </div>
+            </div>
+
+            {/* STARTING CAPITAL */}
+            <div className="space-y-1 min-w-[120px]">
+              <span className="text-[10px] font-extrabold text-blue-200 uppercase tracking-wider block">Starting Capital</span>
+              <div className="text-base sm:text-lg font-black text-white leading-none">₹{startingCapital.toLocaleString('en-IN')}</div>
+              <span className="text-[10px] text-blue-200/80 font-semibold block">Configured Tokens</span>
+            </div>
+
+            {/* INVESTED VALUE */}
+            <div className="space-y-1 min-w-[120px]">
+              <span className="text-[10px] font-extrabold text-blue-200 uppercase tracking-wider block">Invested Value</span>
+              <div className="text-base sm:text-lg font-black text-white leading-none">₹{currentHoldingsValue.toLocaleString('en-IN')}</div>
+              <span className="text-[10px] text-blue-200/80 font-semibold block">{holdings.length} Active Positions</span>
+            </div>
+
+            {/* AVAILABLE TOKENS */}
+            <div className="space-y-1 min-w-[120px]">
+              <span className="text-[10px] font-extrabold text-blue-200 uppercase tracking-wider block">Available Tokens</span>
+              <div className="text-base sm:text-lg font-black text-amber-300 leading-none">₹{availableTokens.toLocaleString('en-IN')}</div>
+              <span className="text-[10px] text-blue-200/80 font-semibold block">Ready to Allocate</span>
+            </div>
+          </div>
+        </div>
+
+        {/* PRIMARY ACTIONS ROW */}
+        <div className="pt-5 border-t border-white/15 flex flex-wrap items-center justify-between gap-3 mt-6">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setIsInvestModalOpen(true)}
+              className="px-5 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs rounded-xl shadow-lg transition cursor-pointer flex items-center gap-1.5"
+            >
+              <Plus className="w-4 h-4" /> Invest Tokens
+            </button>
+
+            <button
+              onClick={() => setActiveTab('journal')}
+              className="px-4 py-2.5 bg-white/10 hover:bg-white/20 text-white font-extrabold text-xs rounded-xl border border-white/20 transition cursor-pointer flex items-center gap-1.5"
+            >
+              <BookOpen className="w-4 h-4" /> Review My Decisions
+            </button>
+          </div>
+
+          <div className="text-xs text-blue-200/90 font-medium flex items-center gap-1.5">
+            <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+            <span>Persistent Virtual Tokens · Sell holdings to free up capital</span>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. TAB NAVIGATION STRIP */}
+      <div className="flex items-center gap-2 border-b border-[#E2E8F0] pb-2 overflow-x-auto">
         {[
-          { id: 'Overview', label: 'Overview', icon: <LayoutDashboard className="w-4 h-4" /> },
-          { id: 'Holdings', label: 'Holdings', icon: <PieChart className="w-4 h-4" /> },
-          { id: 'Performance', label: 'Performance', icon: <TrendingUp className="w-4 h-4" /> },
-          { id: 'Insights', label: 'Insights', icon: <Sparkles className="w-4 h-4" /> },
-          { id: 'Journal', label: 'Decision Journal', icon: <BookOpen className="w-4 h-4" /> },
-        ].map((tab) => (
+          { id: 'overview', label: 'Overview', icon: LayoutDashboard },
+          { id: 'holdings', label: `Holdings (${holdings.length})`, icon: Layers },
+          { id: 'performance', label: 'Performance & Attribution', icon: Activity },
+          { id: 'insights', label: 'AI Insights & Profile', icon: Sparkles },
+          { id: 'journal', label: 'Decision Journal', icon: BookOpen },
+        ].map(t => (
           <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id as any)}
-            className={`flex-1 min-w-[130px] py-3 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
-              activeTab === tab.id
-                ? 'bg-[#15519D] text-white shadow-md shadow-blue-900/20'
-                : 'bg-transparent text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+            key={t.id}
+            onClick={() => setActiveTab(t.id as any)}
+            className={`px-5 py-3 rounded-2xl text-xs font-extrabold transition flex items-center gap-2 cursor-pointer whitespace-nowrap ${
+              activeTab === t.id
+                ? 'bg-[#15519D] text-white shadow-md'
+                : 'bg-white text-[#64748B] hover:text-[#172033] border border-[#E2E8F0]'
             }`}
           >
-            {tab.icon}
-            <span>{tab.label}</span>
+            <t.icon className="w-4 h-4" />
+            <span>{t.label}</span>
           </button>
         ))}
       </div>
 
-      {/* ==================================================== */}
-      {/* TAB 1: OVERVIEW PAGE */}
-      {/* ==================================================== */}
-      {activeTab === 'Overview' && (
-        <div className="space-y-6">
+      {/* 3. TAB 1: OVERVIEW */}
+      {activeTab === 'overview' && (
+        <div className="space-y-8 animate-in fade-in duration-300">
           
-          {/* Top Hero Banner */}
-          <div className="bg-gradient-to-br from-[#123B63] via-[#15519D] to-[#0E2A47] rounded-[28px] p-6 md:p-8 text-white shadow-xl relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <div className="space-y-2 z-10 max-w-xl">
-              <div className="flex items-center gap-2 bg-amber-400/20 text-amber-300 px-3.5 py-1 rounded-full text-xs font-extrabold w-fit border border-amber-400/30">
-                <Coins className="w-4 h-4 fill-current" />
-                <span>UNIVEST INVESTMENT LAB</span>
-              </div>
-              <h1 className="text-2xl md:text-3xl font-black tracking-tight leading-snug">
-                Test your investment thinking.
-              </h1>
-              <p className="text-xs md:text-sm text-blue-100 font-medium leading-relaxed">
-                Manage your <strong className="text-amber-300 font-black">1,00,000 UNIVEST Tokens</strong>. Select share quantities, buy stocks, and track real market performance.
-              </p>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-3 z-10 w-full md:w-auto">
-              <button
-                onClick={() => handleOpenInvestModal()}
-                className="px-6 py-3.5 bg-white text-[#15519D] hover:bg-blue-50 text-xs font-black rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-105 active:scale-95"
-              >
-                <Plus className="w-4 h-4 stroke-[3]" />
-                <span>+ Invest Tokens</span>
-              </button>
-
-              <button
-                onClick={() => setActiveTab('Holdings')}
-                className="px-5 py-3.5 bg-white/10 hover:bg-white/20 text-white text-xs font-extrabold rounded-2xl border border-white/20 transition-all flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <ShoppingCart className="w-4 h-4 text-amber-300" />
-                <span>Sell Holdings →</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Connected Portfolio Summary Card */}
-          <div className="bg-white p-6 md:p-7 rounded-[28px] border border-[#E2E8F0] shadow-2xs">
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-6 divide-y md:divide-y-0 md:divide-x divide-slate-100">
-              <div className="space-y-1 col-span-2 md:col-span-2">
-                <div className="text-xs font-black uppercase text-slate-400 tracking-wider">Total Lab Value</div>
-                <div className="text-3xl font-black text-slate-900 font-mono tracking-tight">{totalLabTokens.toLocaleString('en-IN')} Tokens</div>
-                <div className="flex items-center gap-2 pt-1">
-                  <span className={`text-sm font-extrabold font-mono ${overallReturnTokens >= 0 ? 'text-[#16A34A]' : 'text-[#DC2626]'}`}>
-                    {overallReturnTokens >= 0 ? `↑ +${overallReturnPercent.toFixed(2)}%` : `${overallReturnPercent.toFixed(2)}%`}
-                  </span>
-                  <span className="text-xs font-bold text-slate-500">({overallReturnTokens >= 0 ? '+' : ''}{overallReturnTokens.toLocaleString('en-IN')} Tokens)</span>
-                </div>
-              </div>
-
-              <div className="space-y-1 pt-4 md:pt-0 md:pl-6">
-                <div className="text-xs font-black uppercase text-slate-400 tracking-wider">Available to Invest</div>
-                <div className="text-xl font-black text-[#15519D] font-mono">{availableTokens.toLocaleString('en-IN')} Tokens</div>
-                <div className="text-[11px] font-bold text-emerald-600">
-                  {availableTokens < 10000 ? 'Sell holdings to free up Tokens' : 'Ready for New Investments'}
-                </div>
-              </div>
-
-              <div className="space-y-1 pt-4 md:pt-0 md:pl-6">
-                <div className="text-xs font-black uppercase text-slate-400 tracking-wider">Invested in Holdings</div>
-                <div className="text-xl font-black text-slate-900 font-mono">{totalCurrentTokensValue.toLocaleString('en-IN')} Tokens</div>
-                <div className="text-[11px] font-bold text-slate-500">{holdings.length} Active Positions</div>
-              </div>
-
-              <div className="space-y-1 pt-4 md:pt-0 md:pl-6">
-                <div className="text-xs font-black uppercase text-slate-400 tracking-wider">Closed Realized Returns</div>
-                <div className="text-xl font-black text-emerald-600 font-mono">+2,250 Tokens</div>
-                <div className="text-[11px] font-bold text-slate-400">{closedPositions.length} Closed Deals</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Quick Actions Bar */}
-          <div className="flex items-center justify-between bg-white p-4 rounded-2xl border border-[#E2E8F0] shadow-2xs gap-4 flex-wrap">
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => handleOpenInvestModal()}
-                className="px-5 py-2.5 bg-[#15519D] hover:bg-[#123B63] text-white text-xs font-black rounded-xl shadow-md transition cursor-pointer flex items-center gap-2"
-              >
-                <Plus className="w-4 h-4 stroke-[3]" />
-                <span>+ Invest Tokens</span>
-              </button>
-
-              <button
-                onClick={() => setActiveTab('Holdings')}
-                className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-extrabold rounded-xl transition cursor-pointer flex items-center gap-1.5"
-              >
-                <PieChart className="w-4 h-4 text-slate-600" />
-                <span>View & Sell Holdings</span>
-              </button>
-
-              <button
-                onClick={() => setActiveTab('Insights')}
-                className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-extrabold rounded-xl transition cursor-pointer flex items-center gap-1.5"
-              >
-                <Sparkles className="w-4 h-4 text-amber-500" />
-                <span>Review Insights</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Dual Row: Performance Preview & Health Preview */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* PERFORMANCE CHART + KEY OBSERVATION */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
             
-            {/* Performance Preview Card (7 cols) */}
-            <div className="lg:col-span-7 bg-white p-6 rounded-[28px] border border-[#E2E8F0] shadow-2xs space-y-4 flex flex-col justify-between">
-              <div className="flex items-center justify-between flex-wrap gap-2">
+            <div className="lg:col-span-2 bg-white rounded-[28px] border border-[#E2E8F0] p-6 shadow-sm space-y-4">
+              <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-sm font-black text-slate-900">Your Lab Performance</h3>
-                  <div className="flex items-center gap-2 text-xs font-bold text-slate-500 mt-0.5">
-                    <span>Portfolio +8.45%</span>
-                    <span>•</span>
-                    <span className="text-emerald-600">+3.33% vs NIFTY</span>
-                  </div>
+                  <span className="text-xs font-bold text-[#64748B] uppercase">Lab Growth Trajectory</span>
+                  <h3 className="text-xl font-black text-[#172033]">Portfolio Value vs NIFTY 50</h3>
                 </div>
-
-                <button
-                  onClick={() => setActiveTab('Performance')}
-                  className="text-xs font-extrabold text-[#15519D] hover:underline flex items-center gap-1 cursor-pointer"
-                >
-                  <span>View Full Performance</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
+                <div className="flex items-center gap-4 text-xs font-bold">
+                  <div className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-[#15519D]" /> Your Lab (+12.28%)</div>
+                  <div className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-emerald-500" /> NIFTY 50 (+8.41%)</div>
+                </div>
               </div>
 
-              <div className="h-40 w-full">
+              <div className="h-64 w-full">
                 <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={LAB_PERFORMANCE_TIMEFRAMES['1M']}>
+                  <AreaChart data={[
+                    { day: 'May 24', lab: 150000, nifty: 150000 },
+                    { day: 'Jun 10', lab: 154200, nifty: 152100 },
+                    { day: 'Jun 25', lab: 158900, nifty: 154800 },
+                    { day: 'Jul 15', lab: 163400, nifty: 157200 },
+                    { day: 'Aug 01', lab: 161200, nifty: 159000 },
+                    { day: 'Aug 28', lab: 168420, nifty: 162615 }
+                  ]}>
                     <defs>
-                      <linearGradient id="prevGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#15519D" stopOpacity="0.3" />
-                        <stop offset="100%" stopColor="#15519D" stopOpacity="0.0" />
+                      <linearGradient id="labColor" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#15519D" stopOpacity={0.3}/>
+                        <stop offset="95%" stopColor="#15519D" stopOpacity={0}/>
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
-                    <XAxis dataKey="date" tick={{ fontSize: 10, fill: '#64748B' }} axisLine={false} tickLine={false} />
-                    <YAxis tick={{ fontSize: 10, fill: '#64748B' }} hide />
-                    <Tooltip contentStyle={{ backgroundColor: '#172033', borderRadius: '12px', color: '#fff', fontSize: '12px' }} />
-                    <Area type="monotone" dataKey="labTokens" stroke="#15519D" strokeWidth={2.5} fill="url(#prevGrad)" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
+                    <XAxis dataKey="day" stroke="#94A3B8" fontSize={11} />
+                    <YAxis stroke="#94A3B8" fontSize={11} domain={['auto', 'auto']} />
+                    <Tooltip />
+                    <Area type="monotone" dataKey="lab" stroke="#15519D" strokeWidth={3} fillOpacity={1} fill="url(#labColor)" />
+                    <Area type="monotone" dataKey="nifty" stroke="#16A34A" strokeWidth={2} strokeDasharray="4 4" fill="none" />
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
             </div>
 
-            {/* Health Score Preview (5 cols) */}
-            <div className="lg:col-span-5 bg-white p-6 rounded-[28px] border border-[#E2E8F0] shadow-2xs space-y-4 flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-black text-slate-900 flex items-center gap-2">
-                    <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                    <span>Investment Health</span>
-                  </h3>
-                  <span className="text-xs font-extrabold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
-                    78 / 100 Good
-                  </span>
+            {/* QUICK AI SUMMARY CARD */}
+            <div className="bg-[#123B63] text-white rounded-[28px] p-6 shadow-lg flex flex-col justify-between space-y-6">
+              <div className="space-y-3">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-amber-300 text-xs font-black uppercase">
+                  <Sparkles className="w-3.5 h-3.5" /> Latest Decision Summary
                 </div>
-
-                <div className="space-y-2 mt-4 text-xs font-bold">
-                  <div className="flex justify-between"><span className="text-slate-500">Diversification</span><span className="font-mono">82</span></div>
-                  <div className="flex justify-between"><span className="text-slate-500">Risk Balance</span><span className="font-mono">76</span></div>
-                  <div className="flex justify-between"><span className="text-slate-500">Concentration</span><span className="text-amber-600 font-mono">65</span></div>
-                  <div className="flex justify-between"><span className="text-slate-500">Decision Discipline</span><span className="text-emerald-600 font-mono">84</span></div>
-                </div>
+                <h3 className="text-2xl font-black">Outperforming Benchmark by +3.87%</h3>
+                <p className="text-xs text-blue-100/80 leading-relaxed font-medium">
+                  Your Reliance and HDFC Bank entries have driven strong positive returns. However, your Tech allocation is approaching 41% portfolio concentration.
+                </p>
               </div>
 
-              <button
-                onClick={() => setActiveTab('Insights')}
-                className="w-full py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-extrabold rounded-xl transition-all flex items-center justify-center gap-1 cursor-pointer"
-              >
-                <span>View Insights</span>
-                <ChevronRight className="w-3.5 h-3.5" />
-              </button>
+              <div className="pt-4 border-t border-white/15 space-y-3">
+                <div className="flex justify-between items-center text-xs font-bold">
+                  <span className="text-blue-200">Average Decision Quality:</span>
+                  <span className="text-amber-300 font-black">77.5 / 100</span>
+                </div>
+                <button
+                  onClick={() => setActiveTab('performance')}
+                  className="w-full py-3 bg-white text-[#123B63] font-black text-xs rounded-xl shadow-md transition cursor-pointer flex items-center justify-center gap-2"
+                >
+                  <span>Explore Full Performance →</span>
+                </button>
+              </div>
             </div>
 
           </div>
 
-          {/* Top Holdings Preview Strip */}
-          <div className="bg-white p-6 rounded-[28px] border border-[#E2E8F0] shadow-2xs space-y-4">
+          {/* ACTIVE HOLDINGS SNAPSHOT */}
+          <div className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-base font-black text-slate-900">Top Holdings</h3>
-              <button onClick={() => setActiveTab('Holdings')} className="text-xs font-extrabold text-[#15519D] hover:underline flex items-center gap-1 cursor-pointer">
-                <span>View & Sell Holdings ({holdings.length})</span>
-                <ChevronRight className="w-3.5 h-3.5" />
+              <h3 className="text-lg font-black text-[#172033]">Active Lab Holdings Snapshot</h3>
+              <button onClick={() => setActiveTab('holdings')} className="text-xs font-extrabold text-[#15519D] hover:underline cursor-pointer">
+                View All Holdings →
               </button>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-              {holdings.slice(0, 4).map((st) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {holdings.map(h => (
                 <div
-                  key={st.symbol}
-                  className="p-4 bg-slate-50 hover:bg-blue-50/60 rounded-2xl border border-slate-100 space-y-2 transition"
+                  key={h.symbol}
+                  onClick={() => setSelectedHoldingForDetail(h)}
+                  className="p-5 rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC] hover:bg-blue-50/40 hover:border-[#15519D] transition cursor-pointer space-y-3 group"
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="font-black text-xs text-slate-900">{st.symbol}</span>
-                    <span className={`text-xs font-black font-mono ${st.isPositive ? 'text-[#16A34A]' : 'text-[#DC2626]'}`}>
-                      {st.isPositive ? `+${st.returnPercent}%` : `${st.returnPercent}%`}
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <span className="font-black text-base text-[#172033] group-hover:text-[#15519D] transition-colors">{h.symbol}</span>
+                      <span className="text-[11px] text-[#64748B] block font-medium truncate max-w-[150px]">{h.name}</span>
+                    </div>
+                    <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-black ${
+                      h.isPositive ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
+                    }`}>
+                      {h.isPositive ? '+' : ''}{h.returnPercent}%
                     </span>
                   </div>
-                  <div className="text-sm font-black font-mono text-slate-900">{st.currentValueTokens.toLocaleString('en-IN')} Tokens</div>
-                  <div className="flex items-center gap-2 pt-1">
-                    <button
-                      onClick={() => onSelectStock && onSelectStock({ symbol: st.symbol, name: st.name, price: st.currentPrice.toLocaleString('en-IN') })}
-                      className="px-2.5 py-1 bg-white border border-slate-200 text-slate-700 rounded-lg text-[10px] font-bold hover:bg-slate-100 cursor-pointer"
-                    >
-                      View
-                    </button>
-                    <button
-                      onClick={() => handleOpenSellModal(st)}
-                      className="px-2.5 py-1 bg-rose-50 text-rose-700 border border-rose-200 rounded-lg text-[10px] font-black hover:bg-rose-100 cursor-pointer"
-                    >
-                      Sell
-                    </button>
+
+                  <div className="flex justify-between items-baseline pt-2 border-t border-[#E2E8F0]">
+                    <div className="space-y-0.5">
+                      <span className="text-[10px] font-bold text-[#64748B] uppercase">Invested</span>
+                      <div className="font-extrabold text-xs text-[#172033]">₹{h.investedTokens.toLocaleString('en-IN')}</div>
+                    </div>
+                    <div className="text-right space-y-0.5">
+                      <span className="text-[10px] font-bold text-[#64748B] uppercase">Current Value</span>
+                      <div className="font-black text-sm text-[#15519D]">₹{h.currentValueTokens.toLocaleString('en-IN')}</div>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -787,576 +487,457 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({
         </div>
       )}
 
-      {/* ==================================================== */}
-      {/* TAB 2: HOLDINGS PAGE */}
-      {/* ==================================================== */}
-      {activeTab === 'Holdings' && (
-        <div className="space-y-6">
-          <div className="flex flex-wrap items-center justify-between gap-4">
+      {/* 4. TAB 2: HOLDINGS */}
+      {activeTab === 'holdings' && (
+        <div className="space-y-6 animate-in fade-in duration-300">
+          <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-xl font-black text-slate-900">My Holdings</h2>
-              <p className="text-xs text-slate-500 font-medium">Track and manage active stock positions or sell to free up Tokens.</p>
+              <h2 className="text-2xl font-black text-[#172033]">Your Simulated Holdings</h2>
+              <p className="text-xs text-[#64748B] font-medium">Click any holding to open detailed intelligence, charts, and position breakdown.</p>
             </div>
-
             <button
-              onClick={() => handleOpenInvestModal()}
-              className="px-5 py-2.5 bg-[#15519D] hover:bg-[#123B63] text-white text-xs font-black rounded-xl transition cursor-pointer flex items-center gap-1.5"
+              onClick={() => setIsInvestModalOpen(true)}
+              className="px-5 py-2.5 bg-[#15519D] text-white font-extrabold text-xs rounded-xl shadow-md hover:bg-[#123B63] transition cursor-pointer"
             >
-              <Plus className="w-4 h-4 stroke-[3]" />
-              <span>+ Invest Tokens</span>
+              + Invest Tokens
             </button>
           </div>
 
-          <div className="bg-white p-4 rounded-2xl border border-[#E2E8F0] shadow-2xs flex items-center justify-between text-xs font-bold text-slate-600 flex-wrap gap-4">
-            <div><span>{holdings.length} Active Holdings</span></div>
-            <div><span>Invested: <strong className="font-mono text-slate-900">{totalInvestedTokens.toLocaleString('en-IN')} Tokens</strong></span></div>
-            <div><span>Current Value: <strong className="font-mono text-slate-900">{totalCurrentTokensValue.toLocaleString('en-IN')} Tokens</strong></span></div>
-            <div><span>Unrealized Return: <strong className="font-mono text-emerald-600">+{overallReturnTokens.toLocaleString('en-IN')} Tokens (+{overallReturnPercent.toFixed(2)}%)</strong></span></div>
+          <div className="space-y-4">
+            {holdings.map(h => (
+              <div
+                key={h.symbol}
+                onClick={() => setSelectedHoldingForDetail(h)}
+                className="bg-white rounded-[24px] border border-[#E2E8F0] hover:border-[#15519D] transition-all p-6 shadow-sm space-y-4 cursor-pointer group"
+              >
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#E2E8F0] pb-4">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <span className="font-black text-xl text-[#172033] group-hover:text-[#15519D] transition-colors">{h.symbol}</span>
+                      <span className="text-xs text-[#64748B] font-medium">• {h.name}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs font-semibold text-[#64748B]">
+                      <span>Holding Period: <strong className="text-[#172033]">{h.holdingDays} Days</strong></span>
+                      <span>•</span>
+                      <span>Bought: <strong className="text-[#172033]">{h.buyDate}</strong></span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-6">
+                    <div className="text-right">
+                      <span className="text-[10px] font-bold text-[#64748B] uppercase block">Invested</span>
+                      <span className="font-extrabold text-sm text-[#172033]">₹{h.investedTokens.toLocaleString('en-IN')}</span>
+                    </div>
+
+                    <div className="text-right">
+                      <span className="text-[10px] font-bold text-[#64748B] uppercase block">Current Value</span>
+                      <span className="font-black text-lg text-[#15519D]">₹{h.currentValueTokens.toLocaleString('en-IN')}</span>
+                    </div>
+
+                    <div className="text-right">
+                      <span className="text-[10px] font-bold text-[#64748B] uppercase block">Return</span>
+                      <span className={`font-black text-base ${h.isPositive ? 'text-emerald-600' : 'text-rose-600'}`}>
+                        {h.isPositive ? '+' : ''}{h.returnPercent}% (₹{h.returnTokens.toLocaleString('en-IN')})
+                      </span>
+                    </div>
+
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedHoldingForSell(h);
+                      }}
+                      className="px-4 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 font-extrabold text-xs rounded-xl transition cursor-pointer"
+                    >
+                      Sell & Reallocate
+                    </button>
+                  </div>
+                </div>
+
+                {/* INTELLIGENCE STATUS LAYER */}
+                <div className="bg-[#F8FAFC] p-4 rounded-2xl border border-[#E2E8F0] flex items-start justify-between gap-4">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-bold text-[#64748B]">Investment Status:</span>
+                      <span className={`px-3 py-0.5 rounded-full text-xs font-black ${
+                        h.status === 'Performing Well' ? 'bg-emerald-100 text-emerald-800' :
+                        h.status === 'Thesis On Track' ? 'bg-blue-100 text-blue-800' : 'bg-rose-100 text-rose-800'
+                      }`}>
+                        {h.status}
+                      </span>
+                      <span className="text-xs font-bold text-[#15519D]">{h.thesisState}</span>
+                    </div>
+                    <p className="text-xs text-[#64748B] font-medium">{h.statusDesc}</p>
+                  </div>
+
+                  <div className="flex items-center gap-3 shrink-0">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedHoldingForDetail(h);
+                      }}
+                      className="text-xs font-extrabold text-[#15519D] hover:underline cursor-pointer"
+                    >
+                      View Holding Details & Charts →
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* 5. TAB 3: PERFORMANCE & ATTRIBUTION */}
+      {activeTab === 'performance' && (
+        <div className="space-y-8 animate-in fade-in duration-300">
+          
+          {/* PERFORMANCE HERO COMPARISON */}
+          <div className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 sm:p-8 space-y-6 shadow-sm">
+            <div className="space-y-1">
+              <span className="text-xs font-bold text-[#64748B] uppercase">Decision Evaluation</span>
+              <h2 className="text-2xl font-black text-[#172033]">How good have my investment decisions been?</h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-[#F8FAFC] p-6 rounded-2xl border border-[#E2E8F0]">
+              <div className="space-y-1">
+                <span className="text-xs font-bold text-[#64748B]">Your Lab Return</span>
+                <div className="text-3xl font-black text-[#15519D]">+12.28%</div>
+                <span className="text-xs text-emerald-600 font-bold">+₹18,420 Profit</span>
+              </div>
+
+              <div className="space-y-1">
+                <span className="text-xs font-bold text-[#64748B]">NIFTY 50 Benchmark</span>
+                <div className="text-3xl font-black text-slate-700">+8.41%</div>
+                <span className="text-xs text-slate-500 font-bold">Standard Market Benchmark</span>
+              </div>
+
+              <div className="space-y-1">
+                <span className="text-xs font-bold text-[#64748B]">Relative Outperformance</span>
+                <div className="text-3xl font-black text-emerald-600">+3.87%</div>
+                <span className="text-xs text-emerald-700 font-bold">Alpha Generated Over Market</span>
+              </div>
+            </div>
           </div>
 
-          <div className="bg-white p-6 rounded-[28px] border border-[#E2E8F0] shadow-2xs space-y-4">
-            <div className="overflow-x-auto scrollbar-none">
-              <table className="w-full text-left border-collapse">
+          {/* WHAT CREATED YOUR RETURNS? (RETURN ATTRIBUTION) */}
+          <div className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 space-y-4">
+            <h3 className="text-xl font-black text-[#172033]">What Created Your Returns?</h3>
+            <p className="text-xs text-[#64748B] font-medium">Click on any holding to see chronological drivers (earnings, sector momentum, valuation).</p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {holdings.map(h => (
+                <div
+                  key={h.symbol}
+                  onClick={() => setSelectedHoldingForDetail(h)}
+                  className="p-5 rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC] hover:bg-blue-50/40 hover:border-[#15519D] transition cursor-pointer space-y-3 group"
+                >
+                  <div className="flex justify-between items-center">
+                    <span className="font-black text-base text-[#172033] group-hover:text-[#15519D] transition-colors">{h.symbol}</span>
+                    <span className={`font-black text-sm ${h.isPositive ? 'text-emerald-600' : 'text-rose-600'}`}>
+                      {h.isPositive ? '+' : ''}₹{h.returnTokens.toLocaleString('en-IN')}
+                    </span>
+                  </div>
+
+                  <div className="text-xs text-[#64748B] space-y-1 font-medium">
+                    <div>Decision Score: <strong className="text-[#172033]">{h.decisionScore}/100</strong></div>
+                    <div>Thesis: <strong className="text-[#15519D]">{h.thesisState}</strong></div>
+                  </div>
+
+                  <button className="text-[11px] font-extrabold text-[#15519D] hover:underline block pt-2 border-t border-[#E2E8F0] w-full text-left">
+                    Why did {h.symbol} move? →
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* WAS THIS A GOOD INVESTMENT? (DECISION QUALITY VS OUTCOME) */}
+          <div className="bg-[#123B63] text-white rounded-[28px] p-6 sm:p-8 space-y-6 shadow-xl">
+            <div className="space-y-1">
+              <span className="text-xs font-bold text-amber-300 uppercase">Core Lab Principle</span>
+              <h3 className="text-2xl font-black">Was This a Good Investment? (Decision Quality: 82/100)</h3>
+              <p className="text-xs text-blue-100/80 font-medium">
+                ArthSetu evaluates the reasoning, entry valuation, risk management, and thesis clarity alongside eventual return outcome.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20 space-y-2">
+                <h4 className="font-black text-sm text-emerald-300">What You Got Right</h4>
+                <ul className="text-xs text-blue-50 font-medium space-y-1.5">
+                  <li>• <strong>Strong Business Quality:</strong> Selected companies with solid balance sheets & cash flows.</li>
+                  <li>• <strong>Positive Growth Thesis:</strong> Earnings trajectory matched expected catalysts.</li>
+                  <li>• <strong>Disciplined Entry:</strong> Reliance entry occurred prior to momentum expansion.</li>
+                </ul>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20 space-y-2">
+                <h4 className="font-black text-sm text-amber-300">What Could Have Been Better</h4>
+                <ul className="text-xs text-blue-50 font-medium space-y-1.5">
+                  <li>• <strong>Entry Valuation:</strong> Infosys entered at 26x TTM earnings with minimal margin of safety.</li>
+                  <li>• <strong>Portfolio Concentration:</strong> Technology sector reached 41% total allocation.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* WHAT ELSE COULD YOU HAVE CONSIDERED? (ALTERNATIVE ANALYSIS) */}
+          <div className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 space-y-4">
+            <h3 className="text-xl font-black text-[#172033]">What Else Could You Have Considered?</h3>
+            <p className="text-xs text-[#64748B] font-medium">Compare your holding performance against research-backed alternatives over the same holding period.</p>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs font-medium">
                 <thead>
-                  <tr className="border-b border-slate-100 text-[11px] font-black uppercase text-slate-400 tracking-wider">
-                    <th className="pb-3 pl-2">Stock</th>
-                    <th className="pb-3 text-right">Invested</th>
-                    <th className="pb-3 text-right">Current Value</th>
-                    <th className="pb-3 text-right">Unrealized Return</th>
-                    <th className="pb-3 text-right">Weight</th>
-                    <th className="pb-3 text-right">Current Price</th>
-                    <th className="pb-3 text-right pr-2">Actions</th>
+                  <tr className="border-b border-[#E2E8F0] text-[#64748B] uppercase font-bold">
+                    <th className="py-3 px-4">Company</th>
+                    <th className="py-3 px-4">Your Holding Return</th>
+                    <th className="py-3 px-4">Alternative Return</th>
+                    <th className="py-3 px-4">ArthSetu View</th>
+                    <th className="py-3 px-4">Risk & Volatility Analysis</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 text-xs font-extrabold">
-                  {filteredHoldings.map((st) => (
-                    <tr key={st.symbol} className="hover:bg-slate-50/80 transition-colors group">
-                      <td className="py-3.5 pl-2">
-                        <div className="flex items-center gap-3">
-                          <div className={`w-9 h-9 rounded-xl font-black text-xs flex items-center justify-center ${st.badgeBg}`}>
-                            {st.initials}
-                          </div>
-                          <div>
-                            <div className="font-black text-slate-900 group-hover:text-[#15519D] transition-colors">{st.symbol}</div>
-                            <div className="text-[10px] font-bold text-slate-400 truncate max-w-[140px]">{st.name}</div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="py-3.5 text-right font-mono text-slate-700">{st.investedTokens.toLocaleString('en-IN')} Tokens</td>
-                      <td className="py-3.5 text-right font-mono text-slate-900 font-black">{st.currentValueTokens.toLocaleString('en-IN')} Tokens</td>
-                      <td className="py-3.5 text-right font-mono">
-                        <span className={st.isPositive ? 'text-[#16A34A]' : 'text-[#DC2626]'}>
-                          {st.isPositive ? `+${st.returnTokens.toLocaleString('en-IN')} Tokens` : `${st.returnTokens.toLocaleString('en-IN')} Tokens`}
-                        </span>
-                      </td>
-                      <td className="py-3.5 text-right font-mono text-slate-600">{st.weight}%</td>
-                      <td className="py-3.5 text-right font-mono text-slate-900">₹{st.currentPrice.toLocaleString('en-IN')}</td>
-                      <td className="py-3.5 text-right pr-2">
-                        <div className="flex items-center justify-end gap-2">
-                          <button
-                            onClick={() => onSelectStock && onSelectStock({ symbol: st.symbol, name: st.name, price: st.currentPrice.toLocaleString('en-IN') })}
-                            className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold rounded-xl transition cursor-pointer"
-                          >
-                            View
-                          </button>
-                          <button
-                            onClick={() => handleOpenSellModal(st)}
-                            className="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-black rounded-xl transition cursor-pointer"
-                          >
-                            Sell
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
+                <tbody className="divide-y divide-[#E2E8F0]">
+                  <tr className="hover:bg-[#F8FAFC]">
+                    <td className="py-3 px-4 font-black text-[#172033]">RELIANCE (Your Holding)</td>
+                    <td className="py-3 px-4 font-black text-emerald-600">+14.20%</td>
+                    <td className="py-3 px-4 text-[#64748B]">—</td>
+                    <td className="py-3 px-4 font-bold text-[#15519D]">78/100</td>
+                    <td className="py-3 px-4 text-[#64748B]">Low Risk / Monopoly Moat</td>
+                  </tr>
+                  <tr className="hover:bg-[#F8FAFC]">
+                    <td className="py-3 px-4 font-bold text-[#172033]">ONGC (Alternative A)</td>
+                    <td className="py-3 px-4 text-[#64748B]">—</td>
+                    <td className="py-3 px-4 font-black text-emerald-600">+18.40%</td>
+                    <td className="py-3 px-4 font-bold text-[#15519D]">81/100</td>
+                    <td className="py-3 px-4 text-[#64748B]">Higher crude volatility, higher dividend yield</td>
+                  </tr>
+                  <tr className="hover:bg-[#F8FAFC]">
+                    <td className="py-3 px-4 font-bold text-[#172033]">BPCL (Alternative B)</td>
+                    <td className="py-3 px-4 text-[#64748B]">—</td>
+                    <td className="py-3 px-4 font-black text-emerald-600">+9.70%</td>
+                    <td className="py-3 px-4 font-bold text-[#15519D]">74/100</td>
+                    <td className="py-3 px-4 text-[#64748B]">Lower return but stable cashflows</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
           </div>
+
         </div>
       )}
 
-      {/* ==================================================== */}
-      {/* TAB 3: PERFORMANCE PAGE */}
-      {/* ==================================================== */}
-      {activeTab === 'Performance' && (
-        <div className="space-y-6">
-          <div className="bg-white p-6 md:p-7 rounded-[28px] border border-[#E2E8F0] shadow-2xs space-y-4">
-            <h2 className="text-xl font-black text-slate-900">Performance Analysis</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 divide-y md:divide-y-0 md:divide-x divide-slate-100">
+      {/* 6. TAB 4: INSIGHTS & PROFILE */}
+      {activeTab === 'insights' && (
+        <div className="space-y-8 animate-in fade-in duration-300">
+          
+          {/* PERSONAL INVESTOR PROFILE */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+            
+            <div className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 space-y-4 shadow-sm">
               <div className="space-y-1">
-                <div className="text-xs font-black uppercase text-slate-400">Unrealized Return</div>
-                <div className="text-3xl font-black text-emerald-600 font-mono">+8.45%</div>
+                <span className="text-xs font-bold text-[#64748B] uppercase">Your Investment Style</span>
+                <h3 className="text-2xl font-black text-[#172033]">Growth-Oriented Investor</h3>
+                <p className="text-xs text-[#64748B] font-medium">Based on your holdings duration, allocation behavior, and thesis notes.</p>
               </div>
-              <div className="space-y-1 pt-4 md:pt-0 md:pl-6">
-                <div className="text-xs font-black uppercase text-slate-400">Realized Gain</div>
-                <div className="text-3xl font-black text-[#15519D] font-mono">+2,250 Tokens</div>
+
+              <div className="space-y-3 pt-2">
+                {[
+                  { label: 'Growth Focus', score: 82, color: 'bg-emerald-600' },
+                  { label: 'Value Focus', score: 54, color: 'bg-blue-600' },
+                  { label: 'Momentum', score: 71, color: 'bg-indigo-600' },
+                  { label: 'Dividend / Income', score: 32, color: 'bg-amber-600' },
+                  { label: 'Risk Appetite', score: 68, color: 'bg-rose-600' },
+                ].map(bar => (
+                  <div key={bar.label} className="space-y-1">
+                    <div className="flex justify-between text-xs font-bold">
+                      <span className="text-[#172033]">{bar.label}</span>
+                      <span className="text-[#64748B]">{bar.score}/100</span>
+                    </div>
+                    <div className="h-2 w-full bg-[#F1F5F9] rounded-full overflow-hidden">
+                      <div className={`h-full ${bar.color}`} style={{ width: `${bar.score}%` }} />
+                    </div>
+                  </div>
+                ))}
               </div>
-              <div className="space-y-1 pt-4 md:pt-0 md:pl-6">
-                <div className="text-xs font-black uppercase text-slate-400">Outperformance</div>
-                <div className="text-3xl font-black text-emerald-600 font-mono">+3.33% vs NIFTY</div>
+            </div>
+
+            {/* PORTFOLIO HEALTH SCORE */}
+            <div className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 space-y-4 shadow-sm">
+              <div className="flex justify-between items-start">
+                <div>
+                  <span className="text-xs font-bold text-[#64748B] uppercase">Portfolio Health</span>
+                  <h3 className="text-2xl font-black text-[#172033]">78 / 100</h3>
+                </div>
+                <span className="px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-black rounded-full uppercase">
+                  Healthy Balance
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 pt-2">
+                {[
+                  { label: 'Diversification', val: '81/100' },
+                  { label: 'Risk Balance', val: '73/100' },
+                  { label: 'Valuation Safety', val: '69/100' },
+                  { label: 'Concentration Risk', val: '62/100' },
+                  { label: 'Business Quality', val: '86/100' },
+                  { label: 'Decision Discipline', val: '84/100' },
+                ].map(item => (
+                  <div key={item.label} className="p-3 bg-[#F8FAFC] rounded-xl border border-[#E2E8F0] space-y-0.5">
+                    <span className="text-[10px] font-bold text-[#64748B] uppercase">{item.label}</span>
+                    <div className="font-extrabold text-sm text-[#172033]">{item.val}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
+
+          {/* AI DECISION INSIGHTS */}
+          <div className="bg-[#123B63] text-white rounded-[28px] p-6 sm:p-8 space-y-6 shadow-xl">
+            <h3 className="text-2xl font-black">AI Decision Insights</h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20 space-y-2">
+                <span className="text-amber-300 font-extrabold text-xs uppercase">Insight 01</span>
+                <h4 className="font-extrabold text-sm text-white">Strongest at Quality Companies</h4>
+                <p className="text-xs text-blue-100/80 font-medium leading-relaxed">
+                  Your investments in companies with AAA balance sheets generated better risk-adjusted outcomes than speculative plays.
+                </p>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20 space-y-2">
+                <span className="text-amber-300 font-extrabold text-xs uppercase">Insight 02</span>
+                <h4 className="font-extrabold text-sm text-white">Entry After Momentum Expansion</h4>
+                <p className="text-xs text-blue-100/80 font-medium leading-relaxed">
+                  3 of your last 4 entries occurred after the stock gained &gt;8% over the previous month.
+                </p>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20 space-y-2">
+                <span className="text-amber-300 font-extrabold text-xs uppercase">Insight 03</span>
+                <h4 className="font-extrabold text-sm text-white">Technology Sector Concentration</h4>
+                <p className="text-xs text-blue-100/80 font-medium leading-relaxed">
+                  Technology represents 30% of your holdings. Exploring Healthcare & Capital Goods could enhance diversification.
+                </p>
               </div>
             </div>
           </div>
-        </div>
-      )}
 
-      {/* ==================================================== */}
-      {/* TAB 4: INSIGHTS PAGE */}
-      {/* ==================================================== */}
-      {activeTab === 'Insights' && (
-        <div className="space-y-6">
-          <div className="bg-white p-6 rounded-[28px] border border-[#E2E8F0] shadow-2xs space-y-4">
-            <h2 className="text-xl font-black text-slate-900">Investment Insights</h2>
-            <p className="text-xs text-slate-500 font-medium">Understand the patterns behind your investment decisions.</p>
+          {/* "WHAT IF?" DECISION SIMULATOR */}
+          <div className="bg-white rounded-[28px] border border-[#E2E8F0] p-6 sm:p-8 space-y-6 shadow-sm">
+            <div className="space-y-1">
+              <span className="text-xs font-bold text-[#15519D] uppercase">Alternative Scenario Testing</span>
+              <h3 className="text-2xl font-black text-[#172033]">What If? Scenario Simulator</h3>
+              <p className="text-xs text-[#64748B] font-medium">Explore hypothetical outcomes of alternative investment choices.</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-5 rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC] space-y-3">
+                <h4 className="font-extrabold text-sm text-[#172033]">What if I invested in NIFTY 50 instead?</h4>
+                <p className="text-xs text-[#64748B]">Simulated return: +8.41% (₹12,615 gain)</p>
+                <div className="text-xs font-bold text-[#15519D]">Your Lab Outperformed by +₹5,805</div>
+              </div>
+
+              <div className="p-5 rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC] space-y-3">
+                <h4 className="font-extrabold text-sm text-[#172033]">What if I entered 1 month later?</h4>
+                <p className="text-xs text-[#64748B]">Simulated return: +7.20% (Missed early entry surge)</p>
+                <div className="text-xs font-bold text-amber-700">Early entry added +₹6,200 value</div>
+              </div>
+
+              <div className="p-5 rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC] space-y-3">
+                <h4 className="font-extrabold text-sm text-[#172033]">What if I allocated 50% capital?</h4>
+                <p className="text-xs text-[#64748B]">Simulated return: +14.20% but higher portfolio volatility</p>
+                <div className="text-xs font-bold text-[#15519D]">Current allocation offered better risk balance</div>
+              </div>
+            </div>
           </div>
+
         </div>
       )}
 
-      {/* ==================================================== */}
-      {/* TAB 5: DECISION JOURNAL PAGE */}
-      {/* ==================================================== */}
-      {activeTab === 'Journal' && (
-        <div className="space-y-6">
-          <div className="bg-white p-6 rounded-[28px] border border-[#E2E8F0] shadow-2xs space-y-4">
-            <h2 className="text-xl font-black text-slate-900">Decision Journal</h2>
-            <p className="text-xs text-slate-500 font-medium">Your investment thinking, recorded and tracked over time.</p>
+      {/* 7. TAB 5: DECISION JOURNAL */}
+      {activeTab === 'journal' && (
+        <div className="space-y-6 animate-in fade-in duration-300">
+          <div className="space-y-1">
+            <h2 className="text-2xl font-black text-[#172033]">Decision Journal</h2>
+            <p className="text-xs text-[#64748B] font-medium">Your investment memory — thesis notes, chronological developments, and post-decision reviews.</p>
           </div>
-        </div>
-      )}
 
-      {/* ==================================================== */}
-      {/* MODAL 1: FIRST-TIME PREMIUM WELCOME OVERLAY */}
-      {/* ==================================================== */}
-      <AnimatePresence>
-        {showFirstTimeWelcome && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-[32px] border border-[#E2E8F0] shadow-2xl max-w-xl w-full p-8 space-y-6 text-center overflow-hidden relative"
-            >
-              <div className="w-16 h-16 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mx-auto shadow-md">
-                <Coins className="w-8 h-8 fill-current" />
-              </div>
-
-              <div className="space-y-1">
-                <div className="text-xs font-black uppercase text-[#15519D] tracking-wider">UNIVEST Investment Lab</div>
-                <h2 className="text-2xl font-black text-slate-900">Welcome to the Investment Lab</h2>
-                <p className="text-xs text-slate-500 font-medium">Your ideas deserve a place to be tested.</p>
-              </div>
-
-              <div className="p-4 bg-gradient-to-br from-slate-900 to-[#123B63] text-white rounded-2xl space-y-1">
-                <div className="text-[10px] font-bold text-amber-300 uppercase">Your Allocation</div>
-                <div className="text-3xl font-black font-mono tracking-tight text-amber-300">1,00,000 UNIVEST TOKENS</div>
-                <div className="text-[11px] text-blue-200 font-medium">Buy shares, manage your portfolio, sell to free up Tokens.</div>
-              </div>
-
-              <button
-                onClick={() => setShowFirstTimeWelcome(false)}
-                className="w-full py-4 bg-[#15519D] hover:bg-[#123B63] text-white text-xs font-black rounded-2xl shadow-xl transition-all cursor-pointer hover:scale-105"
+          <div className="space-y-6">
+            {holdings.map(h => (
+              <div
+                key={h.symbol}
+                onClick={() => setSelectedHoldingForDetail(h)}
+                className="bg-white rounded-[28px] border border-[#E2E8F0] hover:border-[#15519D] transition-all p-6 space-y-4 shadow-sm cursor-pointer group"
               >
-                Start My Investment Lab →
-              </button>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
-
-      {/* ==================================================== */}
-      {/* MODAL 2: BUY STOCK BY QUANTITY REDESIGNED MODAL */}
-      {/* ==================================================== */}
-      <AnimatePresence>
-        {isAddModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-[24px] border border-[#E2E8F0] shadow-2xl max-w-lg w-full p-6 space-y-5 overflow-hidden relative font-sans text-[#172033]"
-            >
-              {/* MODAL HEADER */}
-              <div className="flex items-start justify-between border-b border-slate-100 pb-3.5">
-                {selectedStockForAdd ? (
-                  <div className="flex items-center gap-3">
-                    <button
-                      onClick={() => { setSelectedStockForAdd(null); setShowFinalBuyConfirmation(false); }}
-                      className="p-1.5 rounded-xl hover:bg-slate-100 text-slate-600 transition"
-                    >
-                      <ArrowLeft className="w-5 h-5" />
-                    </button>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <h3 className="font-black text-lg text-slate-900">{selectedStockForAdd.symbol}</h3>
-                        <span className="text-xs font-black font-mono px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">
-                          {selectedStockForAdd.change || '+2.35% Today'}
-                        </span>
-                      </div>
-                      <p className="text-xs text-slate-500 font-medium">{selectedStockForAdd.name}</p>
-                    </div>
-                  </div>
-                ) : (
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#E2E8F0] pb-4 gap-2">
                   <div>
-                    <h3 className="font-black text-lg text-slate-900">Invest UNIVEST Tokens</h3>
-                    <p className="text-xs text-slate-500 font-medium">Choose a stock to test your investment idea.</p>
+                    <span className="font-black text-xl text-[#172033] group-hover:text-[#15519D] transition-colors">{h.symbol}</span>
+                    <span className="text-xs text-[#64748B] font-medium ml-2">{h.name}</span>
                   </div>
-                )}
+                  <div className="flex items-center gap-3 text-xs font-bold">
+                    <span className="bg-blue-50 text-[#15519D] px-3 py-1 rounded-full">Decision Score: {h.decisionScore}/100</span>
+                    <span className="text-[#64748B]">Entered: {h.buyDate}</span>
+                  </div>
+                </div>
 
-                <button
-                  onClick={() => setIsAddModalOpen(false)}
-                  className="p-1.5 rounded-xl hover:bg-slate-100 text-slate-400 hover:text-slate-700 transition"
-                >
-                  <X className="w-5 h-5" />
-                </button>
+                <div className="space-y-2">
+                  <span className="text-xs font-bold text-[#64748B] uppercase">Your Original Thesis Notes</span>
+                  <div className="p-4 bg-[#F8FAFC] rounded-2xl border border-[#E2E8F0] text-xs font-medium text-[#172033] italic">
+                    "{h.thesisText}"
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <span className="text-xs font-bold text-[#64748B] uppercase">Post-Investment Review</span>
+                  <div className="flex items-center gap-3 text-xs font-bold">
+                    <span className="text-[#64748B]">Would you make this decision again?</span>
+                    <span className="px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full">Yes, with same thesis</span>
+                  </div>
+                </div>
               </div>
-
-              {/* SCREEN 1: SEARCH & RECOMMENDED STOCKS LIST */}
-              {!selectedStockForAdd && (
-                <div className="space-y-4">
-                  <div className="relative">
-                    <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
-                    <input
-                      type="text"
-                      value={modalSearchQuery}
-                      onChange={(e) => setModalSearchQuery(e.target.value)}
-                      placeholder="Search stocks or companies... (e.g. RELIANCE, TCS, INFY)"
-                      className="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 text-xs font-medium text-slate-900 outline-none focus:border-[#15519D]"
-                    />
-                  </div>
-
-                  <div className="divide-y divide-slate-100 max-h-72 overflow-y-auto border border-slate-100 rounded-2xl bg-white">
-                    {filteredModalStocks.map((st) => (
-                      <div
-                        key={st.symbol}
-                        onClick={() => handleSelectStockFromList(st)}
-                        className="p-3 hover:bg-blue-50/70 transition cursor-pointer flex items-center justify-between group"
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className={`w-9 h-9 rounded-xl font-black text-xs flex items-center justify-center shrink-0 ${st.badgeBg}`}>
-                            {st.initials}
-                          </div>
-                          <div>
-                            <div className="font-black text-xs text-slate-900 group-hover:text-[#15519D] transition-colors">{st.symbol}</div>
-                            <div className="text-[10px] font-bold text-slate-400 truncate max-w-[150px]">{st.name}</div>
-                          </div>
-                        </div>
-
-                        <div className="text-right">
-                          <div className="text-xs font-black font-mono text-slate-900">₹{st.price}</div>
-                          <div className="text-[10px] font-bold font-mono text-[#16A34A]">{st.change}</div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* SCREEN 2: SHARES QUANTITY SELECTOR & AUTO-CALCULATION */}
-              {selectedStockForAdd && !showFinalBuyConfirmation && (
-                <div className="space-y-4">
-                  
-                  {/* Stock Summary Card */}
-                  <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200/80 flex items-center justify-between">
-                    <div>
-                      <div className="text-xs font-bold text-slate-500">Current Price</div>
-                      <div className="text-2xl font-black font-mono text-slate-900">₹{selectedStockForAdd.price} <span className="text-xs font-bold text-slate-400 font-sans">per share</span></div>
-                      <div className="text-[10px] text-slate-400 font-medium">Price used for this virtual investment</div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-xs font-bold text-slate-500">Univest Score</div>
-                      <div className="text-sm font-black text-emerald-600 font-mono">{selectedStockForAdd.score || '78/100'}</div>
-                    </div>
-                  </div>
-
-                  {/* SHARES QUANTITY INPUT */}
-                  <div className="space-y-3">
-                    <label className="text-xs font-black text-slate-900 block">How Many Shares Do You Want to Buy?</label>
-                    
-                    {/* Controls: [-] [ 10 ] [+] */}
-                    <div className="flex items-center justify-center gap-3 bg-slate-50 border border-slate-200 rounded-2xl p-3">
-                      <button
-                        onClick={() => setSharesToBuy(prev => Math.max(1, prev - 1))}
-                        className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-700 hover:bg-slate-100 font-black transition cursor-pointer"
-                      >
-                        <Minus className="w-4 h-4 stroke-[3]" />
-                      </button>
-
-                      <div className="flex flex-col items-center">
-                        <input
-                          type="number"
-                          value={sharesToBuy || ''}
-                          onChange={(e) => setSharesToBuy(Math.max(0, parseInt(e.target.value) || 0))}
-                          className="w-24 text-center text-2xl font-mono font-black text-slate-900 bg-transparent outline-none"
-                        />
-                        <span className="text-[10px] font-bold uppercase text-slate-400 tracking-wider">Shares</span>
-                      </div>
-
-                      <button
-                        onClick={() => setSharesToBuy(prev => prev + 1)}
-                        className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-700 hover:bg-slate-100 font-black transition cursor-pointer"
-                      >
-                        <Plus className="w-4 h-4 stroke-[3]" />
-                      </button>
-                    </div>
-
-                    {/* Quick Quantity Buttons */}
-                    <div className="flex items-center gap-2">
-                      {[1, 5, 10, 25].map((qty) => (
-                        <button
-                          key={qty}
-                          onClick={() => setSharesToBuy(qty)}
-                          className={`flex-1 py-1.5 rounded-xl text-xs font-extrabold border transition cursor-pointer ${
-                            sharesToBuy === qty ? 'bg-blue-50 border-[#15519D] text-[#15519D]' : 'bg-slate-50 border-slate-200 text-slate-700'
-                          }`}
-                        >
-                          {qty}
-                        </button>
-                      ))}
-
-                      {/* MAX Button */}
-                      <button
-                        onClick={() => setSharesToBuy(Math.max(1, maxAffordableShares))}
-                        className={`flex-1 py-1.5 rounded-xl text-xs font-black transition cursor-pointer border ${
-                          sharesToBuy === maxAffordableShares ? 'bg-amber-100 border-amber-400 text-amber-900' : 'bg-amber-50 border-amber-200 text-amber-800'
-                        }`}
-                      >
-                        MAX ({maxAffordableShares})
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* AUTOMATIC INVESTMENT CALCULATION DISPLAY */}
-                  <div className="p-4 bg-blue-50/60 rounded-2xl border border-blue-200/60 space-y-2 text-xs">
-                    <div className="flex items-center justify-between text-slate-600 font-bold">
-                      <span>{sharesToBuy} Shares × ₹{selectedStockForAdd.price}</span>
-                      <span className="text-slate-400">Rate Calculation</span>
-                    </div>
-
-                    <div className="flex items-center justify-between text-slate-900 font-black border-t border-blue-200/50 pt-2 text-sm">
-                      <span>Total Investment</span>
-                      <span className="font-mono text-[#15519D]">{totalRequiredTokens.toLocaleString('en-IN')} Tokens</span>
-                    </div>
-
-                    <div className="flex items-center justify-between text-[11px] font-semibold text-slate-500 pt-1">
-                      <span>Available Balance: <strong className="text-slate-900 font-mono">{availableTokens.toLocaleString('en-IN')} Tokens</strong></span>
-                      <span>After Investment: <strong className={availableTokens - totalRequiredTokens >= 0 ? "text-emerald-700 font-mono font-bold" : "text-rose-600 font-mono font-bold"}>
-                        {Math.max(0, availableTokens - totalRequiredTokens).toLocaleString('en-IN')} Tokens
-                      </strong></span>
-                    </div>
-                  </div>
-
-                  {/* INSUFFICIENT TOKENS WARNING */}
-                  {isInsufficientTokens && (
-                    <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-2xl space-y-2 text-xs text-rose-900">
-                      <div className="font-black flex items-center gap-1.5">
-                        <AlertTriangle className="w-4 h-4 text-rose-600" />
-                        <span>Insufficient UNIVEST Tokens</span>
-                      </div>
-                      <p className="text-[11px] text-rose-800">
-                        You need <strong>{(totalRequiredTokens - availableTokens).toLocaleString('en-IN')}</strong> more Tokens to buy {sharesToBuy} shares.
-                      </p>
-                      <button
-                        onClick={() => setSharesToBuy(Math.max(1, maxAffordableShares))}
-                        className="px-3 py-1.5 bg-rose-100 hover:bg-rose-200 text-rose-900 text-[11px] font-black rounded-xl border border-rose-300 transition cursor-pointer"
-                      >
-                        Use Maximum Affordable Quantity ({maxAffordableShares} Shares)
-                      </button>
-                    </div>
-                  )}
-
-                  {/* Thesis Selector */}
-                  <div className="space-y-1">
-                    <label className="text-[11px] font-black text-slate-700">Select Investment Thesis</label>
-                    <div className="grid grid-cols-2 gap-1.5">
-                      {['Long-Term Growth', 'Strong Fundamentals', 'Undervalued', 'Momentum'].map((reason) => (
-                        <button
-                          key={reason}
-                          onClick={() => setSelectedThesisReason(reason)}
-                          className={`p-2 rounded-xl text-xs font-bold transition text-left border cursor-pointer ${
-                            selectedThesisReason === reason ? 'bg-blue-50 border-[#15519D] text-[#15519D]' : 'bg-slate-50 border-slate-200 text-slate-600'
-                          }`}
-                        >
-                          {reason}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Primary CTA */}
-                  <button
-                    disabled={isInsufficientTokens || sharesToBuy <= 0}
-                    onClick={() => setShowFinalBuyConfirmation(true)}
-                    className={`w-full py-4 text-white text-xs font-black rounded-2xl shadow-lg transition cursor-pointer flex items-center justify-center gap-2 ${
-                      isInsufficientTokens || sharesToBuy <= 0
-                        ? 'bg-slate-300 cursor-not-allowed shadow-none'
-                        : 'bg-[#15519D] hover:bg-[#123B63]'
-                    }`}
-                  >
-                    <span>Confirm Investment — {sharesToBuy} Shares →</span>
-                  </button>
-                </div>
-              )}
-
-              {/* SCREEN 3: FINAL CONFIRMATION SCREEN */}
-              {selectedStockForAdd && showFinalBuyConfirmation && (
-                <div className="space-y-4">
-                  <div className="text-center space-y-1">
-                    <h3 className="font-black text-xl text-slate-900">Confirm Your Investment</h3>
-                    <p className="text-xs text-slate-500 font-medium">Review investment summary before executing virtual trade.</p>
-                  </div>
-
-                  <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3 text-xs">
-                    <div className="flex justify-between font-bold border-b border-slate-200 pb-2">
-                      <span className="text-slate-500">Stock:</span>
-                      <span className="text-slate-900 font-black">{selectedStockForAdd.symbol} ({selectedStockForAdd.name})</span>
-                    </div>
-
-                    <div className="flex justify-between font-bold border-b border-slate-200 pb-2">
-                      <span className="text-slate-500">Quantity:</span>
-                      <span className="text-slate-900 font-mono font-black">{sharesToBuy} Shares</span>
-                    </div>
-
-                    <div className="flex justify-between font-bold border-b border-slate-200 pb-2">
-                      <span className="text-slate-500">Current Price:</span>
-                      <span className="text-slate-900 font-mono font-black">₹{selectedStockForAdd.price} per share</span>
-                    </div>
-
-                    <div className="flex justify-between font-bold border-b border-slate-200 pb-2">
-                      <span className="text-slate-500">Total Investment:</span>
-                      <span className="text-[#15519D] font-mono font-black text-sm">{totalRequiredTokens.toLocaleString('en-IN')} UNIVEST Tokens</span>
-                    </div>
-
-                    <div className="flex justify-between font-bold">
-                      <span className="text-slate-500">Remaining Available Balance:</span>
-                      <span className="text-emerald-700 font-mono font-black">{(availableTokens - totalRequiredTokens).toLocaleString('en-IN')} Tokens</span>
-                    </div>
-                  </div>
-
-                  <button
-                    onClick={handleConfirmVirtualInvestment}
-                    className="w-full py-4 bg-[#15519D] hover:bg-[#123B63] text-white text-xs font-black rounded-2xl shadow-xl transition cursor-pointer flex items-center justify-center gap-2 hover:scale-[1.02]"
-                  >
-                    <span>Confirm Virtual Investment</span>
-                  </button>
-
-                  <p className="text-[10px] text-center text-slate-400 font-medium">
-                    This is a virtual investment using UNIVEST Tokens. No real money is involved.
-                  </p>
-                </div>
-              )}
-
-            </motion.div>
+            ))}
           </div>
-        )}
-      </AnimatePresence>
+        </div>
+      )}
 
-      {/* ==================================================== */}
-      {/* MODAL 3: SELL STOCK MODAL */}
-      {/* ==================================================== */}
-      <AnimatePresence>
-        {isSellModalOpen && selectedHoldingForSell && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-[24px] border border-[#E2E8F0] shadow-2xl max-w-lg w-full p-6 space-y-5 font-sans text-[#172033]"
-            >
-              <div className="flex items-center justify-between border-b border-slate-100 pb-3.5">
-                <div>
-                  <h3 className="font-black text-lg text-slate-900">Sell {selectedHoldingForSell.symbol}</h3>
-                  <p className="text-xs text-slate-500 font-medium">Free up Tokens to invest in other opportunities.</p>
-                </div>
-                <button onClick={() => setIsSellModalOpen(false)} className="p-1.5 rounded-xl hover:bg-slate-100 text-slate-400">
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
+      {/* 8. MODAL: SIMPLIFIED 2-STAGE INVEST / BUY-SELL TRANSACTION */}
+      <LabInvestTransactionModal
+        isOpen={isInvestModalOpen || !!selectedHoldingForSell}
+        onClose={() => {
+          setIsInvestModalOpen(false);
+          setSelectedHoldingForSell(null);
+        }}
+        availableTokens={availableTokens}
+        existingHolding={selectedHoldingForSell}
+        onConfirmBuy={handleModalConfirmBuy}
+        onConfirmSell={handleModalConfirmSell}
+      />
 
-              <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200/80 flex items-center justify-between text-xs font-bold">
-                <div>
-                  <div className="text-slate-500">Current Market Price</div>
-                  <div className="text-xl font-black font-mono text-slate-900">₹{selectedHoldingForSell.currentPrice.toLocaleString('en-IN')}</div>
-                </div>
-                <div className="text-right">
-                  <div className="text-slate-500">Position Value</div>
-                  <div className="text-xl font-black font-mono text-[#15519D]">{selectedHoldingForSell.currentValueTokens.toLocaleString('en-IN')} Tokens</div>
-                </div>
-              </div>
+      {/* 10. CAPITAL SETUP MODAL */}
+      <LabCapitalSetupModal
+        isOpen={isCapitalModalOpen}
+        onClose={() => setIsCapitalModalOpen(false)}
+        onConfirmCapital={handleUpdateCapital}
+        initialAmount={startingCapital}
+      />
 
-              <div className="space-y-2">
-                <label className="text-xs font-black text-slate-700">Select Sale Percentage</label>
-                <div className="flex items-center gap-2">
-                  {[25, 50, 75, 100].map((pct) => (
-                    <button
-                      key={pct}
-                      onClick={() => setSellSharePercent(pct)}
-                      className={`flex-1 py-2 rounded-xl text-xs font-black transition cursor-pointer border ${
-                        sellSharePercent === pct ? 'bg-rose-50 border-rose-500 text-rose-700 shadow-2xs' : 'bg-slate-50 border-slate-200 text-slate-700'
-                      }`}
-                    >
-                      {pct === 100 ? 'MAX (100%)' : `${pct}%`}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <button
-                onClick={handleConfirmSale}
-                className="w-full py-4 bg-rose-600 hover:bg-rose-700 text-white text-xs font-black rounded-2xl shadow-lg transition cursor-pointer"
-              >
-                Confirm Sale & Credit Tokens →
-              </button>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
-
-      {/* ==================================================== */}
-      {/* MODAL 4: INSUFFICIENT TOKENS WARNING MODAL */}
-      {/* ==================================================== */}
-      <AnimatePresence>
-        {showLowBalanceWarning && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-[28px] border border-amber-200 shadow-2xl max-w-md w-full p-6 space-y-4 font-sans text-[#172033]"
-            >
-              <div className="w-12 h-12 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center">
-                <AlertTriangle className="w-6 h-6" />
-              </div>
-
-              <div>
-                <h3 className="text-lg font-black text-slate-900">Insufficient Available Tokens</h3>
-                <p className="text-xs text-slate-600 font-medium leading-relaxed mt-1">
-                  You currently have <strong className="text-[#15519D] font-mono font-black">{availableTokens.toLocaleString('en-IN')} Tokens</strong> available to invest.
-                </p>
-                <p className="text-xs text-slate-500 mt-2">
-                  To free up more Tokens for new investments, you must sell part or all of your active stock positions.
-                </p>
-              </div>
-
-              <div className="flex gap-2 pt-2">
-                <button
-                  onClick={() => { setShowLowBalanceWarning(false); setActiveTab('Holdings'); }}
-                  className="flex-1 py-3 bg-[#15519D] hover:bg-[#123B63] text-white text-xs font-black rounded-xl transition cursor-pointer"
-                >
-                  Sell a Holding →
-                </button>
-                <button
-                  onClick={() => setShowLowBalanceWarning(false)}
-                  className="py-3 px-4 bg-slate-100 text-slate-700 text-xs font-extrabold rounded-xl cursor-pointer"
-                >
-                  Close
-                </button>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
-
+      {/* 11. HOLDING DETAIL MODAL */}
+      <HoldingDetailModal
+        isOpen={!!selectedHoldingForDetail}
+        onClose={() => setSelectedHoldingForDetail(null)}
+        holding={selectedHoldingForDetail}
+        onBuyMore={(holding) => {
+          setSelectedHoldingForDetail(null);
+          setIsInvestModalOpen(true);
+        }}
+        onSellHolding={(holding) => {
+          setSelectedHoldingForDetail(null);
+          setSelectedHoldingForSell(holding);
+        }}
+        onUpdateThesis={handleUpdateThesis}
+      />
     </div>
   );
 };

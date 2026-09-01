@@ -45,7 +45,7 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
     {
       id: 'm1',
       sender: 'ai',
-      text: 'Good morning Omar! I am your Univest AI Investment Copilot. Your portfolio is up +1.55% today. How can I help you build wealth today?',
+      text: 'Good morning Omar! I am your ArthSetu AI Investment Copilot. Your portfolio is up +1.55% today. How can I help you build wealth today?',
       timestamp: 'Just now',
       confidence: 96,
       sources: ['Univest SEBI Advisory Feed', 'TradingView Engine', 'NSE Live'],

@@ -90,7 +90,7 @@ export const UniversalSearch: React.FC<UniversalSearchProps> = ({
       { type: 'ipo', name: 'Ola Electric Mobility IPO', price: '₹72 - 76', status: 'Bidding Open', expectedPremium: '+18%' }
     ],
     reports: [
-      { type: 'report', title: 'IT Services Sector Outlook FY27', author: 'Univest Quant Team', category: 'Sector Report', date: '18 Jul 2026' },
+      { type: 'report', title: 'IT Services Sector Outlook FY27', author: 'ArthSetu Quant Team', category: 'Sector Report', date: '18 Jul 2026' },
       { type: 'report', title: 'Energy Giga-factory Valuation Impact', author: 'Aarav Mehta', category: 'Fundamental Note', date: '15 Jul 2026' }
     ],
     analysts: [

@@ -108,7 +108,7 @@ export const UserMenuDropdown: React.FC<UserMenuDropdownProps> = ({
             className="w-full py-2.5 px-4 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 rounded-xl font-black text-xs transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer"
           >
             <ShieldCheck className="w-4 h-4" />
-            <span>Univest Prime Membership</span>
+            <span>ArthSetu Pro Gold Membership</span>
           </button>
 
           {/* MENU ACTIONS */}

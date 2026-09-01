@@ -47,10 +47,10 @@ export const PremiumPerformance: React.FC = () => {
           <span>Verifiable Track Record</span>
         </div>
         <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
-          Univest Research Performance & Transparency
+          ArthSetu Research Performance & Transparency
         </h1>
         <p className="text-sm text-slate-500 mt-1">
-          Every investment thesis published on Univest is independently timestamped and tracked against real market prices.
+          Every investment thesis published on ArthSetu is independently timestamped and tracked against real market prices.
         </p>
       </div>
 

@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   X, Wallet, TrendingUp, AlertCircle, ArrowRight, ShieldCheck,
@@ -338,7 +338,7 @@ export const TradeDrawer: React.FC<TradeDrawerProps> = ({ isOpen, onClose, resea
                 <div className="p-4 bg-primary-light border border-[#E2E8F0] rounded-[20px] flex items-start gap-3">
                   <Sparkles className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                   <div className="text-xs text-primary-dark font-medium leading-relaxed">
-                    <span className="font-black block text-blue-950 mb-0.5">Univest AI Risk Meter: Medium Risk</span>
+                    <span className="font-black block text-blue-950 mb-0.5">ArthSetu AI Risk Meter: Medium Risk</span>
                     Order is suitable for your long-term capital growth profile. Risk/reward ratio: 1:3.2.
                   </div>
                 </div>

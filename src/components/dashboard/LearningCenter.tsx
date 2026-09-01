@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   GraduationCap, BookOpen, CheckCircle2, Play, Award, Bookmark, 
@@ -57,7 +57,7 @@ export const LearningCenter: React.FC<LearningCenterProps> = ({
       duration: '1 hr 15 mins',
       modules: 6,
       completedModules: 0,
-      author: 'Univest Equity Research Desk',
+      author: 'ArthSetu Equity Research Desk',
       image: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?q=80&w=600&auto=format&fit=crop',
       summary: 'Decode balance sheets, P/E ratios, Return on Equity (ROE), and cash flow stability before buying long-term equities.',
       lessons: [
@@ -136,7 +136,7 @@ export const LearningCenter: React.FC<LearningCenterProps> = ({
           <div className="max-w-2xl">
             <div className="flex items-center gap-2 mb-3">
               <GraduationCap className="w-5 h-5 text-[#64748B] fill-[#64748B]" />
-              <span className="text-xs font-black text-[#64748B] uppercase tracking-widest">UNIVEST INVESTOR ACADEMY</span>
+              <span className="text-xs font-black text-[#64748B] uppercase tracking-widest">ARTHSETU INVESTOR ACADEMY</span>
             </div>
 
             <h1 className="text-3xl sm:text-4xl font-black mb-3 leading-tight">

@@ -1,4 +1,4 @@
-﻿import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Sparkles, Send, Bot, User, TrendingUp, BarChart3, ShieldCheck, 
@@ -45,7 +45,7 @@ const QUICK_FOLLOW_UPS = [
 const WELCOME_MESSAGE: Message = {
   id: 'welcome',
   sender: 'ai',
-  text: `Hello! I'm **Univest AI** — your personal stock market advisor powered by real-time market intelligence.\n\nType your question in the chat or click on any of the suggested topics on the right to start!`,
+  text: `Hello! I'm **ArthSetu AI** — your personal stock market advisor powered by real-time market intelligence.\n\nType your question in the chat or click on any of the suggested topics on the right to start!`,
   time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }),
 };
 
@@ -155,7 +155,7 @@ export const AiAdvisorsHub: React.FC<AiAdvisorsHubProps> = ({ onTradeStock }) =>
             </div>
             <div>
               <div className="flex items-center gap-2 mb-0.5">
-                <h1 className="text-lg font-black tracking-tight">Univest AI Advisor</h1>
+                <h1 className="text-lg font-black tracking-tight">ArthSetu AI Advisor</h1>
                 <span className="bg-emerald-400/20 text-emerald-300 border border-emerald-400/30 text-[9px] font-black uppercase px-2 py-0.5 rounded-full flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />Online
                 </span>
@@ -295,7 +295,7 @@ export const AiAdvisorsHub: React.FC<AiAdvisorsHubProps> = ({ onTradeStock }) =>
               </button>
             </div>
             <p className="text-center text-[9px] font-bold text-slate-400 mt-2">
-              Univest AI · SEBI compliant · Not financial advice
+              ArthSetu AI · SEBI compliant · Not financial advice
             </p>
           </div>
         </div>

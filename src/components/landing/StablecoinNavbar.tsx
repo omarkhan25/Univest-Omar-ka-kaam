@@ -22,7 +22,7 @@ export const StablecoinNavbar: React.FC = () => {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 cursor-pointer">
           <LogoIcon className="w-7 h-7 text-black" />
-          <span className="text-2xl font-medium tracking-tight text-black">Univest</span>
+          <span className="text-2xl font-extrabold tracking-tight text-black">ArthSetu</span>
         </Link>
 
         {/* Links */}

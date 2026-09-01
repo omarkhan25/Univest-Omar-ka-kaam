@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { StablecoinNavbar } from '../../components/landing/StablecoinNavbar';
 
 export const AboutPage: React.FC = () => {
@@ -35,7 +35,7 @@ export const AboutPage: React.FC = () => {
                 Our vision is to make borderless, reward-generating stablecoins the default standard for global commerce and personal wealth. 
               </p>
               <p className="text-white/70 text-lg leading-relaxed">
-                By combining rigorous AI-driven research with uncompromising security, Univest ensures that your capital never sits idle—it works constantly and safely.
+                By combining rigorous AI-driven research with uncompromising security, ArthSetu ensures that your capital never sits idle—it works constantly and safely.
               </p>
             </div>
 

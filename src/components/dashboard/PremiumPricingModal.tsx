@@ -32,7 +32,7 @@ export const PremiumPricingModal: React.FC<PremiumPricingModalProps> = ({
                 <Gem className="w-5 h-5" />
               </span>
               <div>
-                <h2 className="text-xl font-black text-white">Univest Premium Memberships</h2>
+                <h2 className="text-xl font-black text-white">ArthSetu Premium Memberships</h2>
                 <p className="text-xs text-slate-300">
                   Choose the research intelligence strategy built for your investing goals.
                 </p>
@@ -57,7 +57,7 @@ export const PremiumPricingModal: React.FC<PremiumPricingModalProps> = ({
                 </span>
                 <h3 className="text-2xl font-black">Invest with Complete Thesis Clarity</h3>
                 <p className="text-xs text-slate-200 leading-relaxed font-medium">
-                  Univest replaces market noise with high-conviction research, transparent performance tracking, and live opportunity radar signals.
+                  ArthSetu replaces market noise with high-conviction research, transparent performance tracking, and live opportunity radar signals.
                 </p>
               </div>
 
@@ -70,11 +70,11 @@ export const PremiumPricingModal: React.FC<PremiumPricingModalProps> = ({
 
             {/* Pricing Tiers Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* TIER 1: UNIVEST PICKS */}
+              {/* TIER 1: ARTHSETU PICKS */}
               <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm flex flex-col justify-between hover:border-blue-200 transition-all">
                 <div>
                   <div className="text-xs font-extrabold text-[#15519D] uppercase tracking-wider">Individual Ideas</div>
-                  <h4 className="text-2xl font-black text-slate-900 mt-1">Univest Picks</h4>
+                  <h4 className="text-2xl font-black text-slate-900 mt-1">ArthSetu Picks</h4>
                   <p className="text-xs text-slate-500 mt-1">For investors focused on high-conviction stock ideas.</p>
 
                   <div className="mt-4 pb-4 border-b border-slate-100">
@@ -129,11 +129,11 @@ export const PremiumPricingModal: React.FC<PremiumPricingModalProps> = ({
                 </button>
               </div>
 
-              {/* TIER 2: UNIVEST COLLECTIONS */}
+              {/* TIER 2: ARTHSETU COLLECTIONS */}
               <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm flex flex-col justify-between hover:border-blue-200 transition-all">
                 <div>
                   <div className="text-xs font-extrabold text-[#15519D] uppercase tracking-wider">Curated Portfolios</div>
-                  <h4 className="text-2xl font-black text-slate-900 mt-1">Univest Collections</h4>
+                  <h4 className="text-2xl font-black text-slate-900 mt-1">ArthSetu Collections</h4>
                   <p className="text-xs text-slate-500 mt-1">For investors seeking thematic strategies.</p>
 
                   <div className="mt-4 pb-4 border-b border-slate-100">
@@ -188,7 +188,7 @@ export const PremiumPricingModal: React.FC<PremiumPricingModalProps> = ({
                 </button>
               </div>
 
-              {/* TIER 3: UNIVEST PRIME (BEST VALUE) */}
+              {/* TIER 3: ARTHSETU PRO GOLD (BEST VALUE) */}
               <div className="bg-gradient-to-b from-slate-900 via-[#123B63] to-[#15519D] rounded-3xl p-6 shadow-2xl text-white flex flex-col justify-between relative overflow-hidden ring-4 ring-amber-400/30">
                 <div className="absolute top-4 right-4 px-3 py-1 bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 text-[10px] font-black uppercase tracking-wider rounded-full shadow-md">
                   Most Popular
@@ -196,7 +196,7 @@ export const PremiumPricingModal: React.FC<PremiumPricingModalProps> = ({
 
                 <div>
                   <div className="text-xs font-extrabold text-amber-300 uppercase tracking-wider">All-Access Membership</div>
-                  <h4 className="text-2xl font-black text-white mt-1">Univest Prime</h4>
+                  <h4 className="text-2xl font-black text-white mt-1">ArthSetu Pro Gold</h4>
                   <p className="text-xs text-slate-200 mt-1">Complete investment intelligence suite.</p>
 
                   <div className="mt-4 pb-4 border-b border-white/10">
@@ -247,7 +247,7 @@ export const PremiumPricingModal: React.FC<PremiumPricingModalProps> = ({
                   onClick={onClose}
                   className="mt-6 w-full py-3 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 font-black text-xs rounded-2xl shadow-lg transition-all"
                 >
-                  Join Univest Prime
+                  Join ArthSetu Pro Gold
                 </button>
               </div>
             </div>

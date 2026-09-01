@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { StablecoinNavbar } from '../../components/landing/StablecoinNavbar';
 import { ArrowRight, Mail } from 'lucide-react';
 
@@ -37,13 +37,13 @@ export const ContactPage: React.FC = () => {
               </p>
               
               <div className="flex flex-col gap-6">
-                <a href="mailto:hello@univest.ai" className="flex items-center gap-4 group">
+                <a href="mailto:hello@arthsetu.ai" className="flex items-center gap-4 group">
                   <span className="w-12 h-12 rounded-full bg-black/5 flex items-center justify-center group-hover:bg-black/10 transition-colors duration-200">
                     <Mail className="w-5 h-5 text-black" />
                   </span>
                   <div>
                     <span className="block text-black/50 text-sm font-medium">Email</span>
-                    <span className="text-black text-lg font-medium">hello@univest.ai</span>
+                    <span className="text-black text-lg font-medium">hello@arthsetu.ai</span>
                   </div>
                 </a>
                 
