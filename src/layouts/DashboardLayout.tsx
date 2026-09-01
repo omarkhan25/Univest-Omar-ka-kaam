@@ -189,14 +189,6 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                 <span className="whitespace-nowrap font-extrabold text-xs">Watchlist</span>
               </button>
 
-              <button
-                onClick={() => setIsAiOpen(true)}
-                className="px-3.5 py-1.5 bg-[#15519D] hover:bg-[#123B63] text-white rounded-xl text-xs font-extrabold flex items-center gap-1.5 shadow-sm transition-all cursor-pointer whitespace-nowrap shrink-0"
-              >
-                <Sparkles className="w-3.5 h-3.5 text-amber-300 shrink-0" />
-                <span className="whitespace-nowrap font-extrabold text-xs">AI Copilot</span>
-              </button>
-
               <button className="relative p-2 rounded-xl border border-slate-200/80 text-slate-600 hover:bg-slate-100 transition-colors shadow-2xs cursor-pointer shrink-0">
                 <Bell className="w-4 h-4 text-slate-700" />
                 <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full animate-ping" />
@@ -420,6 +412,22 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
 
         </div>
       </div>
+
+      {/* FLOATING AI COPILOT ACTION BUTTON (FIXED BOTTOM-RIGHT) */}
+      <button
+        onClick={() => setIsAiOpen(true)}
+        className="fixed bottom-6 right-6 z-40 bg-gradient-to-r from-[#123B63] to-[#15519D] hover:from-[#0E2F50] hover:to-[#123B63] text-white px-4 py-3 rounded-2xl shadow-2xl hover:shadow-blue-900/30 transition-all duration-200 cursor-pointer flex items-center gap-3 border border-white/20 group hover:scale-105"
+        title="Open ArthSetu AI Copilot"
+      >
+        <div className="relative flex items-center justify-center">
+          <Sparkles className="w-5 h-5 text-amber-300 group-hover:rotate-12 transition-transform" />
+          <span className="absolute -top-1 -right-1 w-2 h-2 bg-emerald-400 rounded-full animate-ping" />
+        </div>
+        <div className="flex flex-col items-start text-left">
+          <span className="text-xs font-black tracking-tight leading-none text-white">AI Copilot</span>
+          <span className="text-[9px] font-extrabold text-amber-300 tracking-wider uppercase mt-0.5">RESEARCH ASSISTANT</span>
+        </div>
+      </button>
 
       {/* MODALS */}
       <UniversalSearch
