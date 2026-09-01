@@ -4,7 +4,7 @@ import {
   Sparkles, X, Maximize2, Minimize2, Send, Mic, Volume2, Bookmark, Share2, 
   TrendingUp, AlertCircle, ShieldCheck, CheckCircle2, ArrowRight, Wallet, 
   BarChart3, RefreshCw, Layers, ArrowUpDown, ChevronRight, HelpCircle, UserCheck, Search, Scale,
-  Lightbulb, Zap, Compass, Filter, Plus, ArrowUpRight, ArrowDownRight, Bot
+  Lightbulb, Zap, Compass, Filter, Plus, ArrowUpRight, ArrowDownRight, Bot, PieChart, Activity
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import aiService from '../../services/ai.service';
@@ -107,7 +107,6 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
     setIsAiTyping(true);
 
     try {
-      // Simulate intelligent advisory response tailored to user query
       let aiText = `Here is ArthSetu's AI research synthesis for "${text}":`;
       let related: string[] = [];
       let followUps: string[] = [];
@@ -273,7 +272,7 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-3 py-1.5 rounded-xl transition cursor-pointer whitespace-nowrap ${
+                className={`px-3.5 py-1.5 rounded-xl transition cursor-pointer whitespace-nowrap ${
                   activeTab === tab ? 'bg-[#15519D] text-white font-black shadow-xs' : 'text-slate-600 hover:text-[#172033]'
                 }`}
               >
@@ -367,8 +366,8 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
               </div>
             )}
 
-            {/* TAB 2: LIVE CHAT INTERACTION & DYNAMIC CHAT RECOMMENDATIONS */}
-            {(activeTab === 'Chat' || activeTab === 'Portfolio Review' || activeTab === 'Market Brief') && (
+            {/* TAB 2: AI LIVE CHAT */}
+            {activeTab === 'Chat' && (
               <div className="flex flex-col gap-4 flex-1">
                 
                 {/* SUGGESTED PROMPTS STRIP IN CHAT */}
@@ -484,6 +483,149 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
                     </div>
                   </div>
                 )}
+
+              </div>
+            )}
+
+            {/* TAB 3: DEDICATED PORTFOLIO REVIEW VIEW */}
+            {activeTab === 'Portfolio Review' && (
+              <div className="flex flex-col gap-5">
+                
+                {/* Health Score Banner */}
+                <div className="bg-[#123B63] text-white p-5 rounded-[24px] shadow-lg flex justify-between items-center">
+                  <div>
+                    <span className="text-[10px] font-black text-amber-300 uppercase tracking-widest block">AI Portfolio Assessment</span>
+                    <h3 className="text-xl font-black text-white mt-0.5">Portfolio Health Score</h3>
+                    <p className="text-xs text-blue-100 font-medium">Good risk diversification & quality balance.</p>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-3xl font-black text-amber-300 block">78/100</span>
+                    <span className="text-[10px] font-extrabold text-emerald-400 bg-emerald-500/20 px-2 py-0.5 rounded-full border border-emerald-400/30">
+                      Strong Quality
+                    </span>
+                  </div>
+                </div>
+
+                {/* Sector Allocation Breakdown */}
+                <div className="bg-white p-4 rounded-2xl border border-slate-200 space-y-3 shadow-2xs">
+                  <div className="flex justify-between items-center">
+                    <h4 className="font-extrabold text-sm text-[#172033]">Sector Concentration & Allocation</h4>
+                    <span className="text-xs font-bold text-amber-600">Tech High Alert</span>
+                  </div>
+
+                  <div className="space-y-2 text-xs font-medium">
+                    {[
+                      { name: 'Technology & Cloud', pct: 41.2, color: 'bg-amber-500', isHigh: true },
+                      { name: 'Financials & Banking', pct: 28.5, color: 'bg-emerald-500', isHigh: false },
+                      { name: 'Industrials & Defense', pct: 18.3, color: 'bg-blue-500', isHigh: false },
+                      { name: 'Energy & Commodities', pct: 12.0, color: 'bg-indigo-500', isHigh: false }
+                    ].map(sec => (
+                      <div key={sec.name} className="space-y-1">
+                        <div className="flex justify-between text-xs">
+                          <span className="font-bold text-slate-800">{sec.name}</span>
+                          <span className="font-extrabold text-slate-900">{sec.pct}%</span>
+                        </div>
+                        <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                          <div className={`h-full ${sec.color} rounded-full`} style={{ width: `${sec.pct}%` }} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* AI Rebalancing Advisory Recommendations */}
+                <div className="bg-[#F8FAFC] p-4 rounded-2xl border border-[#E2E8F0] space-y-3">
+                  <h4 className="font-extrabold text-sm text-[#172033] flex items-center gap-1.5">
+                    <ShieldCheck className="w-4 h-4 text-[#15519D]" /> Actionable Rebalancing Advice
+                  </h4>
+                  <ul className="text-xs text-slate-700 font-medium space-y-2">
+                    <li className="p-2.5 bg-amber-50 rounded-xl border border-amber-200">
+                      <strong className="font-black text-amber-900">1. Trim IT Allocation: </strong>Rebalance 10% of IT holdings into Healthcare to optimize drawdown protection.
+                    </li>
+                    <li className="p-2.5 bg-emerald-50 rounded-xl border border-emerald-200">
+                      <strong className="font-black text-emerald-900">2. Hold Reliance & HDFC Bank: </strong>Thesis playing out well (+14.2% return); maintain positions for 12+ months.
+                    </li>
+                  </ul>
+
+                  <button
+                    onClick={() => handleSend('Generate full rebalancing plan for my portfolio')}
+                    className="w-full py-3 bg-[#15519D] hover:bg-[#123B63] text-white font-extrabold text-xs rounded-xl shadow-xs transition cursor-pointer"
+                  >
+                    Ask Copilot to Generate Rebalance Plan →
+                  </button>
+                </div>
+
+              </div>
+            )}
+
+            {/* TAB 4: DEDICATED MARKET BRIEF VIEW */}
+            {activeTab === 'Market Brief' && (
+              <div className="flex flex-col gap-5">
+                
+                {/* Indices Snapshot Cards */}
+                <div className="grid grid-cols-3 gap-2.5">
+                  <div className="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-2xs space-y-0.5">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase">NIFTY 50</span>
+                    <div className="font-black text-sm text-[#172033]">22,183.65</div>
+                    <span className="text-[11px] font-extrabold text-emerald-600">+1.25% ↑</span>
+                  </div>
+
+                  <div className="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-2xs space-y-0.5">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase">SENSEX</span>
+                    <div className="font-black text-sm text-[#172033]">73,120.40</div>
+                    <span className="text-[11px] font-extrabold text-emerald-600">+0.95% ↑</span>
+                  </div>
+
+                  <div className="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-2xs space-y-0.5">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase">MIDCAP 100</span>
+                    <div className="font-black text-sm text-[#172033]">48,240.10</div>
+                    <span className="text-[11px] font-extrabold text-emerald-600">+1.85% ↑</span>
+                  </div>
+                </div>
+
+                {/* Top 3 Market Catalysts */}
+                <div className="bg-white p-4 rounded-2xl border border-slate-200 space-y-3 shadow-2xs">
+                  <h4 className="font-extrabold text-sm text-[#172033]">Top Market Advisory Catalysts Today</h4>
+                  <div className="space-y-2 text-xs font-medium">
+                    <div className="p-3 bg-[#F8FAFC] rounded-xl border border-slate-100">
+                      <strong className="font-black text-[#15519D] block">FII Net Buying (+₹2,450 Cr)</strong>
+                      <p className="text-slate-600 mt-0.5">Foreign Institutional Investors turned strong buyers in banking & large-cap energy.</p>
+                    </div>
+
+                    <div className="p-3 bg-[#F8FAFC] rounded-xl border border-slate-100">
+                      <strong className="font-black text-[#15519D] block">Refining Margin Recovery</strong>
+                      <p className="text-slate-600 mt-0.5">Brent crude stabilizing around $78.40/bbl providing margin relief for downstream oil marketing.</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Sector Momentum Rankings */}
+                <div className="bg-white p-4 rounded-2xl border border-slate-200 space-y-3 shadow-2xs">
+                  <h4 className="font-extrabold text-sm text-[#172033]">1M Sector Momentum Rankings</h4>
+                  <div className="space-y-2 text-xs font-medium">
+                    {[
+                      { name: 'Technology & Cloud', change: '+4.8%', view: 'Bullish' },
+                      { name: 'Financials & Banking', change: '+3.2%', view: 'Bullish' },
+                      { name: 'Industrials & Defense', change: '+2.7%', view: 'Robust' },
+                      { name: 'Consumer FMCG', change: '-0.8%', view: 'Cautious' }
+                    ].map(sec => (
+                      <div key={sec.name} className="flex justify-between items-center p-2.5 bg-slate-50 rounded-xl">
+                        <span className="font-extrabold text-slate-800">{sec.name}</span>
+                        <div className="flex items-center gap-2">
+                          <span className={sec.change.startsWith('+') ? 'text-emerald-600 font-extrabold' : 'text-rose-600 font-extrabold'}>{sec.change}</span>
+                          <span className="px-2 py-0.5 bg-blue-50 text-[#15519D] text-[10px] font-black rounded">{sec.view}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <button
+                    onClick={() => handleSend('Explain sector momentum trends for Technology and Banking')}
+                    className="w-full py-3 bg-[#15519D] hover:bg-[#123B63] text-white font-extrabold text-xs rounded-xl shadow-xs transition cursor-pointer"
+                  >
+                    Ask Copilot About Market Drivers →
+                  </button>
+                </div>
 
               </div>
             )}
