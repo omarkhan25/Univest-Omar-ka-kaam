@@ -77,28 +77,26 @@ export const UserMenuDropdown: React.FC<UserMenuDropdownProps> = ({
           transition={{ duration: 0.18, ease: "easeOut" }}
           className="absolute right-6 top-[72px] w-[280px] bg-white border border-[#E2E8F0] rounded-[24px] shadow-2xl z-50 overflow-hidden font-sans text-slate-800 pointer-events-auto flex flex-col p-3.5 gap-3"
         >
-          {/* 1. TOTAL NET WEALTH SNAPSHOT CARD */}
-          <div className="bg-[#172033] text-white rounded-2xl p-4 flex flex-col gap-2 shadow-md relative overflow-hidden">
-            <div className="flex items-center justify-between">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1">
-                <Wallet className="w-3.5 h-3.5 text-[#64748B]" /> Total Net Wealth
-              </span>
-              <span className="text-[9px] font-black text-emerald-400 bg-emerald-500/20 px-2 py-0.5 rounded">
-                +20.3%
-              </span>
+          {/* 1. USER PROFILE IDENTITY HEADER */}
+          <div className="p-3.5 bg-gradient-to-r from-slate-900 via-[#123B63] to-[#15519D] text-white rounded-2xl flex items-center gap-3 shadow-md relative overflow-hidden">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-400 to-amber-300 text-slate-950 text-xs font-black flex items-center justify-center shrink-0 shadow-xs">
+              {user?.name ? user.name.substring(0, 2).toUpperCase() : 'AK'}
             </div>
-            <span className="text-2xl font-black tracking-tight">₹8,42,150.00</span>
-            <div className="flex items-center justify-between text-[10px] text-slate-300 font-bold pt-2 border-t border-white/10 mt-1">
-              <span>Tracked Net Wealth</span>
-              <button
-                onClick={() => {
-                  onClose();
-                  if (onNavigateTab) onNavigateTab('Portfolio');
-                }}
-                className="text-[#64748B] hover:text-blue-300 transition font-black flex items-center gap-0.5 cursor-pointer"
-              >
-                View <ArrowUpRight className="w-3 h-3" />
-              </button>
+            
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-1.5">
+                <span className="font-extrabold text-sm text-white truncate">
+                  {user?.name || 'Aman Kumar'}
+                </span>
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" title="Active Account" />
+              </div>
+              <div className="text-[11px] text-slate-300 font-semibold truncate">
+                {user?.email || user?.mobile || '+91 98765 43210'}
+              </div>
+              <div className="inline-flex items-center gap-1 mt-1 text-[9px] font-black uppercase text-amber-300 bg-amber-400/20 px-2 py-0.5 rounded-full border border-amber-300/30">
+                <ShieldCheck className="w-3 h-3 text-amber-300" />
+                <span>Pro Gold Active</span>
+              </div>
             </div>
           </div>
 

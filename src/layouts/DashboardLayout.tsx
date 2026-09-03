@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Home, Compass, TrendingUp, Newspaper, Briefcase, Gem, 
   Search, Sparkles, Bell, ChevronDown, ArrowRight, Plus, 
   Settings, MoreVertical, Star, ChevronRight, User, ShieldCheck, FlaskConical,
-  PanelRightClose, PanelRightOpen
+  PanelRightClose, PanelRightOpen, Lock, Clock
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 
 import LiveStockTicker from '../components/dashboard/LiveStockTicker';
 import HomeDashboard from '../components/dashboard/HomeDashboard';
+import SparklineGraph from '../components/common/SparklineGraph';
 import MarketsCenter from '../components/dashboard/MarketsCenter';
 import ResearchCenter from '../components/dashboard/ResearchCenter';
 import NewsCenter from '../components/dashboard/NewsCenter';
@@ -24,6 +25,7 @@ import { UniversalSearch } from '../components/dashboard/UniversalSearch';
 import { UserMenuDropdown } from '../components/dashboard/UserMenuDropdown';
 import { PremiumPricingModal } from '../components/dashboard/PremiumPricingModal';
 import { AiCopilotModal } from '../components/ai/AiCopilotModal';
+import { TradeDrawer } from '../components/dashboard/TradeDrawer';
 
 const RIGHT_WATCHLIST_DATA = [
   { symbol: 'RELIANCE', name: 'Reliance Industries Ltd.', price: '2,975.80', changePercent: 2.35, isPositive: true, sparkline: [2910, 2930, 2945, 2975.8], badgeBg: 'bg-emerald-100 text-emerald-800' },
@@ -55,6 +57,92 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
   const [isPricingOpen, setIsPricingOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isWatchlistOpen, setIsWatchlistOpen] = useState(true);
+  const [isTradeDrawerOpen, setIsTradeDrawerOpen] = useState(false);
+  const [tradeStock, setTradeStock] = useState<any>(null);
+
+  const [isPremiumUser, setIsPremiumUser] = useState<boolean>(() => {
+    return localStorage.getItem('is_premium_member') === 'true' || localStorage.getItem('user_plan') === 'pro';
+  });
+
+  // Live Indian Stock Market Clock & Status State (IST)
+  const [istTime, setIstTime] = useState<string>('');
+  const [currentDateStr, setCurrentDateStr] = useState<string>('');
+  const [marketStatus, setMarketStatus] = useState<{ status: 'Open' | 'Closed' | 'Pre-Open'; color: string; label: string }>({
+    status: 'Open',
+    color: 'text-emerald-700 bg-emerald-50 border-emerald-200/60',
+    label: 'Market Open'
+  });
+
+  useEffect(() => {
+    const updateClock = () => {
+      const now = new Date();
+      
+      const dateString = now.toLocaleDateString('en-IN', {
+        timeZone: 'Asia/Kolkata',
+        weekday: 'long',
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric'
+      });
+
+      const timeString = now.toLocaleTimeString('en-IN', {
+        timeZone: 'Asia/Kolkata',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+      });
+
+      setCurrentDateStr(dateString);
+      setIstTime(`${timeString} IST`);
+
+      const istDate = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+      const day = istDate.getDay();
+      const hours = istDate.getHours();
+      const minutes = istDate.getMinutes();
+      const timeInMinutes = hours * 60 + minutes;
+
+      const isWeekday = day >= 1 && day <= 5;
+      const isPreMarket = isWeekday && timeInMinutes >= 540 && timeInMinutes < 555;
+      const isOpenHours = isWeekday && timeInMinutes >= 555 && timeInMinutes < 930;
+
+      if (isOpenHours) {
+        setMarketStatus({
+          status: 'Open',
+          color: 'text-emerald-700 bg-emerald-50 border-emerald-200/60',
+          label: 'Market Open'
+        });
+      } else if (isPreMarket) {
+        setMarketStatus({
+          status: 'Pre-Open',
+          color: 'text-amber-700 bg-amber-50 border-amber-200/60',
+          label: 'Pre-Market Session'
+        });
+      } else {
+        setMarketStatus({
+          status: 'Closed',
+          color: 'text-rose-700 bg-rose-50 border-rose-200/60',
+          label: 'Market Closed'
+        });
+      }
+    };
+
+    updateClock();
+    const interval = setInterval(updateClock, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleTogglePlan = (isPro: boolean) => {
+    setIsPremiumUser(isPro);
+    localStorage.setItem('is_premium_member', isPro ? 'true' : 'false');
+    localStorage.setItem('user_plan', isPro ? 'pro' : 'free');
+
+    if (isPro) {
+      toast.success('Simulating Premium Active! Stock actions will open Buy/Sell Trade Drawer.', { icon: '👑' });
+    } else {
+      toast.success('Simulating Free Tier (Non-Premium)! Stock actions will route to Investment Lab.', { icon: '🔒' });
+    }
+  };
 
   const navTabs = [
     { name: 'Home', icon: <Home className="w-5 h-5" />, label: 'Home' },
@@ -113,8 +201,8 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
             </nav>
           </div>
 
-          {/* Bottom Upgrade & Profile Area */}
-          <div className="p-4 space-y-4 border-t border-slate-100 bg-white">
+          {/* Bottom Upgrade Area */}
+          <div className="p-4 border-t border-slate-100 bg-white">
             {/* Upgrade to Pro Banner */}
             <div className="p-4 bg-gradient-to-br from-amber-500/10 via-amber-50 to-blue-50 rounded-2xl border border-amber-200 space-y-2">
               <div className="flex items-center gap-1.5 text-xs font-black text-amber-900">
@@ -132,20 +220,6 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
-
-            {/* User Profile Chip */}
-            <div className="flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer" onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}>
-              <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-full bg-[#15519D] text-white font-black text-xs flex items-center justify-center">
-                  AK
-                </div>
-                <div>
-                  <div className="text-xs font-extrabold text-slate-900">Aman Kumar</div>
-                  <div className="text-[10px] font-bold text-emerald-600">Premium Plan</div>
-                </div>
-              </div>
-              <ChevronDown className="w-4 h-4 text-slate-400" />
-            </div>
           </div>
         </aside>
 
@@ -154,13 +228,21 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
           
           {/* GLOBAL TOP HEADER STICKY BELOW TICKER */}
           <header className="h-14 bg-white border-b border-[#E2E8F0] sticky top-[28px] z-40 px-4 sm:px-6 flex items-center justify-between shadow-2xs gap-4">
-            {/* Left Date & Market Open Indicator */}
+            {/* Left Date, Time & Market Open/Close Indicator */}
             <div className="flex items-center gap-2.5 text-xs font-bold text-slate-500 shrink-0">
-              <span className="font-extrabold text-slate-900 text-xs whitespace-nowrap">Tuesday, 27 May 2025</span>
-              <span className="inline-flex items-center gap-1 font-extrabold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full text-[11px] border border-emerald-200/60 whitespace-nowrap shrink-0">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                Market Open
+              <div className="flex items-center gap-1.5 text-slate-900 font-extrabold text-xs whitespace-nowrap">
+                <Clock className="w-3.5 h-3.5 text-[#15519D] shrink-0" />
+                <span>{currentDateStr || 'Tuesday, 27 May 2025'}</span>
+                <span className="text-[#15519D] font-mono text-[11px] bg-blue-50 px-2 py-0.5 rounded-md border border-blue-100/80">
+                  {istTime || '11:45:20 AM IST'}
+                </span>
+              </div>
+
+              <span className={`inline-flex items-center gap-1.5 font-extrabold text-[11px] px-2.5 py-0.5 rounded-full border whitespace-nowrap shrink-0 ${marketStatus.color}`}>
+                <span className={`w-1.5 h-1.5 rounded-full ${marketStatus.status === 'Open' ? 'bg-emerald-500 animate-pulse' : marketStatus.status === 'Pre-Open' ? 'bg-amber-500 animate-ping' : 'bg-rose-500'}`} />
+                {marketStatus.label}
               </span>
+
               <span className="text-slate-400 font-bold text-[10px] whitespace-nowrap hidden xl:inline">• NSE</span>
               <span className="text-slate-400 font-bold text-[10px] whitespace-nowrap hidden xl:inline">• BSE</span>
             </div>
@@ -258,6 +340,8 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                   {activeTab === 'Portfolio' && (
                     <PortfolioDashboard
                       onSelectStock={(st) => setSelectedStock(st)}
+                      isPremium={isPremiumUser}
+                      onTogglePremium={(isPro) => handleTogglePlan(isPro)}
                     />
                   )}
 
@@ -345,15 +429,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
 
                         {/* Sparkline */}
                         <div className="col-span-2 flex justify-end">
-                          <svg className="w-10 h-4 overflow-visible" viewBox="0 0 30 12">
-                            <polyline
-                              fill="none"
-                              stroke={stk.isPositive ? '#16A34A' : '#DC2626'}
-                              strokeWidth="1.5"
-                              strokeLinecap="round"
-                              points={stk.isPositive ? "0,10 10,8 20,9 30,2" : "0,2 10,6 20,5 30,10"}
-                            />
-                          </svg>
+                          <SparklineGraph isPositive={stk.isPositive} points={stk.sparkline} width={42} height={20} />
                         </div>
                       </div>
                     ))}
@@ -444,6 +520,22 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
         isOpen={!!selectedStock}
         onClose={() => setSelectedStock(null)}
         stock={selectedStock}
+        onNavigateTab={(tb) => setActiveTab(tb)}
+        onOpenTradeDrawer={(stk) => {
+          setTradeStock(stk || selectedStock);
+          setIsTradeDrawerOpen(true);
+        }}
+        onInvestViaBroker={(stk) => {
+          setTradeStock(stk || selectedStock);
+          setIsTradeDrawerOpen(true);
+        }}
+        isPremium={!!isPremiumUser}
+      />
+
+      <TradeDrawer
+        isOpen={isTradeDrawerOpen}
+        onClose={() => setIsTradeDrawerOpen(false)}
+        stock={tradeStock}
       />
 
       <ResearchDetail

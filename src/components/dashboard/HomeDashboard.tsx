@@ -4,6 +4,8 @@ import {
   ChevronLeft, SlidersHorizontal, Lock, Award, Star, MoreVertical, Edit2, Plus, Filter, Sparkles, Activity
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import AiMarketRadarHub from './AiMarketRadarHub';
+import SparklineGraph from '../common/SparklineGraph';
 
 const SECONDARY_INDICES = [
   { name: 'NIFTY MIDCAP 100', exchange: 'NSE', value: '56,248.15', changePercent: 0.82, changePoint: '+458.65', isPositive: true, sparkline: [55700, 55900, 56050, 56248] },
@@ -25,12 +27,6 @@ interface HomeDashboardProps {
   onOpenPricing?: () => void;
 }
 
-const CENTER_WATCHLIST_DATA = [
-  { symbol: 'RELIANCE', name: 'Reliance Industries Ltd.', price: '2,975.80', changePercent: 2.35, isPositive: true, sparkline: [2910, 2930, 2945, 2975.8], mcap: '₹20.11 L Cr', badgeBg: 'bg-emerald-100 text-emerald-800' },
-  { symbol: 'TCS', name: 'Tata Consultancy Services', price: '4,182.75', changePercent: -0.45, isPositive: false, sparkline: [4210, 4200, 4190, 4182.75], mcap: '₹15.18 L Cr', badgeBg: 'bg-purple-100 text-purple-800' },
-  { symbol: 'HDFCBANK', name: 'HDFC Bank Ltd.', price: '1,678.40', changePercent: 1.81, isPositive: true, sparkline: [1650, 1662, 1670, 1678.4], mcap: '₹12.83 L Cr', badgeBg: 'bg-sky-100 text-sky-800' },
-  { symbol: 'INFY', name: 'Infosys Ltd.', price: '1,634.20', changePercent: 0.92, isPositive: true, sparkline: [1615, 1620, 1628, 1634.2], mcap: '₹6.78 L Cr', badgeBg: 'bg-pink-100 text-pink-800' },
-];
 
 const MARKET_MOVERS_DATA: Record<string, Array<{ symbol: string; name: string; price: string; changePercent: number; isPositive: boolean; sparkline: number[]; badgeBg: string }>> = {
   'All-Time High': [
@@ -75,7 +71,6 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
 }) => {
   const [activeExchange, setActiveExchange] = useState<'NSE' | 'BSE'>('NSE');
   const [activeMoverCategory, setActiveMoverCategory] = useState<string>('All-Time High');
-  const [activeWatchlistTab, setActiveWatchlistTab] = useState<string>('Default');
 
   const secondaryIndicesRef = useRef<HTMLDivElement>(null);
 
@@ -158,9 +153,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
               </div>
 
               {/* Sparkline Aligned Right */}
-              <svg className="w-16 h-8 overflow-visible shrink-0" viewBox="0 0 50 20">
-                <polyline fill="none" stroke="#16A34A" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" points="0,16 12,13 25,14 38,7 50,3" />
-              </svg>
+              <SparklineGraph isPositive={true} width={56} height={28} points={[24750, 24800, 24850, 24920]} />
             </div>
 
             {/* SENSEX */}
@@ -180,9 +173,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
               </div>
 
               {/* Sparkline Aligned Right */}
-              <svg className="w-16 h-8 overflow-visible shrink-0" viewBox="0 0 50 20">
-                <polyline fill="none" stroke="#16A34A" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" points="0,17 12,14 25,12 38,8 50,4" />
-              </svg>
+              <SparklineGraph isPositive={true} width={56} height={28} points={[81240, 81400, 81550, 81721]} />
             </div>
 
             {/* BANK NIFTY */}
@@ -202,9 +193,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
               </div>
 
               {/* Sparkline Aligned Right */}
-              <svg className="w-16 h-8 overflow-visible shrink-0" viewBox="0 0 50 20">
-                <polyline fill="none" stroke="#16A34A" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" points="0,16 12,13 25,10 38,6 50,2" />
-              </svg>
+              <SparklineGraph isPositive={true} width={56} height={28} points={[54900, 55050, 55180, 55320]} />
             </div>
 
           </div>
@@ -279,15 +268,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
                 </div>
 
                 {/* Compact Sparkline */}
-                <svg className="w-12 h-6 overflow-visible shrink-0" viewBox="0 0 40 16">
-                  <polyline
-                    fill="none"
-                    stroke={idx.isPositive ? '#16A34A' : '#DC2626'}
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                    points={idx.isPositive ? "0,14 13,11 26,12 40,4" : "0,4 13,7 26,6 40,14"}
-                  />
-                </svg>
+                <SparklineGraph isPositive={idx.isPositive} points={idx.sparkline} width={48} height={24} />
               </div>
             ))}
           </div>
@@ -439,119 +420,18 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
                   {stk.isPositive ? `+${stk.changePercent}%` : `${stk.changePercent}%`}
                 </span>
 
-                <svg className="w-12 h-5 overflow-visible" viewBox="0 0 35 15">
-                  <polyline
-                    fill="none"
-                    stroke={stk.isPositive ? '#16A34A' : '#DC2626'}
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    points={stk.isPositive ? "0,13 12,10 24,11 35,3" : "0,3 12,7 24,6 35,13"}
-                  />
-                </svg>
+                <SparklineGraph isPositive={stk.isPositive} points={stk.sparkline} width={50} height={24} />
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* 5. MAIN CENTER WATCHLIST TABLE */}
-      <div className="p-6 bg-white rounded-[24px] border border-[#E2E8F0] shadow-2xs space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
-          <div className="flex items-center gap-3">
-            <h2 className="text-lg font-extrabold text-slate-900 tracking-tight">My Watchlists</h2>
-            <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-full text-xs">
-              {['Default', 'Long Term', 'Tech', 'High Growth Defense'].map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setActiveWatchlistTab(tab)}
-                  className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
-                    activeWatchlistTab === tab
-                      ? 'bg-[#15519D] text-white shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900'
-                  }`}
-                >
-                  {tab}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2 self-end sm:self-auto text-slate-400">
-            <button className="p-1.5 hover:text-slate-700" title="Edit Watchlist"><Edit2 className="w-4 h-4" /></button>
-            <button className="p-1.5 hover:text-slate-700" title="Add Stock"><Plus className="w-4 h-4" /></button>
-            <button className="p-1.5 hover:text-slate-700" title="More Options"><MoreVertical className="w-4 h-4" /></button>
-          </div>
-        </div>
-
-        {/* Watchlist Table */}
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs font-medium">
-            <thead>
-              <tr className="border-b border-slate-100 text-slate-400 uppercase text-[10px] font-bold tracking-wider">
-                <th className="py-2.5 px-3">Stock</th>
-                <th className="py-2.5 px-3">Price</th>
-                <th className="py-2.5 px-3">Change</th>
-                <th className="py-2.5 px-3">1D Chart</th>
-                <th className="py-2.5 px-3">Market Cap</th>
-                <th className="py-2.5 px-3 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {CENTER_WATCHLIST_DATA.map((row) => (
-                <tr
-                  key={row.symbol}
-                  onClick={() => onSelectStock && onSelectStock({ symbol: row.symbol, name: row.name, price: row.price })}
-                  className="hover:bg-slate-50/80 transition-colors cursor-pointer group"
-                >
-                  <td className="py-3 px-3">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-8 h-8 rounded-xl font-black text-xs flex items-center justify-center shrink-0 ${row.badgeBg}`}>
-                        {row.symbol.substring(0, 2)}
-                      </div>
-                      <div>
-                        <div className="font-extrabold text-slate-900 text-xs group-hover:text-[#15519D] transition-colors">{row.symbol}</div>
-                        <div className="text-[11px] text-slate-400 truncate">{row.name}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="py-3 px-3 font-extrabold text-slate-900 font-mono text-xs">₹{row.price}</td>
-                  <td className={`py-3 px-3 font-extrabold text-xs ${row.isPositive ? 'text-[#16A34A]' : 'text-[#DC2626]'}`}>
-                    {row.isPositive ? `+${row.changePercent}%` : `${row.changePercent}%`}
-                  </td>
-                  <td className="py-3 px-3">
-                    <svg className="w-16 h-5 overflow-visible" viewBox="0 0 40 15">
-                      <polyline
-                        fill="none"
-                        stroke={row.isPositive ? '#16A34A' : '#DC2626'}
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        points={row.isPositive ? "0,12 10,9 20,10 40,3" : "0,3 10,7 20,6 40,12"}
-                      />
-                    </svg>
-                  </td>
-                  <td className="py-3 px-3 text-slate-600 font-bold">{row.mcap}</td>
-                  <td className="py-3 px-3 text-right">
-                    <div className="flex items-center justify-end gap-2 text-slate-400">
-                      <Star className="w-4 h-4 hover:text-amber-400 fill-transparent transition-colors" />
-                      <MoreVertical className="w-4 h-4 hover:text-slate-700" />
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        <div className="text-center pt-2 border-t border-slate-100">
-          <button
-            onClick={() => onNavigateTab && onNavigateTab('Markets')}
-            className="text-xs font-extrabold text-[#15519D] hover:underline flex items-center justify-center gap-1 mx-auto"
-          >
-            <span>View all watchlists</span>
-            <ChevronRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
-      </div>
+      {/* 5. ARTHSETU AI INTELLIGENCE & MARKET RADAR HUB */}
+      <AiMarketRadarHub
+        onSelectStock={onSelectStock}
+        onNavigateTab={onNavigateTab}
+      />
 
       {/* 6. BOTTOM PROMOTIONAL SECTION (DUAL CARDS) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

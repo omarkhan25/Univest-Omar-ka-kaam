@@ -6,7 +6,11 @@ import {
   ChevronRight, Calendar, Info, Award, ShieldCheck, ArrowUpRight, ArrowDownRight, Bell, ExternalLink, X, Plus, Check, Sliders
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { 
+  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer 
+} from 'recharts';
 import AdvancedStockChart from './AdvancedStockChart';
+import { useAuth } from '../../context/AuthContext';
 
 interface StockDetailProps {
   isOpen: boolean;
@@ -14,6 +18,9 @@ interface StockDetailProps {
   stock?: any;
   onInvestViaBroker?: (stock: any) => void;
   onSetAlert?: (stock: any) => void;
+  onNavigateTab?: (tab: string) => void;
+  onOpenTradeDrawer?: (stock: any) => void;
+  isPremium?: boolean;
 }
 
 export const StockDetail: React.FC<StockDetailProps> = ({
@@ -21,12 +28,17 @@ export const StockDetail: React.FC<StockDetailProps> = ({
   onClose,
   stock,
   onInvestViaBroker,
-  onSetAlert
+  onSetAlert,
+  onNavigateTab,
+  onOpenTradeDrawer,
+  isPremium
 }) => {
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState<'overview' | 'charts'>('overview');
   const [chartInterval, setChartInterval] = useState<'1D' | '1W' | '1M' | '3M' | '1Y' | '5Y'>('1M');
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isAlertSet, setIsAlertSet] = useState(false);
+  const [hoveredDataPoint, setHoveredDataPoint] = useState<{ price: number; label: string; diff: number; pct: number } | null>(null);
 
   if (!isOpen) return null;
 
@@ -39,25 +51,67 @@ export const StockDetail: React.FC<StockDetailProps> = ({
 
   const numericPrice = parseFloat(price.toString().replace(/,/g, '')) || 22183.65;
 
-  // Overview Price Performance Area Chart Points
-  const overviewPointsMap: Record<string, number[]> = {
-    '1D': [22010, 22080, 22040, 22120, 22183.65],
-    '1W': [21850, 21920, 21900, 22100, 22183.65],
-    '1M': [21400, 21750, 21600, 22050, 22183.65],
-    '3M': [20800, 21200, 21050, 21900, 22183.65],
-    '1Y': [19200, 20100, 19800, 21500, 22183.65],
-    '5Y': [12500, 15000, 17800, 20400, 22183.65],
+  // Generate detailed, realistic time-series chart data points based on stock price and interval
+  const generateDetailedChartData = (basePrice: number, interval: '1D' | '1W' | '1M' | '3M' | '1Y' | '5Y') => {
+    let count = 24;
+    let labels: string[] = [];
+    let startPrice = basePrice * 0.94;
+
+    if (interval === '1D') {
+      count = 26;
+      labels = [
+        '09:15', '09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:00',
+        '11:15', '11:30', '11:45', '12:00', '12:15', '12:30', '12:45', '13:00',
+        '13:15', '13:30', '13:45', '14:00', '14:15', '14:30', '14:45', '15:00',
+        '15:15', '15:30'
+      ];
+      startPrice = basePrice * 0.988;
+    } else if (interval === '1W') {
+      count = 20;
+      labels = ['Mon 09:15', 'Mon 13:00', 'Tue 09:15', 'Tue 13:00', 'Wed 09:15', 'Wed 13:00', 'Thu 09:15', 'Thu 13:00', 'Fri 09:15', 'Fri 13:00', 'Mon 09:15', 'Mon 13:00', 'Tue 09:15', 'Tue 13:00', 'Wed 09:15', 'Wed 13:00', 'Thu 09:15', 'Thu 13:00', 'Fri 09:15', 'Today'];
+      startPrice = basePrice * 0.965;
+    } else if (interval === '1M') {
+      count = 30;
+      labels = Array.from({ length: 30 }, (_, i) => `May ${i + 1}`);
+      startPrice = basePrice * 0.93;
+    } else if (interval === '3M') {
+      count = 24;
+      labels = Array.from({ length: 24 }, (_, i) => `Wk ${i + 1}`);
+      startPrice = basePrice * 0.88;
+    } else if (interval === '1Y') {
+      count = 24;
+      labels = ['Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May',
+                'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'Today'];
+      startPrice = basePrice * 0.78;
+    } else {
+      count = 25;
+      labels = Array.from({ length: 25 }, (_, i) => `Q${(i % 4) + 1} ${(2020 + Math.floor(i / 4))}`);
+      startPrice = basePrice * 0.52;
+    }
+
+    const totalRange = basePrice - startPrice;
+    const data = [];
+
+    for (let i = 0; i < count; i++) {
+      const progress = i / (count - 1);
+      const trend = startPrice + totalRange * Math.pow(progress, 0.85);
+      const wave = Math.sin(progress * Math.PI * 4) * (totalRange * 0.08);
+      const wave2 = Math.cos(progress * Math.PI * 7) * (totalRange * 0.04);
+      
+      let priceVal = trend + wave + wave2;
+      if (i === count - 1) priceVal = basePrice;
+
+      data.push({
+        label: labels[i] || `Pt ${i + 1}`,
+        price: parseFloat(priceVal.toFixed(2)),
+        startPrice: parseFloat(startPrice.toFixed(2))
+      });
+    }
+
+    return data;
   };
 
-  const points = overviewPointsMap[chartInterval] || overviewPointsMap['1M'];
-  const minPt = Math.min(...points) * 0.99;
-  const maxPt = Math.max(...points) * 1.01;
-
-  const chartSvgPoints = points.map((val, idx) => {
-    const x = (idx / (points.length - 1)) * 600;
-    const y = 140 - ((val - minPt) / (maxPt - minPt)) * 120;
-    return `${x},${y}`;
-  }).join(' ');
+  const detailedChartData = generateDetailedChartData(numericPrice, chartInterval);
 
   const handleShare = () => {
     if (navigator.clipboard) {
@@ -74,6 +128,36 @@ export const StockDetail: React.FC<StockDetailProps> = ({
   const handleToggleAlert = () => {
     setIsAlertSet(!isAlertSet);
     toast.success(isAlertSet ? 'Price alert removed' : `Alert created for ${symbol}!`);
+  };
+
+  const handleAddToInvestmentLab = () => {
+    const hasPremium = isPremium || 
+                       user?.isPremium || 
+                       user?.plan === 'pro' || 
+                       user?.plan === 'premium' || 
+                       localStorage.getItem('is_premium_member') === 'true' ||
+                       localStorage.getItem('user_plan') === 'pro';
+
+    if (hasPremium) {
+      // User HAS bought premium -> Open Buy / Sell trade page
+      onClose();
+      if (onOpenTradeDrawer) {
+        onOpenTradeDrawer(stock || { symbol, companyName, price });
+      } else if (onInvestViaBroker) {
+        onInvestViaBroker(stock || { symbol, companyName, price });
+      } else {
+        toast.success(`Opening Buy/Sell Order Page for ${symbol}`);
+      }
+    } else {
+      // User HAS NOT bought premium -> Redirect to Investment Lab page ('Portfolio')
+      onClose();
+      if (onNavigateTab) {
+        onNavigateTab('Portfolio');
+      }
+      toast.success(`Redirecting to Investment Lab for ${symbol}...`, {
+        icon: '🧪'
+      });
+    }
   };
 
   return (
@@ -165,10 +249,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                 </button>
 
                 <button
-                  onClick={() => {
-                    if (onInvestViaBroker) onInvestViaBroker(stock);
-                    else toast.success(`Opened ${symbol} in Investment Lab!`);
-                  }}
+                  onClick={handleAddToInvestmentLab}
                   className="px-4 py-2.5 bg-[#15519D] hover:bg-[#123B63] text-white font-extrabold text-xs rounded-xl shadow-md transition cursor-pointer flex items-center gap-1.5"
                 >
                   <Briefcase className="w-4 h-4 text-amber-300" />
@@ -275,18 +356,44 @@ export const StockDetail: React.FC<StockDetailProps> = ({
 
                 {/* SECTION 2: PRICE PERFORMANCE TREND */}
                 <div className="bg-white p-6 rounded-2xl border border-slate-200 space-y-4 shadow-2xs">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Activity className="w-4 h-4 text-[#15519D]" />
-                      <h3 className="font-black text-base text-[#172033]">Price Performance Trend</h3>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <Activity className="w-4 h-4 text-[#15519D]" />
+                        <h3 className="font-black text-base text-[#172033]">Price Performance Trend</h3>
+                        <span className="px-2 py-0.5 rounded-full bg-blue-50 text-[#15519D] font-extrabold text-[10px] border border-blue-200">
+                          Live Interactive Chart
+                        </span>
+                      </div>
+
+                      {/* DYNAMIC CURSOR HOVER PRICE DISPLAY */}
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="text-xl font-black text-slate-900 font-mono">
+                          ₹{(hoveredDataPoint ? hoveredDataPoint.price : numericPrice).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                        </span>
+                        {hoveredDataPoint ? (
+                          <span className={`text-xs font-extrabold flex items-center gap-0.5 px-2 py-0.5 rounded-md ${hoveredDataPoint.diff >= 0 ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-rose-50 text-rose-700 border border-rose-200'}`}>
+                            <span>{hoveredDataPoint.diff >= 0 ? '▲ +' : '▼ '}{hoveredDataPoint.diff.toFixed(2)} ({hoveredDataPoint.pct}%)</span>
+                            <span className="text-[10px] text-slate-400 font-semibold ml-1">at {hoveredDataPoint.label}</span>
+                          </span>
+                        ) : (
+                          <span className={`text-xs font-extrabold flex items-center gap-0.5 px-2 py-0.5 rounded-md ${isPositive ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-rose-50 text-rose-700 border border-rose-200'}`}>
+                            <span>{isPositive ? '▲ +' : '▼ '}{changePercent}% Today</span>
+                          </span>
+                        )}
+                      </div>
                     </div>
 
-                    <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl">
+                    {/* TIMEFRAME SELECTOR BUTTONS */}
+                    <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl shrink-0 self-start sm:self-center">
                       {(['1D', '1W', '1M', '3M', '1Y', '5Y'] as const).map((inter) => (
                         <button
                           key={inter}
-                          onClick={() => setChartInterval(inter)}
-                          className={`px-3 py-1 text-xs font-bold rounded-lg transition cursor-pointer ${
+                          onClick={() => {
+                            setChartInterval(inter);
+                            setHoveredDataPoint(null);
+                          }}
+                          className={`px-3 py-1.5 text-xs font-black rounded-lg transition cursor-pointer ${
                             chartInterval === inter
                               ? 'bg-[#15519D] text-white shadow-xs'
                               : 'text-[#64748B] hover:text-[#172033]'
@@ -298,17 +405,84 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                     </div>
                   </div>
 
-                  <div className="h-44 w-full relative pt-2">
-                    <svg className="w-full h-full overflow-visible" viewBox="0 0 600 150">
-                      <defs>
-                        <linearGradient id="stockOverviewGrad" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="#15519D" stopOpacity="0.3" />
-                          <stop offset="100%" stopColor="#15519D" stopOpacity="0.0" />
-                        </linearGradient>
-                      </defs>
-                      <polygon points={`0,150 ${chartSvgPoints} 600,150`} fill="url(#stockOverviewGrad)" />
-                      <polyline points={chartSvgPoints} fill="none" stroke="#15519D" strokeWidth="2.5" strokeLinecap="round" />
-                    </svg>
+                  {/* RECHARTS INTERACTIVE AREA/LINE CHART */}
+                  <div className="h-60 w-full relative pt-2">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <AreaChart
+                        data={detailedChartData}
+                        margin={{ top: 10, right: 10, left: 10, bottom: 0 }}
+                        onMouseMove={(e) => {
+                          if (e && e.activePayload && e.activePayload.length > 0) {
+                            const p = e.activePayload[0].payload;
+                            const diff = p.price - p.startPrice;
+                            const pct = parseFloat(((diff / p.startPrice) * 100).toFixed(2));
+                            setHoveredDataPoint({
+                              price: p.price,
+                              label: p.label,
+                              diff,
+                              pct
+                            });
+                          }
+                        }}
+                        onMouseLeave={() => setHoveredDataPoint(null)}
+                      >
+                        <defs>
+                          <linearGradient id="stockDetailAreaGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#15519D" stopOpacity="0.25" />
+                            <stop offset="100%" stopColor="#15519D" stopOpacity="0.0" />
+                          </linearGradient>
+                        </defs>
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" opacity={0.6} />
+                        <XAxis 
+                          dataKey="label" 
+                          stroke="#94A3B8" 
+                          fontSize={11} 
+                          tickLine={false} 
+                          axisLine={{ stroke: '#E2E8F0' }}
+                          minTickGap={25}
+                        />
+                        <YAxis 
+                          domain={['dataMin - 10', 'dataMax + 10']} 
+                          stroke="#94A3B8" 
+                          fontSize={11} 
+                          tickLine={false} 
+                          axisLine={false}
+                          tickFormatter={(v) => `₹${Math.round(v).toLocaleString('en-IN')}`}
+                          orientation="right"
+                        />
+                        <Tooltip 
+                          content={({ active, payload }: any) => {
+                            if (active && payload && payload.length) {
+                              const d = payload[0].payload;
+                              const isUp = d.price >= d.startPrice;
+                              const diff = d.price - d.startPrice;
+                              const pct = ((diff / d.startPrice) * 100).toFixed(2);
+                              return (
+                                <div className="bg-slate-900/95 text-white p-3 rounded-xl shadow-xl border border-slate-700/80 backdrop-blur-md text-xs space-y-1">
+                                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{d.label}</div>
+                                  <div className="text-base font-black font-mono text-white">
+                                    ₹{d.price.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                                  </div>
+                                  <div className={`text-[11px] font-extrabold flex items-center gap-1 ${isUp ? 'text-emerald-400' : 'text-rose-400'}`}>
+                                    <span>{isUp ? '▲ +' : '▼ '}{diff.toFixed(2)} ({pct}%)</span>
+                                  </div>
+                                </div>
+                              );
+                            }
+                            return null;
+                          }} 
+                          cursor={{ stroke: '#15519D', strokeWidth: 1.5, strokeDasharray: '4 4' }} 
+                        />
+                        <Area 
+                          type="monotone" 
+                          dataKey="price" 
+                          stroke="#15519D" 
+                          strokeWidth={3} 
+                          fill="url(#stockDetailAreaGrad)" 
+                          activeDot={{ r: 6, fill: '#15519D', stroke: '#FFFFFF', strokeWidth: 2 }}
+                        />
+                      </AreaChart>
+                    </ResponsiveContainer>
                   </div>
                 </div>
 

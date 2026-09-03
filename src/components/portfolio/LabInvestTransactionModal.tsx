@@ -381,17 +381,28 @@ export const LabInvestTransactionModal: React.FC<LabInvestTransactionModalProps>
                   </div>
                 </div>
 
-                {/* INLINE BUY VALIDATION WARNING */}
+                {/* PROMINENT INSUFFICIENT TOKEN BALANCE RED BOX */}
                 {!isAffordable && (
-                  <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs space-y-1">
-                    <div className="font-extrabold text-rose-800 flex items-center gap-1.5">
-                      <AlertCircle className="w-4 h-4 text-rose-600" />
-                      <span>Not enough Tokens for this investment.</span>
+                  <div className="p-4 bg-rose-50 border-2 border-rose-500 rounded-2xl text-xs space-y-2 animate-in fade-in duration-200 shadow-sm">
+                    <div className="font-black text-rose-800 text-sm flex items-center justify-between">
+                      <div className="flex items-center gap-1.5">
+                        <AlertCircle className="w-5 h-5 text-rose-600 shrink-0" />
+                        <span>Insufficient Token Balance</span>
+                      </div>
+                      <span className="text-[10px] font-black uppercase text-rose-700 bg-rose-200/80 px-2 py-0.5 rounded border border-rose-300">
+                        Shortfall Alert
+                      </span>
                     </div>
-                    <div className="text-[11px] text-rose-700 font-semibold flex items-center gap-3 pt-0.5">
-                      <span>Available: ₹{availableTokens.toLocaleString('en-IN')}</span>
-                      <span>Required: ₹{requiredTokens.toLocaleString('en-IN')}</span>
-                      <span>Diff: ₹{tokenDifference.toLocaleString('en-IN')}</span>
+
+                    <p className="text-xs text-rose-800 font-medium leading-relaxed">
+                      Your order value of <strong className="text-rose-950 font-black">₹{requiredTokens.toLocaleString('en-IN')} Tokens</strong> exceeds your available token balance of <strong className="text-rose-950 font-black">₹{availableTokens.toLocaleString('en-IN')} Tokens</strong>.
+                    </p>
+
+                    <div className="flex items-center justify-between text-[11px] text-rose-900 font-extrabold pt-2 border-t border-rose-200">
+                      <span>Token Shortfall:</span>
+                      <span className="font-black text-rose-700 bg-white px-2.5 py-0.5 rounded-md border border-rose-300 shadow-2xs font-mono">
+                        -₹{tokenDifference.toLocaleString('en-IN')} Tokens
+                      </span>
                     </div>
                   </div>
                 )}
