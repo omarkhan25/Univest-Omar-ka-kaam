@@ -1,47 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Search, TrendingUp, TrendingDown, Layers, BarChart3, 
   ArrowUpRight, ArrowDownRight, Bookmark, BookmarkCheck,
   ChevronRight, Sparkles, Filter, Activity, ShieldCheck
 } from 'lucide-react';
+import marketService from '../../services/market.service';
 
 interface MarketsCenterProps {
   onSelectStock: (stock: any) => void;
   watchlistStocks?: string[];
   onToggleWatchlist?: (symbol: string) => void;
 }
-
-const INDICES_DATA = [
-  { name: 'NIFTY 50', value: '24,820.40', change: '+142.15', percent: '+0.58%', isPositive: true },
-  { name: 'SENSEX', value: '81,380.20', change: '+415.80', percent: '+0.51%', isPositive: true },
-  { name: 'BANK NIFTY', value: '52,140.75', change: '+290.40', percent: '+0.56%', isPositive: true },
-  { name: 'NIFTY IT', value: '41,250.30', change: '+510.20', percent: '+1.25%', isPositive: true },
-  { name: 'NIFTY AUTO', value: '26,410.10', change: '-85.50', percent: '-0.32%', isPositive: false },
-  { name: 'NIFTY PHARMA', value: '22,980.60', change: '+115.30', percent: '+0.50%', isPositive: true },
-];
-
-const SECTORS_PERFORMANCE = [
-  { name: 'Information Tech', change: '+1.45%', status: 'Bullish', leadStock: 'TCS', color: '#16A34A' },
-  { name: 'Banking & Financials', change: '+0.88%', status: 'Positive', leadStock: 'HDFC Bank', color: '#16A34A' },
-  { name: 'Capital Goods', change: '+0.72%', status: 'Positive', leadStock: 'L&T', color: '#16A34A' },
-  { name: 'Pharma & Healthcare', change: '+0.35%', status: 'Neutral', leadStock: 'Sun Pharma', color: '#16A34A' },
-  { name: 'FMCG', change: '-0.18%', status: 'Cautious', leadStock: 'ITC', color: '#DC2626' },
-  { name: 'Auto & Ancillary', change: '-0.42%', status: 'Bearish', leadStock: 'Tata Motors', color: '#DC2626' },
-];
-
-const STOCKS_DATABASE = [
-  { symbol: 'RELIANCE', name: 'Reliance Industries Ltd', price: '2,934.50', change: '+36.20', changePercent: 1.25, sector: 'Energy & Conglomerate', mcap: '₹19,85,400 Cr', pe: '28.4', peCategory: 'Fair', volume: '4.8M', high52: '3,024.90', low52: '2,220.30' },
-  { symbol: 'TCS', name: 'Tata Consultancy Services', price: '4,185.10', change: '+62.40', changePercent: 1.51, sector: 'Information Tech', mcap: '₹15,14,200 Cr', pe: '31.2', peCategory: 'Fair', volume: '2.1M', high52: '4,585.90', low52: '3,311.80' },
-  { symbol: 'HDFCBANK', name: 'HDFC Bank Limited', price: '1,682.40', change: '+14.30', changePercent: 0.86, sector: 'Banking & Finance', mcap: '12,78,900 Cr', pe: '18.6', peCategory: 'Attractive', volume: '8.4M', high52: '1,794.00', low52: '1,363.50' },
-  { symbol: 'INFY', name: 'Infosys Limited', price: '1,562.10', change: '-13.40', changePercent: -0.85, sector: 'Information Tech', mcap: '₹6,48,500 Cr', pe: '24.1', peCategory: 'Fair', volume: '5.2M', high52: '1,903.00', low52: '1,355.00' },
-  { symbol: 'ICICIBANK', name: 'ICICI Bank Limited', price: '1,215.80', change: '+18.50', changePercent: 1.54, sector: 'Banking & Finance', mcap: '₹8,52,300 Cr', pe: '17.8', peCategory: 'Attractive', volume: '6.7M', high52: '1,257.00', low52: '920.00' },
-  { symbol: 'BHARTIARTL', name: 'Bharti Airtel Ltd', price: '1,495.00', change: '+22.10', changePercent: 1.50, sector: 'Telecom', mcap: '₹8,90,100 Cr', pe: '42.5', peCategory: 'High Growth', volume: '3.9M', high52: '1,550.00', low52: '840.00' },
-  { symbol: 'LT', name: 'Larsen & Toubro Ltd', price: '3,456.90', change: '+35.80', changePercent: 1.05, sector: 'Infrastructure', mcap: '₹4,75,300 Cr', pe: '33.1', peCategory: 'Fair', volume: '1.8M', high52: '3,900.00', low52: '2,800.00' },
-  { symbol: 'TATASTEEL', name: 'Tata Steel Limited', price: '147.20', change: '+3.45', changePercent: 2.40, sector: 'Metals & Mining', mcap: '₹1,83,700 Cr', pe: '14.2', peCategory: 'Value', volume: '12.4M', high52: '184.60', low52: '114.60' },
-  { symbol: 'TATAMOTORS', name: 'Tata Motors Ltd', price: '985.40', change: '-12.80', changePercent: -1.28, sector: 'Auto & Ancillary', mcap: '₹3,27,400 Cr', pe: '10.5', peCategory: 'Deep Value', volume: '4.1M', high52: '1,179.00', low52: '593.00' },
-  { symbol: 'SUNPHARMA', name: 'Sun Pharmaceutical Industries', price: '1,720.50', change: '+8.90', changePercent: 0.52, sector: 'Pharma & Healthcare', mcap: '₹4,12,800 Cr', pe: '36.8', peCategory: 'Growth', volume: '1.4M', high52: '1,825.00', low52: '1,100.00' },
-];
 
 export const MarketsCenter: React.FC<MarketsCenterProps> = ({
   onSelectStock,
@@ -52,22 +22,48 @@ export const MarketsCenter: React.FC<MarketsCenterProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSectorFilter, setSelectedSectorFilter] = useState('All');
   
+  // Dynamic API State
+  const [indicesData, setIndicesData] = useState<any[]>([]);
+  const [sectorsPerformance, setSectorsPerformance] = useState<any[]>([]);
+  const [stocksDatabase, setStocksDatabase] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
   // Top Movers Filters State
   const [moverCategory, setMoverCategory] = useState<'gainers' | 'losers' | 'highs' | 'lows' | 'volume'>('gainers');
   const [moverSectorFilter, setMoverSectorFilter] = useState('All');
 
-  const filteredStocks = STOCKS_DATABASE.filter(stock => {
-    const matchesSearch = stock.symbol.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          stock.name.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesSector = selectedSectorFilter === 'All' || stock.sector.toLowerCase().includes(selectedSectorFilter.toLowerCase());
+  useEffect(() => {
+    let isMounted = true;
+    Promise.all([
+      marketService.getIndices(),
+      marketService.getSectors(),
+      marketService.getStocks('all')
+    ]).then(([indices, sectors, stocks]) => {
+      if (isMounted) {
+        setIndicesData(indices as any[]);
+        setSectorsPerformance(sectors as any[]);
+        setStocksDatabase(stocks as any[]);
+        setIsLoading(false);
+      }
+    }).catch(() => {
+      if (isMounted) setIsLoading(false);
+    });
+    return () => { isMounted = false; };
+  }, []);
+
+  const filteredStocks = stocksDatabase.filter(stock => {
+    const symbolMatch = (stock.symbol || '').toLowerCase().includes(searchQuery.toLowerCase());
+    const nameMatch = (stock.name || stock.companyName || '').toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = symbolMatch || nameMatch;
+    const matchesSector = selectedSectorFilter === 'All' || (stock.sector || '').toLowerCase().includes(selectedSectorFilter.toLowerCase());
     return matchesSearch && matchesSector;
   });
 
   const getMoverStocks = () => {
-    let stocks = [...STOCKS_DATABASE];
+    let stocks = [...stocksDatabase];
 
     if (moverSectorFilter !== 'All') {
-      stocks = stocks.filter(s => s.sector.toLowerCase().includes(moverSectorFilter.toLowerCase()));
+      stocks = stocks.filter(s => (s.sector || '').toLowerCase().includes(moverSectorFilter.toLowerCase()));
     }
 
     switch (moverCategory) {
@@ -77,26 +73,34 @@ export const MarketsCenter: React.FC<MarketsCenterProps> = ({
         return stocks.filter(s => s.changePercent < 0).sort((a, b) => a.changePercent - b.changePercent);
       case 'highs':
         return stocks.filter(s => {
-          const p = parseFloat(s.price.replace(/,/g, ''));
-          const h = parseFloat(s.high52.replace(/,/g, ''));
-          return p >= h * 0.94;
+          const priceStr = String(s.price || s.lastPrice || '0');
+          const highStr = String(s.high52 || s.fiftyTwoWeekHigh || '0');
+          const p = parseFloat(priceStr.replace(/,/g, ''));
+          const h = parseFloat(highStr.replace(/,/g, ''));
+          return h > 0 ? p >= h * 0.94 : true;
         });
       case 'lows':
         return stocks.filter(s => {
-          const p = parseFloat(s.price.replace(/,/g, ''));
-          const l = parseFloat(s.low52.replace(/,/g, ''));
-          return p <= l * 1.12;
+          const priceStr = String(s.price || s.lastPrice || '0');
+          const lowStr = String(s.low52 || s.fiftyTwoWeekLow || '0');
+          const p = parseFloat(priceStr.replace(/,/g, ''));
+          const l = parseFloat(lowStr.replace(/,/g, ''));
+          return l > 0 ? p <= l * 1.12 : true;
         });
       case 'volume':
-        return stocks.sort((a, b) => parseFloat(b.volume) - parseFloat(a.volume));
+        return stocks.sort((a, b) => parseFloat(String(b.volume || 0)) - parseFloat(String(a.volume || 0)));
       default:
         return stocks;
     }
   };
 
-  const topGainers = [...STOCKS_DATABASE].sort((a, b) => b.changePercent - a.changePercent).slice(0, 5);
-  const topLosers = [...STOCKS_DATABASE].sort((a, b) => a.changePercent - b.changePercent).slice(0, 5);
-  const high52 = STOCKS_DATABASE.filter(s => parseFloat(s.price.replace(',', '')) >= parseFloat(s.high52.replace(',', '')) * 0.95);
+  const topGainers = [...stocksDatabase].sort((a, b) => b.changePercent - a.changePercent).slice(0, 5);
+  const topLosers = [...stocksDatabase].sort((a, b) => a.changePercent - b.changePercent).slice(0, 5);
+  const high52 = stocksDatabase.filter(s => {
+    const priceStr = String(s.price || s.lastPrice || '0');
+    const highStr = String(s.high52 || s.fiftyTwoWeekHigh || '0');
+    return parseFloat(priceStr.replace(/,/g, '')) >= parseFloat(highStr.replace(/,/g, '')) * 0.95;
+  });
 
   return (
     <div className="space-y-6 pb-12">
@@ -278,18 +282,18 @@ export const MarketsCenter: React.FC<MarketsCenterProps> = ({
       )}
 
       {/* STOCKS DISCOVERY SUB TAB */}
-      {(subTab === 'stocks' || searchQuery.length > 0) && (
+      {subTab === 'stocks' && (
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 overflow-x-auto">
-              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Sector Filter:</span>
-              {['All', 'Information Tech', 'Banking & Finance', 'Auto & Ancillary', 'Pharma & Healthcare', 'Metals & Mining'].map((sec) => (
+          <div className="flex items-center justify-between flex-wrap gap-3 p-4 bg-white rounded-2xl border border-slate-200/80 shadow-2xs">
+            <div className="flex items-center gap-2 overflow-x-auto scrollbar-none">
+              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider shrink-0">Filter Sector:</span>
+              {['All', 'Information Tech', 'Banking & Finance', 'Energy & Conglomerate', 'Auto & Ancillary', 'Telecom', 'Infrastructure', 'Metals & Mining', 'Pharma & Healthcare'].map(sec => (
                 <button
                   key={sec}
                   onClick={() => setSelectedSectorFilter(sec)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                  className={`px-3 py-1 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
                     selectedSectorFilter === sec
-                      ? 'bg-slate-900 text-white'
+                      ? 'bg-[#15519D] text-white shadow-xs'
                       : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                   }`}
                 >
@@ -297,86 +301,56 @@ export const MarketsCenter: React.FC<MarketsCenterProps> = ({
                 </button>
               ))}
             </div>
-
-            <span className="text-xs text-slate-500 font-medium">
-              Showing {filteredStocks.length} Companies
-            </span>
           </div>
 
-          {/* Stocks Grid Table */}
-          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-slate-50 border-b border-slate-200/80 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                  <th className="py-3.5 px-6">Company</th>
-                  <th className="py-3.5 px-4">Price</th>
-                  <th className="py-3.5 px-4">24h Change</th>
-                  <th className="py-3.5 px-4">Valuation (P/E)</th>
-                  <th className="py-3.5 px-4">Market Cap</th>
-                  <th className="py-3.5 px-4 text-right">Action</th>
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden">
+            <table className="w-full text-left text-xs">
+              <thead className="bg-slate-50 text-slate-400 font-extrabold uppercase border-b border-slate-200/80">
+                <tr>
+                  <th className="py-3 px-4">Company</th>
+                  <th className="py-3 px-4">Sector</th>
+                  <th className="py-3 px-4 text-right">Price</th>
+                  <th className="py-3 px-4 text-right">Change</th>
+                  <th className="py-3 px-4 text-right">Market Cap</th>
+                  <th className="py-3 px-4 text-right">P/E Ratio</th>
+                  <th className="py-3 px-4 text-center">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 text-sm">
-                {filteredStocks.map((stock) => {
+              <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
+                {filteredStocks.map(stock => {
                   const isSaved = watchlistStocks.includes(stock.symbol);
                   return (
-                    <tr 
-                      key={stock.symbol}
-                      onClick={() => onSelectStock(stock)}
-                      className="hover:bg-blue-50/40 cursor-pointer transition-colors group"
-                    >
-                      <td className="py-4 px-6">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-xl bg-slate-100 text-[#15519D] font-extrabold flex items-center justify-center text-sm shadow-inner">
-                            {stock.symbol.substring(0, 2)}
-                          </div>
-                          <div>
-                            <div className="font-extrabold text-slate-900 group-hover:text-[#15519D] transition-colors">
-                              {stock.name}
-                            </div>
-                            <div className="text-xs text-slate-400 font-medium flex items-center gap-2">
-                              <span>{stock.symbol}</span> • <span>{stock.sector}</span>
-                            </div>
-                          </div>
+                    <tr key={stock.symbol} className="hover:bg-slate-50/80 transition-colors">
+                      <td className="py-3.5 px-4 font-bold text-slate-900">
+                        <div className="flex flex-col">
+                          <span 
+                            onClick={() => onSelectStock(stock)} 
+                            className="font-extrabold text-sm text-[#172033] hover:text-[#15519D] transition cursor-pointer"
+                          >
+                            {stock.symbol}
+                          </span>
+                          <span className="text-[11px] text-slate-400 font-medium">{stock.name || stock.companyName}</span>
                         </div>
                       </td>
-
-                      <td className="py-4 px-4 font-extrabold text-slate-900">
-                        ₹{stock.price}
+                      <td className="py-3.5 px-4">{stock.sector}</td>
+                      <td className="py-3.5 px-4 text-right font-black text-slate-900">₹{stock.price || stock.lastPrice}</td>
+                      <td className={`py-3.5 px-4 text-right font-extrabold ${stock.changePercent >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                        {stock.change} ({stock.changePercent > 0 ? `+${stock.changePercent}%` : `${stock.changePercent}%`})
                       </td>
-
-                      <td className="py-4 px-4">
-                        <span className={`inline-flex items-center gap-0.5 text-xs font-black px-2.5 py-1 rounded-lg ${
-                          stock.changePercent >= 0 
-                            ? 'bg-emerald-50 text-[#16A34A]' 
-                            : 'bg-rose-50 text-[#DC2626]'
-                        }`}>
-                          {stock.changePercent >= 0 ? <ArrowUpRight className="w-3.5 h-3.5" /> : <ArrowDownRight className="w-3.5 h-3.5" />}
-                          {stock.changePercent >= 0 ? `+${stock.changePercent}%` : `${stock.changePercent}%`}
-                        </span>
-                      </td>
-
-                      <td className="py-4 px-4">
-                        <span className="font-bold text-slate-800">{stock.pe}</span>
-                        <span className="text-xs text-slate-400 block">{stock.peCategory}</span>
-                      </td>
-
-                      <td className="py-4 px-4 font-bold text-slate-700">
-                        {stock.mcap}
-                      </td>
-
-                      <td className="py-4 px-6 text-right" onClick={(e) => e.stopPropagation()}>
-                        <button
-                          onClick={() => onToggleWatchlist && onToggleWatchlist(stock.symbol)}
-                          className={`p-2 rounded-xl border transition-all ${
-                            isSaved 
-                              ? 'bg-blue-50 border-blue-200 text-[#15519D]' 
-                              : 'bg-white border-slate-200 text-slate-400 hover:text-slate-600 hover:bg-slate-50'
-                          }`}
-                          title={isSaved ? "Saved in Watchlist" : "Add to Watchlist"}
-                        >
-                          {isSaved ? <BookmarkCheck className="w-4 h-4 fill-current" /> : <Bookmark className="w-4 h-4" />}
-                        </button>
+                      <td className="py-3.5 px-4 text-right font-bold text-slate-600">{stock.mcap || stock.marketCap || '₹10,000 Cr'}</td>
+                      <td className="py-3.5 px-4 text-right font-bold text-slate-600">{stock.pe || stock.peRatio || '25.0'}</td>
+                      <td className="py-3.5 px-4 text-center">
+                        {onToggleWatchlist && (
+                          <button
+                            onClick={() => onToggleWatchlist(stock.symbol)}
+                            className={`p-1.5 rounded-lg border text-xs transition cursor-pointer ${
+                              isSaved ? 'bg-amber-50 border-amber-300 text-amber-600' : 'bg-slate-50 border-slate-200 text-slate-400 hover:text-slate-600'
+                            }`}
+                            title={isSaved ? "Saved in Watchlist" : "Add to Watchlist"}
+                          >
+                            {isSaved ? <BookmarkCheck className="w-4 h-4 fill-current" /> : <Bookmark className="w-4 h-4" />}
+                          </button>
+                        )}
                       </td>
                     </tr>
                   );
@@ -390,7 +364,7 @@ export const MarketsCenter: React.FC<MarketsCenterProps> = ({
       {/* INDICES SUB TAB */}
       {subTab === 'indices' && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
-          {INDICES_DATA.map((idx, i) => (
+          {indicesData.map((idx, i) => (
             <div key={i} className="p-4 bg-white rounded-2xl border border-slate-200/90 shadow-2xs space-y-3 hover:border-blue-200 transition-all">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Benchmark Index</span>
@@ -414,20 +388,20 @@ export const MarketsCenter: React.FC<MarketsCenterProps> = ({
       {/* SECTORS SUB TAB */}
       {subTab === 'sectors' && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {SECTORS_PERFORMANCE.map((sec, i) => (
+          {sectorsPerformance.map((sec, i) => (
             <div key={i} className="p-4 sm:p-5 bg-white rounded-2xl border border-slate-200/90 shadow-2xs space-y-3">
               <div className="flex items-center justify-between">
                 <h3 className="font-extrabold text-slate-900 text-sm sm:text-base">{sec.name}</h3>
                 <span className="px-2.5 py-0.5 rounded-md text-[11px] font-black bg-slate-100 text-slate-700">
-                  {sec.status}
+                  {sec.status || 'Active'}
                 </span>
               </div>
-              <div className="text-xl font-black" style={{ color: sec.color }}>
-                {sec.change}
+              <div className="text-xl font-black" style={{ color: sec.color || '#15519D' }}>
+                {sec.change || `${sec.changePercent}%`}
               </div>
               <div className="p-2.5 bg-slate-50 rounded-xl text-xs text-slate-600 flex items-center justify-between">
                 <span>Leading Constituent:</span>
-                <span className="font-bold text-slate-900">{sec.leadStock}</span>
+                <span className="font-bold text-slate-900">{sec.leadStock || sec.topGainer || 'TCS'}</span>
               </div>
             </div>
           ))}
