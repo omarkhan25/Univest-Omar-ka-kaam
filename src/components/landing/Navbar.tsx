@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Shield, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { BrandLogo } from '../common/BrandLogo';
 
 interface NavbarProps {
   onLoginClick?: () => void;
@@ -42,21 +43,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onSignupClick }) =
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div
-            onClick={() => navigate('/')}
-            className="flex items-center gap-3 cursor-pointer group"
-          >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#15519D] to-emerald-500 flex items-center justify-center shadow-lg shadow-[rgba(21,81,157,0.3)]/30 group-hover:scale-105 transition-transform">
-              <span className="text-white font-black text-xl">A</span>
-            </div>
-            <div>
-              <span className="text-white font-black text-2xl tracking-tight block leading-none">
-                ARTHSETU
-              </span>
-              <span className="text-[10px] text-emerald-400 font-bold tracking-widest uppercase flex items-center gap-1">
-                <Shield className="w-3 h-3" /> SEBI Registered
-              </span>
-            </div>
+          <div className="flex items-center gap-3">
+            <BrandLogo size="md" variant="light" onClick={() => navigate('/')} />
+            <span className="text-[10px] text-emerald-400 font-bold tracking-widest uppercase flex items-center gap-1 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded-md">
+              <Shield className="w-3 h-3" /> SEBI Registered
+            </span>
           </div>
 
           {/* Desktop Nav Links */}

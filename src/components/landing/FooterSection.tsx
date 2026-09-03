@@ -1,6 +1,7 @@
 import React from 'react';
 import { Shield, ArrowUpRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { BrandLogo } from '../common/BrandLogo';
 
 export const FooterSection: React.FC = () => {
   const navigate = useNavigate();
@@ -11,12 +12,7 @@ export const FooterSection: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-10 pb-12 border-b border-slate-800/80">
           {/* Brand Info */}
           <div className="md:col-span-2 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#15519D] to-emerald-500 flex items-center justify-center text-white font-black text-xl shadow-md">
-                A
-              </div>
-              <span className="text-white font-black text-2xl tracking-tight">ARTHSETU</span>
-            </div>
+            <BrandLogo size="lg" variant="light" onClick={() => navigate('/')} />
             <p className="text-xs text-slate-400 font-medium leading-relaxed max-w-sm">
               ArthSetu is India's premier SEBI-compliant stock advisory and AI portfolio intelligence platform. Elevating retail investing with institutional analytical rigor.
             </p>

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, CheckCircle2, Eye, EyeOff, Lock, Mail, MessageSquareCode, Phone, ShieldCheck, Sparkles, User } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { BrandLogo } from '../common/BrandLogo';
 import { Button } from '../atoms/Button';
 import { useAuth } from '../../context/AuthContext';
 import authService from '../../services/auth.service';
@@ -155,14 +156,8 @@ export const LoginWithOtp = () => {
         <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-emerald-500/20 blur-3xl pointer-events-none" />
 
         <div className="relative z-10">
-          <div className="flex items-center gap-3 mb-10 cursor-pointer" onClick={() => navigate('/')}>
-            <div className="w-11 h-11 rounded-2xl bg-white/15 backdrop-blur-md border border-white/20 flex items-center justify-center font-black text-2xl text-white shadow-lg">
-              A
-            </div>
-            <div>
-              <span className="font-black text-2xl tracking-tight text-white block">ARTHSETU</span>
-              <span className="text-[10px] font-bold text-blue-200 tracking-widest uppercase">Investment Advisory & Intelligence</span>
-            </div>
+          <div className="flex items-center gap-3 mb-10 cursor-pointer">
+            <BrandLogo size="lg" variant="light" onClick={() => navigate('/')} />
           </div>
 
           <div className="space-y-4 my-auto">

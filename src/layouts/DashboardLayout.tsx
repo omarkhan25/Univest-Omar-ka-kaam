@@ -26,6 +26,8 @@ import { UserMenuDropdown } from '../components/dashboard/UserMenuDropdown';
 import { PremiumPricingModal } from '../components/dashboard/PremiumPricingModal';
 import { AiCopilotModal } from '../components/ai/AiCopilotModal';
 import { TradeDrawer } from '../components/dashboard/TradeDrawer';
+import { NotificationCenterModal } from '../components/dashboard/NotificationCenterModal';
+import { BrandLogo } from '../components/common/BrandLogo';
 
 const RIGHT_WATCHLIST_DATA = [
   { symbol: 'RELIANCE', name: 'Reliance Industries Ltd.', price: '2,975.80', changePercent: 2.35, isPositive: true, sparkline: [2910, 2930, 2945, 2975.8], badgeBg: 'bg-emerald-100 text-emerald-800' },
@@ -55,6 +57,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isAiOpen, setIsAiOpen] = useState(false);
   const [isPricingOpen, setIsPricingOpen] = useState(false);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isWatchlistOpen, setIsWatchlistOpen] = useState(true);
   const [isTradeDrawerOpen, setIsTradeDrawerOpen] = useState(false);
@@ -167,16 +170,8 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
         <aside className="fixed top-[28px] left-0 bottom-0 w-[240px] bg-white border-r border-[#E2E8F0] hidden lg:flex flex-col z-30 shadow-2xs justify-between overflow-y-auto scrollbar-none">
           <div>
             {/* Brand Header */}
-            <div className="p-6 border-b border-slate-100 flex flex-col gap-0.5 cursor-pointer" onClick={() => setActiveTab('Home')}>
-              <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#15519D] to-[#123B63] text-white font-black text-xl flex items-center justify-center shadow-md">
-                  A
-                </div>
-                <span className="font-black text-xl tracking-tight text-[#172033]">ARTHSETU</span>
-              </div>
-              <span className="text-[10px] font-extrabold text-[#64748B] tracking-tight mt-1">
-                Investment Intelligence. Made Clear.
-              </span>
+            <div className="p-6 border-b border-slate-100 cursor-pointer">
+              <BrandLogo size="md" variant="dark" onClick={() => setActiveTab('Home')} />
             </div>
 
             {/* Nav Items */}
@@ -271,7 +266,11 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                 <span className="whitespace-nowrap font-extrabold text-xs">Watchlist</span>
               </button>
 
-              <button className="relative p-2 rounded-xl border border-slate-200/80 text-slate-600 hover:bg-slate-100 transition-colors shadow-2xs cursor-pointer shrink-0">
+              <button
+                onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
+                className="relative p-2 rounded-xl border border-slate-200/80 text-slate-600 hover:bg-slate-100 transition-colors shadow-2xs cursor-pointer shrink-0"
+                title="Notifications"
+              >
                 <Bell className="w-4 h-4 text-slate-700" />
                 <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full animate-ping" />
               </button>
@@ -553,6 +552,17 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
         isOpen={isAiOpen}
         onClose={() => setIsAiOpen(false)}
         onSelectStock={(st) => setSelectedStock(st)}
+      />
+
+      <NotificationCenterModal
+        isOpen={isNotificationsOpen}
+        onClose={() => setIsNotificationsOpen(false)}
+        onSelectStock={(st) => setSelectedStock(st)}
+        onSelectResearch={(res) => setSelectedResearch(res)}
+        onTrade={(tr) => {
+          setTradeStock(tr);
+          setIsTradeDrawerOpen(true);
+        }}
       />
     </div>
   );
