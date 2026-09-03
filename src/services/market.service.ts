@@ -1,13 +1,11 @@
 import api from './api';
-import { MOCK_INDICES, MOCK_STOCKS, MOCK_RESEARCH_PICKS, MOCK_SECTORS } from '../mock/mockData';
 
 export interface MarketIndex {
   name: string;
   symbol: string;
-  value: string | number;
-  change: string | number;
-  changePercent: string | number;
-  isPositive?: boolean;
+  value: number;
+  change: number;
+  changePercent: number;
   high?: number;
   low?: number;
   open?: number;
@@ -17,23 +15,16 @@ export interface MarketIndex {
 
 export interface StockQuote {
   symbol: string;
-  companyName?: string;
-  name?: string;
-  price?: string | number;
+  companyName: string;
   sector?: string;
-  lastPrice?: number;
-  change: string | number;
+  lastPrice: number;
+  change: number;
   changePercent: number;
-  high?: number;
-  low?: number;
-  open?: number;
-  previousClose?: number;
-  volume?: string | number;
-  mcap?: string;
-  pe?: string | number;
-  peCategory?: string;
-  high52?: string;
-  low52?: string;
+  high: number;
+  low: number;
+  open: number;
+  previousClose: number;
+  volume: number;
   marketCap?: string;
   peRatio?: number;
   fiftyTwoWeekHigh?: number;
@@ -46,45 +37,38 @@ export interface ResearchCallData {
   symbol: string;
   companyName: string;
   sector: string;
-  exchange?: 'NSE' | 'BSE' | 'MCX';
-  recommendation?: 'BUY' | 'SELL' | 'HOLD';
-  entryRange?: string;
-  targetPrice?: number;
-  stopLoss?: number;
-  currentPrice?: number;
-  potentialReturn?: number;
-  riskLevel?: 'Low' | 'Medium' | 'High';
-  confidenceScore?: number;
-  horizon?: string;
+  exchange: 'NSE' | 'BSE' | 'MCX';
+  recommendation: 'BUY' | 'SELL' | 'HOLD';
+  entryRange: string;
+  targetPrice: number;
+  stopLoss: number;
+  currentPrice: number;
+  potentialReturn: number;
+  riskLevel: 'Low' | 'Medium' | 'High';
+  confidenceScore: number;
+  horizon: string;
   summary: string;
-  thesis?: string;
-  status?: 'ACTIVE' | 'TARGET_HIT' | 'STOP_LOSS_HIT';
-  publishedTime?: string;
-  analyst?: string;
-  analystAccuracy?: string;
-  technicals?: { rsi: number; macd: string; trend: string };
-  category?: string;
-  datePublished?: string;
-  returnPercent?: number;
-  risk?: string;
+  thesis: string;
+  status: 'ACTIVE' | 'TARGET_HIT' | 'STOP_LOSS_HIT';
+  publishedTime: string;
+  analyst: string;
+  analystAccuracy: string;
+  technicals: { rsi: number; macd: string; trend: string };
 }
 
 export interface SectorData {
   name: string;
-  changePercent: number | string;
-  status?: string;
-  leadStock?: string;
-  color?: string;
-  topGainer?: string;
-  gainerChange?: number;
-  topLoser?: string;
-  loserChange?: number;
-  marketCap?: string;
-  volume?: string;
-  momentumScore?: number;
-  trend?: 'Bullish' | 'Bearish' | 'Neutral';
-  rsi?: number;
-  capitalFlow?: string;
+  changePercent: number;
+  topGainer: string;
+  gainerChange: number;
+  topLoser: string;
+  loserChange: number;
+  marketCap: string;
+  volume: string;
+  momentumScore: number;
+  trend: 'Bullish' | 'Bearish' | 'Neutral';
+  rsi: number;
+  capitalFlow: string;
 }
 
 export interface MarketOutlookData {
@@ -108,25 +92,17 @@ class MarketService {
    * Fetch live market indices (Nifty 50, Sensex, Bank Nifty, etc.)
    */
   async getIndices(): Promise<MarketIndex[]> {
-    try {
-      const response = await api.get('/market/indices');
-      return response.data;
-    } catch {
-      return MOCK_INDICES;
-    }
+    // Top Gainers can act as our market overview indices if real indices aren't available yet
+    const response = await api.get('/market/stocks', { params: { category: 'gainers', limit: 6 } });
+    return response.data;
   }
 
   /**
    * Fetch live quote for a specific symbol
    */
   async getQuote(symbol: string): Promise<StockQuote | null> {
-    try {
-      const response = await api.get(`/market/quote/${symbol}`);
-      return response.data;
-    } catch {
-      const found = MOCK_STOCKS.find(s => s.symbol.toLowerCase() === symbol.toLowerCase());
-      return (found as any) || null;
-    }
+    const response = await api.get(`/market/quote/${symbol}`);
+    return response.data;
   }
 
   /**
@@ -161,12 +137,11 @@ class MarketService {
    * Fetch list of top market stocks
    */
   async getStocks(category: string = 'all'): Promise<StockQuote[]> {
-    try {
-      const response = await api.get('/market/stocks', { params: { category } });
-      return response.data;
-    } catch {
-      return MOCK_STOCKS as any[];
-    }
+    const response = await api.get('/market/stocks', { params: { category } });
+    return response.data.map((st: any) => ({
+      ...st,
+      lastPrice: st.currentPrice || st.ltp || st.lastPrice || 0
+    }));
   }
 
   /**
@@ -200,7 +175,7 @@ class MarketService {
       }));
     } catch (error) {
       console.error('Failed to fetch research calls', error);
-      return MOCK_RESEARCH_PICKS as any[];
+      return [];
     }
   }
 

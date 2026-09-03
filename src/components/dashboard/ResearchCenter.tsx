@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   TrendingUp, Sparkles, ShieldCheck, Clock, 
   ArrowUpRight, ArrowDownRight, ChevronRight, Award, Bookmark, Filter, Search
 } from 'lucide-react';
 import ResearchDetail from './ResearchDetail';
-import marketService from '../../services/market.service';
-import { MOCK_RESEARCH_PICKS } from '../../mock/mockData';
 
 interface ResearchCenterProps {
   onSelectStock?: (stock: any) => void;
@@ -17,14 +15,77 @@ export interface UnivestPick {
   id: string;
   symbol: string;
   companyName: string;
-  category?: 'High Conviction' | 'Growth' | 'Value' | 'Momentum' | 'Long Term' | string;
-  datePublished?: string;
-  returnPercent?: number;
-  risk?: string;
-  horizon?: string;
-  convictionScore?: number;
+  category: 'High Conviction' | 'Growth' | 'Value' | 'Momentum' | 'Long Term';
+  datePublished: string;
+  returnPercent: number;
+  risk: string;
+  horizon: string;
+  convictionScore: number;
   summary: string;
 }
+
+const PICKS_DATABASE: UnivestPick[] = [
+  {
+    id: 'pk-1',
+    symbol: 'RELIANCE',
+    companyName: 'Reliance Industries Ltd',
+    category: 'High Conviction',
+    datePublished: '01 Mar 2025',
+    returnPercent: 21.75,
+    risk: 'Low Risk',
+    horizon: '6 - 12 Months',
+    convictionScore: 92,
+    summary: 'Telecommunications tariff hikes and expanding refining margins driver.'
+  },
+  {
+    id: 'pk-2',
+    symbol: 'HAL',
+    companyName: 'Hindustan Aeronautics Ltd',
+    category: 'Growth',
+    datePublished: '12 Jan 2025',
+    returnPercent: 92.15,
+    risk: 'Moderate Risk',
+    horizon: '1 - 3 Years',
+    convictionScore: 95,
+    summary: 'Record defense order book pipeline for indigenous fighter jets.'
+  },
+  {
+    id: 'pk-3',
+    symbol: 'TATASTEEL',
+    companyName: 'Tata Steel Limited',
+    category: 'Value',
+    datePublished: '15 Feb 2025',
+    returnPercent: 20.16,
+    risk: 'Moderate Risk',
+    horizon: '6 - 12 Months',
+    convictionScore: 81,
+    summary: 'European restructuring costs bottoming; Indian domestic margins expanding.'
+  },
+  {
+    id: 'pk-4',
+    symbol: 'BHARTIARTL',
+    companyName: 'Bharti Airtel Ltd',
+    category: 'Momentum',
+    datePublished: '10 Nov 2024',
+    returnPercent: 52.55,
+    risk: 'Low Risk',
+    horizon: '3 - 6 Months',
+    convictionScore: 88,
+    summary: 'ARPU expansion and 5G enterprise monetization acceleration.'
+  },
+  {
+    id: 'pk-5',
+    symbol: 'HDFCBANK',
+    companyName: 'HDFC Bank Ltd',
+    category: 'Long Term',
+    datePublished: '05 Jan 2025',
+    returnPercent: 18.50,
+    risk: 'Low Risk',
+    horizon: '3+ Years',
+    convictionScore: 90,
+    summary: 'Loan-to-deposit ratio normalization generating steady NIM expansion.'
+  }
+];
 
 export const ResearchCenter: React.FC<ResearchCenterProps> = ({
   onSelectStock,
@@ -32,27 +93,8 @@ export const ResearchCenter: React.FC<ResearchCenterProps> = ({
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [selectedResearch, setSelectedResearch] = useState<UnivestPick | null>(null);
-  const [picks, setPicks] = useState<UnivestPick[]>(MOCK_RESEARCH_PICKS as any[]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  useEffect(() => {
-    let isMounted = true;
-    marketService.getResearchCalls().then((data) => {
-      if (isMounted) {
-        if (data && data.length > 0) {
-          setPicks(data as any[]);
-        }
-        setIsLoading(false);
-      }
-    }).catch(() => {
-      if (isMounted) setIsLoading(false);
-    });
-    return () => { isMounted = false; };
-  }, []);
-
-  const displayPicks = picks.length > 0 ? picks : (MOCK_RESEARCH_PICKS as any[]);
-
-  const filteredPicks = displayPicks.filter(pick => 
+  const filteredPicks = PICKS_DATABASE.filter(pick => 
     selectedCategory === 'All' || pick.category === selectedCategory
   );
 
