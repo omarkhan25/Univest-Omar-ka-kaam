@@ -200,7 +200,7 @@ class MarketService {
       }));
     } catch (error) {
       console.error('Failed to fetch research calls', error);
-      return [];
+      return MOCK_RESEARCH_PICKS as any[];
     }
   }
 

@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import ResearchDetail from './ResearchDetail';
 import marketService from '../../services/market.service';
+import { MOCK_RESEARCH_PICKS } from '../../mock/mockData';
 
 interface ResearchCenterProps {
   onSelectStock?: (stock: any) => void;
@@ -31,14 +32,16 @@ export const ResearchCenter: React.FC<ResearchCenterProps> = ({
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [selectedResearch, setSelectedResearch] = useState<UnivestPick | null>(null);
-  const [picks, setPicks] = useState<UnivestPick[]>([]);
+  const [picks, setPicks] = useState<UnivestPick[]>(MOCK_RESEARCH_PICKS as any[]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     let isMounted = true;
     marketService.getResearchCalls().then((data) => {
       if (isMounted) {
-        setPicks(data as any[]);
+        if (data && data.length > 0) {
+          setPicks(data as any[]);
+        }
         setIsLoading(false);
       }
     }).catch(() => {
@@ -47,7 +50,9 @@ export const ResearchCenter: React.FC<ResearchCenterProps> = ({
     return () => { isMounted = false; };
   }, []);
 
-  const filteredPicks = picks.filter(pick => 
+  const displayPicks = picks.length > 0 ? picks : (MOCK_RESEARCH_PICKS as any[]);
+
+  const filteredPicks = displayPicks.filter(pick => 
     selectedCategory === 'All' || pick.category === selectedCategory
   );
 
