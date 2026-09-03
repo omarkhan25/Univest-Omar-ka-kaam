@@ -156,7 +156,7 @@ export const MarketsCenter: React.FC<MarketsCenterProps> = ({
           <div>
             <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3">Major Benchmark Indices</h3>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-              {INDICES_DATA.map((idx, i) => (
+              {indicesData.map((idx, i) => (
                 <div key={i} className="p-4 bg-white rounded-2xl border border-slate-200/90 shadow-sm hover:border-blue-200 transition-all">
                   <div className="text-xs font-bold text-slate-500">{idx.name}</div>
                   <div className="text-lg font-extrabold text-slate-900 mt-1">{idx.value}</div>
@@ -185,23 +185,23 @@ export const MarketsCenter: React.FC<MarketsCenterProps> = ({
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-              {SECTORS_PERFORMANCE.map((sec, idx) => (
+              {sectorsPerformance.map((sec, idx) => (
                 <div 
                   key={idx} 
                   className="p-4 rounded-2xl border border-slate-100 flex flex-col justify-between"
                   style={{ 
-                    backgroundColor: sec.change.startsWith('+') ? 'rgba(22, 163, 74, 0.05)' : 'rgba(220, 38, 38, 0.05)' 
+                    backgroundColor: String(sec.change || sec.changePercent || '').startsWith('+') ? 'rgba(22, 163, 74, 0.05)' : 'rgba(220, 38, 38, 0.05)' 
                   }}
                 >
                   <span className="text-xs font-bold text-slate-700 truncate">{sec.name}</span>
                   <div className="mt-3">
                     <span 
                       className="text-lg font-black"
-                      style={{ color: sec.change.startsWith('+') ? '#16A34A' : '#DC2626' }}
+                      style={{ color: sec.color || '#15519D' }}
                     >
-                      {sec.change}
+                      {sec.change || `${sec.changePercent}%`}
                     </span>
-                    <div className="text-[11px] text-slate-400 font-medium">Top: {sec.leadStock}</div>
+                    <span className="block text-[10px] text-slate-400 font-medium">Leading: {sec.leadStock || sec.topGainer || 'TCS'}</span>
                   </div>
                 </div>
               ))}
