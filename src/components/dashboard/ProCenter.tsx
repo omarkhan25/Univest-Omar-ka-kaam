@@ -74,7 +74,7 @@ export const ProCenter: React.FC<ProCenterProps> = ({
     <div className="space-y-8 pb-16 font-sans">
       
       {/* 1. HEADER BANNER & STATE TOGGLER */}
-      <div className="bg-gradient-to-r from-[#0E2F50] via-[#123B63] to-[#15519D] p-6 sm:p-8 rounded-[28px] text-white shadow-xl relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6 border border-slate-800">
+      <div className="bg-gradient-to-r from-[#0E2F50] via-[#0B1F33] to-[#2563EB] p-6 sm:p-8 rounded-[28px] text-white shadow-xl relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6 border border-slate-800">
         
         <div className="space-y-2 max-w-2xl z-10">
           <div className="flex items-center gap-3">
@@ -147,7 +147,7 @@ export const ProCenter: React.FC<ProCenterProps> = ({
           <div className="bg-white rounded-[28px] border border-slate-200/90 p-6 sm:p-8 shadow-md relative overflow-hidden space-y-6">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-slate-100 pb-6">
               <div className="space-y-2">
-                <span className="px-3 py-1 bg-blue-50 text-[#15519D] font-extrabold text-xs rounded-full uppercase tracking-wider border border-blue-200">
+                <span className="px-3 py-1 bg-blue-50 text-[#2563EB] font-extrabold text-xs rounded-full uppercase tracking-wider border border-blue-200">
                   Upgrade Plan
                 </span>
                 <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
@@ -164,7 +164,7 @@ export const ProCenter: React.FC<ProCenterProps> = ({
                   <button
                     onClick={() => setBillingCycle('monthly')}
                     className={`px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
-                      billingCycle === 'monthly' ? 'bg-[#15519D] text-white shadow-xs' : 'text-slate-600'
+                      billingCycle === 'monthly' ? 'bg-[#2563EB] text-white shadow-xs' : 'text-slate-600'
                     }`}
                   >
                     Monthly
@@ -172,7 +172,7 @@ export const ProCenter: React.FC<ProCenterProps> = ({
                   <button
                     onClick={() => setBillingCycle('annual')}
                     className={`px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer flex items-center gap-1 ${
-                      billingCycle === 'annual' ? 'bg-[#15519D] text-white shadow-xs' : 'text-slate-600'
+                      billingCycle === 'annual' ? 'bg-[#2563EB] text-white shadow-xs' : 'text-slate-600'
                     }`}
                   >
                     <span>Annual</span>
@@ -192,7 +192,7 @@ export const ProCenter: React.FC<ProCenterProps> = ({
 
                 <button
                   onClick={onOpenPricingModal}
-                  className="w-full py-3 px-6 bg-[#15519D] hover:bg-[#123B63] text-white font-extrabold text-xs rounded-xl shadow-md transition cursor-pointer flex items-center justify-center gap-2"
+                  className="w-full py-3 px-6 bg-[#2563EB] hover:bg-[#0B1F33] text-white font-extrabold text-xs rounded-xl shadow-md transition cursor-pointer flex items-center justify-center gap-2"
                 >
                   <Gem className="w-4 h-4 text-amber-300" />
                   <span>Upgrade to ArthSetu Pro</span>
@@ -203,7 +203,7 @@ export const ProCenter: React.FC<ProCenterProps> = ({
             {/* TEASER DATA PREVIEW HEADER */}
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <Eye className="w-4 h-4 text-[#15519D]" />
+                <Eye className="w-4 h-4 text-[#2563EB]" />
                 <h3 className="text-base font-extrabold text-slate-900">A Teaser Preview of What You Will Get</h3>
               </div>
               <p className="text-xs text-slate-500">Below is a sample teaser preview of live Pro intelligence data unlocked with membership.</p>
@@ -213,7 +213,7 @@ export const ProCenter: React.FC<ProCenterProps> = ({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               
               {/* TEASER 1: INSTITUTIONAL RESEARCH SIGNALS */}
-              <div className="p-5 bg-gradient-to-br from-slate-900 to-[#123B63] rounded-2xl text-white space-y-3 relative overflow-hidden border border-slate-800">
+              <div className="p-5 bg-gradient-to-br from-slate-900 to-[#0B1F33] rounded-2xl text-white space-y-3 relative overflow-hidden border border-slate-800">
                 <div className="flex justify-between items-center">
                   <span className="text-[10px] font-black text-amber-300 uppercase tracking-widest flex items-center gap-1">
                     <Sparkles className="w-3 h-3" /> PRO CANDIDATE SIGNAL #1
@@ -244,10 +244,10 @@ export const ProCenter: React.FC<ProCenterProps> = ({
               {/* TEASER 2: SMALL-CAP RESEARCH LENSES */}
               <div className="p-5 bg-[#F8FAFC] rounded-2xl border border-slate-200 space-y-3 relative overflow-hidden">
                 <div className="flex justify-between items-center">
-                  <span className="text-[10px] font-black text-[#15519D] uppercase tracking-wider">
+                  <span className="text-[10px] font-black text-[#2563EB] uppercase tracking-wider">
                     5 SMALL-CAP LENSES
                   </span>
-                  <span className="px-2 py-0.5 rounded bg-blue-50 text-[#15519D] font-extrabold text-[10px]">
+                  <span className="px-2 py-0.5 rounded bg-blue-50 text-[#2563EB] font-extrabold text-[10px]">
                     24 Fresh Candidates
                   </span>
                 </div>
@@ -262,7 +262,7 @@ export const ProCenter: React.FC<ProCenterProps> = ({
                   ].map((t, idx) => (
                     <div key={idx} className="flex justify-between items-center p-2 bg-white rounded-lg border border-slate-200/80">
                       <span className="font-bold text-slate-700">{t.lens}: <span className="text-slate-900 font-extrabold filter blur-[2px]">{t.symbol}</span></span>
-                      <span className="font-black text-[#15519D] text-[11px]">{t.score}</span>
+                      <span className="font-black text-[#2563EB] text-[11px]">{t.score}</span>
                     </div>
                   ))}
                 </div>
@@ -276,7 +276,7 @@ export const ProCenter: React.FC<ProCenterProps> = ({
               {/* TEASER 3: RISING RADAR TRACKER */}
               <div className="p-5 bg-[#F8FAFC] rounded-2xl border border-slate-200 space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-[10px] font-black text-[#15519D] uppercase tracking-wider">
+                  <span className="text-[10px] font-black text-[#2563EB] uppercase tracking-wider">
                     RADAR UPGRADES
                   </span>
                   <span className="text-xs font-black text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">
@@ -289,7 +289,7 @@ export const ProCenter: React.FC<ProCenterProps> = ({
                 <div className="p-3 bg-white rounded-xl border border-slate-200 space-y-1.5">
                   <div className="flex justify-between text-xs font-extrabold text-slate-900">
                     <span>Candidate Ticker: <span className="filter blur-[2px]">$DIX***</span></span>
-                    <span className="text-[#15519D]">68 → 76 Score</span>
+                    <span className="text-[#2563EB]">68 → 76 Score</span>
                   </div>
                   <p className="text-[11px] text-slate-500 font-medium filter blur-[2.5px]">
                     Operating leverage expansion across EMS export orders over 4 consecutive quarters.
@@ -350,7 +350,7 @@ export const ProCenter: React.FC<ProCenterProps> = ({
                   <tr className="border-b border-slate-200 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">
                     <th className="py-3 px-3">Platform Capability</th>
                     <th className="py-3 px-3">Free Tier</th>
-                    <th className="py-3 px-3 text-[#15519D] font-black">ArthSetu Pro Plan</th>
+                    <th className="py-3 px-3 text-[#2563EB] font-black">ArthSetu Pro Plan</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
@@ -368,8 +368,8 @@ export const ProCenter: React.FC<ProCenterProps> = ({
                       <td className="py-3 px-3">
                         {row.free ? <Check className="w-4 h-4 text-emerald-600" /> : <X className="w-4 h-4 text-slate-300" />}
                       </td>
-                      <td className="py-3 px-3 font-black text-[#15519D]">
-                        <Check className="w-4 h-4 text-[#15519D]" />
+                      <td className="py-3 px-3 font-black text-[#2563EB]">
+                        <Check className="w-4 h-4 text-[#2563EB]" />
                       </td>
                     </tr>
                   ))}
@@ -380,7 +380,7 @@ export const ProCenter: React.FC<ProCenterProps> = ({
             <div className="pt-3 text-center">
               <button
                 onClick={onOpenPricingModal}
-                className="px-8 py-3.5 bg-[#15519D] hover:bg-[#123B63] text-white font-extrabold text-xs rounded-xl shadow-md transition cursor-pointer inline-flex items-center gap-2"
+                className="px-8 py-3.5 bg-[#2563EB] hover:bg-[#0B1F33] text-white font-extrabold text-xs rounded-xl shadow-md transition cursor-pointer inline-flex items-center gap-2"
               >
                 <Gem className="w-4 h-4 text-amber-300" />
                 <span>Unlock All Pro Features Now →</span>
@@ -406,7 +406,7 @@ export const ProCenter: React.FC<ProCenterProps> = ({
               </div>
               <div className="pl-4">
                 <span className="text-[10px] font-bold text-slate-400 uppercase block">Pro Opportunities</span>
-                <div className="text-lg font-black text-[#15519D] mt-0.5">126 Identified</div>
+                <div className="text-lg font-black text-[#2563EB] mt-0.5">126 Identified</div>
               </div>
               <div className="pl-4">
                 <span className="text-[10px] font-bold text-slate-400 uppercase block">High-Conviction Ideas</span>
@@ -440,7 +440,7 @@ export const ProCenter: React.FC<ProCenterProps> = ({
                     key={tf}
                     onClick={() => setLeaderTimeframe(tf)}
                     className={`px-3 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
-                      leaderTimeframe === tf ? 'bg-[#15519D] text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
+                      leaderTimeframe === tf ? 'bg-[#2563EB] text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
                     }`}
                   >
                     {tf}
@@ -454,14 +454,14 @@ export const ProCenter: React.FC<ProCenterProps> = ({
                 <div
                   key={ml.symbol}
                   onClick={() => onSelectStock(ml)}
-                  className="p-4 bg-[#F8FAFC] rounded-2xl border border-slate-200/80 hover:border-[#15519D] transition-all cursor-pointer space-y-2 group"
+                  className="p-4 bg-[#F8FAFC] rounded-2xl border border-slate-200/80 hover:border-[#2563EB] transition-all cursor-pointer space-y-2 group"
                 >
                   <div className="flex justify-between items-start">
                     <div>
-                      <h3 className="font-extrabold text-sm text-slate-900 group-hover:text-[#15519D]">{ml.companyName}</h3>
+                      <h3 className="font-extrabold text-sm text-slate-900 group-hover:text-[#2563EB]">{ml.companyName}</h3>
                       <span className="text-[10px] text-slate-400 font-mono font-bold">{ml.symbol} · {ml.sector}</span>
                     </div>
-                    <span className="text-xs font-black text-[#15519D] bg-blue-50 px-2 py-0.5 rounded-md">
+                    <span className="text-xs font-black text-[#2563EB] bg-blue-50 px-2 py-0.5 rounded-md">
                       {ml.score}/100
                     </span>
                   </div>
@@ -492,7 +492,7 @@ export const ProCenter: React.FC<ProCenterProps> = ({
                     key={rFilter}
                     onClick={() => setReturnFilter(rFilter)}
                     className={`px-2.5 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
-                      returnFilter === rFilter ? 'bg-[#15519D] text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
+                      returnFilter === rFilter ? 'bg-[#2563EB] text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
                     }`}
                   >
                     {rFilter}
@@ -524,7 +524,7 @@ export const ProCenter: React.FC<ProCenterProps> = ({
                       className="hover:bg-slate-50 transition-colors cursor-pointer group"
                     >
                       <td className="py-3.5 px-3">
-                        <div className="font-extrabold text-slate-900 text-xs group-hover:text-[#15519D]">{hr.companyName}</div>
+                        <div className="font-extrabold text-slate-900 text-xs group-hover:text-[#2563EB]">{hr.companyName}</div>
                         <div className="text-[10px] text-slate-400 font-mono font-bold">{hr.symbol}</div>
                       </td>
                       <td className="py-3.5 px-3 font-extrabold text-slate-900">₹{hr.price}</td>
@@ -533,9 +533,9 @@ export const ProCenter: React.FC<ProCenterProps> = ({
                       <td className="py-3.5 px-3 font-bold text-amber-600">{hr.volatility}</td>
                       <td className="py-3.5 px-3 font-bold text-rose-600">{hr.maxDrawdown}</td>
                       <td className="py-3.5 px-3 font-bold text-slate-600">{hr.mcap}</td>
-                      <td className="py-3.5 px-3 font-black text-[#15519D]">{hr.score}/100</td>
+                      <td className="py-3.5 px-3 font-black text-[#2563EB]">{hr.score}/100</td>
                       <td className="py-3.5 px-3 text-right">
-                        <button className="text-[#15519D] font-extrabold text-xs inline-flex items-center gap-1 group-hover:underline">
+                        <button className="text-[#2563EB] font-extrabold text-xs inline-flex items-center gap-1 group-hover:underline">
                           <span>Inspect</span>
                           <ChevronRight className="w-3.5 h-3.5" />
                         </button>
@@ -575,14 +575,14 @@ export const ProCenter: React.FC<ProCenterProps> = ({
                 <div
                   key={pick.symbol}
                   onClick={() => onSelectStock(pick)}
-                  className="p-5 bg-[#F8FAFC] rounded-2xl border border-slate-200/90 space-y-4 hover:border-[#15519D] transition-all cursor-pointer group"
+                  className="p-5 bg-[#F8FAFC] rounded-2xl border border-slate-200/90 space-y-4 hover:border-[#2563EB] transition-all cursor-pointer group"
                 >
                   <div className="flex justify-between items-start">
                     <div>
-                      <h3 className="font-black text-base text-slate-900 group-hover:text-[#15519D] transition-colors">{pick.companyName}</h3>
+                      <h3 className="font-black text-base text-slate-900 group-hover:text-[#2563EB] transition-colors">{pick.companyName}</h3>
                       <span className="text-xs font-mono font-bold text-slate-400">{pick.symbol} · ₹{pick.price}</span>
                     </div>
-                    <span className="px-3 py-1 bg-[#15519D] text-white font-black text-xs rounded-xl shadow-xs">
+                    <span className="px-3 py-1 bg-[#2563EB] text-white font-black text-xs rounded-xl shadow-xs">
                       {pick.score}/100 Score
                     </span>
                   </div>
@@ -604,7 +604,7 @@ export const ProCenter: React.FC<ProCenterProps> = ({
                     </div>
                   </div>
 
-                  <div className="pt-2 flex items-center justify-between text-xs font-extrabold text-[#15519D] group-hover:underline">
+                  <div className="pt-2 flex items-center justify-between text-xs font-extrabold text-[#2563EB] group-hover:underline">
                     <span>Read Full Research Report</span>
                     <ArrowRight className="w-4 h-4" />
                   </div>

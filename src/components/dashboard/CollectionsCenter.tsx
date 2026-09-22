@@ -48,7 +48,7 @@ const COLLECTIONS_DATA: CollectionItem[] = [
     whyExists: 'Traditional large caps offer stability, but dynamic mid-caps delivering 20%+ return on equity (ROE) generate generational wealth over multi-year cycles.',
     strategy: 'We select asset-light businesses with expanding margins, low debt-to-equity (<0.5), and strong institutional buying pressure.',
     sectorAllocation: [
-      { sector: 'Technology & SaaS', percentage: 35, color: '#15519D' },
+      { sector: 'Technology & SaaS', percentage: 35, color: '#2563EB' },
       { sector: 'Specialty Chemicals', percentage: 25, color: '#387ED1' },
       { sector: 'Renewables & Green Tech', percentage: 25, color: '#16A34A' },
       { sector: 'Consumer Discretionary', percentage: 15, color: '#F59E0B' },
@@ -77,8 +77,8 @@ const COLLECTIONS_DATA: CollectionItem[] = [
     whyExists: 'Provides downside protection during volatility while capturing steady compounding from India\'s macroeconomic expansion.',
     strategy: '100% allocation to Top-100 Nifty market cap leaders possessing strong pricing power and dividend consistency.',
     sectorAllocation: [
-      { sector: 'Banking & Financials', percentage: 40, color: '#15519D' },
-      { sector: 'Conglomerates & Energy', percentage: 30, color: '#123B63' },
+      { sector: 'Banking & Financials', percentage: 40, color: '#2563EB' },
+      { sector: 'Conglomerates & Energy', percentage: 30, color: '#0B1F33' },
       { sector: 'Information Tech', percentage: 20, color: '#387ED1' },
       { sector: 'FMCG', percentage: 10, color: '#F59E0B' },
     ],
@@ -106,7 +106,7 @@ const COLLECTIONS_DATA: CollectionItem[] = [
     strategy: 'Companies evaluated on 10-year free cash flow consistency, minimum 2% dividend yield, and debt-free balance sheets.',
     sectorAllocation: [
       { sector: 'Consumer Staples & FMCG', percentage: 45, color: '#16A34A' },
-      { sector: 'IT Services', percentage: 30, color: '#15519D' },
+      { sector: 'IT Services', percentage: 30, color: '#2563EB' },
       { sector: 'Infrastructure & Ports', percentage: 25, color: '#64748B' },
     ],
     stocks: [
@@ -131,8 +131,8 @@ const COLLECTIONS_DATA: CollectionItem[] = [
     whyExists: 'Capitalizes on multi-decade structural policy shifts that create massive order book visibility for domestic players.',
     strategy: 'Selection filtered by government order execution track record, export potential, and proprietary technological moats.',
     sectorAllocation: [
-      { sector: 'Defense & Aerospace', percentage: 40, color: '#123B63' },
-      { sector: 'Infrastructure & Capital Goods', percentage: 35, color: '#15519D' },
+      { sector: 'Defense & Aerospace', percentage: 40, color: '#0B1F33' },
+      { sector: 'Infrastructure & Capital Goods', percentage: 35, color: '#2563EB' },
       { sector: 'Electric Mobility', percentage: 25, color: '#16A34A' },
     ],
     stocks: [
@@ -158,7 +158,7 @@ const COLLECTIONS_DATA: CollectionItem[] = [
     strategy: 'Screened for low P/E (<15), P/B under historical averages, and upcoming catalyst drivers like asset monetization or cyclical recovery.',
     sectorAllocation: [
       { sector: 'Metals & Mining', percentage: 35, color: '#64748B' },
-      { sector: 'Public Sector Banks', percentage: 35, color: '#15519D' },
+      { sector: 'Public Sector Banks', percentage: 35, color: '#2563EB' },
       { sector: 'Power Generation', percentage: 30, color: '#F59E0B' },
     ],
     stocks: [
@@ -182,7 +182,7 @@ export const CollectionsCenter: React.FC<CollectionsCenterProps> = ({
     <div className="space-y-6 pb-12">
       {/* Header */}
       <div className="border-b border-slate-200/80 pb-5">
-        <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-[#15519D] mb-1">
+        <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-[#2563EB] mb-1">
           <Layers className="w-4 h-4" />
           <span>Curated Investment Baskets</span>
         </div>
@@ -200,11 +200,11 @@ export const CollectionsCenter: React.FC<CollectionsCenterProps> = ({
           <div
             key={col.id}
             onClick={() => setSelectedCollection(col)}
-            className="group bg-white rounded-3xl border border-slate-200/90 hover:border-[#15519D] p-6 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between cursor-pointer"
+            className="group bg-white rounded-3xl border border-slate-200/90 hover:border-[#2563EB] p-6 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between cursor-pointer"
           >
             <div>
               <div className="flex items-center justify-between gap-2 mb-3">
-                <span className="px-3 py-1 bg-blue-50 text-[#15519D] font-bold text-xs rounded-full">
+                <span className="px-3 py-1 bg-blue-50 text-[#2563EB] font-bold text-xs rounded-full">
                   {col.badge}
                 </span>
                 <span className={`text-xs font-bold px-2.5 py-0.5 rounded-md ${
@@ -215,7 +215,7 @@ export const CollectionsCenter: React.FC<CollectionsCenterProps> = ({
                 </span>
               </div>
 
-              <h3 className="text-xl font-extrabold text-slate-900 group-hover:text-[#15519D] transition-colors">
+              <h3 className="text-xl font-extrabold text-slate-900 group-hover:text-[#2563EB] transition-colors">
                 {col.title}
               </h3>
               <p className="text-xs text-slate-500 mt-2 line-clamp-2 leading-relaxed">
@@ -239,7 +239,7 @@ export const CollectionsCenter: React.FC<CollectionsCenterProps> = ({
               </div>
             </div>
 
-            <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-extrabold text-[#15519D] group-hover:translate-x-1 transition-transform">
+            <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-extrabold text-[#2563EB] group-hover:translate-x-1 transition-transform">
               <span>View Full Strategy & Allocation</span>
               <ChevronRight className="w-4 h-4" />
             </div>
@@ -260,13 +260,13 @@ export const CollectionsCenter: React.FC<CollectionsCenterProps> = ({
               {/* Modal Header */}
               <div className="p-6 bg-slate-50 border-b border-slate-200/80 flex items-center justify-between sticky top-0 z-10">
                 <div className="flex items-center gap-3">
-                  <span className="p-2.5 bg-[#15519D] text-white rounded-2xl shadow-md">
+                  <span className="p-2.5 bg-[#2563EB] text-white rounded-2xl shadow-md">
                     <Layers className="w-5 h-5" />
                   </span>
                   <div>
                     <div className="flex items-center gap-2">
                       <h2 className="text-xl font-black text-slate-900">{selectedCollection.title}</h2>
-                      <span className="px-2.5 py-0.5 bg-blue-100 text-[#15519D] font-bold text-xs rounded-full">
+                      <span className="px-2.5 py-0.5 bg-blue-100 text-[#2563EB] font-bold text-xs rounded-full">
                         {selectedCollection.badge}
                       </span>
                     </div>
@@ -307,7 +307,7 @@ export const CollectionsCenter: React.FC<CollectionsCenterProps> = ({
                 {/* Why Exists & Strategy */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="p-5 bg-blue-50/50 border border-blue-100 rounded-2xl">
-                    <h4 className="font-extrabold text-[#15519D] text-sm uppercase tracking-wider mb-2">
+                    <h4 className="font-extrabold text-[#2563EB] text-sm uppercase tracking-wider mb-2">
                       Why This Collection Exists
                     </h4>
                     <p className="text-sm text-slate-700 leading-relaxed font-medium">
@@ -328,7 +328,7 @@ export const CollectionsCenter: React.FC<CollectionsCenterProps> = ({
                 {/* Sector Allocation Breakdown */}
                 <div>
                   <h4 className="font-extrabold text-slate-900 text-base mb-3 flex items-center gap-2">
-                    <PieChart className="w-4 h-4 text-[#15519D]" />
+                    <PieChart className="w-4 h-4 text-[#2563EB]" />
                     Sector Exposure Breakdown
                   </h4>
 
@@ -353,7 +353,7 @@ export const CollectionsCenter: React.FC<CollectionsCenterProps> = ({
                 {/* Stock Allocation Table */}
                 <div>
                   <h4 className="font-extrabold text-slate-900 text-base mb-3 flex items-center gap-2">
-                    <BarChart3 className="w-4 h-4 text-[#15519D]" />
+                    <BarChart3 className="w-4 h-4 text-[#2563EB]" />
                     Stock Constituents & Rationales
                   </h4>
 
@@ -375,7 +375,7 @@ export const CollectionsCenter: React.FC<CollectionsCenterProps> = ({
                               <div className="font-extrabold text-slate-900">{stock.symbol}</div>
                               <div className="text-[11px] text-slate-400">{stock.name}</div>
                             </td>
-                            <td className="py-3.5 px-3 font-bold text-[#15519D]">{stock.weight}</td>
+                            <td className="py-3.5 px-3 font-bold text-[#2563EB]">{stock.weight}</td>
                             <td className="py-3.5 px-3 font-extrabold text-slate-900">₹{stock.price}</td>
                             <td className="py-3.5 px-4 text-slate-600 font-medium leading-normal">
                               {stock.rationale}
@@ -386,7 +386,7 @@ export const CollectionsCenter: React.FC<CollectionsCenterProps> = ({
                                   setSelectedCollection(null);
                                   onSelectStock(stock);
                                 }}
-                                className="px-2.5 py-1 bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-[#15519D] rounded-lg font-bold transition-colors"
+                                className="px-2.5 py-1 bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-[#2563EB] rounded-lg font-bold transition-colors"
                               >
                                 Detail
                               </button>
@@ -443,7 +443,7 @@ export const CollectionsCenter: React.FC<CollectionsCenterProps> = ({
                       setSelectedCollection(null);
                       onInvestViaBroker(col);
                     }}
-                    className="px-5 py-2.5 rounded-xl bg-[#15519D] hover:bg-[#123B63] text-white font-extrabold text-sm shadow-md shadow-blue-500/20 transition-all flex items-center gap-2"
+                    className="px-5 py-2.5 rounded-xl bg-[#2563EB] hover:bg-[#0B1F33] text-white font-extrabold text-sm shadow-md shadow-blue-500/20 transition-all flex items-center gap-2"
                   >
                     <span>Invest via Preferred Broker</span>
                     <ArrowUpRight className="w-4 h-4" />

@@ -196,13 +196,13 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
           {/* 1. CLEAN PREMIUM HEADER */}
           <header className="p-4 bg-white border-b border-[#E2E8F0] flex items-center justify-between shadow-2xs shrink-0">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#123B63] to-[#15519D] text-white flex items-center justify-center font-black shadow-xs shrink-0">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#0B1F33] to-[#2563EB] text-white flex items-center justify-center font-black shadow-xs shrink-0">
                 <Sparkles className="w-5 h-5 text-amber-300 animate-pulse" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
                   <h3 className="font-extrabold text-base text-[#172033] leading-tight">ArthSetu AI Copilot</h3>
-                  <span className="px-2 py-0.5 rounded-full bg-blue-50 text-[#15519D] text-[9px] font-black border border-blue-200 uppercase tracking-wider">
+                  <span className="px-2 py-0.5 rounded-full bg-blue-50 text-[#2563EB] text-[9px] font-black border border-blue-200 uppercase tracking-wider">
                     AI-POWERED
                   </span>
                 </div>
@@ -253,7 +253,7 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
                     }}
                     className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition cursor-pointer flex items-center gap-1.5 border ${
                       isSelected
-                        ? 'bg-[#15519D] text-white border-[#15519D] shadow-xs'
+                        ? 'bg-[#2563EB] text-white border-[#2563EB] shadow-xs'
                         : 'bg-[#F8FAFC] text-slate-700 border-slate-200 hover:border-slate-300'
                     }`}
                   >
@@ -274,7 +274,7 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
                     value={stockSearchQuery}
                     onChange={(e) => setStockSearchQuery(e.target.value)}
                     placeholder="Search a company or ticker (e.g. RELIANCE, TCS)..."
-                    className="w-full pl-9 pr-3 py-1.5 bg-[#F8FAFC] border border-slate-300 rounded-xl text-xs font-bold text-[#172033] outline-none focus:border-[#15519D]"
+                    className="w-full pl-9 pr-3 py-1.5 bg-[#F8FAFC] border border-slate-300 rounded-xl text-xs font-bold text-[#172033] outline-none focus:border-[#2563EB]"
                   />
                 </div>
 
@@ -288,7 +288,7 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
                       }}
                       className={`px-2.5 py-1 rounded-lg text-[11px] font-black border transition cursor-pointer shrink-0 ${
                         activeStockContext?.symbol === st.symbol
-                          ? 'bg-blue-50 border-[#15519D] text-[#15519D]'
+                          ? 'bg-blue-50 border-[#2563EB] text-[#2563EB]'
                           : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300'
                       }`}
                     >
@@ -301,7 +301,7 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
 
             {/* CONTEXT CHIP BAR */}
             {activeStockContext && (
-              <div className="p-2 bg-blue-50/80 rounded-xl border border-blue-200 flex items-center justify-between text-xs font-bold text-[#15519D]">
+              <div className="p-2 bg-blue-50/80 rounded-xl border border-blue-200 flex items-center justify-between text-xs font-bold text-[#2563EB]">
                 <span>Context: {activeStockContext.symbol} · ₹{activeStockContext.price} ({activeStockContext.change}) · ArthSetu View {activeStockContext.score}/100</span>
                 <button onClick={() => setActiveStockContext(null)} className="p-0.5 hover:text-slate-900 cursor-pointer">
                   <X className="w-3.5 h-3.5" />
@@ -316,7 +316,7 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
             {/* CHAT START SCREEN (IF NO MESSAGES) */}
             {messages.length === 0 && (
               <div className="my-auto py-8 text-center space-y-6 max-w-sm mx-auto">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#123B63] to-[#15519D] text-white flex items-center justify-center mx-auto shadow-md">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#0B1F33] to-[#2563EB] text-white flex items-center justify-center mx-auto shadow-md">
                   <Sparkles className="w-7 h-7 text-amber-300" />
                 </div>
 
@@ -343,15 +343,15 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
                     <button
                       key={p.text}
                       onClick={() => handleSend(p.text)}
-                      className="w-full p-3 bg-white hover:bg-blue-50/60 border border-slate-200/90 hover:border-[#15519D] rounded-xl text-xs font-bold text-[#172033] transition cursor-pointer flex items-center justify-between group shadow-2xs"
+                      className="w-full p-3 bg-white hover:bg-blue-50/60 border border-slate-200/90 hover:border-[#2563EB] rounded-xl text-xs font-bold text-[#172033] transition cursor-pointer flex items-center justify-between group shadow-2xs"
                     >
                       <div className="flex items-center gap-2">
-                        <span className="px-2 py-0.5 bg-slate-100 group-hover:bg-blue-100 text-slate-600 group-hover:text-[#15519D] text-[10px] font-black rounded-md">
+                        <span className="px-2 py-0.5 bg-slate-100 group-hover:bg-blue-100 text-slate-600 group-hover:text-[#2563EB] text-[10px] font-black rounded-md">
                           {p.topic}
                         </span>
                         <span>"{p.text}"</span>
                       </div>
-                      <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-[#15519D] transition shrink-0" />
+                      <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-[#2563EB] transition shrink-0" />
                     </button>
                   ))}
                 </div>
@@ -366,7 +366,7 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
               >
                 <div className={`p-4 rounded-2xl max-w-[92%] text-xs leading-relaxed font-medium ${
                   msg.sender === 'user'
-                    ? 'bg-[#15519D] text-white rounded-br-none shadow-xs'
+                    ? 'bg-[#2563EB] text-white rounded-br-none shadow-xs'
                     : 'bg-white border border-slate-200 text-[#172033] rounded-bl-none shadow-2xs space-y-3'
                 }`}>
                   
@@ -375,7 +375,7 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
                     <div className="p-3 bg-[#F8FAFC] rounded-xl border border-slate-200 text-[#172033] space-y-2">
                       <div className="flex justify-between items-center border-b border-slate-200 pb-1.5">
                         <span className="font-extrabold text-sm">{msg.stockContext.symbol} · ₹{msg.stockContext.price}</span>
-                        <span className="px-2 py-0.5 bg-blue-50 text-[#15519D] text-[10px] font-black rounded-md">
+                        <span className="px-2 py-0.5 bg-blue-50 text-[#2563EB] text-[10px] font-black rounded-md">
                           ArthSetu View {msg.stockContext.score}/100
                         </span>
                       </div>
@@ -403,7 +403,7 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
                     <div className="pt-2 border-t border-slate-100 flex flex-col gap-2 text-[10px]">
                       {msg.confidence && (
                         <div className="flex items-center justify-between text-slate-400 font-bold">
-                          <span className="flex items-center gap-1 text-[#15519D]">
+                          <span className="flex items-center gap-1 text-[#2563EB]">
                             <Sparkles className="w-3 h-3" /> {msg.confidence}% AI Conviction
                           </span>
                           <span>{msg.timestamp}</span>
@@ -421,7 +421,7 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
                               <button
                                 key={promptText}
                                 onClick={() => handleSend(promptText)}
-                                className="px-3 py-1 bg-[#F8FAFC] hover:bg-[#15519D] hover:text-white border border-slate-300 text-slate-800 text-[11px] font-extrabold rounded-xl transition cursor-pointer shadow-2xs"
+                                className="px-3 py-1 bg-[#F8FAFC] hover:bg-[#2563EB] hover:text-white border border-slate-300 text-slate-800 text-[11px] font-extrabold rounded-xl transition cursor-pointer shadow-2xs"
                               >
                                 [ {promptText} ]
                               </button>
@@ -441,9 +441,9 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
               <div className="flex flex-col gap-2 items-start">
                 <div className="p-4 rounded-2xl max-w-[90%] text-xs leading-relaxed font-medium bg-white border border-slate-200 text-[#172033] rounded-bl-none shadow-2xs">
                   <div className="flex gap-1 items-center">
-                    <div className="w-2 h-2 bg-[#15519D] rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-[#15519D] rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                    <div className="w-2 h-2 bg-[#15519D] rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+                    <div className="w-2 h-2 bg-[#2563EB] rounded-full animate-bounce"></div>
+                    <div className="w-2 h-2 bg-[#2563EB] rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                    <div className="w-2 h-2 bg-[#2563EB] rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
                   </div>
                 </div>
               </div>
@@ -470,12 +470,12 @@ export const AiCopilotModal: React.FC<AiCopilotModalProps> = ({
                 value={inputVal}
                 onChange={(e) => setInputVal(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                className="flex-1 bg-[#F8FAFC] border border-[#CBD5E1] rounded-xl px-4 py-2.5 text-xs text-[#172033] outline-none focus:border-[#15519D] font-medium"
+                className="flex-1 bg-[#F8FAFC] border border-[#CBD5E1] rounded-xl px-4 py-2.5 text-xs text-[#172033] outline-none focus:border-[#2563EB] font-medium"
               />
 
               <button
                 onClick={() => handleSend()}
-                className="p-2.5 rounded-xl bg-[#15519D] hover:bg-[#123B63] text-white transition shadow-sm cursor-pointer"
+                className="p-2.5 rounded-xl bg-[#2563EB] hover:bg-[#0B1F33] text-white transition shadow-sm cursor-pointer"
               >
                 <Send className="w-4 h-4" />
               </button>

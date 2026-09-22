@@ -50,8 +50,8 @@ const RADAR_SIGNALS: RadarSignal[] = [
     keyTrigger: 'JLR free cashflow generation target achieved 2 quarters ahead of guidance.',
     timeframe: '3 - 6 Months',
     convictionScore: 84,
-    badgeColor: 'bg-blue-50 text-[#15519D] border-blue-200',
-    borderColor: 'border-blue-200 hover:border-[#15519D]'
+    badgeColor: 'bg-blue-50 text-[#2563EB] border-blue-200',
+    borderColor: 'border-blue-200 hover:border-[#2563EB]'
   },
   {
     id: 'sig-3',
@@ -121,7 +121,7 @@ export const OpportunityRadar: React.FC<OpportunityRadarProps> = ({ onSelectStoc
   return (
     <div className="space-y-6 pb-12">
       {/* Header */}
-      <div className="bg-gradient-to-r from-slate-900 via-[#123B63] to-[#15519D] p-8 rounded-3xl text-white relative overflow-hidden shadow-xl">
+      <div className="bg-gradient-to-r from-slate-900 via-[#0B1F33] to-[#2563EB] p-8 rounded-3xl text-white relative overflow-hidden shadow-xl">
         <div className="relative z-10 max-w-2xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 backdrop-blur-md rounded-full text-xs font-extrabold uppercase tracking-wider text-blue-200 mb-3">
             <Radio className="w-3.5 h-3.5 animate-pulse text-emerald-400" />
@@ -193,7 +193,7 @@ export const OpportunityRadar: React.FC<OpportunityRadarProps> = ({ onSelectStoc
               {/* Company Info */}
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-xl font-extrabold text-slate-900 group-hover:text-[#15519D] transition-colors">
+                  <h3 className="text-xl font-extrabold text-slate-900 group-hover:text-[#2563EB] transition-colors">
                     {sig.symbol}
                   </h3>
                   <p className="text-xs text-slate-400 font-medium">{sig.name}</p>
@@ -217,7 +217,7 @@ export const OpportunityRadar: React.FC<OpportunityRadarProps> = ({ onSelectStoc
                 </div>
 
                 <div className="pt-2 border-t border-slate-200/60">
-                  <span className="text-[10px] font-extrabold uppercase text-[#15519D]">Key Catalyst Trigger</span>
+                  <span className="text-[10px] font-extrabold uppercase text-[#2563EB]">Key Catalyst Trigger</span>
                   <p className="text-xs text-slate-600 font-medium mt-0.5">
                     {sig.keyTrigger}
                   </p>
@@ -226,7 +226,7 @@ export const OpportunityRadar: React.FC<OpportunityRadarProps> = ({ onSelectStoc
             </div>
 
             {/* Footer Action */}
-            <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-extrabold text-[#15519D]">
+            <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-extrabold text-[#2563EB]">
               <span className="text-slate-400 font-medium">Horizon: {sig.timeframe}</span>
               <div className="flex items-center gap-1 group-hover:translate-x-1 transition-transform">
                 <span>Examine Thesis</span>

@@ -75,7 +75,7 @@ export const ProIntelligenceHero: React.FC<ProIntelligenceHeroProps> = ({ onSele
       {/* SECTION HEADER */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
         <div>
-          <div className="inline-flex items-center gap-1.5 text-xs font-black text-[#15519D] uppercase tracking-wider">
+          <div className="inline-flex items-center gap-1.5 text-xs font-black text-[#2563EB] uppercase tracking-wider">
             <Sparkles className="w-4 h-4 text-amber-500 fill-amber-400" />
             <span>TODAY'S PRO INTELLIGENCE</span>
           </div>
@@ -95,17 +95,17 @@ export const ProIntelligenceHero: React.FC<ProIntelligenceHeroProps> = ({ onSele
             key={stock.symbol}
             whileHover={{ y: -3 }}
             onClick={() => onSelectStock(stock)}
-            className="bg-white rounded-2xl border border-slate-200/90 p-5 space-y-4 shadow-sm hover:shadow-md hover:border-[#15519D]/50 transition-all cursor-pointer flex flex-col justify-between group overflow-hidden"
+            className="bg-white rounded-2xl border border-slate-200/90 p-5 space-y-4 shadow-sm hover:shadow-md hover:border-[#2563EB]/50 transition-all cursor-pointer flex flex-col justify-between group overflow-hidden"
           >
             {/* CARD TOP BAR */}
             <div className="space-y-3">
               <div className="flex items-start justify-between gap-2">
                 <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#123B63] to-[#15519D] text-white font-black text-xs flex items-center justify-center shadow-2xs shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0B1F33] to-[#2563EB] text-white font-black text-xs flex items-center justify-center shadow-2xs shrink-0">
                     {stock.symbol.substring(0, 2)}
                   </div>
                   <div className="min-w-0">
-                    <h3 className="font-extrabold text-sm text-slate-900 group-hover:text-[#15519D] transition-colors leading-tight truncate">
+                    <h3 className="font-extrabold text-sm text-slate-900 group-hover:text-[#2563EB] transition-colors leading-tight truncate">
                       {stock.companyName}
                     </h3>
                     <div className="text-[10px] font-bold text-slate-400 font-mono truncate">
@@ -131,7 +131,7 @@ export const ProIntelligenceHero: React.FC<ProIntelligenceHeroProps> = ({ onSele
 
                 <div className="text-right">
                   <div className="inline-flex items-center gap-1 bg-blue-50 border border-blue-100 px-2.5 py-1 rounded-xl">
-                    <span className="text-sm font-black text-[#15519D] font-mono">{stock.score}</span>
+                    <span className="text-sm font-black text-[#2563EB] font-mono">{stock.score}</span>
                     <span className="text-[9px] font-extrabold text-slate-400 uppercase">/100</span>
                   </div>
                   <div className="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider mt-0.5">Score</div>
@@ -164,7 +164,7 @@ export const ProIntelligenceHero: React.FC<ProIntelligenceHeroProps> = ({ onSele
             </div>
 
             {/* ACTION FOOTER */}
-            <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-extrabold text-[#15519D]">
+            <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-extrabold text-[#2563EB]">
               <span className="group-hover:underline">View Deep Research</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </div>

@@ -144,7 +144,7 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({
               isBookmarked ? 'bg-primary-light text-primary border-primary-light' : 'text-slate-400 hover:bg-slate-50'
             }`}
           >
-            <Bookmark className="w-4.5 h-4.5" fill={isBookmarked ? '#15519D' : 'none'} />
+            <Bookmark className="w-4.5 h-4.5" fill={isBookmarked ? '#2563EB' : 'none'} />
           </button>
           <button
             onClick={() => toast.success('Article link copied to clipboard')}

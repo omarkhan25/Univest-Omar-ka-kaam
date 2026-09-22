@@ -1,51 +1,111 @@
-﻿:root {
-  /* ─── Brand Palette — Deep Financial Blue & Dark Navy ──── */
-  --primary: #15519D;
-  --primary-hover: #104280;
-  --primary-light: #EBF3FC;
-  --primary-mid: #B3D4F5;
-  --primary-glow: rgba(21, 81, 157, 0.18);
+:root {
+  /* ─── 1. Primary Brand (Deep Navy) ─────────────────────────── */
+  --color-primary: #0B1F33;
+  --color-primary-dark: #061220;
+  --color-primary-light: #163859;
+  --color-primary-soft: #23507D;
+  --color-primary-muted: rgba(11, 31, 51, 0.08);
 
-  --navy: #123B63;
-  --navy-hover: #0E2F50;
+  /* ─── 2. Action & Accent (Electric Blue) ───────────────────── */
+  --color-action: #2563EB;
+  --color-action-dark: #1D4ED8;
+  --color-action-light: #DBEAFE;
+  --color-action-muted: rgba(37, 99, 235, 0.08);
+  --color-action-border: rgba(37, 99, 235, 0.25);
 
-  --secondary: #64748B;
+  /* ─── 3. Premium (Pro Arth Gold) ───────────────────────────── */
+  --color-gold: #C89B3C;
+  --color-gold-dark: #92400E;
+  --color-gold-light: #FDF4E6;
+  --color-gold-border: #E5C77A;
+  --color-gold-muted: rgba(200, 155, 60, 0.10);
+
+  /* ─── 4. Market Bullish ────────────────────────────────────── */
+  --color-bull: #16A34A;
+  --color-bull-dark: #15803D;
+  --color-bull-bg: #DCFCE7;
+  --color-bull-glow: rgba(22, 163, 74, 0.18);
+
+  /* ─── 5. Market Bearish ────────────────────────────────────── */
+  --color-bear: #DC2626;
+  --color-bear-dark: #B91C1C;
+  --color-bear-bg: #FEE2E2;
+  --color-bear-glow: rgba(220, 38, 38, 0.18);
+
+  /* ─── 6. Warnings & Hold ───────────────────────────────────── */
+  --color-warning: #F59E0B;
+  --color-warning-dark: #D97706;
+  --color-warning-bg: #FEF3C7;
+
+  /* ─── 7. Surfaces & Canvas ─────────────────────────────────── */
+  --color-bg: #F8FAFC;
+  --color-surface: #FFFFFF;
+  --color-border: #E5E7EB;
+  --color-border-light: #F1F5F9;
+
+  /* ─── 8. Text Hierarchy ────────────────────────────────────── */
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #64748B;
+  --color-text-muted: #94A3B8;
+  --color-text-disabled: #CBD5E1;
+
+  /* ─── Shadows ──────────────────────────────────────────────── */
+  --shadow-card: 0 2px 10px rgba(11, 31, 51, 0.06);
+  --shadow-card-md: 0 4px 14px rgba(11, 31, 51, 0.08);
+  --shadow-accent: 0 6px 16px rgba(37, 99, 235, 0.20);
+  --shadow-gold: 0 6px 16px rgba(200, 155, 60, 0.20);
+  --shadow-modal: 0 20px 48px -6px rgba(11, 31, 51, 0.08), 0 8px 24px -4px rgba(11, 31, 51, 0.04);
+
+  /* ─── Legacy & Convenience CSS Variables ───────────────────── */
+  --primary: var(--color-primary);
+  --primary-hover: var(--color-primary-light);
+  --primary-light: var(--color-action-light);
+  --primary-mid: #93C5FD;
+  --primary-glow: rgba(37, 99, 235, 0.18);
+
+  --navy: var(--color-primary);
+  --navy-hover: var(--color-primary-dark);
+
+  --action: var(--color-action);
+  --action-hover: var(--color-action-dark);
+
+  --gold: var(--color-gold);
+  --gold-light: var(--color-gold-light);
+  --gold-border: var(--color-gold-border);
+
+  --secondary: var(--color-text-secondary);
   --secondary-light: #F1F5F9;
   --secondary-hover: #475569;
 
-  --success: #16A34A;
-  --success-light: #DCFCE7;
-  --success-hover: #15803D;
-  --success-glow: rgba(22, 163, 74, 0.15);
+  --success: var(--color-bull);
+  --success-light: var(--color-bull-bg);
+  --success-hover: var(--color-bull-dark);
+  --success-glow: var(--color-bull-glow);
 
-  --danger: #DC2626;
-  --danger-light: #FEE2E2;
-  --danger-hover: #B91C1C;
-  --danger-glow: rgba(220, 38, 38, 0.15);
+  --danger: var(--color-bear);
+  --danger-light: var(--color-bear-bg);
+  --danger-hover: var(--color-bear-dark);
+  --danger-glow: var(--color-bear-glow);
 
-  --warning: #F59E0B;
-  --warning-hover: #F59E0B;
+  --warning-hover: var(--color-warning-dark);
+  --warning-light: var(--color-warning-bg);
 
-  --info: #0EA5E9;
+  --bg-app: var(--color-bg);
+  --bg-card: var(--color-surface);
+  --border-app: var(--color-border);
 
-  /* ─── Layout ───────────────────────────────────────────── */
-  --bg-app: #F8FAFC;
-  --bg-card: #FFFFFF;
-  --border-app: #E2E8F0;
+  --text-primary: var(--color-text-primary);
+  --text-secondary: var(--color-text-secondary);
+  --text-muted: var(--color-text-muted);
 
-  /* ─── Text ─────────────────────────────────────────────── */
-  --text-primary: #172033;
-  --text-secondary: #64748B;
-  --text-muted: #94A3B8;
-
-  /* ─── Corner Radius ────────────────────────────────────── */
+  /* ─── Corner Radius ────────────────────────────────────────── */
   --radius-card: 20px;
   --radius-button: 14px;
   --radius-input: 14px;
   --radius-modal: 24px;
   --radius-chart: 16px;
 
-  /* ─── Spacing (8pt) ────────────────────────────────────── */
+  /* ─── Spacing (8pt) ────────────────────────────────────────── */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -57,24 +117,30 @@
   --space-16: 64px;
   --space-20: 80px;
   --space-24: 96px;
-
-  /* ─── Shadows ──────────────────────────────────────────── */
-  --shadow-card: 0 8px 28px -4px rgba(23, 32, 51, 0.05), 0 2px 8px -2px rgba(23, 32, 51, 0.03);
-  --shadow-modal: 0 20px 48px -6px rgba(23, 32, 51, 0.08), 0 8px 24px -4px rgba(23, 32, 51, 0.04);
 }
 
 .dark {
-  --primary: #2B7BE4;
-  --primary-hover: #15519D;
-  --primary-light: #0D2746;
-  --primary-mid: #123B63;
-  --navy: #F8FAFC;
-  --bg-app: #0B0F19;
-  --bg-card: #161F30;
-  --border-app: #243249;
-  --text-primary: #F1F5F9;
+  --color-primary: #163859;
+  --color-primary-dark: #0B1F33;
+  --color-primary-light: #23507D;
+  --color-action: #3B82F6;
+  --color-action-dark: #2563EB;
+  --color-action-light: rgba(37, 99, 235, 0.2);
+  --color-bg: #061220;
+  --color-surface: #0B1F33;
+  --color-border: #1E293B;
+  --color-border-light: #162438;
+  --color-text-primary: #F8FAFC;
+  --color-text-secondary: #94A3B8;
+  --color-text-muted: #64748B;
+  --color-text-disabled: #475569;
+
+  --bg-app: #061220;
+  --bg-card: #0B1F33;
+  --border-app: #1E293B;
+  --text-primary: #F8FAFC;
   --text-secondary: #94A3B8;
   --text-muted: #64748B;
-  --shadow-card: 0 12px 34px -4px rgba(0, 0, 0, 0.35), 0 4px 12px -2px rgba(0, 0, 0, 0.2);
-  --shadow-modal: 0 20px 48px -6px rgba(0, 0, 0, 0.5), 0 8px 24px -4px rgba(0, 0, 0, 0.3);
+  --shadow-card: 0 12px 34px -4px rgba(0, 0, 0, 0.45), 0 4px 12px -2px rgba(0, 0, 0, 0.3);
+  --shadow-modal: 0 20px 48px -6px rgba(0, 0, 0, 0.6), 0 8px 24px -4px rgba(0, 0, 0, 0.35);
 }

@@ -150,7 +150,7 @@ export const LoginWithOtp = () => {
   return (
     <main className="min-h-screen bg-[#F8FAFC] text-[#172033] flex flex-col lg:flex-row font-sans">
       {/* LEFT COLUMN: BRAND HERO & PLATFORM VALUE */}
-      <div className="lg:w-5/12 bg-gradient-to-br from-[#123B63] to-[#15519D] p-8 lg:p-14 text-white flex flex-col justify-between relative overflow-hidden">
+      <div className="lg:w-5/12 bg-gradient-to-br from-[#0B1F33] to-[#2563EB] p-8 lg:p-14 text-white flex flex-col justify-between relative overflow-hidden">
         {/* Decorative Grids & Glow */}
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-white/10 blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-emerald-500/20 blur-3xl pointer-events-none" />
@@ -202,7 +202,7 @@ export const LoginWithOtp = () => {
               type="button"
               onClick={() => switchTab('login')}
               className={`py-3 rounded-xl text-xs font-extrabold transition cursor-pointer ${
-                !isSignup ? 'bg-white text-[#15519D] shadow-sm' : 'text-[#64748B] hover:text-[#172033]'
+                !isSignup ? 'bg-white text-[#2563EB] shadow-sm' : 'text-[#64748B] hover:text-[#172033]'
               }`}
             >
               Sign In
@@ -211,7 +211,7 @@ export const LoginWithOtp = () => {
               type="button"
               onClick={() => switchTab('signup')}
               className={`py-3 rounded-xl text-xs font-extrabold transition cursor-pointer ${
-                isSignup ? 'bg-white text-[#15519D] shadow-sm' : 'text-[#64748B] hover:text-[#172033]'
+                isSignup ? 'bg-white text-[#2563EB] shadow-sm' : 'text-[#64748B] hover:text-[#172033]'
               }`}
             >
               Create Account
@@ -252,7 +252,7 @@ export const LoginWithOtp = () => {
                         value={emailOrPhone}
                         onChange={(e) => setEmailOrPhone(e.target.value)}
                         placeholder="Enter your email or mobile number"
-                        className="w-full pl-10 pr-4 py-3 bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#15519D] focus:ring-4 focus:ring-blue-100 rounded-xl text-sm font-medium text-[#172033] outline-none transition"
+                        className="w-full pl-10 pr-4 py-3 bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#2563EB] focus:ring-4 focus:ring-blue-100 rounded-xl text-sm font-medium text-[#172033] outline-none transition"
                         required
                       />
                     </div>
@@ -265,7 +265,7 @@ export const LoginWithOtp = () => {
                         <button
                           type="button"
                           onClick={() => toast.success('Password reset link sent to your registered email')}
-                          className="text-xs font-extrabold text-[#15519D] hover:underline cursor-pointer"
+                          className="text-xs font-extrabold text-[#2563EB] hover:underline cursor-pointer"
                         >
                           Forgot password?
                         </button>
@@ -277,7 +277,7 @@ export const LoginWithOtp = () => {
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           placeholder="Enter your password"
-                          className="w-full pl-10 pr-10 py-3 bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#15519D] focus:ring-4 focus:ring-blue-100 rounded-xl text-sm font-medium text-[#172033] outline-none transition"
+                          className="w-full pl-10 pr-10 py-3 bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#2563EB] focus:ring-4 focus:ring-blue-100 rounded-xl text-sm font-medium text-[#172033] outline-none transition"
                           required
                         />
                         <button
@@ -293,14 +293,14 @@ export const LoginWithOtp = () => {
 
                   <div className="flex items-center justify-between text-xs pt-1">
                     <label className="flex items-center gap-2 font-semibold text-[#64748B] cursor-pointer">
-                      <input type="checkbox" defaultChecked className="rounded border-[#CBD5E1] text-[#15519D] focus:ring-[#15519D]" />
+                      <input type="checkbox" defaultChecked className="rounded border-[#CBD5E1] text-[#2563EB] focus:ring-[#2563EB]" />
                       <span>Remember me</span>
                     </label>
 
                     <button
                       type="button"
                       onClick={() => setUseOtpLogin(!useOtpLogin)}
-                      className="font-bold text-[#15519D] hover:underline cursor-pointer"
+                      className="font-bold text-[#2563EB] hover:underline cursor-pointer"
                     >
                       {useOtpLogin ? 'Use password instead' : 'Log in with OTP'}
                     </button>
@@ -309,7 +309,7 @@ export const LoginWithOtp = () => {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full py-3.5 bg-[#15519D] hover:bg-[#123B63] text-white font-extrabold text-sm rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
+                    className="w-full py-3.5 bg-[#2563EB] hover:bg-[#0B1F33] text-white font-extrabold text-sm rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
                   >
                     <span>{useOtpLogin ? 'Send OTP →' : 'Login →'}</span>
                   </button>
@@ -319,7 +319,7 @@ export const LoginWithOtp = () => {
                     <button
                       type="button"
                       onClick={() => switchTab('signup')}
-                      className="text-xs font-extrabold text-[#15519D] hover:underline ml-1 cursor-pointer"
+                      className="text-xs font-extrabold text-[#2563EB] hover:underline ml-1 cursor-pointer"
                     >
                       Create Account
                     </button>
@@ -355,7 +355,7 @@ export const LoginWithOtp = () => {
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
                         placeholder="Enter your full name"
-                        className="w-full pl-10 pr-4 py-3 bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#15519D] focus:ring-4 focus:ring-blue-100 rounded-xl text-sm font-medium text-[#172033] outline-none transition"
+                        className="w-full pl-10 pr-4 py-3 bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#2563EB] focus:ring-4 focus:ring-blue-100 rounded-xl text-sm font-medium text-[#172033] outline-none transition"
                         required
                       />
                     </div>
@@ -371,7 +371,7 @@ export const LoginWithOtp = () => {
                           value={mobileNumber}
                           onChange={(e) => setMobileNumber(e.target.value.replace(/\D/g, '').slice(0, 10))}
                           placeholder="10-digit mobile"
-                          className="w-full pl-10 pr-3 py-3 bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#15519D] focus:ring-4 focus:ring-blue-100 rounded-xl text-sm font-medium text-[#172033] outline-none transition"
+                          className="w-full pl-10 pr-3 py-3 bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#2563EB] focus:ring-4 focus:ring-blue-100 rounded-xl text-sm font-medium text-[#172033] outline-none transition"
                           required
                         />
                       </div>
@@ -386,7 +386,7 @@ export const LoginWithOtp = () => {
                           value={emailAddress}
                           onChange={(e) => setEmailAddress(e.target.value)}
                           placeholder="you@example.com"
-                          className="w-full pl-10 pr-3 py-3 bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#15519D] focus:ring-4 focus:ring-blue-100 rounded-xl text-sm font-medium text-[#172033] outline-none transition"
+                          className="w-full pl-10 pr-3 py-3 bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#2563EB] focus:ring-4 focus:ring-blue-100 rounded-xl text-sm font-medium text-[#172033] outline-none transition"
                           required
                         />
                       </div>
@@ -403,7 +403,7 @@ export const LoginWithOtp = () => {
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           placeholder="Create password"
-                          className="w-full pl-10 pr-3 py-3 bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#15519D] focus:ring-4 focus:ring-blue-100 rounded-xl text-sm font-medium text-[#172033] outline-none transition"
+                          className="w-full pl-10 pr-3 py-3 bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#2563EB] focus:ring-4 focus:ring-blue-100 rounded-xl text-sm font-medium text-[#172033] outline-none transition"
                           required
                         />
                       </div>
@@ -418,7 +418,7 @@ export const LoginWithOtp = () => {
                           value={confirmPassword}
                           onChange={(e) => setConfirmPassword(e.target.value)}
                           placeholder="Re-enter password"
-                          className="w-full pl-10 pr-3 py-3 bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#15519D] focus:ring-4 focus:ring-blue-100 rounded-xl text-sm font-medium text-[#172033] outline-none transition"
+                          className="w-full pl-10 pr-3 py-3 bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#2563EB] focus:ring-4 focus:ring-blue-100 rounded-xl text-sm font-medium text-[#172033] outline-none transition"
                           required
                         />
                       </div>
@@ -431,10 +431,10 @@ export const LoginWithOtp = () => {
                         type="checkbox"
                         checked={termsAccepted}
                         onChange={(e) => setTermsAccepted(e.target.checked)}
-                        className="mt-0.5 rounded border-[#CBD5E1] text-[#15519D] focus:ring-[#15519D]"
+                        className="mt-0.5 rounded border-[#CBD5E1] text-[#2563EB] focus:ring-[#2563EB]"
                       />
                       <span>
-                        By creating an account, you agree to ArthSetu's <a href="#" className="text-[#15519D] font-bold hover:underline">Terms of Use</a> and <a href="#" className="text-[#15519D] font-bold hover:underline">Privacy Policy</a>.
+                        By creating an account, you agree to ArthSetu's <a href="#" className="text-[#2563EB] font-bold hover:underline">Terms of Use</a> and <a href="#" className="text-[#2563EB] font-bold hover:underline">Privacy Policy</a>.
                       </span>
                     </label>
                   </div>
@@ -442,7 +442,7 @@ export const LoginWithOtp = () => {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full py-3.5 bg-[#15519D] hover:bg-[#123B63] text-white font-extrabold text-sm rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
+                    className="w-full py-3.5 bg-[#2563EB] hover:bg-[#0B1F33] text-white font-extrabold text-sm rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
                   >
                     <span>Create Account →</span>
                   </button>
@@ -452,7 +452,7 @@ export const LoginWithOtp = () => {
                     <button
                       type="button"
                       onClick={() => switchTab('login')}
-                      className="text-xs font-extrabold text-[#15519D] hover:underline ml-1 cursor-pointer"
+                      className="text-xs font-extrabold text-[#2563EB] hover:underline ml-1 cursor-pointer"
                     >
                       Login
                     </button>
@@ -486,12 +486,12 @@ export const LoginWithOtp = () => {
                       }}
                       inputMode="numeric"
                       maxLength={1}
-                      className="h-12 w-11 rounded-xl border border-[#CBD5E1] bg-[#F8FAFC] text-center text-lg font-black text-[#172033] outline-none focus:border-[#15519D] focus:ring-4 focus:ring-blue-100 transition"
+                      className="h-12 w-11 rounded-xl border border-[#CBD5E1] bg-[#F8FAFC] text-center text-lg font-black text-[#172033] outline-none focus:border-[#2563EB] focus:ring-4 focus:ring-blue-100 transition"
                     />
                   ))}
                 </div>
 
-                <div className="flex items-center justify-between text-xs font-bold text-[#15519D]">
+                <div className="flex items-center justify-between text-xs font-bold text-[#2563EB]">
                   <button type="button" onClick={() => setOtpSent(false)} className="hover:underline cursor-pointer">
                     Edit details
                   </button>
@@ -502,7 +502,7 @@ export const LoginWithOtp = () => {
                   onClick={verifyOtp}
                   disabled={otp.some(val => !val)}
                   isLoading={isLoading}
-                  className="w-full py-3.5 text-sm font-extrabold bg-[#15519D] hover:bg-[#123B63]"
+                  className="w-full py-3.5 text-sm font-extrabold bg-[#2563EB] hover:bg-[#0B1F33]"
                   icon={<CheckCircle2 className="h-4 w-4" />}
                 >
                   Verify & Enter ArthSetu

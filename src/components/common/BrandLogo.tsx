@@ -47,8 +47,8 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
       />
       <div>
         <div className={`font-black tracking-tight leading-none ${titleSizeMap[size]}`}>
-          <span className={variant === 'light' ? 'text-white' : 'text-[#172033]'}>arth</span>
-          <span className="text-[#10B981]">setu</span>
+          <span className={variant === 'light' ? 'text-white' : 'text-[#0F172A]'}>arth</span>
+          <span className="text-[#16A34A]">setu</span>
         </div>
         {showSubtitle && (
           <span className={`text-[10px] font-extrabold tracking-tight block mt-0.5 ${

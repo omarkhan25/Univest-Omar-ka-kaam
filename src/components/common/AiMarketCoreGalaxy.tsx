@@ -61,9 +61,9 @@ export const AiMarketCoreGalaxy: React.FC<AiMarketCoreGalaxyProps> = ({
       <svg viewBox="0 0 540 540" className="absolute inset-0 w-full h-full pointer-events-none overflow-visible">
         <defs>
           <linearGradient id="ringGrad1" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#15519D" stopOpacity="0.4" />
+            <stop offset="0%" stopColor="#2563EB" stopOpacity="0.4" />
             <stop offset="50%" stopColor="#10B981" stopOpacity="0.1" />
-            <stop offset="100%" stopColor="#15519D" stopOpacity="0.4" />
+            <stop offset="100%" stopColor="#2563EB" stopOpacity="0.4" />
           </linearGradient>
           <linearGradient id="ringGrad2" x1="1" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#06B6D4" stopOpacity="0.3" />
@@ -81,7 +81,7 @@ export const AiMarketCoreGalaxy: React.FC<AiMarketCoreGalaxyProps> = ({
         <circle cx="270" cy="270" r="245" stroke="#475569" strokeWidth="1" strokeDasharray="3 9" fill="none" opacity="0.35" />
 
         {/* Connection Lines from Center to Orbiting Modules */}
-        <line x1="270" y1="270" x2="180" y2="175" stroke="#15519D" strokeWidth="1.5" opacity="0.4" strokeDasharray="3 3" />
+        <line x1="270" y1="270" x2="180" y2="175" stroke="#2563EB" strokeWidth="1.5" opacity="0.4" strokeDasharray="3 3" />
         <line x1="270" y1="270" x2="360" y2="180" stroke="#10B981" strokeWidth="1.5" opacity="0.4" strokeDasharray="3 3" />
         <line x1="270" y1="270" x2="150" y2="350" stroke="#06B6D4" strokeWidth="1.5" opacity="0.4" strokeDasharray="3 3" />
         <line x1="270" y1="270" x2="390" y2="340" stroke="#8B5CF6" strokeWidth="1.5" opacity="0.4" strokeDasharray="3 3" />

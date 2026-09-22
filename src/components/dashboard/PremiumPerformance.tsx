@@ -64,7 +64,7 @@ export const PremiumPerformance: React.FC = () => {
 
         <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-sm">
           <span className="text-[11px] font-bold text-slate-400 uppercase">Active Research</span>
-          <div className="text-2xl font-black text-[#15519D] mt-1">32 Active</div>
+          <div className="text-2xl font-black text-[#2563EB] mt-1">32 Active</div>
           <span className="text-[11px] text-slate-500">Under tracking</span>
         </div>
 
@@ -120,7 +120,7 @@ export const PremiumPerformance: React.FC = () => {
               onClick={() => setTimeframeFilter(tf as any)}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
                 timeframeFilter === tf
-                  ? 'bg-[#15519D] text-white'
+                  ? 'bg-[#2563EB] text-white'
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >
@@ -150,7 +150,7 @@ export const PremiumPerformance: React.FC = () => {
                 <td className="py-4 px-6">
                   <div className="font-extrabold text-slate-900">{item.symbol}</div>
                   <div className="text-xs text-slate-400 font-medium flex items-center gap-2">
-                    <span>{item.name}</span> • <span className="text-[#15519D] font-bold">{item.convictionTier}</span>
+                    <span>{item.name}</span> • <span className="text-[#2563EB] font-bold">{item.convictionTier}</span>
                   </div>
                 </td>
 
@@ -185,7 +185,7 @@ export const PremiumPerformance: React.FC = () => {
                   <span className={`px-3 py-1 rounded-full text-xs font-bold ${
                     item.status === 'Target Met' 
                       ? 'bg-emerald-100 text-[#16A34A]' 
-                      : 'bg-blue-100 text-[#15519D]'
+                      : 'bg-blue-100 text-[#2563EB]'
                   }`}>
                     {item.status}
                   </span>

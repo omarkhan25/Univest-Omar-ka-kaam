@@ -59,7 +59,7 @@ export const RisingRadarTracker: React.FC<RisingRadarTrackerProps> = ({ onSelect
     <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-5 shadow-2xs">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 border-b border-slate-100 pb-4">
         <div>
-          <div className="inline-flex items-center gap-1.5 text-xs font-black text-[#15519D] uppercase tracking-wider">
+          <div className="inline-flex items-center gap-1.5 text-xs font-black text-[#2563EB] uppercase tracking-wider">
             <TrendingUp className="w-4 h-4" />
             <span>ARTHSETU RADAR SIGNALS</span>
           </div>
@@ -71,7 +71,7 @@ export const RisingRadarTracker: React.FC<RisingRadarTrackerProps> = ({ onSelect
           </p>
         </div>
 
-        <button className="text-xs font-extrabold text-[#15519D] hover:underline inline-flex items-center gap-1">
+        <button className="text-xs font-extrabold text-[#2563EB] hover:underline inline-flex items-center gap-1">
           <span>View All Radar Upgrades</span>
           <ChevronRight className="w-3.5 h-3.5" />
         </button>
@@ -82,22 +82,22 @@ export const RisingRadarTracker: React.FC<RisingRadarTrackerProps> = ({ onSelect
           <div
             key={item.symbol}
             onClick={() => onSelectStock(item)}
-            className="p-4 bg-[#F8FAFC] rounded-2xl border border-slate-200/90 space-y-3 hover:border-[#15519D] transition-all cursor-pointer group"
+            className="p-4 bg-[#F8FAFC] rounded-2xl border border-slate-200/90 space-y-3 hover:border-[#2563EB] transition-all cursor-pointer group"
           >
             {/* TOP TITLE & SCORE Trajectory */}
             <div className="flex items-start justify-between gap-2">
               <div>
-                <span className="px-2 py-0.5 bg-blue-50 text-[#15519D] text-[10px] font-extrabold rounded-md uppercase">
+                <span className="px-2 py-0.5 bg-blue-50 text-[#2563EB] text-[10px] font-extrabold rounded-md uppercase">
                   {item.tag}
                 </span>
-                <h3 className="font-extrabold text-sm text-slate-900 group-hover:text-[#15519D] transition-colors mt-1">
+                <h3 className="font-extrabold text-sm text-slate-900 group-hover:text-[#2563EB] transition-colors mt-1">
                   {item.companyName}
                 </h3>
               </div>
 
               <div className="text-right">
                 <div className="text-xs font-extrabold text-slate-400">
-                  {item.prevScore} → <strong className="text-base text-[#15519D]">{item.currScore}</strong>
+                  {item.prevScore} → <strong className="text-base text-[#2563EB]">{item.currScore}</strong>
                 </div>
                 <span className="text-[10px] font-black text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">
                   ↑ {item.change} pts
@@ -117,7 +117,7 @@ export const RisingRadarTracker: React.FC<RisingRadarTrackerProps> = ({ onSelect
             </div>
 
             {/* FOOTER */}
-            <div className="pt-2 flex items-center justify-between text-xs font-extrabold text-[#15519D] group-hover:underline">
+            <div className="pt-2 flex items-center justify-between text-xs font-extrabold text-[#2563EB] group-hover:underline">
               <span>Inspect Upgrade Thesis</span>
               <ChevronRight className="w-3.5 h-3.5" />
             </div>

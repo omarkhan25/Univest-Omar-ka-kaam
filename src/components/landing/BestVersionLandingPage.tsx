@@ -985,7 +985,7 @@ const LiveAiSignalGraph: React.FC<{ theme: 'dark' | 'light'; activeSignal: any }
               y={140 + (i % 3) * 15}
               width="14"
               height={30 + (i % 2) * 20}
-              fill={i % 2 === 0 ? "#10B981" : "#15519D"}
+              fill={i % 2 === 0 ? "#10B981" : "#2563EB"}
               rx="3"
             />
           </g>
@@ -994,7 +994,7 @@ const LiveAiSignalGraph: React.FC<{ theme: 'dark' | 'light'; activeSignal: any }
         {/* Actual Price Trend Line */}
         <path
           d="M 20 260 Q 80 200, 160 230 T 300 130 T 380 90"
-          stroke="#15519D"
+          stroke="#2563EB"
           strokeWidth="3.5"
           fill="none"
           strokeLinecap="round"

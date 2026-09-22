@@ -38,14 +38,14 @@ export const AccountSetupLoading: React.FC<AccountSetupLoadingProps> = ({ planTi
         
         {/* ANIMATED SPINNER OR BADGE */}
         <div className="relative w-20 h-20 mx-auto flex items-center justify-center">
-          <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#15519D] to-[#123B63] animate-pulse opacity-20" />
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#15519D] to-[#123B63] flex items-center justify-center text-white font-black text-2xl shadow-md">
+          <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#2563EB] to-[#0B1F33] animate-pulse opacity-20" />
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#0B1F33] flex items-center justify-center text-white font-black text-2xl shadow-md">
             A
           </div>
         </div>
 
         <div className="space-y-2">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-[#15519D] text-xs font-black uppercase">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-[#2563EB] text-xs font-black uppercase">
             <Sparkles className="w-3.5 h-3.5 text-emerald-600" /> Account Setup
           </span>
           <h2 className="text-2xl font-black text-[#172033] tracking-tight">
@@ -68,13 +68,13 @@ export const AccountSetupLoading: React.FC<AccountSetupLoadingProps> = ({ planTi
                   isDone 
                     ? 'bg-emerald-600 text-white' 
                     : isCurrent 
-                    ? 'bg-[#15519D] text-white animate-bounce' 
+                    ? 'bg-[#2563EB] text-white animate-bounce' 
                     : 'bg-[#CBD5E1] text-white'
                 }`}>
                   {isDone ? <Check className="w-3.5 h-3.5 stroke-[3]" /> : idx + 1}
                 </div>
 
-                <span className={isDone ? 'text-[#172033]' : isCurrent ? 'text-[#15519D]' : 'text-[#94A3B8]'}>
+                <span className={isDone ? 'text-[#172033]' : isCurrent ? 'text-[#2563EB]' : 'text-[#94A3B8]'}>
                   {stepText}
                 </span>
               </div>
@@ -86,7 +86,7 @@ export const AccountSetupLoading: React.FC<AccountSetupLoadingProps> = ({ planTi
         <div className="pt-2">
           <button
             onClick={onFinished}
-            className="w-full py-3.5 bg-[#15519D] hover:bg-[#123B63] text-white font-extrabold text-sm rounded-xl shadow-md transition cursor-pointer flex items-center justify-center gap-2"
+            className="w-full py-3.5 bg-[#2563EB] hover:bg-[#0B1F33] text-white font-extrabold text-sm rounded-xl shadow-md transition cursor-pointer flex items-center justify-center gap-2"
           >
             <span>Go to ArthSetu Dashboard</span>
             <ArrowRight className="w-4 h-4" />

@@ -42,7 +42,7 @@ export const SmallCapIntelligence: React.FC<SmallCapIntelligenceProps> = ({ onSe
       {/* HEADER */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
         <div>
-          <div className="inline-flex items-center gap-1.5 text-xs font-black text-[#15519D] uppercase tracking-wider">
+          <div className="inline-flex items-center gap-1.5 text-xs font-black text-[#2563EB] uppercase tracking-wider">
             <Compass className="w-4 h-4" />
             <span>SMALL-CAP INTELLIGENCE</span>
           </div>
@@ -68,7 +68,7 @@ export const SmallCapIntelligence: React.FC<SmallCapIntelligenceProps> = ({ onSe
               onClick={() => setActiveLens(l.id as any)}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
                 activeLens === l.id
-                  ? 'bg-[#15519D] text-white shadow-xs'
+                  ? 'bg-[#2563EB] text-white shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -104,7 +104,7 @@ export const SmallCapIntelligence: React.FC<SmallCapIntelligenceProps> = ({ onSe
                 className="hover:bg-slate-50/80 transition-colors cursor-pointer group"
               >
                 <td className="py-3.5 px-3">
-                  <div className="font-extrabold text-slate-900 text-xs group-hover:text-[#15519D]">
+                  <div className="font-extrabold text-slate-900 text-xs group-hover:text-[#2563EB]">
                     {st.companyName}
                   </div>
                   <div className="text-[10px] font-bold text-slate-400 font-mono">{st.symbol}</div>
@@ -117,7 +117,7 @@ export const SmallCapIntelligence: React.FC<SmallCapIntelligenceProps> = ({ onSe
                 <td className="py-3.5 px-3 font-bold text-slate-800">{st.roe}</td>
                 <td className="py-3.5 px-3 font-bold text-slate-600">{st.debt}</td>
                 <td className="py-3.5 px-3">
-                  <span className="font-black text-[#15519D] bg-blue-50 px-2.5 py-0.5 rounded-md">
+                  <span className="font-black text-[#2563EB] bg-blue-50 px-2.5 py-0.5 rounded-md">
                     {st.score}/100
                   </span>
                 </td>
@@ -127,7 +127,7 @@ export const SmallCapIntelligence: React.FC<SmallCapIntelligenceProps> = ({ onSe
                   </span>
                 </td>
                 <td className="py-3.5 px-3 text-right">
-                  <button className="text-[#15519D] font-extrabold text-xs inline-flex items-center gap-1 group-hover:underline">
+                  <button className="text-[#2563EB] font-extrabold text-xs inline-flex items-center gap-1 group-hover:underline">
                     <span>Research</span>
                     <ChevronRight className="w-3.5 h-3.5" />
                   </button>

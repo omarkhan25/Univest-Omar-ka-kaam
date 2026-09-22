@@ -201,7 +201,7 @@ const StockMarketIllustration: React.FC = () => {
         {/* Animated Trend Lines */}
         <path
           d="M 20 280 Q 90 220, 160 250 T 300 120 T 380 90"
-          stroke="#15519D"
+          stroke="#2563EB"
           strokeWidth="4"
           fill="none"
           strokeLinecap="round"
@@ -231,7 +231,7 @@ const StockMarketIllustration: React.FC = () => {
               y={160 + (i % 3) * 15}
               width="16"
               height={30 + (i % 2) * 25}
-              fill={i % 2 === 0 ? "#10B981" : "#15519D"}
+              fill={i % 2 === 0 ? "#10B981" : "#2563EB"}
               rx="3"
             />
           </g>

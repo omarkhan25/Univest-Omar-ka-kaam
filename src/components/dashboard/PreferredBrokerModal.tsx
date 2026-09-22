@@ -75,7 +75,7 @@ export const PreferredBrokerModal: React.FC<PreferredBrokerModalProps> = ({
           <div className="p-6 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
             <div>
               <div className="flex items-center gap-2">
-                <span className="p-2 bg-blue-50 text-[#15519D] rounded-xl">
+                <span className="p-2 bg-blue-50 text-[#2563EB] rounded-xl">
                   <ShieldCheck className="w-5 h-5" />
                 </span>
                 <div>
@@ -98,19 +98,19 @@ export const PreferredBrokerModal: React.FC<PreferredBrokerModalProps> = ({
           {stock && (
             <div className="mx-6 mt-4 p-3.5 bg-blue-50/70 border border-blue-100 rounded-2xl flex items-center justify-between">
               <div>
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#15519D]">Target Security</span>
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#2563EB]">Target Security</span>
                 <div className="font-extrabold text-slate-900 text-base">{stock.companyName || stock.symbol}</div>
               </div>
               <div className="text-right">
                 <span className="text-[11px] text-slate-500 font-medium">Symbol</span>
-                <div className="font-mono font-bold text-[#15519D]">{stock.symbol}</div>
+                <div className="font-mono font-bold text-[#2563EB]">{stock.symbol}</div>
               </div>
             </div>
           )}
 
           {/* Phase 1 Intelligence Note */}
           <div className="mx-6 mt-3 p-3 bg-slate-100/80 rounded-xl flex items-start gap-2 text-slate-600 text-xs">
-            <Info className="w-4 h-4 text-[#15519D] flex-shrink-0 mt-0.5" />
+            <Info className="w-4 h-4 text-[#2563EB] flex-shrink-0 mt-0.5" />
             <p>
               <strong>Direct Broker Redirect:</strong> ArthSetu does not handle order execution or funds custody. Select your broker below to open their platform. Direct 1-click broker syncing will be enabled in Phase 2.
             </p>
@@ -125,7 +125,7 @@ export const PreferredBrokerModal: React.FC<PreferredBrokerModalProps> = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={onClose}
-                className="group flex items-center justify-between p-4 rounded-2xl border border-slate-200 hover:border-[#15519D] hover:bg-blue-50/30 transition-all duration-200"
+                className="group flex items-center justify-between p-4 rounded-2xl border border-slate-200 hover:border-[#2563EB] hover:bg-blue-50/30 transition-all duration-200"
               >
                 <div className="flex items-center gap-3.5">
                   <div
@@ -135,14 +135,14 @@ export const PreferredBrokerModal: React.FC<PreferredBrokerModalProps> = ({
                     {broker.logoText}
                   </div>
                   <div>
-                    <h4 className="font-bold text-slate-900 group-hover:text-[#15519D] transition-colors">
+                    <h4 className="font-bold text-slate-900 group-hover:text-[#2563EB] transition-colors">
                       {broker.name}
                     </h4>
                     <p className="text-xs text-slate-500">{broker.description}</p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-1 text-xs font-semibold text-[#15519D] group-hover:translate-x-0.5 transition-transform">
+                <div className="flex items-center gap-1 text-xs font-semibold text-[#2563EB] group-hover:translate-x-0.5 transition-transform">
                   <span>Open Broker</span>
                   <ExternalLink className="w-4 h-4" />
                 </div>

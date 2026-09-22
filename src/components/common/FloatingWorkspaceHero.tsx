@@ -64,7 +64,7 @@ export const FloatingWorkspaceHero: React.FC<FloatingWorkspaceHeroProps> = ({
       <svg viewBox="0 0 740 560" className="absolute inset-0 w-full h-full pointer-events-none overflow-visible">
         <defs>
           <linearGradient id="workspaceLineGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#15519D" stopOpacity="0.4" />
+            <stop offset="0%" stopColor="#2563EB" stopOpacity="0.4" />
             <stop offset="50%" stopColor="#10B981" stopOpacity="0.2" />
             <stop offset="100%" stopColor="#8B5CF6" stopOpacity="0.4" />
           </linearGradient>
@@ -87,7 +87,7 @@ export const FloatingWorkspaceHero: React.FC<FloatingWorkspaceHeroProps> = ({
         {activeStep === 1 && <circle cx="220" cy="120" r="5" fill="#F59E0B" className="animate-ping" />}
         {activeStep === 2 && <circle cx="540" cy="280" r="5" fill="#8B5CF6" className="animate-ping" />}
         {activeStep === 3 && <circle cx="370" cy="280" r="5" fill="#10B981" className="animate-ping" />}
-        {activeStep === 4 && <circle cx="210" cy="440" r="5" fill="#15519D" className="animate-ping" />}
+        {activeStep === 4 && <circle cx="210" cy="440" r="5" fill="#2563EB" className="animate-ping" />}
       </svg>
 
       {/* 3. FLOATING INVESTMENT WORKSPACE MODULES */}

@@ -46,7 +46,7 @@ export const PlanSelectionStep: React.FC<PlanSelectionStepProps> = ({ onSelectPl
 
         {/* HEADER */}
         <div className="text-center space-y-3 max-w-2xl mx-auto">
-          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-xs font-black text-[#15519D] uppercase tracking-wider">
+          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-xs font-black text-[#2563EB] uppercase tracking-wider">
             <Sparkles className="w-4 h-4 text-emerald-600" /> Choose Your Experience
           </span>
           <h1 className="text-3xl sm:text-4xl font-black text-[#172033] tracking-tight">
@@ -124,14 +124,14 @@ export const PlanSelectionStep: React.FC<PlanSelectionStepProps> = ({ onSelectPl
           </div>
 
           {/* 2. PRO PLAN */}
-          <div className="bg-white rounded-[28px] border-2 border-[#15519D] p-7 flex flex-col justify-between shadow-lg relative overflow-hidden">
-            <div className="absolute top-0 right-0 bg-[#15519D] text-white px-4 py-1 rounded-bl-2xl text-[10px] font-black uppercase tracking-wider">
+          <div className="bg-white rounded-[28px] border-2 border-[#2563EB] p-7 flex flex-col justify-between shadow-lg relative overflow-hidden">
+            <div className="absolute top-0 right-0 bg-[#2563EB] text-white px-4 py-1 rounded-bl-2xl text-[10px] font-black uppercase tracking-wider">
               Most Popular
             </div>
 
             <div className="space-y-6">
               <div className="space-y-2">
-                <span className="text-xs font-extrabold text-[#15519D] uppercase tracking-wider">ArthSetu Pro</span>
+                <span className="text-xs font-extrabold text-[#2563EB] uppercase tracking-wider">ArthSetu Pro</span>
                 <div className="flex items-baseline gap-1">
                   <span className="text-4xl font-black text-[#172033]">
                     {billingFrequency === 'monthly' ? '₹499' : '₹333'}
@@ -152,7 +152,7 @@ export const PlanSelectionStep: React.FC<PlanSelectionStepProps> = ({ onSelectPl
                   "Advanced portfolio intelligence"
                 ].map(feat => (
                   <div key={feat} className="flex items-start gap-2.5 text-xs text-[#172033] font-medium">
-                    <Check className="w-4 h-4 text-[#15519D] shrink-0 mt-0.5" />
+                    <Check className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
                     <span className={feat.startsWith("Everything") ? "font-bold" : ""}>{feat}</span>
                   </div>
                 ))}
@@ -162,7 +162,7 @@ export const PlanSelectionStep: React.FC<PlanSelectionStepProps> = ({ onSelectPl
             <div className="pt-8 mt-auto">
               <button
                 onClick={() => setSelectedPlanForModal('Pro')}
-                className="w-full py-3.5 bg-[#15519D] hover:bg-[#123B63] text-white font-extrabold text-sm rounded-xl shadow-md transition cursor-pointer flex items-center justify-center gap-2"
+                className="w-full py-3.5 bg-[#2563EB] hover:bg-[#0B1F33] text-white font-extrabold text-sm rounded-xl shadow-md transition cursor-pointer flex items-center justify-center gap-2"
               >
                 <span>Choose Pro →</span>
               </button>
@@ -170,7 +170,7 @@ export const PlanSelectionStep: React.FC<PlanSelectionStepProps> = ({ onSelectPl
           </div>
 
           {/* 3. PRO GOLD PLAN (INCLUDES INVESTMENT TOKENS ACCESS) */}
-          <div className="bg-gradient-to-b from-[#123B63] to-[#15519D] text-white rounded-[28px] p-7 flex flex-col justify-between shadow-xl relative overflow-hidden">
+          <div className="bg-gradient-to-b from-[#0B1F33] to-[#2563EB] text-white rounded-[28px] p-7 flex flex-col justify-between shadow-xl relative overflow-hidden">
             <div className="absolute top-0 right-0 bg-amber-400 text-slate-950 px-4 py-1 rounded-bl-2xl text-[10px] font-black uppercase tracking-wider flex items-center gap-1">
               <Zap className="w-3 h-3 fill-current" /> Ultimate Intelligence
             </div>
@@ -234,7 +234,7 @@ export const PlanSelectionStep: React.FC<PlanSelectionStepProps> = ({ onSelectPl
                   <th className="py-3 px-4">Feature</th>
                   <th className="py-3 px-4 text-center">Free (₹0)</th>
                   <th className="py-3 px-4 text-center">Pro (₹499/mo)</th>
-                  <th className="py-3 px-4 text-center text-[#15519D]">Pro Gold (₹999/mo)</th>
+                  <th className="py-3 px-4 text-center text-[#2563EB]">Pro Gold (₹999/mo)</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#E2E8F0]">
@@ -250,7 +250,7 @@ export const PlanSelectionStep: React.FC<PlanSelectionStepProps> = ({ onSelectPl
                   <tr key={i} className="hover:bg-[#F8FAFC]">
                     <td className="py-3 px-4 font-bold text-[#172033]">{row.feature}</td>
                     <td className="py-3 px-4 text-center text-[#64748B]">{row.free}</td>
-                    <td className="py-3 px-4 text-center font-bold text-[#15519D]">{row.pro}</td>
+                    <td className="py-3 px-4 text-center font-bold text-[#2563EB]">{row.pro}</td>
                     <td className="py-3 px-4 text-center font-black text-amber-600">{row.gold}</td>
                   </tr>
                 ))}
@@ -288,7 +288,7 @@ export const PlanSelectionStep: React.FC<PlanSelectionStepProps> = ({ onSelectPl
               </button>
 
               <div className="space-y-2">
-                <span className="px-3 py-1 rounded-full bg-blue-50 text-[#15519D] text-xs font-black uppercase">
+                <span className="px-3 py-1 rounded-full bg-blue-50 text-[#2563EB] text-xs font-black uppercase">
                   Checkout
                 </span>
                 <h3 className="text-2xl font-black text-[#172033]">
@@ -302,7 +302,7 @@ export const PlanSelectionStep: React.FC<PlanSelectionStepProps> = ({ onSelectPl
               <div className="bg-[#F8FAFC] p-4 rounded-2xl border border-[#E2E8F0] space-y-3">
                 <div className="flex justify-between items-center text-sm font-bold text-[#172033]">
                   <span>Selected Plan:</span>
-                  <span className="text-[#15519D]">ArthSetu {selectedPlanForModal}</span>
+                  <span className="text-[#2563EB]">ArthSetu {selectedPlanForModal}</span>
                 </div>
                 <div className="flex justify-between items-center text-xs text-[#64748B]">
                   <span>Billing Frequency:</span>
@@ -310,7 +310,7 @@ export const PlanSelectionStep: React.FC<PlanSelectionStepProps> = ({ onSelectPl
                 </div>
                 <div className="flex justify-between items-center text-base font-black text-[#172033] pt-2 border-t border-[#E2E8F0]">
                   <span>Total Amount:</span>
-                  <span className="text-[#15519D]">
+                  <span className="text-[#2563EB]">
                     {selectedPlanForModal === 'Pro' 
                       ? (billingFrequency === 'monthly' ? '₹499' : '₹3,999')
                       : (billingFrequency === 'monthly' ? '₹999' : '₹7,999')}
@@ -328,7 +328,7 @@ export const PlanSelectionStep: React.FC<PlanSelectionStepProps> = ({ onSelectPl
               <div className="space-y-3">
                 <button
                   onClick={handleConfirmPurchase}
-                  className="w-full py-4 bg-[#15519D] hover:bg-[#123B63] text-white font-extrabold text-sm rounded-xl shadow-lg transition cursor-pointer flex items-center justify-center gap-2"
+                  className="w-full py-4 bg-[#2563EB] hover:bg-[#0B1F33] text-white font-extrabold text-sm rounded-xl shadow-lg transition cursor-pointer flex items-center justify-center gap-2"
                 >
                   <CreditCard className="w-4 h-4" />
                   <span>Pay & Activate {selectedPlanForModal} →</span>

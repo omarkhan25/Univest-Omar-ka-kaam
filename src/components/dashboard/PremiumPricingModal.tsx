@@ -50,7 +50,7 @@ export const PremiumPricingModal: React.FC<PremiumPricingModalProps> = ({
           {/* Body Content */}
           <div className="p-8 overflow-y-auto space-y-8 bg-slate-50/50">
             {/* Value Proposition Hero Banner */}
-            <div className="p-6 bg-gradient-to-r from-[#123B63] to-[#15519D] rounded-3xl text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="p-6 bg-gradient-to-r from-[#0B1F33] to-[#2563EB] rounded-3xl text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="space-y-2 max-w-xl">
                 <span className="px-3 py-1 bg-white/10 rounded-full text-xs font-extrabold uppercase tracking-wider text-blue-200">
                   Institutional Intelligence Access
@@ -73,7 +73,7 @@ export const PremiumPricingModal: React.FC<PremiumPricingModalProps> = ({
               {/* TIER 1: ARTHSETU PICKS */}
               <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm flex flex-col justify-between hover:border-blue-200 transition-all">
                 <div>
-                  <div className="text-xs font-extrabold text-[#15519D] uppercase tracking-wider">Individual Ideas</div>
+                  <div className="text-xs font-extrabold text-[#2563EB] uppercase tracking-wider">Individual Ideas</div>
                   <h4 className="text-2xl font-black text-slate-900 mt-1">ArthSetu Picks</h4>
                   <p className="text-xs text-slate-500 mt-1">For investors focused on high-conviction stock ideas.</p>
 
@@ -106,7 +106,7 @@ export const PremiumPricingModal: React.FC<PremiumPricingModalProps> = ({
                     </div>
 
                     <div className="pt-3 border-t border-slate-100">
-                      <span className="text-[10px] font-extrabold uppercase text-[#15519D]">Why It Matters</span>
+                      <span className="text-[10px] font-extrabold uppercase text-[#2563EB]">Why It Matters</span>
                       <p className="text-xs text-slate-600 font-medium mt-1">
                         Never buy a stock without knowing exactly why, when to enter, and what catalysts drive growth.
                       </p>
@@ -132,7 +132,7 @@ export const PremiumPricingModal: React.FC<PremiumPricingModalProps> = ({
               {/* TIER 2: ARTHSETU COLLECTIONS */}
               <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm flex flex-col justify-between hover:border-blue-200 transition-all">
                 <div>
-                  <div className="text-xs font-extrabold text-[#15519D] uppercase tracking-wider">Curated Portfolios</div>
+                  <div className="text-xs font-extrabold text-[#2563EB] uppercase tracking-wider">Curated Portfolios</div>
                   <h4 className="text-2xl font-black text-slate-900 mt-1">ArthSetu Collections</h4>
                   <p className="text-xs text-slate-500 mt-1">For investors seeking thematic strategies.</p>
 
@@ -165,7 +165,7 @@ export const PremiumPricingModal: React.FC<PremiumPricingModalProps> = ({
                     </div>
 
                     <div className="pt-3 border-t border-slate-100">
-                      <span className="text-[10px] font-extrabold uppercase text-[#15519D]">Why It Matters</span>
+                      <span className="text-[10px] font-extrabold uppercase text-[#2563EB]">Why It Matters</span>
                       <p className="text-xs text-slate-600 font-medium mt-1">
                         Achieve structured diversification without needing to manage individual stock allocations daily.
                       </p>
@@ -189,7 +189,7 @@ export const PremiumPricingModal: React.FC<PremiumPricingModalProps> = ({
               </div>
 
               {/* TIER 3: ARTHSETU PRO GOLD (BEST VALUE) */}
-              <div className="bg-gradient-to-b from-slate-900 via-[#123B63] to-[#15519D] rounded-3xl p-6 shadow-2xl text-white flex flex-col justify-between relative overflow-hidden ring-4 ring-amber-400/30">
+              <div className="bg-gradient-to-b from-slate-900 via-[#0B1F33] to-[#2563EB] rounded-3xl p-6 shadow-2xl text-white flex flex-col justify-between relative overflow-hidden ring-4 ring-amber-400/30">
                 <div className="absolute top-4 right-4 px-3 py-1 bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 text-[10px] font-black uppercase tracking-wider rounded-full shadow-md">
                   Most Popular
                 </div>

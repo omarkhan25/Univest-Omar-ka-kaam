@@ -78,7 +78,7 @@ export const UserMenuDropdown: React.FC<UserMenuDropdownProps> = ({
           className="absolute right-6 top-[72px] w-[280px] bg-white border border-[#E2E8F0] rounded-[24px] shadow-2xl z-50 overflow-hidden font-sans text-slate-800 pointer-events-auto flex flex-col p-3.5 gap-3"
         >
           {/* 1. USER PROFILE IDENTITY HEADER */}
-          <div className="p-3.5 bg-gradient-to-r from-slate-900 via-[#123B63] to-[#15519D] text-white rounded-2xl flex items-center gap-3 shadow-md relative overflow-hidden">
+          <div className="p-3.5 bg-gradient-to-r from-slate-900 via-[#0B1F33] to-[#2563EB] text-white rounded-2xl flex items-center gap-3 shadow-md relative overflow-hidden">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-400 to-amber-300 text-slate-950 text-xs font-black flex items-center justify-center shrink-0 shadow-xs">
               {user?.name ? user.name.substring(0, 2).toUpperCase() : 'AK'}
             </div>

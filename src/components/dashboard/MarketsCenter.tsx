@@ -5,6 +5,7 @@ import {
   ArrowUpRight, ArrowDownRight, Bookmark, BookmarkCheck,
   ChevronRight, Sparkles, Filter, Activity, ShieldCheck
 } from 'lucide-react';
+import FnOIntelligenceCenter from './FnOIntelligenceCenter';
 
 interface MarketsCenterProps {
   onSelectStock: (stock: any) => void;
@@ -48,7 +49,7 @@ export const MarketsCenter: React.FC<MarketsCenterProps> = ({
   watchlistStocks = [],
   onToggleWatchlist
 }) => {
-  const [subTab, setSubTab] = useState<'overview' | 'stocks' | 'indices' | 'sectors' | 'movers'>('overview');
+  const [subTab, setSubTab] = useState<'overview' | 'stocks' | 'indices' | 'sectors' | 'fno' | 'movers'>('overview');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSectorFilter, setSelectedSectorFilter] = useState('All');
   
@@ -105,7 +106,7 @@ export const MarketsCenter: React.FC<MarketsCenterProps> = ({
         <div>
           <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">Market Intelligence & Discovery</h1>
           <p className="text-sm text-slate-500 mt-1">
-            Real-time market overview, sector rotation analytics, and intelligent stock search engine.
+            Real-time market overview, sector rotation analytics, F&O derivatives research, and intelligent search engine.
           </p>
         </div>
 
@@ -117,7 +118,7 @@ export const MarketsCenter: React.FC<MarketsCenterProps> = ({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search stock symbol or name..."
-            className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#15519D] focus:ring-1 focus:ring-[#15519D] transition-all"
+            className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB] transition-all"
           />
         </div>
       </div>
@@ -129,6 +130,7 @@ export const MarketsCenter: React.FC<MarketsCenterProps> = ({
           { id: 'stocks', label: 'Stocks Discovery' },
           { id: 'indices', label: 'Indices' },
           { id: 'sectors', label: 'Sectors Heatmap' },
+          { id: 'fno', label: 'F&O' },
           { id: 'movers', label: 'Top Movers' },
         ].map((item) => (
           <button
@@ -136,7 +138,7 @@ export const MarketsCenter: React.FC<MarketsCenterProps> = ({
             onClick={() => setSubTab(item.id as any)}
             className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all whitespace-nowrap ${
               subTab === item.id
-                ? 'bg-[#15519D] text-white shadow-md shadow-blue-500/20'
+                ? 'bg-[#2563EB] text-white shadow-md shadow-blue-500/20'
                 : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
             }`}
           >
@@ -174,7 +176,7 @@ export const MarketsCenter: React.FC<MarketsCenterProps> = ({
               </div>
               <button 
                 onClick={() => setSubTab('sectors')} 
-                className="text-xs font-bold text-[#15519D] hover:underline flex items-center gap-1"
+                className="text-xs font-bold text-[#2563EB] hover:underline flex items-center gap-1"
               >
                 Full Heatmap <ChevronRight className="w-4 h-4" />
               </button>
@@ -327,11 +329,11 @@ export const MarketsCenter: React.FC<MarketsCenterProps> = ({
                     >
                       <td className="py-4 px-6">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-xl bg-slate-100 text-[#15519D] font-extrabold flex items-center justify-center text-sm shadow-inner">
+                          <div className="w-10 h-10 rounded-xl bg-slate-100 text-[#2563EB] font-extrabold flex items-center justify-center text-sm shadow-inner">
                             {stock.symbol.substring(0, 2)}
                           </div>
                           <div>
-                            <div className="font-extrabold text-slate-900 group-hover:text-[#15519D] transition-colors">
+                            <div className="font-extrabold text-slate-900 group-hover:text-[#2563EB] transition-colors">
                               {stock.name}
                             </div>
                             <div className="text-xs text-slate-400 font-medium flex items-center gap-2">
@@ -370,7 +372,7 @@ export const MarketsCenter: React.FC<MarketsCenterProps> = ({
                           onClick={() => onToggleWatchlist && onToggleWatchlist(stock.symbol)}
                           className={`p-2 rounded-xl border transition-all ${
                             isSaved 
-                              ? 'bg-blue-50 border-blue-200 text-[#15519D]' 
+                              ? 'bg-blue-50 border-blue-200 text-[#2563EB]' 
                               : 'bg-white border-slate-200 text-slate-400 hover:text-slate-600 hover:bg-slate-50'
                           }`}
                           title={isSaved ? "Saved in Watchlist" : "Add to Watchlist"}
@@ -400,7 +402,7 @@ export const MarketsCenter: React.FC<MarketsCenterProps> = ({
               </div>
               <div>
                 <h3 className="text-sm sm:text-base font-extrabold text-slate-900">{idx.name}</h3>
-                <div className="text-lg sm:text-xl font-black text-[#15519D] mt-0.5">₹{idx.value}</div>
+                <div className="text-lg sm:text-xl font-black text-[#2563EB] mt-0.5">₹{idx.value}</div>
               </div>
               <div className="pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-medium">
                 <span>Net Daily Change:</span>
@@ -434,6 +436,11 @@ export const MarketsCenter: React.FC<MarketsCenterProps> = ({
         </div>
       )}
 
+      {/* F&O INTELLIGENCE SUB TAB */}
+      {subTab === 'fno' && (
+        <FnOIntelligenceCenter onSelectStock={onSelectStock} />
+      )}
+
       {/* TOP MOVERS SUB TAB */}
       {subTab === 'movers' && (
         <div className="space-y-5">
@@ -446,12 +453,12 @@ export const MarketsCenter: React.FC<MarketsCenterProps> = ({
                 <p className="text-xs text-slate-500 font-medium">Filter top gaining, declining, 52W breakout, and volume surge stocks</p>
               </div>
               <div className="flex items-center gap-1.5 text-xs text-slate-500 font-bold">
-                <Filter className="w-3.5 h-3.5 text-[#15519D]" />
+                <Filter className="w-3.5 h-3.5 text-[#2563EB]" />
                 <span>Sector Filter:</span>
                 <select
                   value={moverSectorFilter}
                   onChange={(e) => setMoverSectorFilter(e.target.value)}
-                  className="bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1 text-xs font-bold text-slate-800 outline-none focus:border-[#15519D] cursor-pointer"
+                  className="bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1 text-xs font-bold text-slate-800 outline-none focus:border-[#2563EB] cursor-pointer"
                 >
                   {['All', 'Information Tech', 'Banking & Finance', 'Energy & Conglomerate', 'Auto & Ancillary', 'Metals & Mining', 'Pharma & Healthcare', 'Telecom', 'Infrastructure'].map(sec => (
                     <option key={sec} value={sec}>{sec}</option>
@@ -474,7 +481,7 @@ export const MarketsCenter: React.FC<MarketsCenterProps> = ({
                   onClick={() => setMoverCategory(cat.id as any)}
                   className={`px-3 py-1.5 rounded-xl text-xs font-extrabold whitespace-nowrap transition cursor-pointer border ${
                     moverCategory === cat.id
-                      ? 'bg-[#15519D] text-white border-[#15519D] shadow-2xs'
+                      ? 'bg-[#2563EB] text-white border-[#2563EB] shadow-2xs'
                       : 'bg-[#F8FAFC] text-slate-700 border-slate-200 hover:border-slate-300'
                   }`}
                 >
@@ -496,7 +503,7 @@ export const MarketsCenter: React.FC<MarketsCenterProps> = ({
               return (
                 <div 
                   key={stock.symbol}
-                  className="p-4 bg-white rounded-2xl border border-slate-200/90 shadow-2xs hover:border-[#15519D]/50 transition-all space-y-3 group"
+                  className="p-4 bg-white rounded-2xl border border-slate-200/90 shadow-2xs hover:border-[#2563EB]/50 transition-all space-y-3 group"
                 >
                   {/* Top Symbol & Price Row */}
                   <div className="flex items-start justify-between">
@@ -504,7 +511,7 @@ export const MarketsCenter: React.FC<MarketsCenterProps> = ({
                       <div className="flex items-center gap-2">
                         <span 
                           onClick={() => onSelectStock(stock)}
-                          className="font-black text-sm sm:text-base text-[#172033] group-hover:text-[#15519D] transition cursor-pointer"
+                          className="font-black text-sm sm:text-base text-[#172033] group-hover:text-[#2563EB] transition cursor-pointer"
                         >
                           {stock.symbol}
                         </span>
@@ -543,7 +550,7 @@ export const MarketsCenter: React.FC<MarketsCenterProps> = ({
                     <div className="flex items-center gap-2 text-[11px] font-bold text-slate-500">
                       <span>P/E: <strong className="text-slate-800">{stock.pe}</strong></span>
                       <span>•</span>
-                      <span className="px-2 py-0.5 rounded bg-blue-50 text-[#15519D] font-extrabold text-[10px]">
+                      <span className="px-2 py-0.5 rounded bg-blue-50 text-[#2563EB] font-extrabold text-[10px]">
                         {stock.peCategory}
                       </span>
                     </div>
@@ -563,7 +570,7 @@ export const MarketsCenter: React.FC<MarketsCenterProps> = ({
 
                       <button
                         onClick={() => onSelectStock(stock)}
-                        className="text-xs font-extrabold text-[#15519D] hover:underline flex items-center gap-1 cursor-pointer"
+                        className="text-xs font-extrabold text-[#2563EB] hover:underline flex items-center gap-1 cursor-pointer"
                       >
                         View Intelligence →
                       </button>

@@ -34,7 +34,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
   isPremium
 }) => {
   const { user } = useAuth();
-  const [activeTab, setActiveTab] = useState<'overview' | 'charts'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'charts' | 'fno'>('overview');
   const [chartInterval, setChartInterval] = useState<'1D' | '1W' | '1M' | '3M' | '1Y' | '5Y'>('1M');
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isAlertSet, setIsAlertSet] = useState(false);
@@ -186,7 +186,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
               </button>
 
               <div className="flex items-center gap-3">
-                <div className="w-11 h-11 rounded-2xl bg-[#15519D] text-white font-black text-sm flex items-center justify-center shadow-md shrink-0">
+                <div className="w-11 h-11 rounded-2xl bg-[#2563EB] text-white font-black text-sm flex items-center justify-center shadow-md shrink-0">
                   {symbol.substring(0, 2)}
                 </div>
                 <div>
@@ -233,7 +233,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                 <button
                   onClick={handleToggleAlert}
                   className={`p-2.5 rounded-xl border transition cursor-pointer ${
-                    isAlertSet ? 'bg-blue-50 border-blue-200 text-[#15519D]' : 'bg-slate-100 border-slate-200 text-slate-600 hover:bg-slate-200'
+                    isAlertSet ? 'bg-blue-50 border-blue-200 text-[#2563EB]' : 'bg-slate-100 border-slate-200 text-slate-600 hover:bg-slate-200'
                   }`}
                   title="Create Price Alert"
                 >
@@ -250,7 +250,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
 
                 <button
                   onClick={handleAddToInvestmentLab}
-                  className="px-4 py-2.5 bg-[#15519D] hover:bg-[#123B63] text-white font-extrabold text-xs rounded-xl shadow-md transition cursor-pointer flex items-center gap-1.5"
+                  className="px-4 py-2.5 bg-[#2563EB] hover:bg-[#0B1F33] text-white font-extrabold text-xs rounded-xl shadow-md transition cursor-pointer flex items-center gap-1.5"
                 >
                   <Briefcase className="w-4 h-4 text-amber-300" />
                   <span>Add to Investment Lab</span>
@@ -276,7 +276,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                 onClick={() => setActiveTab('overview')}
                 className={`px-5 py-2 rounded-xl font-black text-xs transition cursor-pointer ${
                   activeTab === 'overview'
-                    ? 'bg-[#15519D] text-white shadow-sm'
+                    ? 'bg-[#2563EB] text-white shadow-sm'
                     : 'bg-slate-100 text-[#64748B] hover:text-[#172033]'
                 }`}
               >
@@ -287,19 +287,31 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                 onClick={() => setActiveTab('charts')}
                 className={`px-5 py-2 rounded-xl font-black text-xs transition cursor-pointer flex items-center gap-1.5 ${
                   activeTab === 'charts'
-                    ? 'bg-[#15519D] text-white shadow-sm'
+                    ? 'bg-[#2563EB] text-white shadow-sm'
                     : 'bg-slate-100 text-[#64748B] hover:text-[#172033]'
                 }`}
               >
                 <BarChart3 className="w-3.5 h-3.5" />
                 <span>Advanced Charts</span>
               </button>
+
+              <button
+                onClick={() => setActiveTab('fno')}
+                className={`px-5 py-2 rounded-xl font-black text-xs transition cursor-pointer flex items-center gap-1.5 ${
+                  activeTab === 'fno'
+                    ? 'bg-[#2563EB] text-white shadow-sm'
+                    : 'bg-slate-100 text-[#64748B] hover:text-[#172033]'
+                }`}
+              >
+                <Activity className="w-3.5 h-3.5 text-amber-400" />
+                <span>F&O Research</span>
+              </button>
             </div>
 
             {activeTab === 'overview' && (
               <button
                 onClick={() => setActiveTab('charts')}
-                className="text-xs font-extrabold text-[#15519D] hover:underline flex items-center gap-1 cursor-pointer"
+                className="text-xs font-extrabold text-[#2563EB] hover:underline flex items-center gap-1 cursor-pointer"
               >
                 <span>Open Advanced Technical Workspace</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -349,7 +361,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                     </div>
                     <div className="pl-3">
                       <span className="text-[10px] font-bold text-[#64748B] uppercase block">Market Cap</span>
-                      <div className="font-extrabold text-xs text-[#15519D] mt-0.5">₹19.45L Cr</div>
+                      <div className="font-extrabold text-xs text-[#2563EB] mt-0.5">₹19.45L Cr</div>
                     </div>
                   </div>
                 </div>
@@ -359,9 +371,9 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
                     <div>
                       <div className="flex items-center gap-2">
-                        <Activity className="w-4 h-4 text-[#15519D]" />
+                        <Activity className="w-4 h-4 text-[#2563EB]" />
                         <h3 className="font-black text-base text-[#172033]">Price Performance Trend</h3>
-                        <span className="px-2 py-0.5 rounded-full bg-blue-50 text-[#15519D] font-extrabold text-[10px] border border-blue-200">
+                        <span className="px-2 py-0.5 rounded-full bg-blue-50 text-[#2563EB] font-extrabold text-[10px] border border-blue-200">
                           Live Interactive Chart
                         </span>
                       </div>
@@ -395,7 +407,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                           }}
                           className={`px-3 py-1.5 text-xs font-black rounded-lg transition cursor-pointer ${
                             chartInterval === inter
-                              ? 'bg-[#15519D] text-white shadow-xs'
+                              ? 'bg-[#2563EB] text-white shadow-xs'
                               : 'text-[#64748B] hover:text-[#172033]'
                           }`}
                         >
@@ -428,8 +440,8 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                       >
                         <defs>
                           <linearGradient id="stockDetailAreaGrad" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#15519D" stopOpacity="0.25" />
-                            <stop offset="100%" stopColor="#15519D" stopOpacity="0.0" />
+                            <stop offset="0%" stopColor="#2563EB" stopOpacity="0.25" />
+                            <stop offset="100%" stopColor="#2563EB" stopOpacity="0.0" />
                           </linearGradient>
                         </defs>
                         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" opacity={0.6} />
@@ -471,15 +483,15 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                             }
                             return null;
                           }} 
-                          cursor={{ stroke: '#15519D', strokeWidth: 1.5, strokeDasharray: '4 4' }} 
+                          cursor={{ stroke: '#2563EB', strokeWidth: 1.5, strokeDasharray: '4 4' }} 
                         />
                         <Area 
                           type="monotone" 
                           dataKey="price" 
-                          stroke="#15519D" 
+                          stroke="#2563EB" 
                           strokeWidth={3} 
                           fill="url(#stockDetailAreaGrad)" 
-                          activeDot={{ r: 6, fill: '#15519D', stroke: '#FFFFFF', strokeWidth: 2 }}
+                          activeDot={{ r: 6, fill: '#2563EB', stroke: '#FFFFFF', strokeWidth: 2 }}
                         />
                       </AreaChart>
                     </ResponsiveContainer>
@@ -489,10 +501,10 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                 {/* SECTION 3: WHY IS THIS STOCK MOVING TODAY? */}
                 <div className="bg-blue-50/60 p-6 rounded-2xl border border-blue-100 space-y-4">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-xl bg-[#15519D] text-white flex items-center justify-center shadow-xs">
+                    <div className="w-8 h-8 rounded-xl bg-[#2563EB] text-white flex items-center justify-center shadow-xs">
                       <Sparkles className="w-4 h-4 text-amber-300" />
                     </div>
-                    <h3 className="font-black text-base text-[#15519D]">Why Is This Stock Moving Today?</h3>
+                    <h3 className="font-black text-base text-[#2563EB]">Why Is This Stock Moving Today?</h3>
                   </div>
 
                   <p className="text-xs sm:text-sm text-[#172033] font-medium leading-relaxed italic">
@@ -524,7 +536,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                     </div>
 
                     <div className="text-right">
-                      <div className="text-3xl font-black text-[#15519D]">78</div>
+                      <div className="text-3xl font-black text-[#2563EB]">78</div>
                       <span className="text-[10px] font-bold text-[#64748B] uppercase">Score / 100</span>
                     </div>
                   </div>
@@ -542,10 +554,10 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                       <div key={sc.label} className="p-3 bg-[#F8FAFC] rounded-xl border border-slate-200/80 space-y-1.5">
                         <div className="flex justify-between text-xs font-bold">
                           <span className="text-[#172033]">{sc.label}</span>
-                          <span className="text-[#15519D] font-black">{sc.score}/100</span>
+                          <span className="text-[#2563EB] font-black">{sc.score}/100</span>
                         </div>
                         <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden">
-                          <div className="h-full bg-[#15519D] rounded-full" style={{ width: `${sc.score}%` }} />
+                          <div className="h-full bg-[#2563EB] rounded-full" style={{ width: `${sc.score}%` }} />
                         </div>
                         <span className="text-[10px] text-[#64748B] font-medium block">{sc.text}</span>
                       </div>
@@ -595,6 +607,113 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                   price={numericPrice}
                   isPositive={isPositive}
                 />
+              </div>
+            )}
+
+            {/* F&O RESEARCH TAB */}
+            {activeTab === 'fno' && (
+              <div className="space-y-6 animate-in fade-in duration-300">
+                <div className="p-5 bg-[#0B1F33] text-white rounded-3xl space-y-4 shadow-md">
+                  <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                    <div>
+                      <h3 className="font-extrabold text-lg text-white">Stock F&O Intelligence: {symbol}</h3>
+                      <p className="text-xs text-slate-200 font-medium">Futures & options positioning analysis for advisory research</p>
+                    </div>
+                    <span className="px-3 py-1 bg-white/10 rounded-full text-xs font-black text-amber-300 border border-white/15">
+                      F&O Enabled Stock
+                    </span>
+                  </div>
+
+                  {/* F&O Overview Bar */}
+                  <div className="grid grid-cols-2 md:grid-cols-6 gap-3 pt-1">
+                    <div className="p-3 bg-white/10 rounded-2xl border border-white/15">
+                      <span className="text-[10px] font-bold text-slate-300 uppercase block">Futures Price</span>
+                      <span className="text-base font-black text-white font-mono">₹{(numericPrice * 1.005).toFixed(2)}</span>
+                    </div>
+
+                    <div className="p-3 bg-white/10 rounded-2xl border border-white/15">
+                      <span className="text-[10px] font-bold text-slate-300 uppercase block">Spot Price</span>
+                      <span className="text-base font-black text-white font-mono">₹{price}</span>
+                    </div>
+
+                    <div className="p-3 bg-white/10 rounded-2xl border border-white/15">
+                      <span className="text-[10px] font-bold text-slate-300 uppercase block">Basis</span>
+                      <span className="text-base font-black text-emerald-300 font-mono">+₹{(numericPrice * 0.005).toFixed(2)} (+0.18%)</span>
+                    </div>
+
+                    <div className="p-3 bg-white/10 rounded-2xl border border-white/15">
+                      <span className="text-[10px] font-bold text-slate-300 uppercase block">Futures OI</span>
+                      <span className="text-base font-black text-white">3.82 Cr</span>
+                    </div>
+
+                    <div className="p-3 bg-white/10 rounded-2xl border border-white/15">
+                      <span className="text-[10px] font-bold text-slate-300 uppercase block">OI Change</span>
+                      <span className="text-base font-black text-emerald-400">+7.1%</span>
+                    </div>
+
+                    <div className="p-3 bg-white/10 rounded-2xl border border-white/15">
+                      <span className="text-[10px] font-bold text-slate-300 uppercase block">Implied Vol (IV)</span>
+                      <span className="text-base font-black text-amber-300">22.4%</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Grid of Futures Trend, OI Trend, Options Activity */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="p-5 bg-white rounded-2xl border border-slate-200 space-y-2 shadow-2xs">
+                    <span className="text-xs font-black text-slate-400 uppercase tracking-wider block">Futures Trend</span>
+                    <div className="text-base font-black text-emerald-600">Bullish Long Build-up</div>
+                    <p className="text-xs text-slate-600 font-medium">
+                      Futures price rising alongside expansion in contract open interest points to sustained buyer accumulation.
+                    </p>
+                  </div>
+
+                  <div className="p-5 bg-white rounded-2xl border border-slate-200 space-y-2 shadow-2xs">
+                    <span className="text-xs font-black text-slate-400 uppercase tracking-wider block">OI Trend</span>
+                    <div className="text-base font-black text-[#2563EB]">+18.2% Net Weekly Add</div>
+                    <p className="text-xs text-slate-600 font-medium">
+                      Continuous open interest addition over 3 consecutive trading sessions indicates strong institutional interest.
+                    </p>
+                  </div>
+
+                  <div className="p-5 bg-white rounded-2xl border border-slate-200 space-y-2 shadow-2xs">
+                    <span className="text-xs font-black text-slate-400 uppercase tracking-wider block">Options Activity</span>
+                    <div className="text-base font-black text-slate-900">PCR: 1.18 (Bullish)</div>
+                    <p className="text-xs text-slate-600 font-medium">
+                      Put writing outpaces Call writing. Heavy Put accumulation observed at lower strike levels.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Important Strikes & ArthSetu View */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="p-5 bg-white rounded-2xl border border-slate-200 space-y-3 shadow-2xs">
+                    <h4 className="font-extrabold text-slate-900 text-sm">Important Derivatives Strikes</h4>
+                    <div className="space-y-2 text-xs">
+                      <div className="flex items-center justify-between p-2.5 bg-rose-50 rounded-xl border border-rose-100">
+                        <span className="font-bold text-rose-900">Major Overhead Resistance</span>
+                        <span className="font-black text-rose-700 font-mono">₹{(numericPrice * 1.05).toFixed(0)} Call OI</span>
+                      </div>
+                      <div className="flex items-center justify-between p-2.5 bg-emerald-50 rounded-xl border border-emerald-100">
+                        <span className="font-bold text-emerald-900">Key Put Support Floor</span>
+                        <span className="font-black text-emerald-700 font-mono">₹{(numericPrice * 0.95).toFixed(0)} Put OI</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-5 bg-gradient-to-br from-blue-50 to-indigo-50/60 rounded-2xl border border-blue-200 space-y-2 shadow-2xs">
+                    <div className="flex items-center justify-between">
+                      <h4 className="font-extrabold text-[#2563EB] text-sm">ArthSetu F&O Research View</h4>
+                      <span className="px-2.5 py-0.5 rounded-full bg-[#2563EB] text-white font-black text-xs">88 / 100</span>
+                    </div>
+                    <p className="text-xs text-slate-700 font-medium leading-relaxed">
+                      "Derivatives positioning indicates fresh long build-up with solid put support building below current market price. Monitor price action around key resistance for potential breakout."
+                    </p>
+                    <div className="text-[10px] text-slate-400 font-medium italic pt-1">
+                      Advisory Research Note • Not an order placement or execution recommendation.
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
 

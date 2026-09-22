@@ -183,7 +183,7 @@ export const RealisticLiveMovingChart: React.FC<RealisticLiveMovingChartProps> =
           <path
             d={pathD}
             fill="none"
-            stroke="#15519D"
+            stroke="#2563EB"
             strokeWidth="2"
             strokeDasharray="5 5"
             opacity="0.5"

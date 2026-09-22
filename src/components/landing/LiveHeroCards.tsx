@@ -212,7 +212,7 @@ export const LiveHeroCards: React.FC = () => {
         <svg viewBox="0 0 120 60" className="w-full h-12 mt-1" preserveAspectRatio="none">
           <defs>
             <linearGradient id="liveChartGrad" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="#15519D" />
+              <stop offset="0%" stopColor="#2563EB" />
               <stop offset="100%" stopColor="#10B981" />
             </linearGradient>
             <linearGradient id="liveAreaGrad" x1="0" y1="0" x2="0" y2="1">

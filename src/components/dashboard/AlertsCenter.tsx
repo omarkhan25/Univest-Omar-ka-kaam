@@ -58,7 +58,7 @@ export const AlertsCenter: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/80 pb-5">
         <div>
-          <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-[#15519D] mb-1">
+          <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-[#2563EB] mb-1">
             <Bell className="w-4 h-4" />
             <span>Real-time Market Surveillance</span>
           </div>
@@ -72,7 +72,7 @@ export const AlertsCenter: React.FC = () => {
 
         <button
           onClick={() => setShowCreateModal(true)}
-          className="px-5 py-2.5 bg-[#15519D] hover:bg-[#123B63] text-white font-extrabold text-sm rounded-2xl shadow-lg shadow-blue-500/20 transition-all flex items-center gap-2 self-start sm:self-auto"
+          className="px-5 py-2.5 bg-[#2563EB] hover:bg-[#0B1F33] text-white font-extrabold text-sm rounded-2xl shadow-lg shadow-blue-500/20 transition-all flex items-center gap-2 self-start sm:self-auto"
         >
           <Plus className="w-4 h-4" />
           <span>Create New Alert</span>
@@ -82,7 +82,7 @@ export const AlertsCenter: React.FC = () => {
       {/* Alert Type Breakdown Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
-          <span className="p-3 bg-blue-50 text-[#15519D] rounded-xl">
+          <span className="p-3 bg-blue-50 text-[#2563EB] rounded-xl">
             <TrendingUp className="w-5 h-5" />
           </span>
           <div>
@@ -134,7 +134,7 @@ export const AlertsCenter: React.FC = () => {
             <div key={al.id} className="p-5 flex items-center justify-between hover:bg-slate-50/60 transition-colors">
               <div className="flex items-center gap-4">
                 <div className={`p-3 rounded-2xl ${
-                  al.type === 'PRICE' ? 'bg-blue-50 text-[#15519D]' :
+                  al.type === 'PRICE' ? 'bg-blue-50 text-[#2563EB]' :
                   al.type === 'NEWS' ? 'bg-emerald-50 text-[#16A34A]' :
                   al.type === 'RESEARCH' ? 'bg-purple-50 text-purple-700' : 'bg-amber-50 text-amber-700'
                 }`}>
@@ -148,7 +148,7 @@ export const AlertsCenter: React.FC = () => {
                   <div className="flex items-center gap-2">
                     <span className="font-extrabold text-slate-900 text-base">{al.symbol}</span>
                     <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase ${
-                      al.type === 'PRICE' ? 'bg-blue-100 text-[#15519D]' :
+                      al.type === 'PRICE' ? 'bg-blue-100 text-[#2563EB]' :
                       al.type === 'NEWS' ? 'bg-emerald-100 text-[#16A34A]' :
                       al.type === 'RESEARCH' ? 'bg-purple-100 text-purple-700' : 'bg-amber-100 text-amber-700'
                     }`}>
@@ -232,7 +232,7 @@ export const AlertsCenter: React.FC = () => {
                         onClick={() => setNewType(t.id as any)}
                         className={`p-3 rounded-xl border text-xs font-extrabold transition-all ${
                           newType === t.id
-                            ? 'bg-[#15519D] text-white border-[#15519D]'
+                            ? 'bg-[#2563EB] text-white border-[#2563EB]'
                             : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
                         }`}
                       >
@@ -265,7 +265,7 @@ export const AlertsCenter: React.FC = () => {
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2.5 bg-[#15519D] text-white font-extrabold text-sm rounded-xl shadow-md"
+                    className="px-5 py-2.5 bg-[#2563EB] text-white font-extrabold text-sm rounded-xl shadow-md"
                   >
                     Activate Alert
                   </button>

@@ -113,7 +113,7 @@ export const LiveDataCanvasHero: React.FC<LiveDataCanvasHeroProps> = ({
       <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-full pointer-events-none overflow-visible">
         <defs>
           <linearGradient id="canvasLineGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#15519D" stopOpacity="0.4" />
+            <stop offset="0%" stopColor="#2563EB" stopOpacity="0.4" />
             <stop offset="100%" stopColor="#10B981" stopOpacity="0.4" />
           </linearGradient>
         </defs>

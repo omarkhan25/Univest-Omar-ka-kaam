@@ -19,7 +19,7 @@ export const LockedInvestmentLabPaywall: React.FC<LockedInvestmentLabPaywallProp
     <div className="space-y-8 animate-in fade-in duration-300">
       
       {/* 1. HERO PAYWALL BANNER */}
-      <div className="bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#15519D] text-white rounded-[32px] p-6 sm:p-10 shadow-2xl relative overflow-hidden border border-slate-700/60">
+      <div className="bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#2563EB] text-white rounded-[32px] p-6 sm:p-10 shadow-2xl relative overflow-hidden border border-slate-700/60">
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-amber-500/10 blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 rounded-full bg-blue-500/10 blur-3xl pointer-events-none" />
 
@@ -99,14 +99,14 @@ export const LockedInvestmentLabPaywall: React.FC<LockedInvestmentLabPaywallProp
       {/* 2. WHY YOU SHOULD BUY (KEY BENEFITS GRID) */}
       <div className="space-y-4">
         <div className="flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-[#15519D]" />
+          <Sparkles className="w-5 h-5 text-[#2563EB]" />
           <h2 className="text-xl font-black text-slate-900">Why Upgrade to ArthSetu Pro?</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {/* BENEFIT 1 */}
           <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-3 hover:border-blue-300 transition-all group">
-            <div className="w-12 h-12 rounded-2xl bg-blue-50 text-[#15519D] flex items-center justify-center font-black group-hover:bg-[#15519D] group-hover:text-white transition-colors">
+            <div className="w-12 h-12 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center font-black group-hover:bg-[#2563EB] group-hover:text-white transition-colors">
               <Coins className="w-6 h-6" />
             </div>
             <h3 className="text-lg font-black text-slate-900">Virtual Token Allocation</h3>
@@ -143,7 +143,7 @@ export const LockedInvestmentLabPaywall: React.FC<LockedInvestmentLabPaywallProp
       <div className="bg-gradient-to-r from-blue-50/80 via-white to-amber-50/60 p-6 sm:p-8 rounded-3xl border border-blue-100 space-y-6">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-blue-100 pb-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-[#15519D] text-white flex items-center justify-center font-black">
+            <div className="w-10 h-10 rounded-2xl bg-[#2563EB] text-white flex items-center justify-center font-black">
               <Coins className="w-5 h-5 text-amber-300" />
             </div>
             <div>
@@ -166,7 +166,7 @@ export const LockedInvestmentLabPaywall: React.FC<LockedInvestmentLabPaywallProp
             { step: '04', title: 'Execute Live Orders', desc: 'Convert top-performing paper strategies into live broker orders with 1 click.' }
           ].map((st) => (
             <div key={st.step} className="p-4 bg-white rounded-2xl border border-blue-100/80 shadow-2xs space-y-2">
-              <span className="text-xl font-black text-[#15519D]">{st.step}</span>
+              <span className="text-xl font-black text-[#2563EB]">{st.step}</span>
               <h4 className="text-xs font-black text-slate-900">{st.title}</h4>
               <p className="text-[11px] text-slate-500 font-medium leading-relaxed">{st.desc}</p>
             </div>
@@ -177,7 +177,7 @@ export const LockedInvestmentLabPaywall: React.FC<LockedInvestmentLabPaywallProp
       {/* 4. MEMBERSHIP PRICING TIERS */}
       <div className="space-y-6">
         <div className="text-center space-y-1">
-          <span className="px-3 py-1 bg-blue-50 text-[#15519D] font-extrabold text-xs rounded-full uppercase tracking-wider">
+          <span className="px-3 py-1 bg-blue-50 text-[#2563EB] font-extrabold text-xs rounded-full uppercase tracking-wider">
             Flexible Pricing Options
           </span>
           <h2 className="text-2xl font-black text-slate-900">Choose Your Membership Plan</h2>
@@ -228,7 +228,7 @@ export const LockedInvestmentLabPaywall: React.FC<LockedInvestmentLabPaywallProp
           </div>
 
           {/* TIER 2: ARTHSETU PRO (POPULAR) */}
-          <div className="bg-gradient-to-b from-[#123B63] to-[#15519D] text-white p-7 rounded-3xl shadow-xl flex flex-col justify-between space-y-6 relative border-2 border-amber-400 transform scale-105">
+          <div className="bg-gradient-to-b from-[#0B1F33] to-[#2563EB] text-white p-7 rounded-3xl shadow-xl flex flex-col justify-between space-y-6 relative border-2 border-amber-400 transform scale-105">
             <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 bg-amber-400 text-slate-950 font-black text-[10px] uppercase tracking-wider rounded-full shadow-md">
               Most Popular • Includes Investment Lab
             </span>

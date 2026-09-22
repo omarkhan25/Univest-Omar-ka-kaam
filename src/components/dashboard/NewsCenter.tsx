@@ -86,7 +86,7 @@ export const NewsCenter: React.FC<NewsCenterProps> = ({ onSelectStock }) => {
       {/* Header & Search */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200/80 pb-5">
         <div>
-          <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-[#15519D] mb-1">
+          <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-[#2563EB] mb-1">
             <Newspaper className="w-4 h-4" />
             <span>AI-Contextualized Financial Intelligence</span>
           </div>
@@ -106,7 +106,7 @@ export const NewsCenter: React.FC<NewsCenterProps> = ({ onSelectStock }) => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search company, stock, or topic..."
-            className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#15519D] transition-all"
+            className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#2563EB] transition-all"
           />
         </div>
       </div>
@@ -151,14 +151,14 @@ export const NewsCenter: React.FC<NewsCenterProps> = ({ onSelectStock }) => {
               </div>
 
               <span className={`px-3 py-1 rounded-full text-xs font-black uppercase ${
-                article.impactLevel === 'High' ? 'bg-rose-50 text-[#DC2626]' : 'bg-blue-50 text-[#15519D]'
+                article.impactLevel === 'High' ? 'bg-rose-50 text-[#DC2626]' : 'bg-blue-50 text-[#2563EB]'
               }`}>
                 Market Impact: {article.impactLevel}
               </span>
             </div>
 
             {/* Headline */}
-            <h3 className="text-xl font-extrabold text-slate-900 group-hover:text-[#15519D] transition-colors leading-snug">
+            <h3 className="text-xl font-extrabold text-slate-900 group-hover:text-[#2563EB] transition-colors leading-snug">
               {article.headline}
             </h3>
 
@@ -169,7 +169,7 @@ export const NewsCenter: React.FC<NewsCenterProps> = ({ onSelectStock }) => {
 
             {/* SIGNATURE AI "WHY THIS MATTERS" CARD */}
             <div className="p-4 bg-gradient-to-r from-blue-50/80 to-slate-50 rounded-2xl border border-blue-100 space-y-2">
-              <div className="flex items-center gap-2 text-xs font-extrabold text-[#15519D]">
+              <div className="flex items-center gap-2 text-xs font-extrabold text-[#2563EB]">
                 <Sparkles className="w-4 h-4" />
                 <span>WHY THIS MATTERS</span>
               </div>

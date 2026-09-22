@@ -32,7 +32,7 @@ const MARKET_MOVERS_DATA: Record<string, Array<{ symbol: string; name: string; p
   'All-Time High': [
     { symbol: 'RELIANCE', name: 'Reliance Ind', price: '2,975.80', changePercent: 2.35, isPositive: true, sparkline: [2910, 2935, 2950, 2975.8], badgeBg: 'bg-emerald-100 text-emerald-800' },
     { symbol: 'LT', name: 'Larsen & Toubro', price: '3,620.45', changePercent: 1.92, isPositive: true, sparkline: [3550, 3575, 3600, 3620.45], badgeBg: 'bg-emerald-100 text-emerald-800' },
-    { symbol: 'SBIN', name: 'State Bank of India', price: '857.10', changePercent: 1.68, isPositive: true, sparkline: [842, 848, 852, 857.1], badgeBg: 'bg-[#E0F2FE] text-[#15519D]' },
+    { symbol: 'SBIN', name: 'State Bank of India', price: '857.10', changePercent: 1.68, isPositive: true, sparkline: [842, 848, 852, 857.1], badgeBg: 'bg-[#E0F2FE] text-[#2563EB]' },
     { symbol: 'TCS', name: 'Tata Consultancy', price: '4,182.75', changePercent: -0.45, isPositive: false, sparkline: [4210, 4200, 4190, 4182.75], badgeBg: 'bg-purple-100 text-purple-800' },
     { symbol: 'COALINDIA', name: 'Coal India Ltd', price: '502.30', changePercent: -1.25, isPositive: false, sparkline: [512, 508, 505, 502.3], badgeBg: 'bg-purple-100 text-purple-800' },
     { symbol: 'VEDL', name: 'Vedanta Limited', price: '478.90', changePercent: -2.18, isPositive: false, sparkline: [490, 485, 481, 478.9], badgeBg: 'bg-rose-100 text-rose-800' },
@@ -50,7 +50,7 @@ const MARKET_MOVERS_DATA: Record<string, Array<{ symbol: string; name: string; p
   'Top Gainers': [
     { symbol: 'RELIANCE', name: 'Reliance Ind', price: '2,975.80', changePercent: 2.35, isPositive: true, sparkline: [2910, 2935, 2950, 2975.8], badgeBg: 'bg-emerald-100 text-emerald-800' },
     { symbol: 'LT', name: 'Larsen & Toubro', price: '3,620.45', changePercent: 1.92, isPositive: true, sparkline: [3550, 3575, 3600, 3620.45], badgeBg: 'bg-emerald-100 text-emerald-800' },
-    { symbol: 'SBIN', name: 'State Bank of India', price: '857.10', changePercent: 1.68, isPositive: true, sparkline: [842, 848, 852, 857.1], badgeBg: 'bg-[#E0F2FE] text-[#15519D]' },
+    { symbol: 'SBIN', name: 'State Bank of India', price: '857.10', changePercent: 1.68, isPositive: true, sparkline: [842, 848, 852, 857.1], badgeBg: 'bg-[#E0F2FE] text-[#2563EB]' },
   ],
   'Top Losers': [
     { symbol: 'VEDL', name: 'Vedanta Limited', price: '478.90', changePercent: -2.18, isPositive: false, sparkline: [490, 485, 481, 478.9], badgeBg: 'bg-rose-100 text-rose-800' },
@@ -60,7 +60,7 @@ const MARKET_MOVERS_DATA: Record<string, Array<{ symbol: string; name: string; p
   'Most Active': [
     { symbol: 'RELIANCE', name: 'Reliance Ind', price: '2,975.80', changePercent: 2.35, isPositive: true, sparkline: [2910, 2935, 2950, 2975.8], badgeBg: 'bg-emerald-100 text-emerald-800' },
     { symbol: 'HDFCBANK', name: 'HDFC Bank Ltd', price: '1,678.40', changePercent: 1.81, isPositive: true, sparkline: [1650, 1662, 1670, 1678.4], badgeBg: 'bg-sky-100 text-sky-800' },
-    { symbol: 'SBIN', name: 'State Bank of India', price: '857.10', changePercent: 1.68, isPositive: true, sparkline: [842, 848, 852, 857.1], badgeBg: 'bg-[#E0F2FE] text-[#15519D]' },
+    { symbol: 'SBIN', name: 'State Bank of India', price: '857.10', changePercent: 1.68, isPositive: true, sparkline: [842, 848, 852, 857.1], badgeBg: 'bg-[#E0F2FE] text-[#2563EB]' },
   ]
 };
 
@@ -100,11 +100,11 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
                 onClick={() => setActiveExchange('NSE')}
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-black transition-all flex items-center gap-1.5 ${
                   activeExchange === 'NSE'
-                    ? 'bg-white text-[#15519D] shadow-xs border border-slate-200/60'
+                    ? 'bg-white text-[#2563EB] shadow-xs border border-slate-200/60'
                     : 'text-slate-500 hover:text-slate-900'
                 }`}
               >
-                <span className={`w-1.5 h-1.5 rounded-full ${activeExchange === 'NSE' ? 'bg-[#15519D]' : 'bg-transparent border border-slate-400'}`} />
+                <span className={`w-1.5 h-1.5 rounded-full ${activeExchange === 'NSE' ? 'bg-[#2563EB]' : 'bg-transparent border border-slate-400'}`} />
                 <span>NSE</span>
               </button>
 
@@ -112,11 +112,11 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
                 onClick={() => setActiveExchange('BSE')}
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-black transition-all flex items-center gap-1.5 ${
                   activeExchange === 'BSE'
-                    ? 'bg-white text-[#15519D] shadow-xs border border-slate-200/60'
+                    ? 'bg-white text-[#2563EB] shadow-xs border border-slate-200/60'
                     : 'text-slate-500 hover:text-slate-900'
                 }`}
               >
-                <span className={`w-1.5 h-1.5 rounded-full ${activeExchange === 'BSE' ? 'bg-[#15519D]' : 'bg-transparent border border-slate-400'}`} />
+                <span className={`w-1.5 h-1.5 rounded-full ${activeExchange === 'BSE' ? 'bg-[#2563EB]' : 'bg-transparent border border-slate-400'}`} />
                 <span>BSE</span>
               </button>
             </div>
@@ -143,7 +143,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
             >
               <div className="space-y-0.5">
                 <div className="text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">NIFTY 50</div>
-                <div className="text-xl font-black text-slate-900 font-mono tracking-tight group-hover:text-[#15519D] transition-colors">
+                <div className="text-xl font-black text-slate-900 font-mono tracking-tight group-hover:text-[#2563EB] transition-colors">
                   24,920.50
                 </div>
                 <div className="flex items-center gap-1.5 text-xs font-bold">
@@ -163,7 +163,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
             >
               <div className="space-y-0.5">
                 <div className="text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">SENSEX</div>
-                <div className="text-xl font-black text-slate-900 font-mono tracking-tight group-hover:text-[#15519D] transition-colors">
+                <div className="text-xl font-black text-slate-900 font-mono tracking-tight group-hover:text-[#2563EB] transition-colors">
                   81,721.08
                 </div>
                 <div className="flex items-center gap-1.5 text-xs font-bold">
@@ -183,7 +183,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
             >
               <div className="space-y-0.5">
                 <div className="text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">BANK NIFTY</div>
-                <div className="text-xl font-black text-slate-900 font-mono tracking-tight group-hover:text-[#15519D] transition-colors">
+                <div className="text-xl font-black text-slate-900 font-mono tracking-tight group-hover:text-[#2563EB] transition-colors">
                   55,320.25
                 </div>
                 <div className="flex items-center gap-1.5 text-xs font-bold">
@@ -205,14 +205,14 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
           {/* Header Row */}
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-extrabold text-slate-900 flex items-center gap-2">
-              <Activity className="w-4 h-4 text-[#15519D]" />
+              <Activity className="w-4 h-4 text-[#2563EB]" />
               <span>Explore More Indices</span>
             </h3>
 
             <div className="flex items-center gap-3">
               <button
                 onClick={() => onNavigateTab && onNavigateTab('Markets')}
-                className="text-xs font-extrabold text-[#15519D] hover:underline flex items-center gap-1 cursor-pointer"
+                className="text-xs font-extrabold text-[#2563EB] hover:underline flex items-center gap-1 cursor-pointer"
               >
                 <span>All Indices</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -253,7 +253,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
               >
                 <div className="space-y-0.5 min-w-[140px]">
                   <div className="flex items-center gap-1.5">
-                    <span className="text-[11px] font-black text-slate-900 truncate group-hover:text-[#15519D] transition-colors">{idx.name}</span>
+                    <span className="text-[11px] font-black text-slate-900 truncate group-hover:text-[#2563EB] transition-colors">{idx.name}</span>
                     <span className="text-[9px] font-bold text-slate-400 uppercase">{idx.exchange}</span>
                   </div>
 
@@ -278,9 +278,9 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
       </div>
 
       {/* 2. TRUST STRIP */}
-      <div className="px-5 py-3 bg-[#EBF3FC] border border-[#B3D4F5] rounded-[16px] flex flex-wrap items-center justify-between gap-3 text-xs font-semibold">
-        <div className="flex items-center gap-2 text-[#15519D]">
-          <ShieldCheck className="w-4.5 h-4.5 text-[#15519D] shrink-0" />
+      <div className="px-5 py-3 bg-[#DBEAFE] border border-[#B3D4F5] rounded-[16px] flex flex-wrap items-center justify-between gap-3 text-xs font-semibold">
+        <div className="flex items-center gap-2 text-[#2563EB]">
+          <ShieldCheck className="w-4.5 h-4.5 text-[#2563EB] shrink-0" />
           <span className="font-extrabold">Trusted by Thousands of Investors</span>
           <span className="text-slate-400">|</span>
           <span className="text-slate-700 font-medium">
@@ -289,7 +289,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
         </div>
         <button
           onClick={() => onNavigateTab && onNavigateTab('Research')}
-          className="text-[#15519D] font-extrabold hover:underline flex items-center gap-1 shrink-0"
+          className="text-[#2563EB] font-extrabold hover:underline flex items-center gap-1 shrink-0"
         >
           <span>Track Record Since Jan 2022</span>
           <ChevronRight className="w-3.5 h-3.5" />
@@ -299,7 +299,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
       {/* 3. TODAY'S MARKET BRIEF */}
       <div className="p-6 bg-white rounded-[24px] border border-[#E2E8F0] shadow-2xs space-y-4">
         <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#15519D]" />
+          <div className="w-2 h-2 rounded-full bg-[#2563EB]" />
           <h2 className="text-lg font-extrabold text-slate-900 tracking-tight">Today's Market Brief</h2>
         </div>
 
@@ -335,7 +335,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
               </div>
               <div>
                 <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Sector In Focus</div>
-                <div className="text-sm font-black text-[#15519D] mt-0.5">IT Services</div>
+                <div className="text-sm font-black text-[#2563EB] mt-0.5">IT Services</div>
                 <div className="text-[11px] text-blue-700 font-bold mt-0.5">+1.93% today</div>
               </div>
             </div>
@@ -373,7 +373,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
           <h2 className="text-lg font-extrabold text-slate-900 tracking-tight">Market Movers</h2>
           <button
             onClick={() => onNavigateTab && onNavigateTab('Markets')}
-            className="text-xs font-extrabold text-[#15519D] hover:underline flex items-center gap-1 self-end sm:self-auto"
+            className="text-xs font-extrabold text-[#2563EB] hover:underline flex items-center gap-1 self-end sm:self-auto"
           >
             <span>View all in Markets</span>
             <ChevronRight className="w-3.5 h-3.5" />
@@ -388,7 +388,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
               onClick={() => setActiveMoverCategory(cat)}
               className={`px-3.5 py-1.5 rounded-full text-xs font-extrabold transition-all whitespace-nowrap ${
                 activeMoverCategory === cat
-                  ? 'bg-[#15519D] text-white shadow-xs'
+                  ? 'bg-[#2563EB] text-white shadow-xs'
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >
@@ -410,7 +410,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
                   {stk.symbol.substring(0, 2)}
                 </div>
                 <div className="min-w-0">
-                  <div className="font-extrabold text-slate-900 text-xs truncate group-hover:text-[#15519D] transition-colors">{stk.symbol}</div>
+                  <div className="font-extrabold text-slate-900 text-xs truncate group-hover:text-[#2563EB] transition-colors">{stk.symbol}</div>
                   <div className="text-[10px] text-slate-400 font-bold truncate">₹{stk.price}</div>
                 </div>
               </div>
@@ -470,7 +470,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
         </div>
 
         {/* PRO OPPORTUNITY PREVIEW CARD */}
-        <div className="p-7 bg-[#123B63] text-white rounded-[24px] border border-slate-700 shadow-xl relative overflow-hidden flex flex-col justify-between space-y-6">
+        <div className="p-7 bg-[#0B1F33] text-white rounded-[24px] border border-slate-700 shadow-xl relative overflow-hidden flex flex-col justify-between space-y-6">
           <div className="flex items-center justify-between border-b border-white/10 pb-4">
             <h3 className="font-black text-lg text-white">Pro Opportunity Preview</h3>
             <span className="px-2.5 py-0.5 bg-amber-400 text-slate-950 font-black text-[10px] uppercase tracking-wider rounded-md">

@@ -79,12 +79,12 @@ export const LabCapitalSetupModal: React.FC<LabCapitalSetupModalProps> = ({
 
           {/* ICON & TITLE */}
           <div className="space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#15519D] to-[#123B63] flex items-center justify-center text-amber-400 shadow-md">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#0B1F33] flex items-center justify-center text-amber-400 shadow-md">
               <Coins className="w-6 h-6" />
             </div>
 
             <div className="space-y-1">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-[#15519D] text-xs font-black uppercase">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-[#2563EB] text-xs font-black uppercase">
                 <Sparkles className="w-3.5 h-3.5 text-emerald-600" /> Premium Simulation Setup
               </span>
               <h2 className="text-2xl sm:text-3xl font-black text-[#172033] tracking-tight">
@@ -111,7 +111,7 @@ export const LabCapitalSetupModal: React.FC<LabCapitalSetupModalProps> = ({
                   onClick={() => handleSelectPreset(preset.value)}
                   className={`py-2.5 px-3 rounded-xl border text-xs font-extrabold transition cursor-pointer ${
                     selectedAmount === preset.value
-                      ? 'bg-[#15519D] border-[#15519D] text-white shadow-md'
+                      ? 'bg-[#2563EB] border-[#2563EB] text-white shadow-md'
                       : 'bg-[#F8FAFC] border-[#E2E8F0] text-[#172033] hover:border-[#CBD5E1]'
                   }`}
                 >
@@ -126,19 +126,19 @@ export const LabCapitalSetupModal: React.FC<LabCapitalSetupModalProps> = ({
                 Or enter exact amount (matching your real capital):
               </span>
               <div className="relative flex items-center">
-                <span className="absolute left-4 text-base font-black text-[#15519D]">₹</span>
+                <span className="absolute left-4 text-base font-black text-[#2563EB]">₹</span>
                 <input
                   type="text"
                   value={customInputValue ? parseInt(customInputValue, 10).toLocaleString('en-IN') : ''}
                   onChange={handleCustomInputChange}
                   placeholder="e.g. 1,50,000"
-                  className="w-full pl-9 pr-4 py-3 bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#15519D] focus:ring-4 focus:ring-blue-100 rounded-xl text-base font-black text-[#172033] outline-none transition"
+                  className="w-full pl-9 pr-4 py-3 bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#2563EB] focus:ring-4 focus:ring-blue-100 rounded-xl text-base font-black text-[#172033] outline-none transition"
                 />
               </div>
             </div>
 
             {/* DISCLAIMER */}
-            <div className="p-3.5 bg-blue-50/70 border border-blue-100 rounded-2xl flex items-start gap-2.5 text-xs text-[#15519D] font-medium leading-relaxed">
+            <div className="p-3.5 bg-blue-50/70 border border-blue-100 rounded-2xl flex items-start gap-2.5 text-xs text-[#2563EB] font-medium leading-relaxed">
               <Info className="w-4 h-4 shrink-0 mt-0.5" />
               <span>
                 <strong>Virtual Simulation Note:</strong> This is virtual capital for learning and decision intelligence. It has no cash value and cannot be withdrawn.
@@ -151,7 +151,7 @@ export const LabCapitalSetupModal: React.FC<LabCapitalSetupModalProps> = ({
             <button
               type="button"
               onClick={handleConfirm}
-              className="w-full py-4 bg-[#15519D] hover:bg-[#123B63] text-white font-extrabold text-sm rounded-xl shadow-lg transition cursor-pointer flex items-center justify-center gap-2"
+              className="w-full py-4 bg-[#2563EB] hover:bg-[#0B1F33] text-white font-extrabold text-sm rounded-xl shadow-lg transition cursor-pointer flex items-center justify-center gap-2"
             >
               <span>Start Investment Lab (₹{selectedAmount.toLocaleString('en-IN')})</span>
               <ArrowRight className="w-4 h-4" />

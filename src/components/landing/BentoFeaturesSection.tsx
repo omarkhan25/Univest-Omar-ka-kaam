@@ -118,7 +118,7 @@ function PortfolioMockup() {
             strokeLinecap="round"
           />
           <motion.circle
-            cx="50" cy="50" r="40" fill="none" stroke="#15519D" strokeWidth="12"
+            cx="50" cy="50" r="40" fill="none" stroke="#2563EB" strokeWidth="12"
             strokeDasharray="251.2"
             initial={{ strokeDashoffset: 251.2 }}
             whileInView={{ strokeDashoffset: 251.2 * 0.7 }}

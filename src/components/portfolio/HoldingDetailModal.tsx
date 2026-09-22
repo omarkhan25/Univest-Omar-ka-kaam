@@ -123,7 +123,7 @@ export const HoldingDetailModal: React.FC<HoldingDetailModalProps> = ({
               </button>
 
               <div className="flex items-center gap-3">
-                <div className="w-11 h-11 rounded-2xl bg-[#15519D] text-white font-black text-sm flex items-center justify-center shadow-md shrink-0">
+                <div className="w-11 h-11 rounded-2xl bg-[#2563EB] text-white font-black text-sm flex items-center justify-center shadow-md shrink-0">
                   {holding.symbol.substring(0, 2)}
                 </div>
                 <div>
@@ -157,7 +157,7 @@ export const HoldingDetailModal: React.FC<HoldingDetailModalProps> = ({
                   onClose();
                   onBuyMore(holding);
                 }}
-                className="px-4 py-2.5 bg-[#15519D] hover:bg-[#123B63] text-white font-extrabold text-xs rounded-xl shadow-xs transition cursor-pointer flex items-center gap-1.5"
+                className="px-4 py-2.5 bg-[#2563EB] hover:bg-[#0B1F33] text-white font-extrabold text-xs rounded-xl shadow-xs transition cursor-pointer flex items-center gap-1.5"
               >
                 <Plus className="w-4 h-4" />
                 <span>Buy More Shares</span>
@@ -196,7 +196,7 @@ export const HoldingDetailModal: React.FC<HoldingDetailModalProps> = ({
 
               <div className="p-3.5 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-0.5">
                 <span className="text-[10px] font-bold text-[#64748B] uppercase block">Current Value</span>
-                <div className="font-black text-sm text-[#15519D]">₹{holding.currentValueTokens.toLocaleString('en-IN')}</div>
+                <div className="font-black text-sm text-[#2563EB]">₹{holding.currentValueTokens.toLocaleString('en-IN')}</div>
               </div>
 
               <div className="p-3.5 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-0.5">
@@ -223,7 +223,7 @@ export const HoldingDetailModal: React.FC<HoldingDetailModalProps> = ({
 
               <div className="p-3.5 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-0.5">
                 <span className="text-[10px] font-bold text-[#64748B] uppercase block">Portfolio Weight</span>
-                <div className="font-black text-sm text-[#15519D]">{holding.weight}%</div>
+                <div className="font-black text-sm text-[#2563EB]">{holding.weight}%</div>
               </div>
             </div>
 
@@ -234,7 +234,7 @@ export const HoldingDetailModal: React.FC<HoldingDetailModalProps> = ({
               <div className="lg:col-span-2 bg-white p-6 rounded-2xl border border-slate-200 space-y-4 shadow-2xs">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Activity className="w-4 h-4 text-[#15519D]" />
+                    <Activity className="w-4 h-4 text-[#2563EB]" />
                     <h3 className="font-black text-base text-[#172033]">Holding Trajectory vs NIFTY 50 Benchmark</h3>
                   </div>
 
@@ -245,7 +245,7 @@ export const HoldingDetailModal: React.FC<HoldingDetailModalProps> = ({
                         onClick={() => setChartInterval(inter)}
                         className={`px-3 py-1 text-xs font-bold rounded-lg transition cursor-pointer ${
                           chartInterval === inter
-                            ? 'bg-[#15519D] text-white shadow-xs'
+                            ? 'bg-[#2563EB] text-white shadow-xs'
                             : 'text-[#64748B] hover:text-[#172033]'
                         }`}
                       >
@@ -260,15 +260,15 @@ export const HoldingDetailModal: React.FC<HoldingDetailModalProps> = ({
                     <AreaChart data={chartData}>
                       <defs>
                         <linearGradient id="holdingCurveGrad" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="#15519D" stopOpacity={0.3} />
-                          <stop offset="100%" stopColor="#15519D" stopOpacity={0.0} />
+                          <stop offset="0%" stopColor="#2563EB" stopOpacity={0.3} />
+                          <stop offset="100%" stopColor="#2563EB" stopOpacity={0.0} />
                         </linearGradient>
                       </defs>
                       <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
                       <XAxis dataKey="time" stroke="#94A3B8" fontSize={11} tickLine={false} />
                       <YAxis stroke="#94A3B8" fontSize={11} tickLine={false} domain={['auto', 'auto']} />
                       <Tooltip />
-                      <Area type="monotone" dataKey="holdingVal" name={`${holding.symbol} Return`} stroke="#15519D" strokeWidth={2.5} fill="url(#holdingCurveGrad)" />
+                      <Area type="monotone" dataKey="holdingVal" name={`${holding.symbol} Return`} stroke="#2563EB" strokeWidth={2.5} fill="url(#holdingCurveGrad)" />
                       <Area type="monotone" dataKey="niftyVal" name="NIFTY 50 Benchmark" stroke="#94A3B8" strokeWidth={1.5} strokeDasharray="3 3" fill="none" />
                     </AreaChart>
                   </ResponsiveContainer>
@@ -280,7 +280,7 @@ export const HoldingDetailModal: React.FC<HoldingDetailModalProps> = ({
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-extrabold text-[#64748B] uppercase tracking-wider">INVESTMENT STATUS</span>
-                    <span className="px-3 py-1 bg-blue-50 text-[#15519D] font-black text-xs rounded-full">
+                    <span className="px-3 py-1 bg-blue-50 text-[#2563EB] font-black text-xs rounded-full">
                       Score: {holding.decisionScore || 82}/100
                     </span>
                   </div>
@@ -306,7 +306,7 @@ export const HoldingDetailModal: React.FC<HoldingDetailModalProps> = ({
 
                 <div className="pt-3 border-t border-slate-100 text-xs font-semibold text-[#64748B] flex items-center justify-between">
                   <span>Entry Date: {holding.buyDate}</span>
-                  <span className="text-[#15519D] font-extrabold">Active Simulation</span>
+                  <span className="text-[#2563EB] font-extrabold">Active Simulation</span>
                 </div>
               </div>
 
@@ -319,7 +319,7 @@ export const HoldingDetailModal: React.FC<HoldingDetailModalProps> = ({
               <div className="bg-white p-6 rounded-2xl border border-slate-200 space-y-4 shadow-2xs">
                 <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                   <div className="flex items-center gap-2">
-                    <BookOpen className="w-4 h-4 text-[#15519D]" />
+                    <BookOpen className="w-4 h-4 text-[#2563EB]" />
                     <h3 className="font-black text-base text-[#172033]">Your Original Investment Thesis</h3>
                   </div>
 
@@ -329,14 +329,14 @@ export const HoldingDetailModal: React.FC<HoldingDetailModalProps> = ({
                         setEditedThesisText(holding.thesisText);
                         setIsEditingThesis(true);
                       }}
-                      className="text-xs font-extrabold text-[#15519D] hover:underline flex items-center gap-1 cursor-pointer"
+                      className="text-xs font-extrabold text-[#2563EB] hover:underline flex items-center gap-1 cursor-pointer"
                     >
                       <Edit2 className="w-3.5 h-3.5" /> Edit Thesis
                     </button>
                   ) : (
                     <button
                       onClick={handleSaveThesis}
-                      className="px-3 py-1 bg-[#15519D] text-white font-extrabold text-xs rounded-lg cursor-pointer"
+                      className="px-3 py-1 bg-[#2563EB] text-white font-extrabold text-xs rounded-lg cursor-pointer"
                     >
                       Save Thesis
                     </button>
@@ -348,7 +348,7 @@ export const HoldingDetailModal: React.FC<HoldingDetailModalProps> = ({
                     rows={3}
                     value={editedThesisText}
                     onChange={e => setEditedThesisText(e.target.value)}
-                    className="w-full p-3 bg-[#F8FAFC] border border-[#CBD5E1] rounded-xl text-xs font-medium outline-none focus:border-[#15519D]"
+                    className="w-full p-3 bg-[#F8FAFC] border border-[#CBD5E1] rounded-xl text-xs font-medium outline-none focus:border-[#2563EB]"
                   />
                 ) : (
                   <p className="text-xs text-[#172033] font-medium leading-relaxed italic bg-[#F8FAFC] p-4 rounded-xl border border-slate-100">
@@ -379,7 +379,7 @@ export const HoldingDetailModal: React.FC<HoldingDetailModalProps> = ({
                     <div key={d.driver} className="space-y-1">
                       <div className="flex justify-between text-xs font-bold text-slate-700">
                         <span>{d.driver}</span>
-                        <span className="text-[#15519D] font-extrabold">{d.pct}% Contribution</span>
+                        <span className="text-[#2563EB] font-extrabold">{d.pct}% Contribution</span>
                       </div>
                       <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
                         <div className={`h-full ${d.color} rounded-full`} style={{ width: `${d.pct}%` }} />

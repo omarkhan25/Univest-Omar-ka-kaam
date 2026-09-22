@@ -30,16 +30,16 @@ import { NotificationCenterModal } from '../components/dashboard/NotificationCen
 import { BrandLogo } from '../components/common/BrandLogo';
 
 const RIGHT_WATCHLIST_DATA = [
-  { symbol: 'RELIANCE', name: 'Reliance Industries Ltd.', price: '2,975.80', changePercent: 2.35, isPositive: true, sparkline: [2910, 2930, 2945, 2975.8], badgeBg: 'bg-emerald-100 text-emerald-800' },
-  { symbol: 'TCS', name: 'Tata Consultancy Services', price: '4,182.75', changePercent: -0.45, isPositive: false, sparkline: [4210, 4200, 4190, 4182.75], badgeBg: 'bg-purple-100 text-purple-800' },
-  { symbol: 'HDFCBANK', name: 'HDFC Bank Ltd.', price: '1,678.40', changePercent: 1.81, isPositive: true, sparkline: [1650, 1662, 1670, 1678.4], badgeBg: 'bg-sky-100 text-sky-800' },
-  { symbol: 'INFY', name: 'Infosys Ltd.', price: '1,634.20', changePercent: 0.92, isPositive: true, sparkline: [1615, 1620, 1628, 1634.2], badgeBg: 'bg-pink-100 text-pink-800' },
-  { symbol: 'ICICIBANK', name: 'ICICI Bank Ltd.', price: '1,248.65', changePercent: -0.32, isPositive: false, sparkline: [1255, 1252, 1250, 1248.65], badgeBg: 'bg-rose-100 text-rose-800' },
-  { symbol: 'SBIN', name: 'State Bank of India', price: '857.10', changePercent: 1.68, isPositive: true, sparkline: [842, 848, 852, 857.1], badgeBg: 'bg-[#E0F2FE] text-[#15519D]' },
-  { symbol: 'LT', name: 'Larsen & Toubro Ltd.', price: '3,620.45', changePercent: 1.92, isPositive: true, sparkline: [3550, 3575, 3600, 3620.45], badgeBg: 'bg-emerald-100 text-emerald-800' },
-  { symbol: 'AXISBANK', name: 'Axis Bank Ltd.', price: '1,166.30', changePercent: 0.76, isPositive: true, sparkline: [1156, 1160, 1162, 1166.3], badgeBg: 'bg-pink-100 text-pink-800' },
-  { symbol: 'BAJFINANCE', price: '6,912.30', changePercent: -0.16, isPositive: false, sparkline: [6930, 6925, 6918, 6912.3], badgeBg: 'bg-[#E0F2FE] text-[#15519D]', name: 'Bajaj Finance Ltd.' },
-  { symbol: 'SUNPHARMA', price: '1,782.55', changePercent: 0.55, isPositive: true, sparkline: [1770, 1775, 1778, 1782.55], badgeBg: 'bg-amber-100 text-amber-800', name: 'Sun Pharma Ltd.' },
+  { symbol: 'RELIANCE', name: 'Reliance Industries', price: '2,975.80', changePercent: 2.35, isPositive: true, sparkline: [2910, 2930, 2945, 2975.8], badgeBg: 'bg-emerald-50 text-emerald-700 border border-emerald-200/60' },
+  { symbol: 'TCS', name: 'Tata Consultancy', price: '4,182.75', changePercent: -0.45, isPositive: false, sparkline: [4210, 4200, 4190, 4182.75], badgeBg: 'bg-purple-50 text-purple-700 border border-purple-200/60' },
+  { symbol: 'HDFCBANK', name: 'HDFC Bank Ltd.', price: '1,678.40', changePercent: 1.81, isPositive: true, sparkline: [1650, 1662, 1670, 1678.4], badgeBg: 'bg-sky-50 text-sky-700 border border-sky-200/60' },
+  { symbol: 'INFY', name: 'Infosys Ltd.', price: '1,634.20', changePercent: 0.92, isPositive: true, sparkline: [1615, 1620, 1628, 1634.2], badgeBg: 'bg-indigo-50 text-indigo-700 border border-indigo-200/60' },
+  { symbol: 'ICICIBANK', name: 'ICICI Bank Ltd.', price: '1,248.65', changePercent: -0.32, isPositive: false, sparkline: [1255, 1252, 1250, 1248.65], badgeBg: 'bg-rose-50 text-rose-700 border border-rose-200/60' },
+  { symbol: 'SBIN', name: 'State Bank of India', price: '857.10', changePercent: 1.68, isPositive: true, sparkline: [842, 848, 852, 857.1], badgeBg: 'bg-blue-50 text-blue-700 border border-blue-200/60' },
+  { symbol: 'LT', name: 'Larsen & Toubro', price: '3,620.45', changePercent: 1.92, isPositive: true, sparkline: [3550, 3575, 3600, 3620.45], badgeBg: 'bg-teal-50 text-teal-700 border border-teal-200/60' },
+  { symbol: 'AXISBANK', name: 'Axis Bank Ltd.', price: '1,166.30', changePercent: 0.76, isPositive: true, sparkline: [1156, 1160, 1162, 1166.3], badgeBg: 'bg-pink-50 text-pink-700 border border-pink-200/60' },
+  { symbol: 'BAJFINANCE', name: 'Bajaj Finance Ltd.', price: '6,912.30', changePercent: -0.16, isPositive: false, sparkline: [6930, 6925, 6918, 6912.3], badgeBg: 'bg-blue-50 text-blue-700 border border-blue-200/60' },
+  { symbol: 'SUNPHARMA', name: 'Sun Pharma Ltd.', price: '1,782.55', changePercent: 0.55, isPositive: true, sparkline: [1770, 1775, 1778, 1782.55], badgeBg: 'bg-amber-50 text-amber-700 border border-amber-200/60' },
 ];
 
 interface DashboardLayoutProps {
@@ -152,12 +152,12 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
     { name: 'Markets', icon: <Compass className="w-5 h-5" />, label: 'Markets' },
     { name: 'Research', icon: <TrendingUp className="w-5 h-5" />, label: 'Research' },
     { name: 'News', icon: <Newspaper className="w-5 h-5" />, label: 'News' },
-    { name: 'Portfolio', icon: <FlaskConical className="w-5 h-5" />, label: 'Investment Lab' },
-    { name: 'Pro', icon: <Gem className="w-5 h-5" />, label: 'Pro Arth' },
+    { name: 'Portfolio', icon: <FlaskConical className="w-5 h-5" />, label: 'Investment Lab', isPro: true },
+    { name: 'Pro', icon: <Gem className="w-5 h-5" />, label: 'Pro Arth', isPro: true },
   ];
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] font-sans antialiased text-[#172033] flex flex-col">
+    <div className="min-h-screen bg-[#F8FAFC] font-sans antialiased text-[#0F172A] flex flex-col">
       
       {/* 1. MOVING LIVE STOCK TICKER STRIP FIXED AT VERY TOP */}
       <div className="sticky top-0 z-50">
@@ -167,7 +167,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
       <div className="flex-1 flex w-full relative">
         
         {/* 2. LEFT SIDEBAR — PERMANENTLY FIXED ON SCREEN (240px Width) */}
-        <aside className="fixed top-[28px] left-0 bottom-0 w-[240px] bg-white border-r border-[#E2E8F0] hidden lg:flex flex-col z-30 shadow-2xs justify-between overflow-y-auto scrollbar-none">
+        <aside className="fixed top-[28px] left-0 bottom-0 w-[240px] bg-white border-r border-[#E5E7EB] hidden lg:flex flex-col z-30 shadow-2xs justify-between overflow-y-auto scrollbar-none">
           <div>
             {/* Brand Header */}
             <div className="p-6 border-b border-slate-100 cursor-pointer">
@@ -175,16 +175,37 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
             </div>
 
             {/* Nav Items */}
-            <nav className="p-4 space-y-1.5">
+            <nav className="p-4 space-y-2">
               {navTabs.map((tab) => {
                 const isActive = activeTab === tab.name;
+                const isPro = (tab as any).isPro;
+
+                if (isPro) {
+                  return (
+                    <button
+                      key={tab.name}
+                      onClick={() => setActiveTab(tab.name)}
+                      className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl text-sm font-extrabold transition-all duration-150 cursor-pointer ${
+                        isActive
+                          ? 'bg-[#C89B3C] text-white shadow-md shadow-[#C89B3C]/30'
+                          : 'text-[#C89B3C] hover:text-[#92400E] hover:bg-[#FDF4E6]'
+                      }`}
+                    >
+                      <span className={`shrink-0 ${isActive ? 'text-white' : 'text-[#C89B3C]'}`}>
+                        {tab.icon}
+                      </span>
+                      <span className="truncate">{tab.label}</span>
+                    </button>
+                  );
+                }
+
                 return (
                   <button
                     key={tab.name}
                     onClick={() => setActiveTab(tab.name)}
-                    className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl text-sm font-extrabold transition-all duration-150 ${
+                    className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl text-sm font-extrabold transition-all duration-150 cursor-pointer ${
                       isActive
-                        ? 'bg-[#15519D] text-white shadow-md shadow-blue-900/20'
+                        ? 'bg-primary text-white shadow-md shadow-primary/20'
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                     }`}
                   >
@@ -201,7 +222,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
             {/* Upgrade to Pro Banner */}
             <div className="p-4 bg-gradient-to-br from-amber-500/10 via-amber-50 to-blue-50 rounded-2xl border border-amber-200 space-y-2">
               <div className="flex items-center gap-1.5 text-xs font-black text-amber-900">
-                <Gem className="w-4 h-4 text-amber-600 fill-current" />
+                <Gem className="w-4 h-4 text-[#C89B3C] fill-current" />
                 <span>Upgrade to Pro</span>
               </div>
               <p className="text-[11px] text-slate-600 font-medium leading-tight">
@@ -209,7 +230,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
               </p>
               <button
                 onClick={() => setIsPricingOpen(true)}
-                className="w-full py-2 bg-[#15519D] hover:bg-[#123B63] text-white text-xs font-extrabold rounded-xl shadow-xs transition-all flex items-center justify-center gap-1.5"
+                className="w-full py-2 bg-primary hover:bg-primary-light text-white text-xs font-extrabold rounded-xl shadow-xs transition-all flex items-center justify-center gap-1.5"
               >
                 <span>Go Pro</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -222,13 +243,13 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
         <div className="flex-1 flex flex-col min-w-0 lg:pl-[240px]">
           
           {/* GLOBAL TOP HEADER STICKY BELOW TICKER */}
-          <header className="h-14 bg-white border-b border-[#E2E8F0] sticky top-[28px] z-40 px-4 sm:px-6 flex items-center justify-between shadow-2xs gap-4">
+          <header className="h-14 bg-white border-b border-[#E5E7EB] sticky top-[28px] z-40 px-4 sm:px-6 flex items-center justify-between shadow-2xs gap-4">
             {/* Left Date, Time & Market Open/Close Indicator */}
             <div className="flex items-center gap-2.5 text-xs font-bold text-slate-500 shrink-0">
               <div className="flex items-center gap-1.5 text-slate-900 font-extrabold text-xs whitespace-nowrap">
-                <Clock className="w-3.5 h-3.5 text-[#15519D] shrink-0" />
+                <Clock className="w-3.5 h-3.5 text-action shrink-0" />
                 <span>{currentDateStr || 'Tuesday, 27 May 2025'}</span>
-                <span className="text-[#15519D] font-mono text-[11px] bg-blue-50 px-2 py-0.5 rounded-md border border-blue-100/80">
+                <span className="text-action font-mono text-[11px] bg-action-light/60 px-2 py-0.5 rounded-md border border-action/20">
                   {istTime || '11:45:20 AM IST'}
                 </span>
               </div>
@@ -257,12 +278,12 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                 onClick={() => setIsWatchlistOpen(!isWatchlistOpen)}
                 className={`px-3 py-1.5 rounded-xl border text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs whitespace-nowrap ${
                   isWatchlistOpen
-                    ? 'bg-blue-50 border-blue-200 text-[#15519D]'
+                    ? 'bg-blue-50 border-blue-200 text-[#2563EB]'
                     : 'bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200'
                 }`}
                 title={isWatchlistOpen ? "Minimize Watchlist" : "Open Watchlist"}
               >
-                {isWatchlistOpen ? <PanelRightClose className="w-3.5 h-3.5 shrink-0" /> : <PanelRightOpen className="w-3.5 h-3.5 text-[#15519D] shrink-0" />}
+                {isWatchlistOpen ? <PanelRightClose className="w-3.5 h-3.5 shrink-0" /> : <PanelRightOpen className="w-3.5 h-3.5 text-[#2563EB] shrink-0" />}
                 <span className="whitespace-nowrap font-extrabold text-xs">Watchlist</span>
               </button>
 
@@ -280,7 +301,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                   className="flex items-center gap-1.5 p-1 bg-slate-100 hover:bg-slate-200/80 rounded-xl transition-colors cursor-pointer border border-slate-200/60 shadow-2xs"
                 >
-                  <div className="w-7 h-7 rounded-lg bg-[#15519D] text-white text-[11px] font-black flex items-center justify-center shadow-xs">
+                  <div className="w-7 h-7 rounded-lg bg-[#2563EB] text-white text-[11px] font-black flex items-center justify-center shadow-xs">
                     AK
                   </div>
                   <ChevronDown className="w-3.5 h-3.5 text-slate-500 pr-0.5" />
@@ -363,14 +384,14 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                   <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                     <div className="flex items-center gap-2">
                       <h3 className="font-extrabold text-slate-900 text-base">My Watchlists</h3>
-                      <span className="px-2 py-0.5 rounded-full bg-blue-50 text-[#15519D] text-[10px] font-black">Live</span>
+                      <span className="px-2 py-0.5 rounded-full bg-action-light text-action text-[10px] font-black">Live</span>
                     </div>
                     <div className="flex items-center gap-1.5 text-slate-400">
                       <button className="p-1 hover:text-slate-700 cursor-pointer" title="Add Stock"><Plus className="w-4 h-4" /></button>
                       <button className="p-1 hover:text-slate-700 cursor-pointer" title="Watchlist Settings"><Settings className="w-4 h-4" /></button>
                       <button
                         onClick={() => setIsWatchlistOpen(false)}
-                        className="p-1 hover:text-[#15519D] hover:bg-blue-50 text-slate-500 rounded-lg transition-colors cursor-pointer ml-1"
+                        className="p-1 hover:text-action hover:bg-action-light text-slate-500 rounded-lg transition-colors cursor-pointer ml-1"
                         title="Minimize Watchlist"
                       >
                         <PanelRightClose className="w-4 h-4" />
@@ -390,45 +411,58 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                 </div>
 
                 {/* Watchlist Table */}
-                <div className="space-y-3">
-                  <div className="grid grid-cols-12 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider pb-1 border-b border-slate-100">
-                    <span className="col-span-5">Stock</span>
-                    <span className="col-span-3 text-right">Price</span>
-                    <span className="col-span-2 text-right">Change</span>
-                    <span className="col-span-2 text-right">1D Chart</span>
+                <div className="space-y-2.5">
+                  {/* Column Header */}
+                  <div className="flex items-center justify-between text-[11px] font-bold text-slate-400 uppercase tracking-wider px-2.5 pb-1 border-b border-slate-100">
+                    <span>Stock</span>
+                    <div className="flex items-center gap-6">
+                      <span className="w-12 text-center">Trend</span>
+                      <span className="w-20 text-right">Price</span>
+                    </div>
                   </div>
 
-                  <div className="space-y-2">
+                  {/* Stock Row List */}
+                  <div className="space-y-1.5">
                     {RIGHT_WATCHLIST_DATA.map((stk) => (
                       <div
                         key={stk.symbol}
                         onClick={() => setSelectedStock({ symbol: stk.symbol, name: stk.name, price: stk.price })}
-                        className="grid grid-cols-12 items-center py-2 px-2 hover:bg-slate-50/90 rounded-xl transition-colors cursor-pointer group"
+                        className="flex items-center justify-between p-2.5 hover:bg-slate-50/90 rounded-2xl transition-all duration-150 cursor-pointer group border border-transparent hover:border-slate-200/60"
                       >
-                        {/* Symbol & Initial Badge */}
-                        <div className="col-span-5 flex items-center gap-2 min-w-0">
-                          <div className={`w-7 h-7 rounded-lg font-black text-[10px] flex items-center justify-center shrink-0 ${stk.badgeBg}`}>
+                        {/* Left: Avatar + Stock Symbol & Full Company Name */}
+                        <div className="flex items-center gap-2.5 min-w-0 flex-1 pr-2">
+                          <div className={`w-8 h-8 rounded-xl font-black text-[10px] flex items-center justify-center shrink-0 shadow-2xs ${stk.badgeBg}`}>
                             {stk.symbol.substring(0, 2)}
                           </div>
                           <div className="min-w-0">
-                            <div className="font-extrabold text-slate-900 text-xs truncate group-hover:text-[#15519D] transition-colors">{stk.symbol}</div>
-                            {stk.name && <div className="text-[9px] text-slate-400 truncate">{stk.name}</div>}
+                            <div className="font-black text-slate-900 text-xs tracking-tight truncate group-hover:text-action transition-colors">
+                              {stk.symbol}
+                            </div>
+                            {stk.name && (
+                              <div className="text-[10px] text-slate-400 font-medium truncate max-w-[95px]">
+                                {stk.name}
+                              </div>
+                            )}
                           </div>
                         </div>
 
-                        {/* Price */}
-                        <div className="col-span-3 text-right font-extrabold text-slate-900 text-xs font-mono">
-                          ₹{stk.price}
+                        {/* Middle: Sparkline Chart */}
+                        <div className="w-14 flex items-center justify-center shrink-0 px-1">
+                          <SparklineGraph isPositive={stk.isPositive} points={stk.sparkline} width={48} height={20} />
                         </div>
 
-                        {/* Change % */}
-                        <div className={`col-span-2 text-right font-extrabold text-[11px] ${stk.isPositive ? 'text-[#16A34A]' : 'text-[#DC2626]'}`}>
-                          {stk.isPositive ? `+${stk.changePercent}%` : `${stk.changePercent}%`}
-                        </div>
-
-                        {/* Sparkline */}
-                        <div className="col-span-2 flex justify-end">
-                          <SparklineGraph isPositive={stk.isPositive} points={stk.sparkline} width={42} height={20} />
+                        {/* Right: Stacked Price & Percentage Pill */}
+                        <div className="w-20 text-right shrink-0 flex flex-col items-end">
+                          <div className="font-extrabold text-slate-900 text-xs font-mono tracking-tight">
+                            ₹{stk.price}
+                          </div>
+                          <div className={`inline-flex items-center gap-0.5 text-[10px] font-black rounded-md px-1.5 py-0.5 mt-0.5 ${
+                            stk.isPositive 
+                              ? 'bg-emerald-50 text-emerald-600 border border-emerald-200/50' 
+                              : 'bg-rose-50 text-rose-600 border border-rose-200/50'
+                          }`}>
+                            <span>{stk.isPositive ? '+' : ''}{stk.changePercent}%</span>
+                          </div>
                         </div>
                       </div>
                     ))}
@@ -437,7 +471,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                   <div className="pt-2 text-center border-t border-slate-100">
                     <button
                       onClick={() => setActiveTab('Markets')}
-                      className="text-xs font-extrabold text-[#15519D] hover:underline inline-flex items-center gap-1"
+                      className="text-xs font-extrabold text-action hover:underline inline-flex items-center gap-1 cursor-pointer"
                     >
                       <span>View all watchlists</span>
                       <ChevronRight className="w-3.5 h-3.5" />
@@ -466,7 +500,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
               /* COLLAPSED WATCHLIST FLOATING SIDE TAB */
               <button
                 onClick={() => setIsWatchlistOpen(true)}
-                className="hidden xl:flex fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-[#15519D] hover:bg-[#123B63] text-white p-3 rounded-l-2xl shadow-2xl transition-all items-center gap-2 cursor-pointer group hover:pl-4 border-l border-t border-b border-white/20"
+                className="hidden xl:flex fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-[#2563EB] hover:bg-[#0B1F33] text-white p-3 rounded-l-2xl shadow-2xl transition-all items-center gap-2 cursor-pointer group hover:pl-4 border-l border-t border-b border-white/20"
                 title="Expand Watchlist"
               >
                 <div className="flex flex-col items-center gap-2">
@@ -497,11 +531,11 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
 
         <button
           onClick={() => setIsAiOpen(true)}
-          className="w-14 h-14 rounded-full bg-gradient-to-br from-[#123B63] via-[#15519D] to-[#0E2F50] hover:from-[#0E2F50] hover:to-[#15519D] text-white shadow-2xl hover:shadow-blue-900/40 border border-white/20 transition-all duration-200 cursor-pointer flex items-center justify-center relative hover:scale-110"
+          className="w-14 h-14 rounded-full bg-gradient-to-br from-[#0B1F33] via-[#2563EB] to-[#0E2F50] hover:from-[#0E2F50] hover:to-[#2563EB] text-white shadow-2xl hover:shadow-blue-900/40 border border-white/20 transition-all duration-200 cursor-pointer flex items-center justify-center relative hover:scale-110"
           title="Open ArthSetu AI Copilot"
         >
           <Sparkles className="w-6 h-6 text-amber-300 group-hover:rotate-12 transition-transform" />
-          <span className="absolute top-1 right-1 w-3 h-3 bg-emerald-400 rounded-full border-2 border-[#123B63] animate-pulse" />
+          <span className="absolute top-1 right-1 w-3 h-3 bg-emerald-400 rounded-full border-2 border-[#0B1F33] animate-pulse" />
         </button>
       </div>
 

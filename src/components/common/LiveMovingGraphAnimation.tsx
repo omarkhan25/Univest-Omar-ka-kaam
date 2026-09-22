@@ -184,7 +184,7 @@ export const LiveMovingGraphAnimation: React.FC<LiveMovingGraphAnimationProps> =
           <motion.path
             d={pathString}
             fill="none"
-            stroke="#15519D"
+            stroke="#2563EB"
             strokeWidth="2"
             strokeDasharray="4 4"
             opacity="0.7"

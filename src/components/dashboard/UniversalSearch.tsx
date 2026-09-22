@@ -162,9 +162,9 @@ export const UniversalSearch: React.FC<UniversalSearchProps> = ({
           {/* SEARCH INPUT BAR */}
           <div className="p-4 border-b border-[#E2E8F0] flex items-center gap-3 bg-[#F8FAFC]">
             {isSearching ? (
-              <Loader2 className="w-5 h-5 text-[#15519D] animate-spin shrink-0" />
+              <Loader2 className="w-5 h-5 text-[#2563EB] animate-spin shrink-0" />
             ) : (
-              <Search className="w-5 h-5 text-[#15519D] shrink-0" />
+              <Search className="w-5 h-5 text-[#2563EB] shrink-0" />
             )}
 
             <input

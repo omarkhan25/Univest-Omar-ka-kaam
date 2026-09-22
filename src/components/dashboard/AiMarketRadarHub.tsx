@@ -169,7 +169,7 @@ export const AiMarketRadarHub: React.FC<AiMarketRadarHubProps> = ({
         {/* Title, Icon & Live Indicator Row */}
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-center gap-3.5">
-            <div className="w-11 h-11 shrink-0 rounded-2xl bg-gradient-to-br from-[#123B63] to-[#15519D] text-white flex items-center justify-center shadow-md border border-white/20">
+            <div className="w-11 h-11 shrink-0 rounded-2xl bg-gradient-to-br from-[#0B1F33] to-[#2563EB] text-white flex items-center justify-center shadow-md border border-white/20">
               <Radio className="w-5.5 h-5.5 animate-pulse text-amber-300" />
             </div>
             <div>
@@ -196,11 +196,11 @@ export const AiMarketRadarHub: React.FC<AiMarketRadarHubProps> = ({
               onClick={() => setActiveTab('signals')}
               className={`px-4 py-2 rounded-xl font-extrabold transition-all flex items-center gap-2 whitespace-nowrap cursor-pointer ${
                 activeTab === 'signals'
-                  ? 'bg-white text-[#15519D] shadow-sm border border-slate-200/80'
+                  ? 'bg-white text-[#2563EB] shadow-sm border border-slate-200/80'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              <Zap className={`w-4 h-4 ${activeTab === 'signals' ? 'text-[#15519D]' : 'text-slate-400'}`} />
+              <Zap className={`w-4 h-4 ${activeTab === 'signals' ? 'text-[#2563EB]' : 'text-slate-400'}`} />
               <span>AI Alpha Signals</span>
             </button>
 
@@ -208,11 +208,11 @@ export const AiMarketRadarHub: React.FC<AiMarketRadarHubProps> = ({
               onClick={() => setActiveTab('momentum')}
               className={`px-4 py-2 rounded-xl font-extrabold transition-all flex items-center gap-2 whitespace-nowrap cursor-pointer ${
                 activeTab === 'momentum'
-                  ? 'bg-white text-[#15519D] shadow-sm border border-slate-200/80'
+                  ? 'bg-white text-[#2563EB] shadow-sm border border-slate-200/80'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              <BarChart3 className={`w-4 h-4 ${activeTab === 'momentum' ? 'text-[#15519D]' : 'text-slate-400'}`} />
+              <BarChart3 className={`w-4 h-4 ${activeTab === 'momentum' ? 'text-[#2563EB]' : 'text-slate-400'}`} />
               <span>Sector Momentum</span>
             </button>
 
@@ -220,11 +220,11 @@ export const AiMarketRadarHub: React.FC<AiMarketRadarHubProps> = ({
               onClick={() => setActiveTab('catalysts')}
               className={`px-4 py-2 rounded-xl font-extrabold transition-all flex items-center gap-2 whitespace-nowrap cursor-pointer ${
                 activeTab === 'catalysts'
-                  ? 'bg-white text-[#15519D] shadow-sm border border-slate-200/80'
+                  ? 'bg-white text-[#2563EB] shadow-sm border border-slate-200/80'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              <Calendar className={`w-4 h-4 ${activeTab === 'catalysts' ? 'text-[#15519D]' : 'text-slate-400'}`} />
+              <Calendar className={`w-4 h-4 ${activeTab === 'catalysts' ? 'text-[#2563EB]' : 'text-slate-400'}`} />
               <span>Market Catalysts</span>
             </button>
           </div>
@@ -239,7 +239,7 @@ export const AiMarketRadarHub: React.FC<AiMarketRadarHubProps> = ({
               <div
                 key={sig.symbol}
                 onClick={() => onSelectStock && onSelectStock({ symbol: sig.symbol, name: sig.name, price: sig.price })}
-                className="p-5 bg-white hover:bg-slate-50/50 rounded-2xl border border-slate-200/90 hover:border-[#15519D]/40 transition-all duration-300 cursor-pointer space-y-4 shadow-2xs hover:shadow-lg group relative overflow-hidden"
+                className="p-5 bg-white hover:bg-slate-50/50 rounded-2xl border border-slate-200/90 hover:border-[#2563EB]/40 transition-all duration-300 cursor-pointer space-y-4 shadow-2xs hover:shadow-lg group relative overflow-hidden"
               >
                 {/* Top Badge Row */}
                 <div className="flex items-center justify-between gap-3">
@@ -248,7 +248,7 @@ export const AiMarketRadarHub: React.FC<AiMarketRadarHubProps> = ({
                       {sig.symbol.substring(0, 2)}
                     </div>
                     <div className="min-w-0">
-                      <div className="font-black text-slate-900 text-sm group-hover:text-[#15519D] transition-colors">{sig.symbol}</div>
+                      <div className="font-black text-slate-900 text-sm group-hover:text-[#2563EB] transition-colors">{sig.symbol}</div>
                       <div className="text-xs text-slate-500 font-semibold truncate max-w-[170px]">{sig.name}</div>
                     </div>
                   </div>
@@ -279,7 +279,7 @@ export const AiMarketRadarHub: React.FC<AiMarketRadarHubProps> = ({
                 </div>
 
                 {/* AI Rationale Box */}
-                <div className="p-3.5 bg-[#F8FAFC] rounded-xl border-l-4 border-[#15519D] text-xs space-y-1.5">
+                <div className="p-3.5 bg-[#F8FAFC] rounded-xl border-l-4 border-[#2563EB] text-xs space-y-1.5">
                   <div className="flex items-center justify-between text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                     <span>AI Thesis & Rationale</span>
                     <span className="text-emerald-700 font-black px-2 py-0.5 bg-emerald-50 rounded border border-emerald-200">{sig.signalType}</span>
@@ -288,7 +288,7 @@ export const AiMarketRadarHub: React.FC<AiMarketRadarHubProps> = ({
                 </div>
 
                 {/* Footer Action */}
-                <div className="flex items-center justify-between pt-1 text-xs font-extrabold text-[#15519D]">
+                <div className="flex items-center justify-between pt-1 text-xs font-extrabold text-[#2563EB]">
                   <span className="text-slate-400 text-[11px] font-semibold truncate max-w-[200px]">Catalyst: {sig.catalyst}</span>
                   <span className="flex items-center gap-1 group-hover:translate-x-1 transition-transform shrink-0">
                     <span>Inspect Thesis</span>
@@ -303,7 +303,7 @@ export const AiMarketRadarHub: React.FC<AiMarketRadarHubProps> = ({
             <span className="text-slate-400 font-medium">Updated live by ArthSetu Neural Engine</span>
             <button
               onClick={() => onNavigateTab && onNavigateTab('Research')}
-              className="text-[#15519D] font-extrabold hover:underline flex items-center gap-1 cursor-pointer"
+              className="text-[#2563EB] font-extrabold hover:underline flex items-center gap-1 cursor-pointer"
             >
               <span>Explore All 24 AI Signals</span>
               <ChevronRight className="w-4 h-4" />
@@ -331,7 +331,7 @@ export const AiMarketRadarHub: React.FC<AiMarketRadarHubProps> = ({
 
                   <div className="text-right">
                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Momentum Score</span>
-                    <span className="text-sm font-black text-[#15519D] font-mono">{item.momentumScore}/100</span>
+                    <span className="text-sm font-black text-[#2563EB] font-mono">{item.momentumScore}/100</span>
                   </div>
                 </div>
 
@@ -367,7 +367,7 @@ export const AiMarketRadarHub: React.FC<AiMarketRadarHubProps> = ({
           <div className="flex justify-end pt-3 border-t border-slate-100 text-xs">
             <button
               onClick={() => onNavigateTab && onNavigateTab('Markets')}
-              className="text-[#15519D] font-extrabold hover:underline flex items-center gap-1 cursor-pointer"
+              className="text-[#2563EB] font-extrabold hover:underline flex items-center gap-1 cursor-pointer"
             >
               <span>View Sector Heatmap in Markets</span>
               <ChevronRight className="w-4 h-4" />
@@ -392,7 +392,7 @@ export const AiMarketRadarHub: React.FC<AiMarketRadarHubProps> = ({
                 </div>
                 <div className="space-y-1">
                   <div className="flex items-center gap-2.5 flex-wrap">
-                    <h3 className="font-extrabold text-slate-900 text-sm group-hover:text-[#15519D] transition-colors">{evt.title}</h3>
+                    <h3 className="font-extrabold text-slate-900 text-sm group-hover:text-[#2563EB] transition-colors">{evt.title}</h3>
                     <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold ${evt.impactBg}`}>
                       {evt.impact}
                     </span>

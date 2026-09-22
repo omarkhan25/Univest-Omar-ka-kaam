@@ -53,8 +53,8 @@ export const AiMarketIntelligenceNetwork: React.FC<AiMarketIntelligenceNetworkPr
 
     // Color Palette: Luxury restraint
     const COLORS = [
-      '#15519D', // Royal Blue
-      '#15519D', // Royal Blue (dominant)
+      '#2563EB', // Royal Blue
+      '#2563EB', // Royal Blue (dominant)
       '#16A34A', // Emerald Green
       '#38BDF8', // Soft Cyan
       '#FFFFFF', // Pure White (rare)

@@ -42,7 +42,7 @@ export const GetStartedLanding: React.FC = () => {
             onClick={() => navigate('/')}
             className="flex items-center gap-3 cursor-pointer group"
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#4e8cff] to-[#15519D] flex items-center justify-center text-white font-black text-xl shadow-[0_0_20px_rgba(78,140,255,0.4)] group-hover:scale-105 transition-transform">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#4e8cff] to-[#2563EB] flex items-center justify-center text-white font-black text-xl shadow-[0_0_20px_rgba(78,140,255,0.4)] group-hover:scale-105 transition-transform">
               U
             </div>
             <span className="font-black text-2xl tracking-tight text-white">
@@ -72,7 +72,7 @@ export const GetStartedLanding: React.FC = () => {
             </button>
             <button
               onClick={() => navigate('/signup')}
-              className="px-5 py-2.5 text-sm font-black text-white bg-[#15519D] hover:bg-[#1759e9] rounded-xl shadow-[0_4px_20px_rgba(21,81,157,0.5)] hover:shadow-[0_6px_25px_rgba(23,89,233,0.6)] transition-all"
+              className="px-5 py-2.5 text-sm font-black text-white bg-[#2563EB] hover:bg-[#1759e9] rounded-xl shadow-[0_4px_20px_rgba(21,81,157,0.5)] hover:shadow-[0_6px_25px_rgba(23,89,233,0.6)] transition-all"
             >
               Create account
             </button>
@@ -137,7 +137,7 @@ export const GetStartedLanding: React.FC = () => {
               />
               <button
                 type="submit"
-                className="w-full sm:w-auto px-6 py-3 bg-[#15519D] hover:bg-[#1759e9] text-white font-black text-sm rounded-xl flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(21,81,157,0.6)] transition-all shrink-0 cursor-pointer"
+                className="w-full sm:w-auto px-6 py-3 bg-[#2563EB] hover:bg-[#1759e9] text-white font-black text-sm rounded-xl flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(21,81,157,0.6)] transition-all shrink-0 cursor-pointer"
               >
                 <span>Get Started</span>
                 <ArrowRight className="w-4 h-4" />

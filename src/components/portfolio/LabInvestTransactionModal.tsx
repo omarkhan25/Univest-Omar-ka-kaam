@@ -152,10 +152,10 @@ export const LabInvestTransactionModal: React.FC<LabInvestTransactionModalProps>
             {/* HEADER & LIVE AVAILABLE TOKENS */}
             <div className="space-y-1">
               <div className="flex items-center justify-between">
-                <span className="px-2.5 py-0.5 rounded-full bg-blue-50 text-[#15519D] text-[10px] font-black uppercase tracking-wider">
+                <span className="px-2.5 py-0.5 rounded-full bg-blue-50 text-[#2563EB] text-[10px] font-black uppercase tracking-wider">
                   INVEST VIRTUAL TOKENS
                 </span>
-                <span className="text-xs font-extrabold text-[#15519D] bg-slate-100 px-2.5 py-0.5 rounded-full mr-6">
+                <span className="text-xs font-extrabold text-[#2563EB] bg-slate-100 px-2.5 py-0.5 rounded-full mr-6">
                   Available Tokens: ₹{availableTokens.toLocaleString('en-IN')}
                 </span>
               </div>
@@ -172,7 +172,7 @@ export const LabInvestTransactionModal: React.FC<LabInvestTransactionModalProps>
                 onChange={e => setSearchQuery(e.target.value)}
                 placeholder="Search stocks or companies..."
                 autoFocus
-                className="w-full pl-10 pr-4 py-2.5 bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#15519D] rounded-xl text-xs font-bold text-[#172033] outline-none transition"
+                className="w-full pl-10 pr-4 py-2.5 bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#2563EB] rounded-xl text-xs font-bold text-[#172033] outline-none transition"
               />
             </div>
 
@@ -187,14 +187,14 @@ export const LabInvestTransactionModal: React.FC<LabInvestTransactionModalProps>
                   <div
                     key={st.symbol}
                     onClick={() => handleSelectStockFromStage1(st)}
-                    className="p-3 bg-[#F8FAFC] hover:bg-blue-50/50 rounded-xl border border-[#E2E8F0] hover:border-[#15519D] transition cursor-pointer flex items-center justify-between group"
+                    className="p-3 bg-[#F8FAFC] hover:bg-blue-50/50 rounded-xl border border-[#E2E8F0] hover:border-[#2563EB] transition cursor-pointer flex items-center justify-between group"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-lg bg-[#15519D] text-white font-black text-xs flex items-center justify-center shrink-0">
+                      <div className="w-9 h-9 rounded-lg bg-[#2563EB] text-white font-black text-xs flex items-center justify-center shrink-0">
                         {st.symbol.substring(0, 2)}
                       </div>
                       <div>
-                        <div className="font-black text-xs text-[#172033] group-hover:text-[#15519D] transition-colors">
+                        <div className="font-black text-xs text-[#172033] group-hover:text-[#2563EB] transition-colors">
                           {st.symbol}
                         </div>
                         <div className="text-[11px] text-[#64748B] font-medium line-clamp-1">
@@ -207,7 +207,7 @@ export const LabInvestTransactionModal: React.FC<LabInvestTransactionModalProps>
                       <div className="font-extrabold text-xs text-[#172033]">₹{st.price.toLocaleString('en-IN')}</div>
                       <div className="flex items-center justify-end gap-1.5 text-[10px] font-bold">
                         <span className="text-emerald-600">{st.change}</span>
-                        <span className="text-[#15519D] bg-blue-50 px-1.5 py-0.2 rounded font-black">View {st.score}</span>
+                        <span className="text-[#2563EB] bg-blue-50 px-1.5 py-0.2 rounded font-black">View {st.score}</span>
                       </div>
                     </div>
                   </div>
@@ -252,7 +252,7 @@ export const LabInvestTransactionModal: React.FC<LabInvestTransactionModalProps>
             {/* SELECTED STOCK HEADER */}
             <div className="p-3.5 bg-[#F8FAFC] rounded-xl border border-[#E2E8F0] flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-[#15519D] text-white font-black text-xs flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-[#2563EB] text-white font-black text-xs flex items-center justify-center shrink-0">
                   {selectedStock.symbol.substring(0, 2)}
                 </div>
                 <div>
@@ -265,7 +265,7 @@ export const LabInvestTransactionModal: React.FC<LabInvestTransactionModalProps>
 
               <div className="text-right">
                 <div className="text-sm font-black text-[#172033]">₹{selectedStock.price.toLocaleString('en-IN')}</div>
-                <span className="text-[10px] font-black text-[#15519D] bg-blue-50 px-2 py-0.5 rounded-md">
+                <span className="text-[10px] font-black text-[#2563EB] bg-blue-50 px-2 py-0.5 rounded-md">
                   View {selectedStock.score}
                 </span>
               </div>
@@ -277,7 +277,7 @@ export const LabInvestTransactionModal: React.FC<LabInvestTransactionModalProps>
                 type="button"
                 onClick={() => setTxMode('BUY')}
                 className={`flex-1 py-2 text-xs font-extrabold rounded-lg transition cursor-pointer ${
-                  txMode === 'BUY' ? 'bg-[#15519D] text-white shadow-xs' : 'text-[#64748B] hover:text-[#172033]'
+                  txMode === 'BUY' ? 'bg-[#2563EB] text-white shadow-xs' : 'text-[#64748B] hover:text-[#172033]'
                 }`}
               >
                 BUY
@@ -322,7 +322,7 @@ export const LabInvestTransactionModal: React.FC<LabInvestTransactionModalProps>
                       min={1}
                       value={shareQty}
                       onChange={e => setShareQty(Math.max(1, parseInt(e.target.value, 10) || 1))}
-                      className="flex-1 px-4 py-2.5 bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#15519D] rounded-xl text-center font-black text-sm text-[#172033] outline-none"
+                      className="flex-1 px-4 py-2.5 bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#2563EB] rounded-xl text-center font-black text-sm text-[#172033] outline-none"
                     />
 
                     <button
@@ -342,7 +342,7 @@ export const LabInvestTransactionModal: React.FC<LabInvestTransactionModalProps>
                         type="button"
                         onClick={() => setShareQty(q)}
                         className={`px-2.5 py-1 text-xs font-bold rounded-lg border transition cursor-pointer ${
-                          shareQty === q ? 'bg-blue-50 border-[#15519D] text-[#15519D]' : 'bg-white border-[#E2E8F0] text-[#64748B] hover:text-[#172033]'
+                          shareQty === q ? 'bg-blue-50 border-[#2563EB] text-[#2563EB]' : 'bg-white border-[#E2E8F0] text-[#64748B] hover:text-[#172033]'
                         }`}
                       >
                         {q}
@@ -353,7 +353,7 @@ export const LabInvestTransactionModal: React.FC<LabInvestTransactionModalProps>
                       type="button"
                       onClick={() => setShareQty(maxAffordableShares)}
                       className={`px-3 py-1 text-xs font-extrabold rounded-lg border transition cursor-pointer ml-auto ${
-                        shareQty === maxAffordableShares ? 'bg-blue-50 border-[#15519D] text-[#15519D]' : 'bg-[#15519D]/10 border-[#15519D]/30 text-[#15519D]'
+                        shareQty === maxAffordableShares ? 'bg-blue-50 border-[#2563EB] text-[#2563EB]' : 'bg-[#2563EB]/10 border-[#2563EB]/30 text-[#2563EB]'
                       }`}
                     >
                       Max ({maxAffordableShares})
@@ -365,7 +365,7 @@ export const LabInvestTransactionModal: React.FC<LabInvestTransactionModalProps>
                 <div className="p-3.5 bg-[#F8FAFC] rounded-xl border border-[#E2E8F0] space-y-1 text-xs">
                   <div className="flex justify-between font-extrabold text-[#172033]">
                     <span>Required Tokens ({shareQty} Shares × ₹{selectedStock.price}):</span>
-                    <span className="text-[#15519D]">₹{requiredTokens.toLocaleString('en-IN')}</span>
+                    <span className="text-[#2563EB]">₹{requiredTokens.toLocaleString('en-IN')}</span>
                   </div>
 
                   <div className="flex justify-between font-medium text-[#64748B]">
@@ -419,7 +419,7 @@ export const LabInvestTransactionModal: React.FC<LabInvestTransactionModalProps>
                     value={thesisText}
                     onChange={e => setThesisText(e.target.value)}
                     placeholder="Add a short reason for this investment..."
-                    className="w-full p-3 bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#15519D] rounded-xl text-xs font-medium outline-none"
+                    className="w-full p-3 bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#2563EB] rounded-xl text-xs font-medium outline-none"
                   />
 
                   {/* THESIS PRESET CHIPS */}
@@ -446,7 +446,7 @@ export const LabInvestTransactionModal: React.FC<LabInvestTransactionModalProps>
                 <button
                   onClick={handleExecuteBuy}
                   disabled={!isAffordable}
-                  className="w-full py-3.5 bg-[#15519D] hover:bg-[#123B63] disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-extrabold text-xs rounded-xl shadow-md transition cursor-pointer"
+                  className="w-full py-3.5 bg-[#2563EB] hover:bg-[#0B1F33] disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-extrabold text-xs rounded-xl shadow-md transition cursor-pointer"
                 >
                   Confirm Virtual Investment (₹{requiredTokens.toLocaleString('en-IN')} Tokens) →
                 </button>
@@ -536,7 +536,7 @@ export const LabInvestTransactionModal: React.FC<LabInvestTransactionModalProps>
 
                   <div className="flex justify-between font-bold text-slate-800 border-t border-rose-200/60 pt-1">
                     <span>Available Tokens After Sale:</span>
-                    <span className="text-[#15519D]">₹{newTokensAfterSale.toLocaleString('en-IN')}</span>
+                    <span className="text-[#2563EB]">₹{newTokensAfterSale.toLocaleString('en-IN')}</span>
                   </div>
                 </div>
 
@@ -584,7 +584,7 @@ export const LabInvestTransactionModal: React.FC<LabInvestTransactionModalProps>
                   </div>
                   <div className="flex justify-between font-bold text-[#172033]">
                     <span>Tokens Invested:</span>
-                    <span className="text-[#15519D]">₹{lastTxSummary.totalTokens.toLocaleString('en-IN')} Tokens</span>
+                    <span className="text-[#2563EB]">₹{lastTxSummary.totalTokens.toLocaleString('en-IN')} Tokens</span>
                   </div>
                   <div className="flex justify-between font-medium text-[#64748B]">
                     <span>Average Price:</span>
@@ -601,7 +601,7 @@ export const LabInvestTransactionModal: React.FC<LabInvestTransactionModalProps>
                     <span>Tokens Returned:</span>
                     <span>₹{lastTxSummary.saleValue.toLocaleString('en-IN')} Tokens</span>
                   </div>
-                  <div className="flex justify-between font-bold text-[#15519D] border-t border-slate-200/60 pt-1">
+                  <div className="flex justify-between font-bold text-[#2563EB] border-t border-slate-200/60 pt-1">
                     <span>New Available Tokens:</span>
                     <span>₹{lastTxSummary.newAvailableTokens.toLocaleString('en-IN')}</span>
                   </div>
@@ -612,7 +612,7 @@ export const LabInvestTransactionModal: React.FC<LabInvestTransactionModalProps>
             <div className="flex items-center gap-3 pt-2">
               <button
                 onClick={onClose}
-                className="flex-1 py-3 bg-[#15519D] hover:bg-[#123B63] text-white font-extrabold text-xs rounded-xl shadow-xs transition cursor-pointer"
+                className="flex-1 py-3 bg-[#2563EB] hover:bg-[#0B1F33] text-white font-extrabold text-xs rounded-xl shadow-xs transition cursor-pointer"
               >
                 {lastTxSummary.mode === 'BUY' ? 'View Holding' : 'View Portfolio'}
               </button>

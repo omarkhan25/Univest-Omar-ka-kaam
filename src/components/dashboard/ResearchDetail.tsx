@@ -63,7 +63,7 @@ export const ResearchDetail: React.FC<ResearchDetailProps> = ({
               </button>
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-0.5 bg-blue-100 text-[#15519D] font-extrabold text-xs rounded-full">
+                  <span className="px-2.5 py-0.5 bg-blue-100 text-[#2563EB] font-extrabold text-xs rounded-full">
                     {category}
                   </span>
                   <span className="text-xs text-slate-400 font-medium">Published: {pubDate}</span>
@@ -78,7 +78,7 @@ export const ResearchDetail: React.FC<ResearchDetailProps> = ({
                   onClose();
                   if (onInvestViaBroker) onInvestViaBroker({ symbol, companyName });
                 }}
-                className="px-4 sm:px-5 py-2.5 bg-[#15519D] hover:bg-[#123B63] text-white font-extrabold text-xs rounded-2xl shadow-lg shadow-blue-500/20 transition-all flex items-center gap-1.5"
+                className="px-4 sm:px-5 py-2.5 bg-[#2563EB] hover:bg-[#0B1F33] text-white font-extrabold text-xs rounded-2xl shadow-lg shadow-blue-500/20 transition-all flex items-center gap-1.5"
               >
                 <span>Invest via Broker</span>
                 <ExternalLink className="w-4 h-4" />
@@ -117,7 +117,7 @@ export const ResearchDetail: React.FC<ResearchDetailProps> = ({
             {/* Research Summary Card */}
             <div className="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-3">
               <h3 className="text-base font-extrabold text-slate-900 flex items-center gap-2">
-                <FileText className="w-5 h-5 text-[#15519D]" />
+                <FileText className="w-5 h-5 text-[#2563EB]" />
                 Investment Thesis Executive Summary
               </h3>
               <p className="text-sm text-slate-700 leading-relaxed font-medium">
@@ -128,7 +128,7 @@ export const ResearchDetail: React.FC<ResearchDetailProps> = ({
             {/* WHY THIS & WHY NOW */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="p-6 bg-blue-50/70 rounded-3xl border border-blue-100 space-y-2">
-                <h4 className="font-extrabold text-[#15519D] text-sm uppercase tracking-wider">Why This Company?</h4>
+                <h4 className="font-extrabold text-[#2563EB] text-sm uppercase tracking-wider">Why This Company?</h4>
                 <p className="text-xs text-slate-700 leading-relaxed font-medium">
                   Dominant market share across high-entry-barrier industries. High Return on Invested Capital (ROIC) coupled with strong institutional sponsorship.
                 </p>
@@ -170,7 +170,7 @@ export const ResearchDetail: React.FC<ResearchDetailProps> = ({
             <div className="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-4">
               <div className="flex items-center justify-between">
                 <h3 className="text-base font-extrabold text-slate-900 flex items-center gap-2">
-                  <Clock className="w-5 h-5 text-[#15519D]" />
+                  <Clock className="w-5 h-5 text-[#2563EB]" />
                   Transparent Research Journey Timeline
                 </h3>
                 <span className="text-xs text-slate-400 font-mono">Verifiable Records</span>
@@ -179,13 +179,13 @@ export const ResearchDetail: React.FC<ResearchDetailProps> = ({
               <div className="space-y-4 relative before:absolute before:left-3 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-200">
                 {timelineEvents.map((ev: any, idx: number) => (
                   <div key={idx} className="relative pl-8 space-y-1">
-                    <div className="absolute left-1.5 top-1.5 w-3 h-3 rounded-full bg-[#15519D] ring-4 ring-blue-50" />
+                    <div className="absolute left-1.5 top-1.5 w-3 h-3 rounded-full bg-[#2563EB] ring-4 ring-blue-50" />
                     <div className="flex items-center justify-between text-xs">
                       <span className="font-extrabold text-slate-900">{ev.event}</span>
                       <span className="font-mono text-slate-400">{ev.date}</span>
                     </div>
                     <p className="text-xs text-slate-600 font-medium">{ev.change}</p>
-                    <div className="text-[10px] font-bold text-[#15519D] inline-block px-2 py-0.5 bg-blue-50 rounded">
+                    <div className="text-[10px] font-bold text-[#2563EB] inline-block px-2 py-0.5 bg-blue-50 rounded">
                       Status: {ev.thesisStatus}
                     </div>
                   </div>

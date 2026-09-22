@@ -159,7 +159,7 @@ export const AdvancedStockChart: React.FC<AdvancedStockChartProps> = ({
               onClick={() => setTimeframe(tf)}
               className={`px-2.5 py-1 rounded-lg font-bold transition cursor-pointer ${
                 timeframe === tf
-                  ? 'bg-[#15519D] text-white shadow-sm'
+                  ? 'bg-[#2563EB] text-white shadow-sm'
                   : 'text-slate-400 hover:text-white hover:bg-slate-700/60'
               }`}
             >
@@ -176,7 +176,7 @@ export const AdvancedStockChart: React.FC<AdvancedStockChartProps> = ({
               onClick={() => setChartType(type)}
               className={`px-2.5 py-1 rounded-lg font-bold transition cursor-pointer ${
                 chartType === type
-                  ? 'bg-[#15519D] text-white shadow-sm'
+                  ? 'bg-[#2563EB] text-white shadow-sm'
                   : 'text-slate-400 hover:text-white hover:bg-slate-700/60'
               }`}
             >
@@ -235,7 +235,7 @@ export const AdvancedStockChart: React.FC<AdvancedStockChartProps> = ({
               onClick={() => setActiveTool(tool.id as any)}
               className={`p-1.5 rounded-lg transition cursor-pointer ${
                 activeTool === tool.id
-                  ? 'bg-[#15519D] text-white'
+                  ? 'bg-[#2563EB] text-white'
                   : 'text-slate-400 hover:text-white hover:bg-slate-700/60'
               }`}
               title={tool.id}
@@ -364,18 +364,18 @@ export const AdvancedStockChart: React.FC<AdvancedStockChartProps> = ({
           {chartType === 'Area' && (
             <>
               <polygon points={areaChartPoints} fill="url(#chartAreaGrad)" opacity={0.25} />
-              <polyline points={lineChartPoints} fill="none" stroke="#15519D" strokeWidth="2.5" />
+              <polyline points={lineChartPoints} fill="none" stroke="#2563EB" strokeWidth="2.5" />
               <defs>
                 <linearGradient id="chartAreaGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#15519D" stopOpacity={0.8} />
-                  <stop offset="100%" stopColor="#15519D" stopOpacity={0} />
+                  <stop offset="0%" stopColor="#2563EB" stopOpacity={0.8} />
+                  <stop offset="100%" stopColor="#2563EB" stopOpacity={0} />
                 </linearGradient>
               </defs>
             </>
           )}
 
           {chartType === 'Line' && (
-            <polyline points={lineChartPoints} fill="none" stroke="#15519D" strokeWidth="2.5" />
+            <polyline points={lineChartPoints} fill="none" stroke="#2563EB" strokeWidth="2.5" />
           )}
 
           {/* MOVING AVERAGE OVERLAY LINES */}
@@ -414,7 +414,7 @@ export const AdvancedStockChart: React.FC<AdvancedStockChartProps> = ({
                 cx={getX(hoverIndex)}
                 cy={getY(candles[hoverIndex].close)}
                 r="4"
-                fill="#15519D"
+                fill="#2563EB"
                 stroke="#FFFFFF"
                 strokeWidth="2"
               />
@@ -525,7 +525,7 @@ export const AdvancedStockChart: React.FC<AdvancedStockChartProps> = ({
               onClick={() => setSelectedRange(range)}
               className={`px-2.5 py-1 rounded-lg font-bold transition cursor-pointer ${
                 selectedRange === range
-                  ? 'bg-[#15519D] text-white shadow-sm'
+                  ? 'bg-[#2563EB] text-white shadow-sm'
                   : 'text-slate-400 hover:text-white hover:bg-slate-700/60'
               }`}
             >
@@ -540,7 +540,7 @@ export const AdvancedStockChart: React.FC<AdvancedStockChartProps> = ({
               type="checkbox"
               checked={isLogScale}
               onChange={e => setIsLogScale(e.target.checked)}
-              className="rounded accent-[#15519D]"
+              className="rounded accent-[#2563EB]"
             />
             <span>Log Scale</span>
           </label>
@@ -549,7 +549,7 @@ export const AdvancedStockChart: React.FC<AdvancedStockChartProps> = ({
               type="checkbox"
               checked={isPercentScale}
               onChange={e => setIsPercentScale(e.target.checked)}
-              className="rounded accent-[#15519D]"
+              className="rounded accent-[#2563EB]"
             />
             <span>% Scale</span>
           </label>

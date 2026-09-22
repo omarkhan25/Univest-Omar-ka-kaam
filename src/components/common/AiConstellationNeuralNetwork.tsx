@@ -22,7 +22,7 @@ const NODES: ConstellationNode[] = [
   { id: 'research', name: 'Research', metric: '28 Calls', subMetric: 'SEBI RA Compliant', icon: Shield, x: 390, y: 100, color: '#F59E0B', badge: '14 Live' },
   { id: 'ai-advisors', name: 'AI Copilots', metric: '96% Accuracy', subMetric: '3 Active Agents', icon: Sparkles, x: 260, y: 70, color: '#8B5CF6', badge: 'AI V4' },
   { id: 'news', name: 'News Intel', metric: '142 Updates', subMetric: 'RBI Policy Live', icon: Newspaper, x: 470, y: 240, color: '#38BDF8', badge: 'Breaking' },
-  { id: 'invest', name: 'Asset Hub', metric: '7 Assets', subMetric: 'Ola IPO GMP +38%', icon: Layers, x: 410, y: 390, color: '#15519D', badge: 'High Yield' },
+  { id: 'invest', name: 'Asset Hub', metric: '7 Assets', subMetric: 'Ola IPO GMP +38%', icon: Layers, x: 410, y: 390, color: '#2563EB', badge: 'High Yield' },
   { id: 'watchlist', name: 'Watchlist', metric: '18 Stocks', subMetric: '3 Breakouts Near', icon: Star, x: 70, y: 230, color: '#EC4899', badge: 'Live Ticks' },
   { id: 'orders', name: 'Execution', metric: '3 Active', subMetric: 'Instant NSE/BSE', icon: Zap, x: 120, y: 380, color: '#10B981', badge: '0.2s Execution' },
   { id: 'goals', name: 'Goals Tracker', metric: '68% Goal', subMetric: 'Retirement 2035', icon: Target, x: 260, y: 440, color: '#F59E0B', badge: 'On Track' },
@@ -84,7 +84,7 @@ export const AiConstellationNeuralNetwork: React.FC<AiConstellationNeuralNetwork
       <svg viewBox="0 0 540 500" className="absolute inset-0 w-full h-full pointer-events-none overflow-visible">
         <defs>
           <linearGradient id="neuralLineGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#15519D" stopOpacity="0.4" />
+            <stop offset="0%" stopColor="#2563EB" stopOpacity="0.4" />
             <stop offset="50%" stopColor="#10B981" stopOpacity="0.2" />
             <stop offset="100%" stopColor="#8B5CF6" stopOpacity="0.4" />
           </linearGradient>
@@ -131,7 +131,7 @@ export const AiConstellationNeuralNetwork: React.FC<AiConstellationNeuralNetwork
           <circle cx={NODES[0].x} cy={NODES[0].y} r="5" fill="#10B981" filter="url(#glow)" className="animate-ping" />
         )}
         {activeStep === 4 && (
-          <circle cx={NODES[6].x} cy={NODES[6].y} r="5" fill="#15519D" filter="url(#glow)" className="animate-ping" />
+          <circle cx={NODES[6].x} cy={NODES[6].y} r="5" fill="#2563EB" filter="url(#glow)" className="animate-ping" />
         )}
 
         {/* AI Scan Pulse Expanding Wave Circle */}

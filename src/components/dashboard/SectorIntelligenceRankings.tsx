@@ -69,7 +69,7 @@ export const SectorIntelligenceRankings: React.FC<SectorIntelligenceRankingsProp
     <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-5 shadow-2xs">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 border-b border-slate-100 pb-4">
         <div>
-          <div className="inline-flex items-center gap-1.5 text-xs font-black text-[#15519D] uppercase tracking-wider">
+          <div className="inline-flex items-center gap-1.5 text-xs font-black text-[#2563EB] uppercase tracking-wider">
             <Layers className="w-4 h-4" />
             <span>SECTOR INTELLIGENCE & MOMENTUM</span>
           </div>
@@ -81,7 +81,7 @@ export const SectorIntelligenceRankings: React.FC<SectorIntelligenceRankingsProp
           </p>
         </div>
 
-        <button className="text-xs font-extrabold text-[#15519D] hover:underline inline-flex items-center gap-1">
+        <button className="text-xs font-extrabold text-[#2563EB] hover:underline inline-flex items-center gap-1">
           <span>Explore All 17 Sectors</span>
           <ChevronRight className="w-3.5 h-3.5" />
         </button>
@@ -92,14 +92,14 @@ export const SectorIntelligenceRankings: React.FC<SectorIntelligenceRankingsProp
           <div
             key={sec.name}
             onClick={() => onSelectSector && onSelectSector(sec.name)}
-            className="p-4 bg-[#F8FAFC] rounded-2xl border border-slate-200/90 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-[#15519D] transition-all cursor-pointer group"
+            className="p-4 bg-[#F8FAFC] rounded-2xl border border-slate-200/90 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-[#2563EB] transition-all cursor-pointer group"
           >
             <div className="flex items-center gap-3.5 min-w-[240px]">
               <span className="w-7 h-7 rounded-lg bg-slate-200 text-slate-700 font-black text-xs flex items-center justify-center shrink-0">
                 #{idx + 1}
               </span>
               <div>
-                <h3 className="font-extrabold text-sm text-slate-900 group-hover:text-[#15519D] transition-colors">
+                <h3 className="font-extrabold text-sm text-slate-900 group-hover:text-[#2563EB] transition-colors">
                   {sec.name}
                 </h3>
                 <span className={`text-xs font-extrabold ${sec.isPositive ? 'text-emerald-600' : 'text-rose-600'}`}>

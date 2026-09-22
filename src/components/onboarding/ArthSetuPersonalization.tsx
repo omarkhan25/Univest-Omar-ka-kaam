@@ -123,7 +123,7 @@ export const ArthSetuPersonalization: React.FC<ArthSetuPersonalizationProps> = (
         
         {/* TOP LEFT BRANDING */}
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#15519D] to-[#123B63] text-white font-black text-lg flex items-center justify-center shadow-sm">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#2563EB] to-[#0B1F33] text-white font-black text-lg flex items-center justify-center shadow-sm">
             A
           </div>
           <div>
@@ -138,11 +138,11 @@ export const ArthSetuPersonalization: React.FC<ArthSetuPersonalizationProps> = (
 
         {/* TOP RIGHT COMPACT STEP INDICATOR */}
         <div className="flex items-center gap-2 text-xs font-semibold text-[#64748B] hidden sm:flex">
-          <span className={step === 1 && !isSummaryView ? 'text-[#15519D] font-extrabold' : ''}>1 About You</span>
+          <span className={step === 1 && !isSummaryView ? 'text-[#2563EB] font-extrabold' : ''}>1 About You</span>
           <span>•</span>
-          <span className={(step >= 2 && step <= 4) && !isSummaryView ? 'text-[#15519D] font-extrabold' : ''}>2 Your Interests</span>
+          <span className={(step >= 2 && step <= 4) && !isSummaryView ? 'text-[#2563EB] font-extrabold' : ''}>2 Your Interests</span>
           <span>•</span>
-          <span className={isSummaryView ? 'text-[#15519D] font-extrabold' : ''}>3 Choose Your Plan</span>
+          <span className={isSummaryView ? 'text-[#2563EB] font-extrabold' : ''}>3 Choose Your Plan</span>
           <span>•</span>
           <span>4 Ready</span>
         </div>
@@ -185,7 +185,7 @@ export const ArthSetuPersonalization: React.FC<ArthSetuPersonalizationProps> = (
                   className="space-y-6"
                 >
                   <div className="space-y-1">
-                    <span className="text-xs font-bold text-[#15519D] uppercase tracking-wider">
+                    <span className="text-xs font-bold text-[#2563EB] uppercase tracking-wider">
                       PERSONALIZATION SUMMARY
                     </span>
                     <h2 className="text-2xl font-extrabold text-[#172033]">
@@ -210,13 +210,13 @@ export const ArthSetuPersonalization: React.FC<ArthSetuPersonalizationProps> = (
                           setStep(item.stepNum);
                           setIsSummaryView(false);
                         }}
-                        className="p-3.5 bg-[#F8FAFC] hover:bg-blue-50/50 rounded-xl border border-[#E2E8F0] hover:border-[#15519D] transition-all cursor-pointer flex items-center justify-between group"
+                        className="p-3.5 bg-[#F8FAFC] hover:bg-blue-50/50 rounded-xl border border-[#E2E8F0] hover:border-[#2563EB] transition-all cursor-pointer flex items-center justify-between group"
                       >
                         <div className="space-y-0.5">
                           <span className="text-[10px] font-bold text-[#64748B] uppercase">{item.label}</span>
-                          <div className="text-xs font-extrabold text-[#172033] group-hover:text-[#15519D] transition-colors">{item.val}</div>
+                          <div className="text-xs font-extrabold text-[#172033] group-hover:text-[#2563EB] transition-colors">{item.val}</div>
                         </div>
-                        <span className="text-[11px] font-extrabold text-[#15519D] flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity">
+                        <span className="text-[11px] font-extrabold text-[#2563EB] flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity">
                           <Edit2 className="w-3 h-3" /> Change
                         </span>
                       </div>
@@ -236,7 +236,7 @@ export const ArthSetuPersonalization: React.FC<ArthSetuPersonalizationProps> = (
                     <button
                       type="button"
                       onClick={handleFinalSubmit}
-                      className="bg-[#15519D] hover:bg-[#123B63] text-white font-extrabold text-xs px-6 py-3 rounded-xl shadow-sm transition cursor-pointer flex items-center gap-1.5"
+                      className="bg-[#2563EB] hover:bg-[#0B1F33] text-white font-extrabold text-xs px-6 py-3 rounded-xl shadow-sm transition cursor-pointer flex items-center gap-1.5"
                     >
                       <span>Choose Your Plan</span>
                       <ArrowRight className="w-4 h-4" />
@@ -255,7 +255,7 @@ export const ArthSetuPersonalization: React.FC<ArthSetuPersonalizationProps> = (
                 >
                   {/* QUESTION CARD HEADER */}
                   <div className="space-y-1">
-                    <span className="text-xs font-bold text-[#15519D] uppercase tracking-wider block">
+                    <span className="text-xs font-bold text-[#2563EB] uppercase tracking-wider block">
                       QUESTION {step} OF 5
                     </span>
 
@@ -326,14 +326,14 @@ export const ArthSetuPersonalization: React.FC<ArthSetuPersonalizationProps> = (
                             onClick={() => setAnswers(prev => ({ ...prev, familiarity: opt.label }))}
                             className={`p-4 rounded-xl border transition cursor-pointer relative flex flex-col justify-between ${
                               isSelected
-                                ? 'bg-[#15519D]/5 border-[#15519D] shadow-xs'
+                                ? 'bg-[#2563EB]/5 border-[#2563EB] shadow-xs'
                                 : 'bg-white border-[#E2E8F0] hover:border-[#CBD5E1]'
                             }`}
                           >
                             <div className="flex justify-between items-start">
                               <h3 className="font-extrabold text-sm text-[#172033]">{opt.label}</h3>
                               {isSelected && (
-                                <CheckCircle2 className="w-4 h-4 text-[#15519D] shrink-0" />
+                                <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0" />
                               )}
                             </div>
                             <p className="text-xs text-[#64748B] font-medium mt-1 leading-relaxed">
@@ -356,7 +356,7 @@ export const ArthSetuPersonalization: React.FC<ArthSetuPersonalizationProps> = (
                             onClick={() => toggleInterest(opt.label)}
                             className={`p-3.5 rounded-xl border transition cursor-pointer flex items-center justify-between ${
                               isSelected
-                                ? 'bg-[#15519D]/5 border-[#15519D]'
+                                ? 'bg-[#2563EB]/5 border-[#2563EB]'
                                 : 'bg-white border-[#E2E8F0] hover:border-[#CBD5E1]'
                             }`}
                           >
@@ -364,7 +364,7 @@ export const ArthSetuPersonalization: React.FC<ArthSetuPersonalizationProps> = (
                               <h3 className="font-extrabold text-xs text-[#172033]">{opt.label}</h3>
                               <p className="text-[11px] text-[#64748B] font-medium">{opt.desc}</p>
                             </div>
-                            {isSelected && <CheckCircle2 className="w-4 h-4 text-[#15519D] shrink-0" />}
+                            {isSelected && <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0" />}
                           </div>
                         );
                       })}
@@ -382,12 +382,12 @@ export const ArthSetuPersonalization: React.FC<ArthSetuPersonalizationProps> = (
                             onClick={() => toggleGoal(goal)}
                             className={`p-3 rounded-xl border text-xs font-extrabold transition cursor-pointer flex items-center justify-between ${
                               isSelected
-                                ? 'bg-[#15519D]/5 border-[#15519D] text-[#15519D]'
+                                ? 'bg-[#2563EB]/5 border-[#2563EB] text-[#2563EB]'
                                 : 'bg-white border-[#E2E8F0] text-[#172033] hover:border-[#CBD5E1]'
                             }`}
                           >
                             <span>{goal}</span>
-                            {isSelected && <CheckCircle2 className="w-4 h-4 text-[#15519D] shrink-0" />}
+                            {isSelected && <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0" />}
                           </div>
                         );
                       })}
@@ -405,7 +405,7 @@ export const ArthSetuPersonalization: React.FC<ArthSetuPersonalizationProps> = (
                             onClick={() => setAnswers(prev => ({ ...prev, approach: opt.label }))}
                             className={`p-4 rounded-xl border transition cursor-pointer flex items-center justify-between ${
                               isSelected
-                                ? 'bg-[#15519D]/5 border-[#15519D]'
+                                ? 'bg-[#2563EB]/5 border-[#2563EB]'
                                 : 'bg-white border-[#E2E8F0] hover:border-[#CBD5E1]'
                             }`}
                           >
@@ -413,7 +413,7 @@ export const ArthSetuPersonalization: React.FC<ArthSetuPersonalizationProps> = (
                               <h3 className="font-extrabold text-sm text-[#172033]">{opt.label}</h3>
                               <p className="text-xs text-[#64748B] font-medium mt-0.5">{opt.desc}</p>
                             </div>
-                            {isSelected && <CheckCircle2 className="w-4 h-4 text-[#15519D] shrink-0" />}
+                            {isSelected && <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0" />}
                           </div>
                         );
                       })}
@@ -431,7 +431,7 @@ export const ArthSetuPersonalization: React.FC<ArthSetuPersonalizationProps> = (
                             onClick={() => setAnswers(prev => ({ ...prev, horizon: opt.label }))}
                             className={`p-4 rounded-xl border transition cursor-pointer flex items-center justify-between ${
                               isSelected
-                                ? 'bg-[#15519D]/5 border-[#15519D]'
+                                ? 'bg-[#2563EB]/5 border-[#2563EB]'
                                 : 'bg-white border-[#E2E8F0] hover:border-[#CBD5E1]'
                             }`}
                           >
@@ -439,7 +439,7 @@ export const ArthSetuPersonalization: React.FC<ArthSetuPersonalizationProps> = (
                               <h3 className="font-extrabold text-sm text-[#172033]">{opt.label}</h3>
                               <p className="text-xs text-[#64748B] font-medium mt-0.5">{opt.desc}</p>
                             </div>
-                            {isSelected && <CheckCircle2 className="w-4 h-4 text-[#15519D] shrink-0" />}
+                            {isSelected && <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0" />}
                           </div>
                         );
                       })}
@@ -463,7 +463,7 @@ export const ArthSetuPersonalization: React.FC<ArthSetuPersonalizationProps> = (
                     <button
                       type="button"
                       onClick={handleNext}
-                      className="bg-[#15519D] hover:bg-[#123B63] text-white font-extrabold text-xs px-6 py-3 rounded-xl shadow-sm transition cursor-pointer flex items-center gap-1.5"
+                      className="bg-[#2563EB] hover:bg-[#0B1F33] text-white font-extrabold text-xs px-6 py-3 rounded-xl shadow-sm transition cursor-pointer flex items-center gap-1.5"
                     >
                       <span>{step === 5 ? 'Review Profile' : 'Continue'}</span>
                       <ArrowRight className="w-4 h-4" />
