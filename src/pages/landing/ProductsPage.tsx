@@ -1,113 +1,156 @@
-﻿import React from 'react';
-import { StablecoinNavbar } from '../../components/landing/StablecoinNavbar';
-import { ArrowRight } from 'lucide-react';
+import React from 'react';
+import { ArthSetuNavbar } from '../../components/landing/ArthSetuNavbar';
+import { Footer } from '../../components/landing/Footer';
+import { ArrowRight, Compass, Activity, BrainCircuit, PieChart, FlaskConical, Crown, Sparkles, CheckCircle2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export const ProductsPage: React.FC = () => {
-  return (
-    <div className="flex flex-col bg-[#F8FAFC] min-h-screen font-sans">
-      <StablecoinNavbar />
+  const navigate = useNavigate();
 
-      <main className="flex-1 pt-32 pb-24 px-[50px]">
+  const products = [
+    {
+      title: 'ArthSetu View (Company Research)',
+      tagline: 'Multi-Dimensional Fundamental Analysis',
+      icon: Compass,
+      description: 'Our proprietary 6-pillar framework (Business Quality, Growth, Valuation, Momentum, Financial Health, Risk) transforms hundreds of audited metrics into a transparent, contextual evaluation score.',
+      features: ['6-Pillar Quality Breakdown', 'Historical Multiples Context', 'Red-Flag & Governance Audit', 'Reverse DCF Implied Expectations'],
+      accent: 'purple',
+      cta: 'Explore Research'
+    },
+    {
+      title: 'Market Intelligence & Breadth',
+      tagline: 'Contextual Market Signals & Sector Telemetry',
+      icon: Activity,
+      description: 'Go beyond raw price swings. Understand sector rotation, institutional flows, derivatives positioning (OI & PCR), and macroeconomic catalysts in real time.',
+      features: ['Sector Advance/Decline Breadth', 'Derivatives Sentiment Context', 'Catalyst Decomposition', 'FII / DII Institutional Flow'],
+      accent: 'emerald',
+      cta: 'Explore Markets'
+    },
+    {
+      title: 'AI Research Copilot',
+      tagline: 'Your Personal Financial Analyst',
+      icon: BrainCircuit,
+      description: 'An intelligent research assistant powered by deep financial models. Ask complex questions about notes-to-accounts, concall transcripts, debt restructuring, or peer comparisons.',
+      features: ['Concall & Filing Synthesis', 'Peer Comparison Matrices', 'Portfolio Risk Queries', 'Source-Attributed Answers'],
+      accent: 'indigo',
+      cta: 'Meet AI Copilot'
+    },
+    {
+      title: 'Portfolio Diagnostics',
+      tagline: 'Comprehensive Risk & Concentration Health',
+      icon: PieChart,
+      description: 'Analyze your holdings for hidden sector concentration, correlation risk, and benchmark tracking error so you always invest with disciplined risk control.',
+      features: ['Concentration Alerts', 'Benchmark Beta Attribution', 'Drawdown Vulnerability', 'Rebalancing Context'],
+      accent: 'blue',
+      cta: 'Analyze Portfolio'
+    },
+    {
+      title: 'Investment Lab Simulator',
+      tagline: 'Simulate Investment Theses with Virtual Capital',
+      icon: FlaskConical,
+      description: 'Test your long-term investment ideas using virtual Tokens. Compare results against NIFTY benchmarks, evaluate post-decision outcomes, and learn from mistakes without financial risk.',
+      features: ['Virtual Token Allocations', 'Multi-Horizon Thesis Tracking', 'Post-Decision Analysis', 'Zero Monetary Risk'],
+      accent: 'amber',
+      cta: 'Enter Investment Lab'
+    },
+    {
+      title: 'ArthSetu Pro Radars',
+      tagline: 'Advanced Radars & Small-Cap Intelligence',
+      icon: Crown,
+      description: 'Gain access to proprietary quantitative radar screens, daily research upgrades and downgrades, small-cap screening, and institutional dossiers.',
+      features: ['Growth & Value Radars', 'Small-Cap Screening Watch', 'Daily Upgrades / Downgrades', '10-Page Research Dossiers'],
+      accent: 'purple-dark',
+      cta: 'Explore Pro Plans'
+    }
+  ];
+
+  return (
+    <div className="flex flex-col bg-[#F8FAFC] min-h-screen font-sans text-slate-900">
+      <ArthSetuNavbar />
+
+      <main className="flex-1 pt-32 pb-24 px-6 sm:px-10 md:px-[50px]">
         <div className="max-w-[88rem] mx-auto">
+          
           {/* Header */}
-          <div className="mb-16">
-            <span className="text-[#2B2644] text-sm font-bold uppercase tracking-widest block mb-4">INVESTMENT ECOSYSTEM</span>
-            <h1 
-              className="text-black text-5xl md:text-6xl font-medium leading-tight mb-4"
-              style={{ letterSpacing: '-0.04em' }}
-            >
-              One Platform.<br />Every Investment.
+          <div className="max-w-3xl mb-16">
+            <span className="text-xs font-bold uppercase tracking-widest text-purple-700 block mb-3">
+              THE ARTHSETU ECOSYSTEM
+            </span>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight text-gray-950 leading-tight mb-4">
+              Intelligence tools built for thoughtful investors.
             </h1>
-            <p className="text-black/60 text-xl max-w-2xl">
-              Everything you need to research, invest, manage and grow your wealth—powered by AI and designed for modern investors.
+            <p className="text-lg text-gray-600 leading-relaxed">
+              Every tool is engineered to replace speculation with rigorous fundamental context, deep research, and risk awareness.
             </p>
           </div>
 
           {/* Products Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Main Product Card */}
-            <div className="md:col-span-2 rounded-[2rem] bg-[#E8E4F5] p-10 flex flex-col justify-between overflow-hidden relative min-h-[440px] group hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-black/5 transition-all duration-300 border border-transparent hover:border-white/40">
-              <div className="relative z-10">
-                <h3 className="text-black text-3xl font-medium mb-3" style={{ letterSpacing: '-0.02em' }}>AI Research</h3>
-                <p className="text-black/70 text-lg max-w-sm mb-6">
-                  Transform market data into actionable investment ideas using institutional-grade research, AI-powered stock analysis, technical indicators and fundamental insights—all in one place.
-                </p>
-                <ul className="text-black/80 font-medium space-y-2 mb-8">
-                  <li>• AI Research Reports</li>
-                  <li>• Fundamental Analysis</li>
-                  <li>• Technical Analysis</li>
-                  <li>• Smart Stock Ratings</li>
-                </ul>
-                <button className="inline-flex items-center gap-3 bg-black text-white text-base font-medium pl-6 pr-2 py-2 rounded-full hover:bg-gray-800 transition-colors duration-200 cursor-pointer w-max">
-                  <span>Explore Research</span>
-                  <span className="bg-white rounded-full p-1.5 flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
-                    <ArrowRight className="w-4 h-4 text-black" />
-                  </span>
-                </button>
-              </div>
-              
-              {/* 3D Image */}
-              <div className="absolute right-0 bottom-0 w-2/3 h-full mix-blend-multiply opacity-90 transition-transform duration-500 group-hover:scale-[1.02]" style={{ backgroundImage: "url('/images/products_hero_1785925514340.png')", backgroundSize: 'cover', backgroundPosition: 'center left' }}>
-                <div className="absolute inset-0 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-between p-8">
-                  <div className="text-black/60 font-bold text-xs uppercase tracking-widest">AI Powered</div>
-                  <div className="flex justify-between items-end w-full mt-auto">
-                    <div className="text-black/60 font-bold text-xs uppercase tracking-widest">Invest • Research • Grow</div>
-                    <div className="text-black/60 font-bold text-xs uppercase tracking-widest text-right">Market Intelligence</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
+            {products.map((p, idx) => {
+              const Icon = p.icon;
+              return (
+                <div 
+                  key={idx}
+                  className="bg-white rounded-3xl p-8 border border-gray-200/80 shadow-xs hover:shadow-lg hover:border-purple-300 transition-all duration-300 flex flex-col justify-between group"
+                >
+                  <div>
+                    <div className="w-12 h-12 rounded-2xl bg-purple-50 text-purple-700 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                      <Icon className="w-6 h-6" />
+                    </div>
+                    <div className="text-xs font-bold uppercase tracking-wider text-purple-800 mb-1">{p.tagline}</div>
+                    <h3 className="text-xl font-bold text-gray-950 mb-3">{p.title}</h3>
+                    <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-6">{p.description}</p>
+                    
+                    <ul className="space-y-2 mb-8">
+                      {p.features.map((f, i) => (
+                        <li key={i} className="flex items-center gap-2 text-xs text-gray-700 font-medium">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                          <span>{f}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                </div>
-              </div>
-            </div>
 
-            <div className="flex flex-col gap-6">
-              {/* Secondary Product Card 1 */}
-              <div className="rounded-[2rem] bg-[#2B2644] p-8 flex flex-col justify-between flex-1 group hover:-translate-y-1.5 hover:shadow-2xl transition-all duration-300 border border-transparent hover:border-white/10 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-white/0 group-hover:from-white/5 group-hover:to-transparent transition-all duration-500" />
-                <div className="relative z-10">
-                  <h3 className="text-white text-2xl font-medium mb-3" style={{ letterSpacing: '-0.01em' }}>Market Intelligence</h3>
-                  <p className="text-white/70 text-base mb-6">
-                    Stay informed with real-time market news, earnings, corporate actions and AI-generated summaries that explain what every event means for your investments.
-                  </p>
-                  <ul className="text-white/80 text-sm font-medium space-y-2 mb-6">
-                    <li>• Live Market News</li>
-                    <li>• Earnings Updates</li>
-                    <li>• Corporate Actions</li>
-                    <li>• AI News Summary</li>
-                  </ul>
+                  <button
+                    onClick={() => navigate('/signup')}
+                    className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-900 group-hover:text-purple-800 transition-colors pt-4 border-t border-gray-100 cursor-pointer"
+                  >
+                    <span>{p.cta}</span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </button>
                 </div>
-                <a href="#know-more" className="inline-flex items-center gap-3 mt-auto relative z-10 w-max group/btn">
-                  <span className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover/btn:bg-white/20 transition-colors duration-200">
-                    <ArrowRight className="w-5 h-5 text-white transition-transform duration-300 group-hover/btn:translate-x-1" />
-                  </span>
-                  <span className="text-white text-sm font-medium">View Market Insights</span>
-                </a>
-              </div>
-
-              {/* Secondary Product Card 2 */}
-              <div className="rounded-[2rem] bg-[#2B2644] p-8 flex flex-col justify-between flex-1 group hover:-translate-y-1.5 hover:shadow-2xl transition-all duration-300 border border-transparent hover:border-white/10 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-white/0 group-hover:from-white/5 group-hover:to-transparent transition-all duration-500" />
-                <div className="relative z-10">
-                  <h3 className="text-white text-2xl font-medium mb-3" style={{ letterSpacing: '-0.01em' }}>Portfolio Intelligence</h3>
-                  <p className="text-white/70 text-base mb-6">
-                    Monitor every investment with real-time portfolio tracking, performance analytics and AI recommendations that help you diversify and invest with confidence.
-                  </p>
-                  <ul className="text-white/80 text-sm font-medium space-y-2 mb-6">
-                    <li>• Live Portfolio Tracking</li>
-                    <li>• Performance Insights</li>
-                    <li>• Risk Analysis</li>
-                    <li>• AI Rebalancing</li>
-                  </ul>
-                </div>
-                <a href="#know-more" className="inline-flex items-center gap-3 mt-auto relative z-10 w-max group/btn">
-                  <span className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover/btn:bg-white/20 transition-colors duration-200">
-                    <ArrowRight className="w-5 h-5 text-white transition-transform duration-300 group-hover/btn:translate-x-1" />
-                  </span>
-                  <span className="text-white text-sm font-medium">Manage Portfolio</span>
-                </a>
-              </div>
-            </div>
+              );
+            })}
           </div>
+
+          {/* Bottom Banner */}
+          <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-[#2B2644] to-[#1E1A30] text-white flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl">
+            <div className="max-w-2xl">
+              <span className="text-xs font-bold uppercase tracking-widest text-purple-300 block mb-2">
+                READY TO EXPERIENCE RESEARCH CLARITY?
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-bold mb-3">
+                Start with free market and company intelligence.
+              </h2>
+              <p className="text-xs sm:text-sm text-purple-100/80 leading-relaxed">
+                Join thousands of Indian investors who use ArthSetu to understand the market before making investment decisions.
+              </p>
+            </div>
+            <button
+              onClick={() => navigate('/signup')}
+              className="inline-flex items-center gap-2 bg-white text-gray-950 text-sm font-semibold px-8 py-4 rounded-full hover:bg-purple-100 transition-colors shrink-0 cursor-pointer shadow-md"
+            >
+              <span>Explore ArthSetu Free</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 };
+
+export default ProductsPage;

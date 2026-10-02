@@ -131,10 +131,12 @@ export const StockDetail: React.FC<StockDetailProps> = ({
   };
 
   const handleAddToInvestmentLab = () => {
+    const usr = user as any;
     const hasPremium = isPremium || 
-                       user?.isPremium || 
-                       user?.plan === 'pro' || 
-                       user?.plan === 'premium' || 
+                       usr?.isPremium || 
+                       usr?.is_premium ||
+                       usr?.plan === 'pro' || 
+                       usr?.plan === 'premium' || 
                        localStorage.getItem('is_premium_member') === 'true' ||
                        localStorage.getItem('user_plan') === 'pro';
 
@@ -423,7 +425,7 @@ export const StockDetail: React.FC<StockDetailProps> = ({
                       <AreaChart
                         data={detailedChartData}
                         margin={{ top: 10, right: 10, left: 10, bottom: 0 }}
-                        onMouseMove={(e) => {
+                        onMouseMove={(e: any) => {
                           if (e && e.activePayload && e.activePayload.length > 0) {
                             const p = e.activePayload[0].payload;
                             const diff = p.price - p.startPrice;
